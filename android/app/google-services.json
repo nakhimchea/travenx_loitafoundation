@@ -1,0 +1,54 @@
+{
+  "project_info": {
+    "project_number": "757818286951",
+    "project_id": "travenx",
+    "storage_bucket": "travenx.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:757818286951:android:6515272a9e2a2a74b905c2",
+        "android_client_info": {
+          "package_name": "com.travenx.crossplatform.travenx_loitafoundation"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "757818286951-bqq8gjqmfbvo0fc0kru714h0b3doiinm.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.travenx.crossplatform.travenx_loitafoundation",
+            "certificate_hash": "d72bb8f6af81218382cb75052fa3a2be45aafa3a"
+          }
+        },
+        {
+          "client_id": "757818286951-ql0s368eon5c36ki4vnvil6gj1nnj6tt.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDyi0gVJ6NCSP6Hxxdzq2DOnpT1Z_2C2l4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "757818286951-ql0s368eon5c36ki4vnvil6gj1nnj6tt.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "757818286951-8sm0kefdfqv5itoq8390dd9dj25n3ep2.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.travenx.userapp"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

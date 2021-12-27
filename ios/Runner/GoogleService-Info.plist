@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>757818286951-dslc4mggiunvc1vedke5073s49fve908.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.757818286951-dslc4mggiunvc1vedke5073s49fve908</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>757818286951-65bn2aenj0992a79fig247qbi91iul8i.apps.googleusercontent.com</string>
+	<key>API_KEY</key>
+	<string>AIzaSyCtpG996ienqlZ-Eias0sF_myyiXt23zGA</string>
+	<key>GCM_SENDER_ID</key>
+	<string>757818286951</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.travenx.crossplatform.travenxLoitafoundation</string>
+	<key>PROJECT_ID</key>
+	<string>travenx</string>
+	<key>STORAGE_BUCKET</key>
+	<string>travenx.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:757818286951:ios:786ac0767a8834c2b905c2</string>
+</dict>
+</plist>

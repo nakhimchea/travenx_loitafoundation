@@ -33,3 +33,22 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
+
+  assets:
+    - assets/images/
+    - assets/images/home_screen/
+    - assets/images/home_subscreen/
+    - assets/images/chat_screen/
+    - assets/images/profile_screen/
+    - assets/icons/
+
+  fonts:
+    - family: Nokora
+      fonts:
+        - asset: fonts/Nokora-Regular.ttf
+    - family: CustomOutlinedIcons
+      fonts:
+        - asset: fonts/Custom-Oulined-Icons.ttf
+    - family: CustomFilledIcons
+      fonts:
+        - asset: fonts/Custom-Filled-Icons.ttf

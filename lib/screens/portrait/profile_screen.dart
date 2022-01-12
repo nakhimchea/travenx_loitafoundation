@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:travenx_loitafoundation/screens/portrait/profile_screen/profile.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({Key? key}) : super(key: key);
@@ -11,7 +12,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.lime,
+      body: Profile(),
     );
   }
 }

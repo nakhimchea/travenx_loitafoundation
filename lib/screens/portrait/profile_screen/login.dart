@@ -27,35 +27,7 @@ class _LoginState extends State<Login> {
               fit: BoxFit.fill,
             ),
           ),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Container(
-                margin: EdgeInsets.only(top: 44.0, left: 16.0),
-                child: Text(
-                  'Travenx',
-                  textScaleFactor: textScaleFactor,
-                  style: const TextStyle(
-                    color: Colors.white,
-                    fontSize: 28.0,
-                    fontWeight: FontWeight.w700,
-                  ),
-                ),
-              ),
-              Container(
-                margin: EdgeInsets.only(top: 56.0, right: 30.0),
-                child: Text(
-                  'រំលង',
-                  style: const TextStyle(
-                    color: Colors.white,
-                    fontSize: 16.0,
-                    fontFamily: 'Nokora',
-                    fontWeight: FontWeight.w700,
-                  ),
-                ),
-              )
-            ],
-          ),
+          child: CustomAppBar(),
         ),
         Positioned(
           width: MediaQuery.of(context).size.width,
@@ -90,65 +62,126 @@ class _LoginState extends State<Login> {
                   ],
                 ),
               ),
-              GestureDetector(
-                onTap: () => print('Policy Button click...'),
-                child: Column(
-                  children: [
-                    Text(
-                      'តាមរយ:ការប្រើកម្មវិធីនេះ អ្នកយល់ព្រមទទួលយក',
-                      style: const TextStyle(
-                        color: Colors.white,
-                        fontSize: 12.0,
-                        height: 1.67,
-                        fontFamily: 'Nokora',
-                        fontWeight: FontWeight.w400,
-                      ),
-                    ),
-                    Text(
-                      'លក្ខខណ្ឌ និងគោលនយោបាយឯកជនភាព',
-                      style: const TextStyle(
-                        color: Colors.white,
-                        fontSize: 12.0,
-                        height: 1.67,
-                        fontFamily: 'Nokora',
-                        fontWeight: FontWeight.w700,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    'ត្រូវការគណនី? ',
-                    style: const TextStyle(
-                      color: Colors.white,
-                      fontSize: 14.0,
-                      height: 3,
-                      fontFamily: 'Nokora',
-                      fontWeight: FontWeight.w400,
-                    ),
-                  ),
-                  GestureDetector(
-                    onTap: () => print('Register button click...'),
-                    child: Text(
-                      'ចុះឈ្មោះឥឡូវនេះ',
-                      style: const TextStyle(
-                        color: Colors.white,
-                        fontSize: 14.0,
-                        height: 3,
-                        fontFamily: 'Nokora',
-                        fontWeight: FontWeight.w700,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
+              PolicyAgreement(),
+              SignUpRequest(),
             ],
           ),
         ),
       ],
+    );
+  }
+}
+
+class CustomAppBar extends StatelessWidget {
+  const CustomAppBar({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Container(
+          margin: EdgeInsets.only(top: 44.0, left: 16.0),
+          child: Text(
+            'Travenx',
+            textScaleFactor: textScaleFactor,
+            style: const TextStyle(
+              color: Colors.white,
+              fontSize: 28.0,
+              fontWeight: FontWeight.w700,
+            ),
+          ),
+        ),
+        Container(
+          margin: EdgeInsets.only(top: 56.0, right: 30.0),
+          child: Text(
+            'រំលង',
+            style: const TextStyle(
+              color: Colors.white,
+              fontSize: 16.0,
+              fontFamily: 'Nokora',
+              fontWeight: FontWeight.w700,
+            ),
+          ),
+        )
+      ],
+    );
+  }
+}
+
+class SignUpRequest extends StatelessWidget {
+  const SignUpRequest({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Text(
+          'ត្រូវការគណនី? ',
+          style: const TextStyle(
+            color: Colors.white,
+            fontSize: 14.0,
+            height: 3,
+            fontFamily: 'Nokora',
+            fontWeight: FontWeight.w400,
+          ),
+        ),
+        GestureDetector(
+          onTap: () => print('Register button click...'),
+          child: Text(
+            'ចុះឈ្មោះឥឡូវនេះ',
+            style: const TextStyle(
+              color: Colors.white,
+              fontSize: 14.0,
+              height: 3,
+              fontFamily: 'Nokora',
+              fontWeight: FontWeight.w700,
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+class PolicyAgreement extends StatelessWidget {
+  const PolicyAgreement({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: () => print('Policy Button click...'),
+      child: Column(
+        children: [
+          Text(
+            'តាមរយ:ការប្រើកម្មវិធីនេះ អ្នកយល់ព្រមទទួលយក',
+            style: const TextStyle(
+              color: Colors.white,
+              fontSize: 12.0,
+              height: 1.67,
+              fontFamily: 'Nokora',
+              fontWeight: FontWeight.w400,
+            ),
+          ),
+          Text(
+            'លក្ខខណ្ឌ និងគោលនយោបាយឯកជនភាព',
+            style: const TextStyle(
+              color: Colors.white,
+              fontSize: 12.0,
+              height: 1.67,
+              fontFamily: 'Nokora',
+              fontWeight: FontWeight.w700,
+            ),
+          ),
+        ],
+      ),
     );
   }
 }

@@ -40,7 +40,7 @@ class LoginCardButton extends StatelessWidget {
                   .toDouble(),
               decoration: BoxDecoration(
                 color: Colors.white,
-                borderRadius: BorderRadius.circular(15.0),
+                borderRadius: BorderRadius.circular(14.0),
               ),
               child: Padding(
                 padding: EdgeInsets.symmetric(

@@ -7,7 +7,11 @@ import 'package:travenx_loitafoundation/icons/icons.dart';
 import 'package:travenx_loitafoundation/widgets/portrait/profile_screen/profile_widget.dart';
 
 class Profile extends StatefulWidget {
-  const Profile({Key? key}) : super(key: key);
+  final void Function() loggedInCallback;
+  const Profile({
+    Key? key,
+    required this.loggedInCallback,
+  }) : super(key: key);
 
   @override
   _ProfileState createState() => _ProfileState();
@@ -191,6 +195,7 @@ class _ProfileState extends State<Profile> {
                     title: 'ចាកចេញ',
                     textColor: Color(0xFFC23616),
                     trailing: [],
+                    onTap: widget.loggedInCallback,
                   ),
                   SizedBox(height: 20.0),
                   Text(

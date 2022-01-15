@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:travenx_loitafoundation/config/palette.dart';
 import 'package:travenx_loitafoundation/config/variable.dart';
-import 'package:travenx_loitafoundation/screens/portrait/profile_screen/profile.dart';
 import 'package:travenx_loitafoundation/widgets/portrait/profile_screen/profile_widget.dart';
 
 class Login extends StatefulWidget {
-  const Login({Key? key}) : super(key: key);
+  final void Function() loggedInCallback;
+  const Login({
+    Key? key,
+    required this.loggedInCallback,
+  }) : super(key: key);
 
   @override
   _LoginState createState() => _LoginState();
@@ -34,7 +37,9 @@ class _LoginState extends State<Login> {
                 fit: BoxFit.fill,
               ),
             ),
-            child: !isPhoneLogin ? CustomAppBar() : LoginAppBar(),
+            child: !isPhoneLogin
+                ? CustomAppBar(skippedCallback: widget.loggedInCallback)
+                : LoginAppBar(skippedCallback: widget.loggedInCallback),
           ),
           Positioned(
             width: constraints.maxWidth,
@@ -49,7 +54,8 @@ class _LoginState extends State<Login> {
                           isPhoneLogin: isPhoneLogin,
                           isPhoneLoginCallback: hasPhoneLogin,
                         )
-                      : PhoneLogin(),
+                      : PhoneLogin(
+                          successfulLoggedInCallback: widget.loggedInCallback),
                 ),
                 PolicyAgreement(),
                 !isPhoneLogin
@@ -65,8 +71,10 @@ class _LoginState extends State<Login> {
 }
 
 class CustomAppBar extends StatelessWidget {
+  final void Function() skippedCallback;
   const CustomAppBar({
     Key? key,
+    required this.skippedCallback,
   }) : super(key: key);
 
   @override
@@ -89,7 +97,7 @@ class CustomAppBar extends StatelessWidget {
         Container(
           margin: EdgeInsets.only(top: 56.0, right: 30.0),
           child: TextButton(
-            onPressed: () => print('Skip Click ...'),
+            onPressed: skippedCallback,
             style: ButtonStyle(
                 overlayColor: MaterialStateProperty.all(Colors.transparent)),
             child: Text(
@@ -109,7 +117,11 @@ class CustomAppBar extends StatelessWidget {
 }
 
 class LoginAppBar extends StatelessWidget {
-  const LoginAppBar({Key? key}) : super(key: key);
+  final void Function() skippedCallback;
+  const LoginAppBar({
+    Key? key,
+    required this.skippedCallback,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -133,7 +145,7 @@ class LoginAppBar extends StatelessWidget {
           Padding(
             padding: EdgeInsets.only(top: 10.0, right: 20.0),
             child: TextButton(
-              onPressed: () => print('Skip Click ...'),
+              onPressed: skippedCallback,
               style: ButtonStyle(
                   overlayColor: MaterialStateProperty.all(Colors.transparent)),
               child: Text(
@@ -249,7 +261,11 @@ class GradientButton extends StatelessWidget {
 }
 
 class PhoneLogin extends StatefulWidget {
-  const PhoneLogin({Key? key}) : super(key: key);
+  final void Function() successfulLoggedInCallback;
+  const PhoneLogin({
+    Key? key,
+    required this.successfulLoggedInCallback,
+  }) : super(key: key);
 
   @override
   _PhoneLoginState createState() => _PhoneLoginState();
@@ -278,10 +294,10 @@ class _PhoneLoginState extends State<PhoneLogin> {
         _verifyNumber() ? _isCodeSent = _verifyNumber() : _isCodeSent = false);
   }
 
-  bool _verifyOtpNumber() {
+  void _verifyOtpNumber() {
     print(_otpNumber);
     print(_otpNumber == '123456' ? 'OTP ត្រឹមត្រូវ' : 'OTP មិនត្រឹមត្រូវ');
-    return _otpNumber == '123456' ? true : false;
+    if (_otpNumber == '123456') widget.successfulLoggedInCallback();
   }
 
   @override
@@ -327,12 +343,7 @@ class _PhoneLoginState extends State<PhoneLogin> {
                 title: 'ចូល',
                 isCodeSent: _isCodeSent,
                 constraints: constraints,
-                onPressed: () {
-                  if (_verifyOtpNumber()) {
-                    Navigator.push(
-                        context, MaterialPageRoute(builder: (_) => Profile()));
-                  }
-                },
+                onPressed: _verifyOtpNumber,
               ),
             ],
           ),

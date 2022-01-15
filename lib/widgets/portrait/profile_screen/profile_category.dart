@@ -7,6 +7,7 @@ class ProfileCategory extends StatelessWidget {
   final String title;
   final List<Widget> trailing;
   final Color? textColor;
+  final void Function()? onTap;
 
   const ProfileCategory({
     Key? key,
@@ -14,12 +15,13 @@ class ProfileCategory extends StatelessWidget {
     required this.title,
     required this.trailing,
     this.textColor,
+    this.onTap,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () => print('Profile Item Clicked ...'),
+      onTap: onTap,
       child: Container(
         margin: EdgeInsets.symmetric(vertical: 4.0),
         padding: EdgeInsets.symmetric(horizontal: kHPadding, vertical: 20.0),

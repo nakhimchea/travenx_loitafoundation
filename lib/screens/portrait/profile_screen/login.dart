@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:travenx_loitafoundation/config/palette.dart';
 import 'package:travenx_loitafoundation/config/variable.dart';
 import 'package:travenx_loitafoundation/screens/portrait/profile_screen/profile.dart';
 import 'package:travenx_loitafoundation/widgets/portrait/profile_screen/profile_widget.dart';
@@ -12,6 +13,9 @@ class Login extends StatefulWidget {
 
 class _LoginState extends State<Login> {
   bool isPhoneLogin = false;
+
+  void hasPhoneLogin() => setState(() => isPhoneLogin = true);
+  void hasLoginMethods() => setState(() => isPhoneLogin = false);
 
   @override
   Widget build(BuildContext context) {
@@ -41,11 +45,16 @@ class _LoginState extends State<Login> {
                 Container(
                   margin: EdgeInsets.only(bottom: 67.0),
                   child: !isPhoneLogin
-                      ? LoginMethods(isPhoneLogin: isPhoneLogin)
+                      ? LoginMethods(
+                          isPhoneLogin: isPhoneLogin,
+                          isPhoneLoginCallback: hasPhoneLogin,
+                        )
                       : PhoneLogin(),
                 ),
                 PolicyAgreement(),
-                !isPhoneLogin ? SignUpRequest() : SignInRequest(),
+                !isPhoneLogin
+                    ? SignUpRequest(isPhoneLoginCallback: hasPhoneLogin)
+                    : SignInRequest(isPhoneLoginCallback: hasLoginMethods),
               ],
             ),
           ),
@@ -136,9 +145,12 @@ class LoginAppBar extends StatelessWidget {
 
 class LoginMethods extends StatelessWidget {
   final bool isPhoneLogin;
+  final void Function() isPhoneLoginCallback;
+
   const LoginMethods({
     Key? key,
     required this.isPhoneLogin,
+    required this.isPhoneLoginCallback,
   }) : super(key: key);
 
   @override
@@ -148,9 +160,7 @@ class LoginMethods extends StatelessWidget {
         LoginCardButton(
           leadingUrl: 'assets/icons/profile_screen/phone_logo.png',
           title: 'ចុះឈ្មោះគណនី លេខទូរសព្ទ',
-          onTap: () {
-            //isPhoneLogin = true;
-          },
+          onTap: isPhoneLoginCallback,
         ),
         SizedBox(height: 18.0),
         LoginCardButton(
@@ -167,6 +177,67 @@ class LoginMethods extends StatelessWidget {
   }
 }
 
+class GradientButton extends StatelessWidget {
+  final String title;
+  final bool isCodeSent;
+  final BoxConstraints constraints;
+  final void Function() onPressed;
+  const GradientButton({
+    Key? key,
+    required this.title,
+    required this.isCodeSent,
+    required this.constraints,
+    required this.onPressed,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 30.0),
+      child: Stack(
+        children: [
+          Container(
+            width: constraints.maxWidth / 3,
+            height: (MediaQuery.of(context).size.height / 12).ceil().toDouble(),
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(15.0),
+              child: Image.asset(
+                'assets/images/profile_screen/card_background.png',
+                width: constraints.maxWidth - 60,
+                fit: BoxFit.cover,
+              ),
+            ),
+          ),
+          Container(
+            margin: EdgeInsets.all(3.0),
+            width: constraints.maxWidth / 3 - 6,
+            height: ((MediaQuery.of(context).size.height / 12).ceil() - 6)
+                .toDouble(),
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(14.0),
+            ),
+            child: TextButton(
+              onPressed: onPressed,
+              style: ButtonStyle(
+                  overlayColor: MaterialStateProperty.all(isCodeSent
+                      ? Palette.priceColor.withOpacity(0.2)
+                      : Colors.transparent)),
+              child: Text(
+                title,
+                style: Theme.of(context).textTheme.headline1!.copyWith(
+                    color: isCodeSent
+                        ? Palette.priceColor
+                        : Theme.of(context).disabledColor),
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
 class PhoneLogin extends StatefulWidget {
   const PhoneLogin({Key? key}) : super(key: key);
 
@@ -175,10 +246,33 @@ class PhoneLogin extends StatefulWidget {
 }
 
 class _PhoneLoginState extends State<PhoneLogin> {
-  TextEditingController phoneController = TextEditingController();
-  TextEditingController otpCodeController = TextEditingController();
+  String _phoneNumber = '';
+  String _otpNumber = '';
 
-  bool isCodeSent = false;
+  void _getPhoneNumber(String text) => setState(() => _phoneNumber = text);
+
+  void _getOtpNumber(String text) => setState(() => _otpNumber = text);
+
+  bool _isCodeSent = false;
+
+  bool _verifyNumber() {
+    print(_phoneNumber);
+    print(_phoneNumber == '092782792'
+        ? 'លេខទូរសព្ទត្រឹមត្រូវ'
+        : 'លេខទូរសព្ទមិនត្រឹមត្រូវ');
+    return _phoneNumber == '092782792' ? true : false;
+  }
+
+  void _toggleCodeSent() {
+    setState(() =>
+        _verifyNumber() ? _isCodeSent = _verifyNumber() : _isCodeSent = false);
+  }
+
+  bool _verifyOtpNumber() {
+    print(_otpNumber);
+    print(_otpNumber == '123456' ? 'OTP ត្រឹមត្រូវ' : 'OTP មិនត្រឹមត្រូវ');
+    return _otpNumber == '123456' ? true : false;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -187,62 +281,48 @@ class _PhoneLoginState extends State<PhoneLogin> {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Text(
-            !isCodeSent ? 'សូមបំពេញលេខទូរសព្ទ' : 'សូមបំពេញលេខកូដ',
+            'សូមបំពេញលេខទូរសព្ទ',
             textScaleFactor: textScaleFactor,
             style: TextStyle(
-              color: Colors.black,
+              color: Colors.black38,
               fontSize: 18.0,
               fontFamily: 'Nokora',
-              fontWeight: FontWeight.w400,
+              fontWeight: FontWeight.w500,
             ),
           ),
           SizedBox(height: 50.0),
           Column(
             children: [
-              Visibility(
-                visible: !isCodeSent,
-                child: LoginTextField(
-                  logoUrl: 'assets/icons/profile_screen/phone_logo.png',
-                  hintText: '012345678',
-                  constraints: constraints,
-                  controller: phoneController,
-                ),
+              LoginTextField(
+                logoUrl: 'assets/icons/profile_screen/phone_logo.png',
+                hintText: '012345678',
+                constraints: constraints,
+                onChangedCallback: _getPhoneNumber,
+                isCodeSent: _isCodeSent,
+                isCodeSentCallback: _toggleCodeSent,
               ),
-              Visibility(
-                visible: isCodeSent,
-                child: LoginTextField(
-                  logoUrl:
-                      'assets/icons/profile_screen/one_time_password_logo.png',
-                  hintText: '******',
-                  constraints: constraints,
-                  controller: otpCodeController,
-                ),
+              SizedBox(height: 26.0),
+              LoginTextField(
+                logoUrl:
+                    'assets/icons/profile_screen/one_time_password_logo.png',
+                hintText: '******',
+                constraints: constraints,
+                onChangedCallback: _getOtpNumber,
+                phoneNumber: _phoneNumber,
+                isCodeSent: !_isCodeSent,
+                isCodeSentCallback: _toggleCodeSent,
               ),
               SizedBox(height: 50.0),
-              Visibility(
-                visible: !isCodeSent,
-                child: GradientButton(
-                  title: 'ផ្ញើលេខកូដ',
-                  constraints: constraints,
-                  onPressed: () {
-                    setState(() => isCodeSent = true);
-                    print(phoneController.text);
-                    verifyNumber();
-                  },
-                ),
-              ),
-              Visibility(
-                visible: isCodeSent,
-                child: GradientButton(
-                  title: 'ចូល',
-                  constraints: constraints,
-                  onPressed: () {
-                    setState(() => isCodeSent = false);
-                    print(otpCodeController.text);
+              GradientButton(
+                title: 'ចូល',
+                isCodeSent: _isCodeSent,
+                constraints: constraints,
+                onPressed: () {
+                  if (_verifyOtpNumber()) {
                     Navigator.push(
                         context, MaterialPageRoute(builder: (_) => Profile()));
-                  },
-                ),
+                  }
+                },
               ),
             ],
           ),
@@ -250,8 +330,6 @@ class _PhoneLoginState extends State<PhoneLogin> {
       );
     });
   }
-
-  void verifyNumber() {}
 }
 
 class PolicyAgreement extends StatelessWidget {
@@ -292,7 +370,11 @@ class PolicyAgreement extends StatelessWidget {
 }
 
 class SignInRequest extends StatelessWidget {
-  const SignInRequest({Key? key}) : super(key: key);
+  final void Function() isPhoneLoginCallback;
+  const SignInRequest({
+    Key? key,
+    required this.isPhoneLoginCallback,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -310,7 +392,7 @@ class SignInRequest extends StatelessWidget {
           ),
         ),
         GestureDetector(
-          onTap: () => print('Sign in button click...'),
+          onTap: isPhoneLoginCallback,
           child: Text(
             'ចូលតាមគណនីផ្សេងទៀត',
             style: const TextStyle(
@@ -328,8 +410,10 @@ class SignInRequest extends StatelessWidget {
 }
 
 class SignUpRequest extends StatelessWidget {
+  final void Function() isPhoneLoginCallback;
   const SignUpRequest({
     Key? key,
+    required this.isPhoneLoginCallback,
   }) : super(key: key);
 
   @override
@@ -348,7 +432,7 @@ class SignUpRequest extends StatelessWidget {
           ),
         ),
         GestureDetector(
-          onTap: () => print('Register button click...'),
+          onTap: isPhoneLoginCallback,
           child: Text(
             'ចុះឈ្មោះឥឡូវនេះ',
             style: const TextStyle(

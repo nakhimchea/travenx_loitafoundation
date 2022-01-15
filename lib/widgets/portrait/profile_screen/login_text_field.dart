@@ -4,14 +4,22 @@ class LoginTextField extends StatelessWidget {
   final String logoUrl;
   final String hintText;
   final BoxConstraints constraints;
-  final TextEditingController controller;
+  //final TextEditingController controller;
+  final void Function(String) onChangedCallback;
+  final bool isCodeSent;
+  final void Function() isCodeSentCallback;
+  final String phoneNumber;
 
   const LoginTextField({
     Key? key,
     required this.logoUrl,
     required this.hintText,
     required this.constraints,
-    required this.controller,
+    //required this.controller,
+    required this.onChangedCallback,
+    required this.isCodeSent,
+    required this.isCodeSentCallback,
+    this.phoneNumber = '',
   }) : super(key: key);
 
   @override
@@ -42,7 +50,7 @@ class LoginTextField extends StatelessWidget {
             child: Row(
               children: [
                 Container(
-                  padding: const EdgeInsets.only(left: 50.0),
+                  padding: const EdgeInsets.only(left: 30.0),
                   child: Image.asset(
                     logoUrl,
                     width: 23.0,
@@ -51,14 +59,71 @@ class LoginTextField extends StatelessWidget {
                 ),
                 SizedBox(width: 20.0),
                 Container(
-                  width: constraints.maxWidth - 207.0,
-                  child: TextField(
-                    controller: controller,
-                    decoration: InputDecoration(
-                      hintText: hintText,
-                      border: InputBorder.none,
-                    ),
-                    keyboardType: TextInputType.number,
+                  width: constraints.maxWidth - 167.0,
+                  child: Row(
+                    children: [
+                      Expanded(
+                        child: TextField(
+                          style:
+                              TextStyle(color: Theme.of(context).primaryColor),
+                          enabled: !isCodeSent,
+                          autofocus: !isCodeSent,
+                          onChanged: onChangedCallback,
+                          decoration: InputDecoration(
+                            hintText: hintText,
+                            border: InputBorder.none,
+                          ),
+                          keyboardType: TextInputType.number,
+                        ),
+                      ),
+                      phoneNumber != ''
+                          ? Row(
+                              children: [
+                                Visibility(
+                                  visible: isCodeSent,
+                                  child: TextButton(
+                                    onPressed: isCodeSentCallback,
+                                    style: ButtonStyle(
+                                      overlayColor: MaterialStateProperty.all(
+                                        Colors.transparent,
+                                      ),
+                                    ),
+                                    child: Text(
+                                      'ផ្ញើលេខកូដ',
+                                      style: const TextStyle(
+                                        color: Color(0xAAF7B731),
+                                        fontSize: 18.0,
+                                        fontFamily: 'Nokora',
+                                        fontWeight: FontWeight.w600,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                Visibility(
+                                  visible: !isCodeSent,
+                                  //ToDo: Counting down the seconds
+                                  child: TextButton(
+                                    onPressed: isCodeSentCallback,
+                                    style: ButtonStyle(
+                                      overlayColor: MaterialStateProperty.all(
+                                        Colors.transparent,
+                                      ),
+                                    ),
+                                    child: Text(
+                                      '60 វិនាទី',
+                                      style: TextStyle(
+                                        color: Theme.of(context).disabledColor,
+                                        fontSize: 16.0,
+                                        fontFamily: 'Nokora',
+                                        fontWeight: FontWeight.w600,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            )
+                          : SizedBox.shrink(),
+                    ],
                   ),
                 ),
               ],

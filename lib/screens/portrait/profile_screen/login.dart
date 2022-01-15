@@ -126,7 +126,7 @@ class LoginAppBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 87.0,
+      height: 127.0,
       alignment: Alignment.bottomCenter,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -137,13 +137,13 @@ class LoginAppBar extends StatelessWidget {
             textScaleFactor: textScaleFactor,
             style: const TextStyle(
               color: Colors.white,
-              fontSize: 18.0,
+              fontSize: 20.0,
               fontFamily: 'Nokora',
               fontWeight: FontWeight.w700,
             ),
           ),
           Padding(
-            padding: EdgeInsets.only(top: 10.0, right: 20.0),
+            padding: EdgeInsets.only(top: 20.0, right: 20.0),
             child: TextButton(
               onPressed: skippedCallback,
               style: ButtonStyle(

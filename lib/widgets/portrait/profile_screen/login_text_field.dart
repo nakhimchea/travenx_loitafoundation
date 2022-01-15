@@ -4,7 +4,6 @@ class LoginTextField extends StatelessWidget {
   final String logoUrl;
   final String hintText;
   final BoxConstraints constraints;
-  //final TextEditingController controller;
   final void Function(String) onChangedCallback;
   final bool isCodeSent;
   final void Function() isCodeSentCallback;
@@ -15,7 +14,6 @@ class LoginTextField extends StatelessWidget {
     required this.logoUrl,
     required this.hintText,
     required this.constraints,
-    //required this.controller,
     required this.onChangedCallback,
     required this.isCodeSent,
     required this.isCodeSentCallback,

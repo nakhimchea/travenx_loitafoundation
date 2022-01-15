@@ -88,13 +88,18 @@ class CustomAppBar extends StatelessWidget {
         ),
         Container(
           margin: EdgeInsets.only(top: 56.0, right: 30.0),
-          child: Text(
-            'រំលង',
-            style: const TextStyle(
-              color: Colors.white,
-              fontSize: 16.0,
-              fontFamily: 'Nokora',
-              fontWeight: FontWeight.w700,
+          child: TextButton(
+            onPressed: () => print('Skip Click ...'),
+            style: ButtonStyle(
+                overlayColor: MaterialStateProperty.all(Colors.transparent)),
+            child: Text(
+              'រំលង',
+              style: const TextStyle(
+                color: Colors.white,
+                fontSize: 16.0,
+                fontFamily: 'Nokora',
+                fontWeight: FontWeight.w700,
+              ),
             ),
           ),
         )
@@ -127,13 +132,18 @@ class LoginAppBar extends StatelessWidget {
           ),
           Padding(
             padding: EdgeInsets.only(top: 10.0, right: 20.0),
-            child: Text(
-              'រំលង',
-              style: const TextStyle(
-                color: Colors.white,
-                fontSize: 16.0,
-                fontFamily: 'Nokora',
-                fontWeight: FontWeight.w700,
+            child: TextButton(
+              onPressed: () => print('Skip Click ...'),
+              style: ButtonStyle(
+                  overlayColor: MaterialStateProperty.all(Colors.transparent)),
+              child: Text(
+                'រំលង',
+                style: const TextStyle(
+                  color: Colors.white,
+                  fontSize: 16.0,
+                  fontFamily: 'Nokora',
+                  fontWeight: FontWeight.w700,
+                ),
               ),
             ),
           ),
@@ -333,9 +343,7 @@ class _PhoneLoginState extends State<PhoneLogin> {
 }
 
 class PolicyAgreement extends StatelessWidget {
-  const PolicyAgreement({
-    Key? key,
-  }) : super(key: key);
+  const PolicyAgreement({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

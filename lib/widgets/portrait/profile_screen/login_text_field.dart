@@ -1,6 +1,8 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 
-class LoginTextField extends StatelessWidget {
+class LoginTextField extends StatefulWidget {
   final String logoUrl;
   final String hintText;
   final BoxConstraints constraints;
@@ -21,6 +23,20 @@ class LoginTextField extends StatelessWidget {
   }) : super(key: key);
 
   @override
+  _LoginTextFieldState createState() => _LoginTextFieldState();
+}
+
+class _LoginTextFieldState extends State<LoginTextField> {
+  int _countSeconds = 60;
+
+  void _startTimer() {
+    Timer.periodic(const Duration(seconds: 1), (timer) {
+      if (mounted)
+        setState(() => _countSeconds > 1 ? _countSeconds-- : timer.cancel());
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 30.0),
@@ -32,7 +48,7 @@ class LoginTextField extends StatelessWidget {
               borderRadius: BorderRadius.circular(15.0),
               child: Image.asset(
                 'assets/images/profile_screen/card_background.png',
-                width: constraints.maxWidth - 60,
+                width: widget.constraints.maxWidth - 60,
                 fit: BoxFit.cover,
               ),
             ),
@@ -50,37 +66,40 @@ class LoginTextField extends StatelessWidget {
                 Container(
                   padding: const EdgeInsets.only(left: 30.0),
                   child: Image.asset(
-                    logoUrl,
+                    widget.logoUrl,
                     width: 23.0,
                     height: 23.0,
                   ),
                 ),
                 SizedBox(width: 20.0),
                 Container(
-                  width: constraints.maxWidth - 167.0,
+                  width: widget.constraints.maxWidth - 167.0,
                   child: Row(
                     children: [
                       Expanded(
                         child: TextField(
                           style:
                               TextStyle(color: Theme.of(context).primaryColor),
-                          enabled: !isCodeSent,
-                          autofocus: !isCodeSent,
-                          onChanged: onChangedCallback,
+                          enabled: !widget.isCodeSent,
+                          autofocus: !widget.isCodeSent,
+                          onChanged: widget.onChangedCallback,
                           decoration: InputDecoration(
-                            hintText: hintText,
+                            hintText: widget.hintText,
                             border: InputBorder.none,
                           ),
                           keyboardType: TextInputType.number,
                         ),
                       ),
-                      phoneNumber != ''
+                      widget.phoneNumber != ''
                           ? Row(
                               children: [
                                 Visibility(
-                                  visible: isCodeSent,
+                                  visible: widget.isCodeSent,
                                   child: TextButton(
-                                    onPressed: isCodeSentCallback,
+                                    onPressed: () {
+                                      widget.isCodeSentCallback();
+                                      _startTimer();
+                                    },
                                     style: ButtonStyle(
                                       overlayColor: MaterialStateProperty.all(
                                         Colors.transparent,
@@ -98,23 +117,14 @@ class LoginTextField extends StatelessWidget {
                                   ),
                                 ),
                                 Visibility(
-                                  visible: !isCodeSent,
-                                  //ToDo: Counting down the seconds
-                                  child: TextButton(
-                                    onPressed: isCodeSentCallback,
-                                    style: ButtonStyle(
-                                      overlayColor: MaterialStateProperty.all(
-                                        Colors.transparent,
-                                      ),
-                                    ),
-                                    child: Text(
-                                      '60 វិនាទី',
-                                      style: TextStyle(
-                                        color: Theme.of(context).disabledColor,
-                                        fontSize: 16.0,
-                                        fontFamily: 'Nokora',
-                                        fontWeight: FontWeight.w600,
-                                      ),
+                                  visible: !widget.isCodeSent,
+                                  child: Text(
+                                    '$_countSeconds វិនាទី',
+                                    style: TextStyle(
+                                      color: Theme.of(context).disabledColor,
+                                      fontSize: 16.0,
+                                      fontFamily: 'Nokora',
+                                      fontWeight: FontWeight.w600,
                                     ),
                                   ),
                                 ),

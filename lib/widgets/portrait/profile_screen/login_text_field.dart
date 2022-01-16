@@ -31,7 +31,7 @@ class _LoginTextFieldState extends State<LoginTextField> {
 
   void _startTimer() {
     Timer.periodic(const Duration(seconds: 1), (timer) {
-      if (mounted)
+      if (mounted) // If user logged in, there is no Countdown widget, Destroyed
         setState(() => _countSeconds > 1 ? _countSeconds-- : timer.cancel());
     });
   }

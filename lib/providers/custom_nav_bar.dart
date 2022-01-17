@@ -16,6 +16,7 @@ class CustomNavBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TabBar(
+      overlayColor: MaterialStateProperty.all(Colors.transparent),
       tabs: icons
           .map(
             (key, icon) => MapEntry(

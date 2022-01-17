@@ -281,18 +281,7 @@ class _PhoneLoginState extends State<PhoneLogin> {
 
   bool _isCodeSent = false;
 
-  bool _verifyNumber() {
-    print(_phoneNumber);
-    print(_phoneNumber == '092782792'
-        ? 'លេខទូរសព្ទត្រឹមត្រូវ'
-        : 'លេខទូរសព្ទមិនត្រឹមត្រូវ');
-    return _phoneNumber == '092782792' ? true : false;
-  }
-
-  void _toggleCodeSent() {
-    setState(() =>
-        _verifyNumber() ? _isCodeSent = _verifyNumber() : _isCodeSent = false);
-  }
+  void _toggleCodeSent() => setState(() => _isCodeSent = !_isCodeSent);
 
   void _verifyOtpNumber() {
     print(_otpNumber);

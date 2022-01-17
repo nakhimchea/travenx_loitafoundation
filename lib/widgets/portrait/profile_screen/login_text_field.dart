@@ -28,12 +28,29 @@ class LoginTextField extends StatefulWidget {
 
 class _LoginTextFieldState extends State<LoginTextField> {
   int _countSeconds = 60;
+  int _penalty = 60;
 
   void _startTimer() {
     Timer.periodic(const Duration(seconds: 1), (timer) {
       if (mounted) // If user logged in, there is no Countdown widget, Destroyed
-        setState(() => _countSeconds > 1 ? _countSeconds-- : timer.cancel());
+        setState(() {
+          if (_countSeconds <= 1) {
+            timer.cancel();
+            widget.isCodeSentCallback();
+            _penalty = 2 * _penalty;
+            _countSeconds = _penalty;
+          } else
+            _countSeconds--;
+        });
     });
+  }
+
+  bool _verifyNumber() {
+    print(widget.phoneNumber);
+    print(widget.phoneNumber == '092782792'
+        ? 'លេខទូរសព្ទត្រឹមត្រូវ'
+        : 'លេខទូរសព្ទមិនត្រឹមត្រូវ');
+    return widget.phoneNumber == '092782792' ? true : false;
   }
 
   @override
@@ -97,8 +114,10 @@ class _LoginTextFieldState extends State<LoginTextField> {
                                   visible: widget.isCodeSent,
                                   child: TextButton(
                                     onPressed: () {
-                                      widget.isCodeSentCallback();
-                                      _startTimer();
+                                      if (_verifyNumber()) {
+                                        widget.isCodeSentCallback();
+                                        _startTimer();
+                                      }
                                     },
                                     style: ButtonStyle(
                                       overlayColor: MaterialStateProperty.all(

@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:travenx_loitafoundation/services/authentication_service.dart';
 
 class LoginTextField extends StatefulWidget {
   final String logoUrl;
@@ -28,7 +29,6 @@ class LoginTextField extends StatefulWidget {
 
 class _LoginTextFieldState extends State<LoginTextField> {
   int _countSeconds = 60;
-  int _penalty = 60;
 
   void _startTimer() {
     Timer.periodic(const Duration(seconds: 1), (timer) {
@@ -37,21 +37,14 @@ class _LoginTextFieldState extends State<LoginTextField> {
           if (_countSeconds <= 1) {
             timer.cancel();
             widget.isCodeSentCallback();
-            _penalty = 2 * _penalty;
-            _countSeconds = _penalty;
+            _countSeconds = 120;
           } else
             _countSeconds--;
         });
     });
   }
 
-  bool _verifyNumber() {
-    print(widget.phoneNumber);
-    print(widget.phoneNumber == '092782792'
-        ? 'លេខទូរសព្ទត្រឹមត្រូវ'
-        : 'លេខទូរសព្ទមិនត្រឹមត្រូវ');
-    return widget.phoneNumber == '092782792' ? true : false;
-  }
+  AuthService _authService = AuthService();
 
   @override
   Widget build(BuildContext context) {
@@ -118,8 +111,13 @@ class _LoginTextFieldState extends State<LoginTextField> {
                                 Visibility(
                                   visible: widget.isCodeSent,
                                   child: TextButton(
-                                    onPressed: () {
-                                      if (_verifyNumber()) {
+                                    onPressed: () async {
+                                      // Change the code here, because the smsCodeID is never come here
+                                      if (await _authService.verifyPhoneNumber(
+                                              context,
+                                              widget.phoneNumber,
+                                              _countSeconds) !=
+                                          '') {
                                         widget.isCodeSentCallback();
                                         _startTimer();
                                       }

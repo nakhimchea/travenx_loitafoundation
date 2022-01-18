@@ -8,16 +8,16 @@ import 'package:travenx_loitafoundation/providers/theme_provider.dart';
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
-    options: FirebaseOptions(
-      apiKey: "AIzaSyAdhhJKdC5-eH66MjJelC-VEeEaez4Xu0M",
-      authDomain: "travenx.firebaseapp.com",
-      projectId: "travenx",
-      storageBucket: "travenx.appspot.com",
-      messagingSenderId: "757818286951",
-      appId: "1:757818286951:web:264d197c1572e7f1b905c2",
-      measurementId: "G-96JT3Z7SBV",
-    ),
-  );
+      // options: FirebaseOptions(
+      //   apiKey: "AIzaSyAdhhJKdC5-eH66MjJelC-VEeEaez4Xu0M",
+      //   authDomain: "travenx.firebaseapp.com",
+      //   projectId: "travenx",
+      //   storageBucket: "travenx.appspot.com",
+      //   messagingSenderId: "757818286951",
+      //   appId: "1:757818286951:web:190a57f5758f8047b905c2",
+      //   measurementId: "G-49E7VYY6B6",
+      // ),
+      );
   runApp(MyApp());
 }
 

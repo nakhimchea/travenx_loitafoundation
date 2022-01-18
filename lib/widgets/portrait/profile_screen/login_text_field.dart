@@ -102,6 +102,11 @@ class _LoginTextFieldState extends State<LoginTextField> {
                           onChanged: widget.onChangedCallback,
                           decoration: InputDecoration(
                             hintText: widget.hintText,
+                            hintStyle: TextStyle(
+                                color: Theme.of(context)
+                                    .textTheme
+                                    .bodyText1!
+                                    .color),
                             border: InputBorder.none,
                           ),
                           keyboardType: TextInputType.number,

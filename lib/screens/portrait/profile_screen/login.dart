@@ -354,7 +354,7 @@ class PolicyAgreement extends StatelessWidget {
           Text(
             'តាមរយ:ការប្រើកម្មវិធីនេះ អ្នកយល់ព្រមទទួលយក',
             style: const TextStyle(
-              color: Colors.white,
+              color: Colors.white60,
               fontSize: 12.0,
               height: 1.67,
               fontFamily: 'Nokora',
@@ -364,7 +364,7 @@ class PolicyAgreement extends StatelessWidget {
           Text(
             'លក្ខខណ្ឌ និងគោលនយោបាយឯកជនភាព',
             style: const TextStyle(
-              color: Colors.white,
+              color: Colors.white60,
               fontSize: 12.0,
               height: 1.67,
               fontFamily: 'Nokora',

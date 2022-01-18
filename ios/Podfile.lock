@@ -495,10 +495,10 @@ EXTERNAL SOURCES:
 SPEC CHECKSUMS:
   abseil: 6c8eb7892aefa08d929b39f9bb108e5367e3228f
   BoringSSL-GRPC: 8edf627ee524575e2f8d19d56f068b448eea3879
-  cloud_firestore: 03020d987c2828e9b2d87f6940d365ddb089394f
+  cloud_firestore: 9e9ae87c96d011a37fe7c3b31ce137fe1bddd4aa
   Firebase: 44213362f1dcc52555b935dc925ed35ac55f1b20
-  firebase_auth: 9d959bddc3b255ddfb67cf630a5bbb6186964356
-  firebase_core: 2ca2d6cc8a11693e701b37126afae4800be5dbac
+  firebase_auth: 8afd0e6dbb29fd9c1c7891260c592287f0eaab8f
+  firebase_core: c38b7d4c1030a1f679eed0728c367d0e9855d695
   FirebaseAuth: 59a2d2b933b5b79e18fb1e6ad230c6abdaa73d26
   FirebaseCore: 04186597c095da37d90ff9fd3e53bc61a1ff2440
   FirebaseCoreDiagnostics: 56fb7216d87e0e6ec2feddefa9d8a392fe8b2c18
@@ -512,9 +512,9 @@ SPEC CHECKSUMS:
   GTMSessionFetcher: 43748f93435c2aa068b1cbe39655aaf600652e91
   leveldb-library: 50c7b45cbd7bf543c81a468fe557a16ae3db8729
   nanopb: a0ba3315591a9ae0a16a309ee504766e90db0c96
-  path_provider: abfe2b5c733d04e238b0d8691db0cfd63a27a93c
+  path_provider: 0cf25b2145d52f2266b937bef7c06a3c04e55d68
   PromisesObjC: 68159ce6952d93e17b2dfe273b8c40907db5ba58
-  sqflite: 6d358c025f5b867b29ed92fc697fd34924e11904
+  sqflite: 12301fb38ad5dba0c8c77585369b445acf43696f
 
 PODFILE CHECKSUM: 4e8f8b2be68aeea4c0d5beb6ff1e79fface1d048
 

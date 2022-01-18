@@ -7,18 +7,18 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:757818286951:android:6515272a9e2a2a74b905c2",
+        "mobilesdk_app_id": "1:757818286951:android:346186226602cd93b905c2",
         "android_client_info": {
           "package_name": "com.travenx.crossplatform.travenx_loitafoundation"
         }
       },
       "oauth_client": [
         {
-          "client_id": "757818286951-bqq8gjqmfbvo0fc0kru714h0b3doiinm.apps.googleusercontent.com",
+          "client_id": "757818286951-kj4uopue8orvurdrtbc9u35tnvh9c55o.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.travenx.crossplatform.travenx_loitafoundation",
-            "certificate_hash": "d72bb8f6af81218382cb75052fa3a2be45aafa3a"
+            "certificate_hash": "1cd7b67d6397bfb9ddad6de97a1055eb04460f25"
           }
         },
         {

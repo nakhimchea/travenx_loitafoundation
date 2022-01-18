@@ -275,7 +275,9 @@ class _PhoneLoginState extends State<PhoneLogin> {
   String _phoneNumber = '';
   String _otpNumber = '';
 
-  void _getPhoneNumber(String text) => setState(() => _phoneNumber = text);
+  // Callback input phoneNumber and clean number with country code
+  void _getPhoneNumber(String text) => setState(
+      () => _phoneNumber = '+855${text[0] == '0' ? text.substring(1) : text}');
 
   void _getOtpNumber(String text) => setState(() => _otpNumber = text);
 

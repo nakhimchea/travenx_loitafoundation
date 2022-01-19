@@ -5,7 +5,8 @@ class AuthService {
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
   void showSnackBar(BuildContext context, String text) {
-    final snackBar = SnackBar(content: Text(text));
+    final snackBar =
+        SnackBar(content: Text(text), duration: Duration(seconds: 3));
     ScaffoldMessenger.of(context).showSnackBar(snackBar);
   }
 
@@ -23,19 +24,18 @@ class AuthService {
     };
 
     PhoneVerificationFailed verificationFailed =
-        (FirebaseAuthException firebaseAuthException) async {
+        (FirebaseAuthException firebaseAuthException) {
       showSnackBar(context, firebaseAuthException.toString());
     };
 
-    PhoneCodeSent codeSent =
-        (String verificationId, int? forceResendingToken) async {
+    PhoneCodeSent codeSent = (String verificationId, int? forceResendingToken) {
       _smsCodeId = verificationId;
       //print(_smsCodeId);
       showSnackBar(context, 'SMS Code sent to $phoneNumber');
     };
 
     PhoneCodeAutoRetrievalTimeout codeAutoRetrievalTimeout =
-        (String verificationId) async {
+        (String verificationId) {
       _smsCodeId = verificationId;
       //print(_smsCodeId);
       showSnackBar(context, 'Time out');

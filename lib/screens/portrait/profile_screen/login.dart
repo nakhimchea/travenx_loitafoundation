@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:travenx_loitafoundation/config/palette.dart';
 import 'package:travenx_loitafoundation/config/variable.dart';
@@ -274,21 +275,46 @@ class PhoneLogin extends StatefulWidget {
 class _PhoneLoginState extends State<PhoneLogin> {
   String _phoneNumber = '';
   String _otpNumber = '';
+  String _smsCodeId = '';
 
   // Callback input phoneNumber and clean number with country code
-  void _getPhoneNumber(String text) => setState(
-      () => _phoneNumber = '+855${text[0] == '0' ? text.substring(1) : text}');
-
-  void _getOtpNumber(String text) => setState(() => _otpNumber = text);
+  void _getPhoneNumber(String text) {
+    if (mounted && text != '')
+      setState(() =>
+          _phoneNumber = '+855${text[0] == '0' ? text.substring(1) : text}');
+  }
 
   bool _isCodeSent = false;
 
-  void _toggleCodeSent() => setState(() => _isCodeSent = !_isCodeSent);
+  void _toggleCodeSent() {
+    if (mounted) setState(() => _isCodeSent = !_isCodeSent);
+  }
 
-  void _verifyOtpNumber() {
-    print(_otpNumber);
-    print(_otpNumber == '123456' ? 'OTP ត្រឹមត្រូវ' : 'OTP មិនត្រឹមត្រូវ');
-    if (_otpNumber == '123456') widget.successfulLoggedInCallback();
+  void _getSmsCodeId(String text) {
+    if (mounted) setState(() => _smsCodeId = text);
+  }
+
+  void _getOtpNumber(String text) {
+    if (mounted) setState(() => _otpNumber = text.trim());
+  }
+
+  Future<void> _signInWithPhoneNumber() async {
+    try {
+      AuthCredential authCredential = PhoneAuthProvider.credential(
+        verificationId: _smsCodeId,
+        smsCode: _otpNumber,
+      );
+      UserCredential userCredential =
+          await FirebaseAuth.instance.signInWithCredential(authCredential);
+
+      userCredential.user != null
+          ? widget.successfulLoggedInCallback()
+          : print('Can\'t logged in user with $_phoneNumber.');
+    } catch (_) {
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+          content: Text('លេខកូដ SMS មិនត្រឹមត្រូវ!'),
+          duration: Duration(seconds: 5)));
+    }
   }
 
   @override
@@ -325,16 +351,17 @@ class _PhoneLoginState extends State<PhoneLogin> {
                 hintText: '******',
                 constraints: constraints,
                 onChangedCallback: _getOtpNumber,
-                phoneNumber: _phoneNumber,
                 isCodeSent: !_isCodeSent,
                 isCodeSentCallback: _toggleCodeSent,
+                smsCodeIdSentCallback: _getSmsCodeId,
+                phoneNumber: _phoneNumber,
               ),
               SizedBox(height: 50.0),
               GradientButton(
                 title: 'ចូល',
                 isCodeSent: _isCodeSent,
                 constraints: constraints,
-                onPressed: _verifyOtpNumber,
+                onPressed: _isCodeSent ? _signInWithPhoneNumber : () {},
               ),
             ],
           ),

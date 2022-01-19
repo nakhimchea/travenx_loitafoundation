@@ -10,6 +10,7 @@ class LoginTextField extends StatefulWidget {
   final void Function(String) onChangedCallback;
   final bool isCodeSent;
   final void Function() isCodeSentCallback;
+  final void Function(String)? smsCodeIdSentCallback;
   final String phoneNumber;
 
   const LoginTextField({
@@ -20,6 +21,7 @@ class LoginTextField extends StatefulWidget {
     required this.onChangedCallback,
     required this.isCodeSent,
     required this.isCodeSentCallback,
+    this.smsCodeIdSentCallback,
     this.phoneNumber = '',
   }) : super(key: key);
 
@@ -45,6 +47,12 @@ class _LoginTextFieldState extends State<LoginTextField> {
   }
 
   AuthService _authService = AuthService();
+
+  void setData(String verificationId) {
+    widget.smsCodeIdSentCallback!(verificationId);
+    widget.isCodeSentCallback();
+    _startTimer();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -112,15 +120,11 @@ class _LoginTextFieldState extends State<LoginTextField> {
                                   visible: widget.isCodeSent,
                                   child: TextButton(
                                     onPressed: () async {
-                                      // Change the code here, because the smsCodeID is never come here
-                                      if (await _authService.verifyPhoneNumber(
-                                              context,
-                                              widget.phoneNumber,
-                                              _countSeconds) !=
-                                          '') {
-                                        widget.isCodeSentCallback();
-                                        _startTimer();
-                                      }
+                                      await _authService.verifyPhoneNumber(
+                                          context,
+                                          widget.phoneNumber,
+                                          _countSeconds,
+                                          setData);
                                     },
                                     style: ButtonStyle(
                                       overlayColor: MaterialStateProperty.all(

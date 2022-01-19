@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:travenx_loitafoundation/config/constant.dart';
 import 'package:travenx_loitafoundation/config/palette.dart';
@@ -195,7 +196,10 @@ class _ProfileState extends State<Profile> {
                     title: 'ចាកចេញ',
                     textColor: Color(0xFFC23616),
                     trailing: [],
-                    onTap: widget.loggedInCallback,
+                    onTap: () async {
+                      await FirebaseAuth.instance.signOut();
+                      widget.loggedInCallback();
+                    },
                   ),
                   SizedBox(height: 20.0),
                   Text(

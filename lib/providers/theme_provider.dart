@@ -19,6 +19,8 @@ class Travenx {
     disabledColor: LightPalette.disableColor,
     cardColor: LightPalette.announcementColor, //Only Announcement Card
     primaryColor: Palette.primary,
+    hintColor: Palette.tertiary,
+    errorColor: Palette.quaternary,
     primaryIconTheme: IconThemeData(
       color: LightPalette.secondaryColor,
       opacity: 1.0,
@@ -115,6 +117,8 @@ class Travenx {
     disabledColor: DarkPalette.disableColor,
     cardColor: DarkPalette.announcementColor, // Only Announcement Card
     primaryColor: Palette.primary,
+    hintColor: Palette.tertiary,
+    errorColor: Palette.quaternary,
     primaryIconTheme: IconThemeData(
       color: DarkPalette.secondaryColor,
       opacity: 1.0,

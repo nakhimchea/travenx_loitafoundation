@@ -5,6 +5,7 @@ class Palette {
 
   static const Color priceColor = Color(0xFFF7B731);
   static const Color tertiary = Color(0xFF0097E6);
+  static const Color quaternary = Color(0xFFC23616);
 
   static const LinearGradient blackGradient = LinearGradient(
     begin: Alignment.topCenter,

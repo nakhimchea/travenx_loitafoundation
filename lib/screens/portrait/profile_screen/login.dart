@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:travenx_loitafoundation/config/palette.dart';
 import 'package:travenx_loitafoundation/config/variable.dart';
+import 'package:travenx_loitafoundation/widgets/custom_snackbar_content.dart';
 import 'package:travenx_loitafoundation/widgets/portrait/profile_screen/profile_widget.dart';
 
 class Login extends StatefulWidget {
@@ -307,12 +308,22 @@ class _PhoneLoginState extends State<PhoneLogin> {
       UserCredential userCredential =
           await FirebaseAuth.instance.signInWithCredential(authCredential);
 
-      userCredential.user != null
-          ? widget.successfulLoggedInCallback()
-          : print('Can\'t logged in user with $_phoneNumber.');
+      if (userCredential.user != null) {
+        widget.successfulLoggedInCallback();
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+            backgroundColor: Colors.transparent,
+            padding: const EdgeInsets.symmetric(horizontal: 15.0),
+            elevation: 0.0,
+            content: CustomSnackBarContent(contentCode: 'successful_login'),
+            duration: Duration(seconds: 3)));
+      } else
+        print('Can\'t logged in user with $_phoneNumber.');
     } catch (_) {
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-          content: Text('លេខកូដ SMS មិនត្រឹមត្រូវ!'),
+          backgroundColor: Colors.transparent,
+          padding: const EdgeInsets.symmetric(horizontal: 15.0),
+          elevation: 0.0,
+          content: CustomSnackBarContent(contentCode: 'invalid_sms_code'),
           duration: Duration(seconds: 5)));
     }
   }

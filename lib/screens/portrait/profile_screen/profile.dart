@@ -84,11 +84,11 @@ class _ProfileState extends State<Profile> {
                   ProfileCategory(
                     icon: Icon(
                       CustomOutlinedIcons.location,
-                      color: Palette.tertiary,
+                      color: Theme.of(context).hintColor,
                       size: 20.0,
                     ),
                     title: 'ចុះឈ្មោះទីតាំង ឬអាជីវកម្ម',
-                    textColor: Palette.tertiary,
+                    textColor: Theme.of(context).hintColor,
                     trailing: [
                       Icon(
                         Icons.arrow_forward_ios_sharp,
@@ -180,7 +180,7 @@ class _ProfileState extends State<Profile> {
                   ProfileCategory(
                     icon: Icon(
                       CustomFilledIcons.share,
-                      color: Palette.tertiary,
+                      color: Theme.of(context).hintColor,
                       size: 20.0,
                     ),
                     title: 'ចែករំលែកកម្មវិធី',

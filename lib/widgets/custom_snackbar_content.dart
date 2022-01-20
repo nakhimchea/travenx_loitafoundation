@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:travenx_loitafoundation/config/variable.dart';
+import 'package:travenx_loitafoundation/icons/icons.dart';
 
 class CustomSnackBarContent extends StatelessWidget {
   final String contentCode;
@@ -13,7 +14,7 @@ class CustomSnackBarContent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 50.0,
+      height: 45.0,
       decoration: BoxDecoration(
           color: Theme.of(context).bottomAppBarColor,
           borderRadius: BorderRadius.circular(6.0),
@@ -24,9 +25,10 @@ class CustomSnackBarContent extends StatelessWidget {
             alignment: AlignmentDirectional.center,
             children: [
               Container(
-                width: 50.0,
+                width: 45.0,
                 decoration: BoxDecoration(
-                  color: contentCode == 'code_sent'
+                  color: contentCode == 'code_sent' ||
+                          contentCode == 'successful_login'
                       ? Theme.of(context).primaryColor
                       : contentCode == 'invalid_phone_number' ||
                               contentCode == 'invalid_sms_code'
@@ -36,9 +38,26 @@ class CustomSnackBarContent extends StatelessWidget {
                       BorderRadius.horizontal(left: Radius.circular(5.0)),
                 ),
               ),
-              Icon(
-                Icons.info,
-              ),
+              contentCode == 'invalid_phone_number' ||
+                      contentCode == 'invalid_sms_code'
+                  ? CircleAvatar(
+                      radius: (14 * textScaleFactor) / 2,
+                      backgroundColor: Theme.of(context).bottomAppBarColor,
+                      child: Icon(
+                        CustomOutlinedIcons.close,
+                        size: 10 * textScaleFactor,
+                        color: Theme.of(context).errorColor,
+                      ),
+                    )
+                  : Icon(
+                      contentCode == 'code_sent' ||
+                              contentCode == 'successful_login'
+                          ? CustomFilledIcons.success
+                          : CustomFilledIcons.warning,
+                      //Icons.info,
+                      size: 16 * textScaleFactor,
+                      color: Theme.of(context).bottomAppBarColor,
+                    ),
             ],
           ),
           SizedBox(width: 10),

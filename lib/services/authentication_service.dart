@@ -1,16 +1,14 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:travenx_loitafoundation/widgets/custom_snackbar_content.dart';
 
 class AuthService {
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
-  SnackBar _buildSnackBar({
-    required String contentCode,
-    String? phoneNumber,
-    int duration = 5,
-  }) {
+  SnackBar _buildSnackBar(
+      {required String contentCode, String? phoneNumber, int duration = 5}) {
     return SnackBar(
         backgroundColor: Colors.transparent,
         padding: const EdgeInsets.symmetric(horizontal: 15.0),
@@ -43,7 +41,7 @@ class AuthService {
 
     if (kIsWeb) {
       try {
-        ConfirmationResult confirmationResult =
+        final ConfirmationResult confirmationResult =
             await _auth.signInWithPhoneNumber(phoneNumber);
         setData(confirmationResult.verificationId);
         ScaffoldMessenger.of(context).showSnackBar(_buildSnackBar(
@@ -70,6 +68,8 @@ class AuthService {
         );
       } catch (e) {
         print(e.toString());
+        ScaffoldMessenger.of(context)
+            .showSnackBar(_buildSnackBar(contentCode: 'technical_problem'));
       }
     }
   }
@@ -77,12 +77,12 @@ class AuthService {
   Future<void> signInWithPhoneNumber(BuildContext context, String smsCodeId,
       String otpNumber, void Function() successfulLoggedInCallback) async {
     try {
-      AuthCredential authCredential = PhoneAuthProvider.credential(
+      final AuthCredential authCredential = PhoneAuthProvider.credential(
         verificationId: smsCodeId,
         smsCode: otpNumber,
       );
-      UserCredential userCredential =
-          await FirebaseAuth.instance.signInWithCredential(authCredential);
+      final UserCredential userCredential =
+          await _auth.signInWithCredential(authCredential);
 
       if (userCredential.user != null) {
         successfulLoggedInCallback();
@@ -90,9 +90,36 @@ class AuthService {
             _buildSnackBar(contentCode: 'successful_login', duration: 3));
       } else
         print('Can\'t logged in user.');
-    } catch (_) {
+    } catch (e) {
+      print(e.toString());
       ScaffoldMessenger.of(context)
           .showSnackBar(_buildSnackBar(contentCode: 'invalid_sms_code'));
+    }
+  }
+
+  Future<void> signInWithFacebook(
+      BuildContext context, void Function() successfulLoggedInCallback) async {
+    //Todo: Android , Check if iOS code is the same
+    try {
+      final LoginResult facebookLoginResult =
+          await FacebookAuth.instance.login();
+
+      final facebookAuthCredential = FacebookAuthProvider.credential(
+          facebookLoginResult.accessToken!.token);
+
+      final UserCredential userCredential =
+          await _auth.signInWithCredential(facebookAuthCredential);
+
+      if (userCredential.user != null) {
+        successfulLoggedInCallback();
+        ScaffoldMessenger.of(context).showSnackBar(
+            _buildSnackBar(contentCode: 'successful_login', duration: 3));
+      } else
+        print('Can\'t logged in user.');
+    } catch (e) {
+      print(e.toString());
+      ScaffoldMessenger.of(context).showSnackBar(
+          _buildSnackBar(contentCode: 'invalid_facebook_account'));
     }
   }
 }

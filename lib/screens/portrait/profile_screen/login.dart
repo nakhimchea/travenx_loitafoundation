@@ -54,9 +54,11 @@ class _LoginState extends State<Login> {
                       ? LoginMethods(
                           isPhoneLogin: isPhoneLogin,
                           isPhoneLoginCallback: hasPhoneLogin,
+                          successfulLoggedInCallback: widget.loggedInCallback,
                         )
                       : PhoneLogin(
-                          successfulLoggedInCallback: widget.loggedInCallback),
+                          successfulLoggedInCallback: widget.loggedInCallback,
+                        ),
                 ),
                 PolicyAgreement(),
                 !isPhoneLogin
@@ -169,11 +171,13 @@ class LoginAppBar extends StatelessWidget {
 class LoginMethods extends StatelessWidget {
   final bool isPhoneLogin;
   final void Function() isPhoneLoginCallback;
+  final void Function() successfulLoggedInCallback;
 
   const LoginMethods({
     Key? key,
     required this.isPhoneLogin,
     required this.isPhoneLoginCallback,
+    required this.successfulLoggedInCallback,
   }) : super(key: key);
 
   @override
@@ -189,12 +193,18 @@ class LoginMethods extends StatelessWidget {
         LoginCardButton(
           leadingUrl: 'assets/icons/profile_screen/facebook_logo.png',
           title: 'ចូលតាមគណនី ហ្វេសប៊ុក',
+          onTap: () async {
+            await AuthService()
+                .signInWithFacebook(context, successfulLoggedInCallback);
+          },
         ),
         SizedBox(height: 18.0),
         LoginCardButton(
-            leadingUrl: 'assets/icons/profile_screen/google_logo.png',
-            title: 'ចូលតាមគណនី ',
-            trailing: 'Google'),
+          leadingUrl: 'assets/icons/profile_screen/google_logo.png',
+          title: 'ចូលតាមគណនី ',
+          onTap: () async {},
+          trailing: 'Google',
+        ),
       ],
     );
   }

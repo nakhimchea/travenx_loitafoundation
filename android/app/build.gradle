@@ -63,6 +63,9 @@ dependencies {
     // Firebase Authentication
     implementation 'com.google.firebase:firebase-auth'
 
+    // Facebook Authentication
+    implementation 'com.facebook.android:facebook-android-sdk:latest.release'
+
     // Cloud FireStore Database
     implementation 'com.google.firebase:firebase-firestore'
 

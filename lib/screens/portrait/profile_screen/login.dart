@@ -1,8 +1,7 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:travenx_loitafoundation/config/palette.dart';
 import 'package:travenx_loitafoundation/config/variable.dart';
-import 'package:travenx_loitafoundation/widgets/custom_snackbar_content.dart';
+import 'package:travenx_loitafoundation/services/authentication_service.dart';
 import 'package:travenx_loitafoundation/widgets/portrait/profile_screen/profile_widget.dart';
 
 class Login extends StatefulWidget {
@@ -299,35 +298,6 @@ class _PhoneLoginState extends State<PhoneLogin> {
     if (mounted) setState(() => _otpNumber = text.trim());
   }
 
-  Future<void> _signInWithPhoneNumber() async {
-    try {
-      AuthCredential authCredential = PhoneAuthProvider.credential(
-        verificationId: _smsCodeId,
-        smsCode: _otpNumber,
-      );
-      UserCredential userCredential =
-          await FirebaseAuth.instance.signInWithCredential(authCredential);
-
-      if (userCredential.user != null) {
-        widget.successfulLoggedInCallback();
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-            backgroundColor: Colors.transparent,
-            padding: const EdgeInsets.symmetric(horizontal: 15.0),
-            elevation: 0.0,
-            content: CustomSnackBarContent(contentCode: 'successful_login'),
-            duration: Duration(seconds: 3)));
-      } else
-        print('Can\'t logged in user with $_phoneNumber.');
-    } catch (_) {
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-          backgroundColor: Colors.transparent,
-          padding: const EdgeInsets.symmetric(horizontal: 15.0),
-          elevation: 0.0,
-          content: CustomSnackBarContent(contentCode: 'invalid_sms_code'),
-          duration: Duration(seconds: 5)));
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     return LayoutBuilder(builder: (context, constraints) {
@@ -372,7 +342,15 @@ class _PhoneLoginState extends State<PhoneLogin> {
                 title: 'ចូល',
                 isCodeSent: _isCodeSent,
                 constraints: constraints,
-                onPressed: _isCodeSent ? _signInWithPhoneNumber : () {},
+                onPressed: () async {
+                  if (_isCodeSent)
+                    await AuthService().signInWithPhoneNumber(
+                      context,
+                      _smsCodeId,
+                      _otpNumber,
+                      widget.successfulLoggedInCallback,
+                    );
+                },
               ),
             ],
           ),

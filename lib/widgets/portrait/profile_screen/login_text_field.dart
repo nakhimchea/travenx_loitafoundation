@@ -46,8 +46,6 @@ class _LoginTextFieldState extends State<LoginTextField> {
     });
   }
 
-  AuthService _authService = AuthService();
-
   void setData(String verificationId) {
     widget.smsCodeIdSentCallback!(verificationId);
     widget.isCodeSentCallback();
@@ -120,7 +118,7 @@ class _LoginTextFieldState extends State<LoginTextField> {
                                   visible: widget.isCodeSent,
                                   child: TextButton(
                                     onPressed: () async {
-                                      await _authService.verifyPhoneNumber(
+                                      await AuthService().verifyPhoneNumber(
                                           context,
                                           widget.phoneNumber,
                                           _countSeconds,

@@ -73,4 +73,26 @@ class AuthService {
       }
     }
   }
+
+  Future<void> signInWithPhoneNumber(BuildContext context, String smsCodeId,
+      String otpNumber, void Function() successfulLoggedInCallback) async {
+    try {
+      AuthCredential authCredential = PhoneAuthProvider.credential(
+        verificationId: smsCodeId,
+        smsCode: otpNumber,
+      );
+      UserCredential userCredential =
+          await FirebaseAuth.instance.signInWithCredential(authCredential);
+
+      if (userCredential.user != null) {
+        successfulLoggedInCallback();
+        ScaffoldMessenger.of(context).showSnackBar(
+            _buildSnackBar(contentCode: 'successful_login', duration: 3));
+      } else
+        print('Can\'t logged in user.');
+    } catch (_) {
+      ScaffoldMessenger.of(context)
+          .showSnackBar(_buildSnackBar(contentCode: 'invalid_sms_code'));
+    }
+  }
 }

@@ -99,7 +99,6 @@ class AuthService {
 
   Future<void> signInWithFacebook(
       BuildContext context, void Function() successfulLoggedInCallback) async {
-    //Todo: Android , Check if iOS code is the same
     try {
       final LoginResult facebookLoginResult =
           await FacebookAuth.instance.login();

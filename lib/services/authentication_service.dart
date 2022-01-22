@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:travenx_loitafoundation/widgets/custom_snackbar_content.dart';
 
 class AuthService {
@@ -100,16 +101,25 @@ class AuthService {
   Future<void> signInWithFacebook(
       BuildContext context, void Function() successfulLoggedInCallback) async {
     try {
-      final LoginResult facebookLoginResult =
-          await FacebookAuth.instance.login();
+      late UserCredential _userCredential;
+      if (kIsWeb) {
+        _userCredential = await _auth.signInWithPopup(FacebookAuthProvider());
+        //Todo: have to get and upload user data in this file
+      } else {
+        final LoginResult facebookLoginResult =
+            await FacebookAuth.instance.login();
 
-      final facebookAuthCredential = FacebookAuthProvider.credential(
-          facebookLoginResult.accessToken!.token);
+        final facebookAuthCredential = FacebookAuthProvider.credential(
+            facebookLoginResult.accessToken!.token);
 
-      final UserCredential userCredential =
-          await _auth.signInWithCredential(facebookAuthCredential);
+        _userCredential =
+            await _auth.signInWithCredential(facebookAuthCredential);
 
-      if (userCredential.user != null) {
+        // Facebook Logout from App
+        await FacebookAuth.instance.logOut();
+      }
+
+      if (_userCredential.user != null) {
         successfulLoggedInCallback();
         ScaffoldMessenger.of(context).showSnackBar(
             _buildSnackBar(contentCode: 'successful_login', duration: 3));
@@ -119,6 +129,40 @@ class AuthService {
       print(e.toString());
       ScaffoldMessenger.of(context).showSnackBar(
           _buildSnackBar(contentCode: 'invalid_facebook_account'));
+    }
+  }
+
+  Future<void> signInWithGoogle(
+      BuildContext context, void Function() successfulLoggedInCallback) async {
+    try {
+      UserCredential _userCredential;
+      if (kIsWeb) {
+        _userCredential = await _auth.signInWithPopup(GoogleAuthProvider());
+        //Todo: have to get and upload user data in this file
+      } else {
+        final GoogleSignInAuthentication googleSignInAuthentication =
+            await GoogleSignIn().signIn().then((googleSignInAccount) async =>
+                await googleSignInAccount!.authentication);
+        // Google Automatically SignOut from App
+        final googleAuthCredential = GoogleAuthProvider.credential(
+          idToken: googleSignInAuthentication.idToken,
+          accessToken: googleSignInAuthentication.accessToken,
+        );
+
+        _userCredential =
+            await _auth.signInWithCredential(googleAuthCredential);
+      }
+
+      if (_userCredential.user != null) {
+        successfulLoggedInCallback();
+        ScaffoldMessenger.of(context).showSnackBar(
+            _buildSnackBar(contentCode: 'successful_login', duration: 3));
+      } else
+        print('Can\'t logged in user.');
+    } catch (e) {
+      print(e.toString());
+      ScaffoldMessenger.of(context)
+          .showSnackBar(_buildSnackBar(contentCode: 'invalid_google_account'));
     }
   }
 }

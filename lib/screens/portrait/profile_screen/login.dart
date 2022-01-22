@@ -191,20 +191,17 @@ class LoginMethods extends StatelessWidget {
         ),
         SizedBox(height: 18.0),
         LoginCardButton(
-          leadingUrl: 'assets/icons/profile_screen/facebook_logo.png',
-          title: 'ចូលតាមគណនី ហ្វេសប៊ុក',
-          onTap: () async {
-            await AuthService()
-                .signInWithFacebook(context, successfulLoggedInCallback);
-          },
-        ),
+            leadingUrl: 'assets/icons/profile_screen/facebook_logo.png',
+            title: 'ចូលតាមគណនី ហ្វេសប៊ុក',
+            onTap: () async => await AuthService()
+                .signInWithFacebook(context, successfulLoggedInCallback)),
         SizedBox(height: 18.0),
         LoginCardButton(
-          leadingUrl: 'assets/icons/profile_screen/google_logo.png',
-          title: 'ចូលតាមគណនី ',
-          onTap: () async {},
-          trailing: 'Google',
-        ),
+            leadingUrl: 'assets/icons/profile_screen/google_logo.png',
+            title: 'ចូលតាមគណនី ',
+            trailing: 'Google',
+            onTap: () async => await AuthService()
+                .signInWithGoogle(context, successfulLoggedInCallback)),
       ],
     );
   }

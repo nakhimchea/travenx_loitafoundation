@@ -32,7 +32,8 @@ class CustomSnackBarContent extends StatelessWidget {
                       ? Theme.of(context).primaryColor
                       : contentCode == 'invalid_phone_number' ||
                               contentCode == 'invalid_sms_code' ||
-                    contentCode == 'invalid_facebook_account'
+                              contentCode == 'invalid_facebook_account' ||
+                              contentCode == 'invalid_google_account'
                           ? Theme.of(context).errorColor
                           : Theme.of(context).hintColor,
                   borderRadius:
@@ -40,8 +41,9 @@ class CustomSnackBarContent extends StatelessWidget {
                 ),
               ),
               contentCode == 'invalid_phone_number' ||
-                      contentCode == 'invalid_sms_code'||
-                  contentCode == 'invalid_facebook_account'
+                      contentCode == 'invalid_sms_code' ||
+                      contentCode == 'invalid_facebook_account' ||
+                      contentCode == 'invalid_google_account'
                   ? CircleAvatar(
                       radius: (14 * textScaleFactor) / 2,
                       backgroundColor: Theme.of(context).bottomAppBarColor,

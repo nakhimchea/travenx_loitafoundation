@@ -1,6 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:travenx_loitafoundation/config/constant.dart';
 import 'package:travenx_loitafoundation/config/palette.dart';
 import 'package:travenx_loitafoundation/config/variable.dart';
@@ -199,11 +198,6 @@ class _ProfileState extends State<Profile> {
                     trailing: [],
                     onTap: () async {
                       await FirebaseAuth.instance.signOut();
-                      await FacebookAuth.instance.accessToken
-                          .then((AccessToken? accessToken) async {
-                        if (accessToken != null)
-                          await FacebookAuth.instance.logOut();
-                      });
                       widget.loggedInCallback();
                     },
                   ),

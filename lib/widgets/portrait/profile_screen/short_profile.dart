@@ -50,7 +50,7 @@ class ShortProfile extends StatelessWidget {
             child: Column(
               children: [
                 Text(
-                  '${userProfile.firstName} ${userProfile.lastName}',
+                  '${userProfile.displayName}',
                   textScaleFactor: textScaleFactor,
                   style: Theme.of(context).textTheme.headline2,
                 ),

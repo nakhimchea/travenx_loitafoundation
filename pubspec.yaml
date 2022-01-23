@@ -34,6 +34,10 @@ dependencies:
   # Flutter Google Sign In
   google_sign_in: '>=5.0.0 <5.1.0'
 
+  # Loading Screen
+  flutter_spinkit: ^5.1.0
+  animated_text_kit: ^4.2.1
+
   # Firebase Cloud Firestore
   cloud_firestore: ^3.1.6
 

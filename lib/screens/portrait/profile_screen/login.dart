@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:travenx_loitafoundation/config/palette.dart';
 import 'package:travenx_loitafoundation/config/variable.dart';
 import 'package:travenx_loitafoundation/services/authentication_service.dart';
+import 'package:travenx_loitafoundation/widgets/custom_loading.dart';
 import 'package:travenx_loitafoundation/widgets/portrait/profile_screen/profile_widget.dart';
 
 class Login extends StatefulWidget {
@@ -168,7 +169,7 @@ class LoginAppBar extends StatelessWidget {
   }
 }
 
-class LoginMethods extends StatelessWidget {
+class LoginMethods extends StatefulWidget {
   final bool isPhoneLogin;
   final void Function() isPhoneLoginCallback;
   final void Function() successfulLoggedInCallback;
@@ -181,29 +182,49 @@ class LoginMethods extends StatelessWidget {
   }) : super(key: key);
 
   @override
+  _LoginMethodsState createState() => _LoginMethodsState();
+}
+
+class _LoginMethodsState extends State<LoginMethods> {
+  bool _isLoading = false;
+
+  @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        LoginCardButton(
-          leadingUrl: 'assets/icons/profile_screen/phone_logo.png',
-          title: 'ចុះឈ្មោះគណនី លេខទូរសព្ទ',
-          onTap: isPhoneLoginCallback,
-        ),
-        SizedBox(height: 18.0),
-        LoginCardButton(
-            leadingUrl: 'assets/icons/profile_screen/facebook_logo.png',
-            title: 'ចូលតាមគណនី ហ្វេសប៊ុក',
-            onTap: () async => await AuthService()
-                .signInWithFacebook(context, successfulLoggedInCallback)),
-        SizedBox(height: 18.0),
-        LoginCardButton(
-            leadingUrl: 'assets/icons/profile_screen/google_logo.png',
-            title: 'ចូលតាមគណនី ',
-            trailing: 'Google',
-            onTap: () async => await AuthService()
-                .signInWithGoogle(context, successfulLoggedInCallback)),
-      ],
-    );
+    return _isLoading
+        ? Loading()
+        : Column(
+            children: [
+              LoginCardButton(
+                leadingUrl: 'assets/icons/profile_screen/phone_logo.png',
+                title: 'ចុះឈ្មោះគណនី លេខទូរសព្ទ',
+                onTap: widget.isPhoneLoginCallback,
+              ),
+              SizedBox(height: 18.0),
+              LoginCardButton(
+                  leadingUrl: 'assets/icons/profile_screen/facebook_logo.png',
+                  title: 'ចូលតាមគណនី ហ្វេសប៊ុក',
+                  onTap: () async {
+                    setState(() => _isLoading = true);
+                    await AuthService()
+                        .signInWithFacebook(
+                            context, widget.successfulLoggedInCallback)
+                        .whenComplete(() => setState(() => _isLoading = false));
+                  }),
+              SizedBox(height: 18.0),
+              LoginCardButton(
+                leadingUrl: 'assets/icons/profile_screen/google_logo.png',
+                title: 'ចូលតាមគណនី ',
+                trailing: 'Google',
+                onTap: () async {
+                  setState(() => _isLoading = true);
+                  await AuthService()
+                      .signInWithGoogle(
+                          context, widget.successfulLoggedInCallback)
+                      .whenComplete(() => setState(() => _isLoading = false));
+                },
+              ),
+            ],
+          );
   }
 }
 
@@ -283,6 +304,8 @@ class _PhoneLoginState extends State<PhoneLogin> {
   String _phoneNumber = '';
   String _otpNumber = '';
   String _smsCodeId = '';
+  bool _isLoading = false;
+  bool _showLogin = true;
 
   // Callback input phoneNumber and clean number with country code
   void _getPhoneNumber(String text) {
@@ -292,6 +315,8 @@ class _PhoneLoginState extends State<PhoneLogin> {
   }
 
   bool _isCodeSent = false;
+
+  void _toggleShowLogin() => setState(() => _showLogin = !_showLogin);
 
   void _toggleCodeSent() {
     if (mounted) setState(() => _isCodeSent = !_isCodeSent);
@@ -331,6 +356,7 @@ class _PhoneLoginState extends State<PhoneLogin> {
                 onChangedCallback: _getPhoneNumber,
                 isCodeSent: _isCodeSent,
                 isCodeSentCallback: _toggleCodeSent,
+                showLoginCallback: _toggleShowLogin,
               ),
               SizedBox(height: 26.0),
               LoginTextField(
@@ -343,22 +369,31 @@ class _PhoneLoginState extends State<PhoneLogin> {
                 isCodeSentCallback: _toggleCodeSent,
                 smsCodeIdSentCallback: _getSmsCodeId,
                 phoneNumber: _phoneNumber,
+                showLoginCallback: _toggleShowLogin,
               ),
               SizedBox(height: 50.0),
-              GradientButton(
-                title: 'ចូល',
-                isCodeSent: _isCodeSent,
-                constraints: constraints,
-                onPressed: () async {
-                  if (_isCodeSent)
-                    await AuthService().signInWithPhoneNumber(
-                      context,
-                      _smsCodeId,
-                      _otpNumber,
-                      widget.successfulLoggedInCallback,
-                    );
-                },
-              ),
+              _isLoading
+                  ? Loading()
+                  : _showLogin
+                      ? GradientButton(
+                          title: 'ចូល',
+                          isCodeSent: _isCodeSent,
+                          constraints: constraints,
+                          onPressed: () async {
+                            if (_isCodeSent) setState(() => _isLoading = true);
+                            await AuthService()
+                                .signInWithPhoneNumber(
+                                  context,
+                                  _smsCodeId,
+                                  _otpNumber,
+                                  widget.successfulLoggedInCallback,
+                                )
+                                .whenComplete(
+                                    () => setState(() => _isLoading = false));
+                          },
+                        )
+                      : SizedBox(
+                          height: MediaQuery.of(context).size.height / 16),
             ],
           ),
         ],

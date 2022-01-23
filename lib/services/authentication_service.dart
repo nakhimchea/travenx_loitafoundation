@@ -103,7 +103,10 @@ class AuthService {
     try {
       late UserCredential _userCredential;
       if (kIsWeb) {
-        _userCredential = await _auth.signInWithPopup(FacebookAuthProvider());
+        _userCredential = await _auth
+            .signInWithPopup(FacebookAuthProvider())
+            .onError((_, __) async =>
+                await _auth.signInWithPopup(GoogleAuthProvider()));
         //Todo: have to get and upload user data in this file
       } else {
         final LoginResult facebookLoginResult =
@@ -112,8 +115,20 @@ class AuthService {
         final facebookAuthCredential = FacebookAuthProvider.credential(
             facebookLoginResult.accessToken!.token);
 
-        _userCredential =
-            await _auth.signInWithCredential(facebookAuthCredential);
+        _userCredential = await _auth
+            .signInWithCredential(facebookAuthCredential)
+            .onError((error, stackTrace) async {
+          final GoogleSignInAuthentication googleSignInAuthentication =
+              await GoogleSignIn().signIn().then((googleSignInAccount) async =>
+                  await googleSignInAccount!.authentication);
+          // Google Automatically SignOut from App
+          final googleAuthCredential = GoogleAuthProvider.credential(
+            idToken: googleSignInAuthentication.idToken,
+            accessToken: googleSignInAuthentication.accessToken,
+          );
+
+          return await _auth.signInWithCredential(googleAuthCredential);
+        });
 
         // Facebook Logout from App
         await FacebookAuth.instance.logOut();

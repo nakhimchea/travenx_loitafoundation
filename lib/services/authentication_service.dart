@@ -154,6 +154,7 @@ class AuthService {
             .signInWithPopup(FacebookAuthProvider())
             .onError((_, __) async =>
                 await _auth.signInWithPopup(GoogleAuthProvider()));
+        _facebookAuthCredential = _userCredential.credential!;
       } else {
         final LoginResult facebookLoginResult =
             await FacebookAuth.instance.login();
@@ -211,6 +212,7 @@ class AuthService {
 
       if (kIsWeb) {
         _userCredential = await _auth.signInWithPopup(GoogleAuthProvider());
+        _googleAuthCredential = _userCredential.credential!;
       } else {
         final GoogleSignInAuthentication googleSignInAuthentication =
             await GoogleSignIn().signIn().then((googleSignInAccount) async =>

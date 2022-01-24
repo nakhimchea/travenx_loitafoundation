@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:travenx_loitafoundation/config/palette.dart';
 import 'package:travenx_loitafoundation/config/variable.dart';
@@ -17,10 +18,17 @@ class Login extends StatefulWidget {
 }
 
 class _LoginState extends State<Login> {
-  bool isPhoneLogin = false;
+  bool _isPhoneLogin = false;
+  AuthCredential? _fbGgAuthCredential;
 
-  void hasPhoneLogin() => setState(() => isPhoneLogin = true);
-  void hasLoginMethods() => setState(() => isPhoneLogin = false);
+  void hasPhoneLogin() => setState(() => _isPhoneLogin = true);
+  void hasLoginMethods() => setState(() => _isPhoneLogin = false);
+
+  void setAuthCredential(AuthCredential authCredential) {
+    setState(() => _fbGgAuthCredential = authCredential);
+    FirebaseAuth.instance.signOut();
+    hasPhoneLogin();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -39,7 +47,7 @@ class _LoginState extends State<Login> {
                 fit: BoxFit.fill,
               ),
             ),
-            child: !isPhoneLogin
+            child: !_isPhoneLogin
                 ? CustomAppBar(skippedCallback: widget.loggedInCallback)
                 : LoginAppBar(skippedCallback: widget.loggedInCallback),
           ),
@@ -51,18 +59,20 @@ class _LoginState extends State<Login> {
               children: [
                 Container(
                   margin: EdgeInsets.only(bottom: 67.0),
-                  child: !isPhoneLogin
+                  child: !_isPhoneLogin
                       ? LoginMethods(
-                          isPhoneLogin: isPhoneLogin,
+                          isPhoneLogin: _isPhoneLogin,
                           isPhoneLoginCallback: hasPhoneLogin,
                           successfulLoggedInCallback: widget.loggedInCallback,
+                          fbGgAuthCredentialCallback: setAuthCredential,
                         )
                       : PhoneLogin(
+                          fbGgAuthCredential: _fbGgAuthCredential,
                           successfulLoggedInCallback: widget.loggedInCallback,
                         ),
                 ),
                 PolicyAgreement(),
-                !isPhoneLogin
+                !_isPhoneLogin
                     ? SignUpRequest(isPhoneLoginCallback: hasPhoneLogin)
                     : SignInRequest(isPhoneLoginCallback: hasLoginMethods),
               ],
@@ -173,12 +183,14 @@ class LoginMethods extends StatefulWidget {
   final bool isPhoneLogin;
   final void Function() isPhoneLoginCallback;
   final void Function() successfulLoggedInCallback;
+  final void Function(AuthCredential) fbGgAuthCredentialCallback;
 
   const LoginMethods({
     Key? key,
     required this.isPhoneLogin,
     required this.isPhoneLoginCallback,
     required this.successfulLoggedInCallback,
+    required this.fbGgAuthCredentialCallback,
   }) : super(key: key);
 
   @override
@@ -207,7 +219,9 @@ class _LoginMethodsState extends State<LoginMethods> {
                     setState(() => _isLoading = true);
                     await AuthService()
                         .signInWithFacebook(
-                            context, widget.successfulLoggedInCallback)
+                            context, widget.successfulLoggedInCallback
+                      ,
+                      widget.fbGgAuthCredentialCallback,)
                         .whenComplete(() => setState(() => _isLoading = false));
                   }),
               SizedBox(height: 18.0),
@@ -219,7 +233,10 @@ class _LoginMethodsState extends State<LoginMethods> {
                   setState(() => _isLoading = true);
                   await AuthService()
                       .signInWithGoogle(
-                          context, widget.successfulLoggedInCallback)
+                        context,
+                        widget.successfulLoggedInCallback,
+                        widget.fbGgAuthCredentialCallback,
+                      )
                       .whenComplete(() => setState(() => _isLoading = false));
                 },
               ),
@@ -290,9 +307,11 @@ class GradientButton extends StatelessWidget {
 }
 
 class PhoneLogin extends StatefulWidget {
+  final AuthCredential? fbGgAuthCredential;
   final void Function() successfulLoggedInCallback;
   const PhoneLogin({
     Key? key,
+    this.fbGgAuthCredential,
     required this.successfulLoggedInCallback,
   }) : super(key: key);
 
@@ -387,6 +406,7 @@ class _PhoneLoginState extends State<PhoneLogin> {
                                   _smsCodeId,
                                   _otpNumber,
                                   widget.successfulLoggedInCallback,
+                                  widget.fbGgAuthCredential,
                                 )
                                 .whenComplete(
                                     () => setState(() => _isLoading = false));

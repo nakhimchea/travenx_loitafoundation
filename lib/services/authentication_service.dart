@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
@@ -7,6 +8,7 @@ import 'package:travenx_loitafoundation/widgets/custom_snackbar_content.dart';
 
 class AuthService {
   final FirebaseAuth _auth = FirebaseAuth.instance;
+  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
   SnackBar _buildSnackBar(
       {required String contentCode, String? phoneNumber, int duration = 5}) {
@@ -40,7 +42,22 @@ class AuthService {
           contentCode: 'code_sent', phoneNumber: phoneNumber, duration: 3));
     };
 
-    if (kIsWeb) {
+    if (!kIsWeb) {
+      try {
+        await _auth.verifyPhoneNumber(
+          phoneNumber: phoneNumber,
+          verificationCompleted: (_) {},
+          verificationFailed: verificationFailed,
+          codeSent: codeSent,
+          codeAutoRetrievalTimeout: (_) {},
+          timeout: Duration(seconds: timeoutDuration),
+        );
+      } catch (e) {
+        print(e.toString());
+        ScaffoldMessenger.of(context)
+            .showSnackBar(_buildSnackBar(contentCode: 'technical_problem'));
+      }
+    } else {
       try {
         final ConfirmationResult confirmationResult =
             await _auth.signInWithPhoneNumber(phoneNumber);
@@ -57,35 +74,61 @@ class AuthService {
                     ? _buildSnackBar(contentCode: 'network_request_failed')
                     : _buildSnackBar(contentCode: 'technical_problem'));
       }
-    } else {
-      try {
-        await _auth.verifyPhoneNumber(
-          phoneNumber: phoneNumber,
-          verificationCompleted: (_) {},
-          verificationFailed: verificationFailed,
-          codeSent: codeSent,
-          codeAutoRetrievalTimeout: (_) {},
-          timeout: Duration(seconds: timeoutDuration),
-        );
-      } catch (e) {
-        print(e.toString());
-        ScaffoldMessenger.of(context)
-            .showSnackBar(_buildSnackBar(contentCode: 'technical_problem'));
-      }
     }
   }
 
+  Future<bool> containData(String userId) async => await _firestore
+      .collection('profile_screen')
+      .doc(userId)
+      .get()
+      .then((_document) => _document.data() != null ? true : false);
+
   Future<void> signInWithPhoneNumber(BuildContext context, String smsCodeId,
-      String otpNumber, void Function() successfulLoggedInCallback) async {
+      String otpNumber, void Function() successfulLoggedInCallback,
+      [AuthCredential? fbGgAuthCredential]) async {
     try {
       final AuthCredential authCredential = PhoneAuthProvider.credential(
         verificationId: smsCodeId,
         smsCode: otpNumber,
       );
-      final UserCredential userCredential =
+      final UserCredential _phoneUserCredential =
           await _auth.signInWithCredential(authCredential);
 
-      if (userCredential.user != null) {
+      if (_phoneUserCredential.user != null) {
+        print('fbGgAuthCredential: $fbGgAuthCredential');
+        if (fbGgAuthCredential != null) {
+          print('There is another AuthCredential token.');
+          await _auth.signOut();
+          final UserCredential _fbGgUserCredential =
+              await _auth.signInWithCredential(fbGgAuthCredential);
+
+          await _firestore
+              .collection('profile_screen')
+              .doc(_fbGgUserCredential.user!.uid)
+              .set({
+            'displayName': _fbGgUserCredential.user!.displayName,
+            'phoneNumber': _phoneUserCredential.user!.phoneNumber,
+            'profileUrl': _fbGgUserCredential.user!.photoURL,
+            'backgroundUrl':
+                'assets/images/profile_screen/dummy_background.png',
+          });
+        } else {
+          if (await containData(_phoneUserCredential.user!.uid)) {
+            print('Has data');
+          } else {
+            print('User has no data');
+            await _firestore
+                .collection('profile_screen')
+                .doc(_phoneUserCredential.user!.uid)
+                .set({
+              'displayName': 'ដើរ លេង',
+              'phoneNumber': _phoneUserCredential.user!.phoneNumber,
+              'profileUrl': 'assets/images/profile_screen/dummy_profile.png',
+              'backgroundUrl':
+                  'assets/images/profile_screen/dummy_background.png',
+            });
+          }
+        }
         successfulLoggedInCallback();
         ScaffoldMessenger.of(context).showSnackBar(
             _buildSnackBar(contentCode: 'successful_login', duration: 3));
@@ -99,25 +142,28 @@ class AuthService {
   }
 
   Future<void> signInWithFacebook(
-      BuildContext context, void Function() successfulLoggedInCallback) async {
+      BuildContext context,
+      void Function() successfulLoggedInCallback,
+      void Function(AuthCredential) pushFacebookAuthCredential) async {
     try {
+      late AuthCredential _facebookAuthCredential;
       late UserCredential _userCredential;
+
       if (kIsWeb) {
         _userCredential = await _auth
             .signInWithPopup(FacebookAuthProvider())
             .onError((_, __) async =>
                 await _auth.signInWithPopup(GoogleAuthProvider()));
-        //Todo: have to get and upload user data in this file
       } else {
         final LoginResult facebookLoginResult =
             await FacebookAuth.instance.login();
 
-        final facebookAuthCredential = FacebookAuthProvider.credential(
+        _facebookAuthCredential = FacebookAuthProvider.credential(
             facebookLoginResult.accessToken!.token);
 
         _userCredential = await _auth
-            .signInWithCredential(facebookAuthCredential)
-            .onError((error, stackTrace) async {
+            .signInWithCredential(_facebookAuthCredential)
+            .onError((_, __) async {
           final GoogleSignInAuthentication googleSignInAuthentication =
               await GoogleSignIn().signIn().then((googleSignInAccount) async =>
                   await googleSignInAccount!.authentication);
@@ -126,7 +172,7 @@ class AuthService {
             idToken: googleSignInAuthentication.idToken,
             accessToken: googleSignInAuthentication.accessToken,
           );
-
+          _facebookAuthCredential = googleAuthCredential;
           return await _auth.signInWithCredential(googleAuthCredential);
         });
 
@@ -135,9 +181,17 @@ class AuthService {
       }
 
       if (_userCredential.user != null) {
-        successfulLoggedInCallback();
-        ScaffoldMessenger.of(context).showSnackBar(
-            _buildSnackBar(contentCode: 'successful_login', duration: 3));
+        final User user = _userCredential.user!;
+
+        if (await containData(user.uid)) {
+          print('Has data');
+          successfulLoggedInCallback();
+          ScaffoldMessenger.of(context).showSnackBar(
+              _buildSnackBar(contentCode: 'successful_login', duration: 3));
+        } else {
+          print('User has no data, we gonna take it!');
+          pushFacebookAuthCredential(_facebookAuthCredential);
+        }
       } else
         print('Can\'t logged in user.');
     } catch (e) {
@@ -148,30 +202,41 @@ class AuthService {
   }
 
   Future<void> signInWithGoogle(
-      BuildContext context, void Function() successfulLoggedInCallback) async {
+      BuildContext context,
+      void Function() successfulLoggedInCallback,
+      void Function(AuthCredential) pushGoogleAuthCredential) async {
     try {
-      UserCredential _userCredential;
+      late AuthCredential _googleAuthCredential;
+      late UserCredential _userCredential;
+
       if (kIsWeb) {
         _userCredential = await _auth.signInWithPopup(GoogleAuthProvider());
-        //Todo: have to get and upload user data in this file
       } else {
         final GoogleSignInAuthentication googleSignInAuthentication =
             await GoogleSignIn().signIn().then((googleSignInAccount) async =>
                 await googleSignInAccount!.authentication);
         // Google Automatically SignOut from App
-        final googleAuthCredential = GoogleAuthProvider.credential(
+        _googleAuthCredential = GoogleAuthProvider.credential(
           idToken: googleSignInAuthentication.idToken,
           accessToken: googleSignInAuthentication.accessToken,
         );
 
         _userCredential =
-            await _auth.signInWithCredential(googleAuthCredential);
+            await _auth.signInWithCredential(_googleAuthCredential);
       }
 
       if (_userCredential.user != null) {
-        successfulLoggedInCallback();
-        ScaffoldMessenger.of(context).showSnackBar(
-            _buildSnackBar(contentCode: 'successful_login', duration: 3));
+        final User user = _userCredential.user!;
+
+        if (await containData(user.uid)) {
+          print('Has data');
+          successfulLoggedInCallback();
+          ScaffoldMessenger.of(context).showSnackBar(
+              _buildSnackBar(contentCode: 'successful_login', duration: 3));
+        } else {
+          print('User has no data, we gonna take it!');
+          pushGoogleAuthCredential(_googleAuthCredential);
+        }
       } else
         print('Can\'t logged in user.');
     } catch (e) {

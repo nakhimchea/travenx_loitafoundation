@@ -95,38 +95,44 @@ class AuthService {
           await _auth.signInWithCredential(authCredential);
 
       if (_phoneUserCredential.user != null) {
-        print('fbGgAuthCredential: $fbGgAuthCredential');
         if (fbGgAuthCredential != null) {
-          print('There is another AuthCredential token.');
           await _auth.signOut();
           final UserCredential _fbGgUserCredential =
               await _auth.signInWithCredential(fbGgAuthCredential);
 
-          await _firestore
-              .collection('profile_screen')
-              .doc(_fbGgUserCredential.user!.uid)
-              .set({
-            'displayName': _fbGgUserCredential.user!.displayName,
-            'phoneNumber': _phoneUserCredential.user!.phoneNumber,
-            'profileUrl': _fbGgUserCredential.user!.photoURL,
-            'backgroundUrl':
-                'assets/images/profile_screen/dummy_background.png',
-          });
-        } else {
-          if (await containData(_phoneUserCredential.user!.uid)) {
-            print('Has data');
-          } else {
-            print('User has no data');
+          try {
             await _firestore
                 .collection('profile_screen')
-                .doc(_phoneUserCredential.user!.uid)
+                .doc(_fbGgUserCredential.user!.uid)
                 .set({
-              'displayName': 'ដើរ លេង',
+              'displayName': _fbGgUserCredential.user!.displayName,
               'phoneNumber': _phoneUserCredential.user!.phoneNumber,
-              'profileUrl': 'assets/images/profile_screen/dummy_profile.png',
+              'profileUrl': _fbGgUserCredential.user!.photoURL,
               'backgroundUrl':
                   'assets/images/profile_screen/dummy_background.png',
             });
+          } catch (e) {
+            print(
+                'Push Data to Firestore with FB/Google SignIn: ${e.toString()}');
+          }
+        } else {
+          if (await containData(_phoneUserCredential.user!.uid)) {
+          } else {
+            try {
+              await _firestore
+                  .collection('profile_screen')
+                  .doc(_phoneUserCredential.user!.uid)
+                  .set({
+                'displayName': 'ដើរ លេង',
+                'phoneNumber': _phoneUserCredential.user!.phoneNumber,
+                'profileUrl': 'assets/images/profile_screen/dummy_profile.png',
+                'backgroundUrl':
+                    'assets/images/profile_screen/dummy_background.png',
+              });
+            } catch (e) {
+              print(
+                  'Push Data to Firestore with Phone SignIn: ${e.toString()}');
+            }
           }
         }
         successfulLoggedInCallback();
@@ -185,12 +191,10 @@ class AuthService {
         final User user = _userCredential.user!;
 
         if (await containData(user.uid)) {
-          print('Has data');
           successfulLoggedInCallback();
           ScaffoldMessenger.of(context).showSnackBar(
               _buildSnackBar(contentCode: 'successful_login', duration: 3));
         } else {
-          print('User has no data, we gonna take it!');
           pushFacebookAuthCredential(_facebookAuthCredential);
         }
       } else
@@ -231,12 +235,10 @@ class AuthService {
         final User user = _userCredential.user!;
 
         if (await containData(user.uid)) {
-          print('Has data');
           successfulLoggedInCallback();
           ScaffoldMessenger.of(context).showSnackBar(
               _buildSnackBar(contentCode: 'successful_login', duration: 3));
         } else {
-          print('User has no data, we gonna take it!');
           pushGoogleAuthCredential(_googleAuthCredential);
         }
       } else

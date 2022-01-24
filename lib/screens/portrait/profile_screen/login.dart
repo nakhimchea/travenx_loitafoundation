@@ -219,9 +219,10 @@ class _LoginMethodsState extends State<LoginMethods> {
                     setState(() => _isLoading = true);
                     await AuthService()
                         .signInWithFacebook(
-                            context, widget.successfulLoggedInCallback
-                      ,
-                      widget.fbGgAuthCredentialCallback,)
+                          context,
+                          widget.successfulLoggedInCallback,
+                          widget.fbGgAuthCredentialCallback,
+                        )
                         .whenComplete(() => setState(() => _isLoading = false));
                   }),
               SizedBox(height: 18.0),

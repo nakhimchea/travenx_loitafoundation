@@ -59,9 +59,9 @@ class AuthService {
       }
     } else {
       try {
-        final ConfirmationResult confirmationResult =
+        final ConfirmationResult _confirmationResult =
             await _auth.signInWithPhoneNumber(phoneNumber);
-        setData(confirmationResult.verificationId);
+        setData(_confirmationResult.verificationId);
         ScaffoldMessenger.of(context).showSnackBar(_buildSnackBar(
             contentCode: 'code_sent', phoneNumber: phoneNumber, duration: 3));
       } catch (firebaseAuthException) {
@@ -87,12 +87,12 @@ class AuthService {
       String otpNumber, void Function() successfulLoggedInCallback,
       [AuthCredential? fbGgAuthCredential]) async {
     try {
-      final AuthCredential authCredential = PhoneAuthProvider.credential(
+      final AuthCredential _phoneAuthCredential = PhoneAuthProvider.credential(
         verificationId: smsCodeId,
         smsCode: otpNumber,
       );
       final UserCredential _phoneUserCredential =
-          await _auth.signInWithCredential(authCredential);
+          await _auth.signInWithCredential(_phoneAuthCredential);
 
       if (_phoneUserCredential.user != null) {
         if (fbGgAuthCredential != null) {

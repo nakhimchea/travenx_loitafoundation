@@ -408,6 +408,8 @@ PODS:
     - FBSDKCoreKit (~> 12.2.1)
     - FBSDKLoginKit (~> 12.2.1)
     - Flutter
+  - flutter_secure_storage (3.3.1):
+    - Flutter
   - FMDB (2.7.5):
     - FMDB/standard (= 2.7.5)
   - FMDB/standard (2.7.5)
@@ -484,6 +486,7 @@ DEPENDENCIES:
   - firebase_core (from `.symlinks/plugins/firebase_core/ios`)
   - Flutter (from `Flutter`)
   - flutter_facebook_auth (from `.symlinks/plugins/flutter_facebook_auth/ios`)
+  - flutter_secure_storage (from `.symlinks/plugins/flutter_secure_storage/ios`)
   - google_sign_in (from `.symlinks/plugins/google_sign_in/ios`)
   - path_provider (from `.symlinks/plugins/path_provider/ios`)
   - sqflite (from `.symlinks/plugins/sqflite/ios`)
@@ -525,6 +528,8 @@ EXTERNAL SOURCES:
     :path: Flutter
   flutter_facebook_auth:
     :path: ".symlinks/plugins/flutter_facebook_auth/ios"
+  flutter_secure_storage:
+    :path: ".symlinks/plugins/flutter_secure_storage/ios"
   google_sign_in:
     :path: ".symlinks/plugins/google_sign_in/ios"
   path_provider:
@@ -550,6 +555,7 @@ SPEC CHECKSUMS:
   FirebaseFirestore: 0e7321a508cc9de54316ec45400caba6b5719beb
   Flutter: 434fef37c0980e73bb6479ef766c45957d4b510c
   flutter_facebook_auth: dbc47556cbdc61ced50e14473bd32461386a1425
+  flutter_secure_storage: 7953c38a04c3fdbb00571bcd87d8e3b5ceb9daec
   FMDB: 2ce00b547f966261cd18927a3ddb07cb6f3db82a
   google_sign_in: de494e5e993986afae63e22a32441e30c35c9823
   GoogleDataTransport: 629c20a4d363167143f30ea78320d5a7eb8bd940

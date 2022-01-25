@@ -34,6 +34,9 @@ dependencies:
   # Flutter Google Sign In
   google_sign_in: '>=5.0.0 <5.1.0'
 
+  # Flutter Secure Storage
+  flutter_secure_storage: ^5.0.2
+
   # Loading Screen
   flutter_spinkit: ^5.1.0
   animated_text_kit: ^4.2.1

@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:travenx_loitafoundation/config/constant.dart';
 import 'package:travenx_loitafoundation/config/palette.dart';
 import 'package:travenx_loitafoundation/config/variable.dart';
@@ -199,6 +200,8 @@ class _ProfileState extends State<Profile> {
                     trailing: [],
                     onTap: () async {
                       await FirebaseAuth.instance.signOut();
+                      await FlutterSecureStorage().delete(key: 'userId');
+                      await FlutterSecureStorage().delete(key: 'isAnonymous');
                       widget.loggedInCallback();
                     },
                   ),

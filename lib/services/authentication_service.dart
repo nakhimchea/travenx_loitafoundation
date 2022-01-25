@@ -3,12 +3,14 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:travenx_loitafoundation/widgets/custom_snackbar_content.dart';
 
 class AuthService {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+  final FlutterSecureStorage _secureStorage = FlutterSecureStorage();
 
   SnackBar _buildSnackBar(
       {required String contentCode, String? phoneNumber, int duration = 5}) {
@@ -111,14 +113,18 @@ class AuthService {
               'backgroundUrl':
                   'assets/images/profile_screen/dummy_background.png',
             });
-            //Todo: Save _fbGgUserCredential uid anon=false
+            await _secureStorage.write(
+                key: 'userId', value: _fbGgUserCredential.user!.uid);
+            await _secureStorage.write(key: 'isAnonymous', value: 'false');
           } catch (e) {
             print(
                 'Push Data to Firestore with FB/Google SignIn: ${e.toString()}');
           }
         } else {
           if (await containData(_phoneUserCredential.user!.uid)) {
-            //Todo: Save _phoneUserCredential uid anon=false
+            await _secureStorage.write(
+                key: 'userId', value: _phoneUserCredential.user!.uid);
+            await _secureStorage.write(key: 'isAnonymous', value: 'false');
           } else {
             try {
               await _firestore
@@ -131,7 +137,9 @@ class AuthService {
                 'backgroundUrl':
                     'assets/images/profile_screen/dummy_background.png',
               });
-              //Todo: Save _phoneUserCredential uid anon=false
+              await _secureStorage.write(
+                  key: 'userId', value: _phoneUserCredential.user!.uid);
+              await _secureStorage.write(key: 'isAnonymous', value: 'false');
             } catch (e) {
               print(
                   'Push Data to Firestore with Phone SignIn: ${e.toString()}');
@@ -194,7 +202,8 @@ class AuthService {
         final User user = _userCredential.user!;
 
         if (await containData(user.uid)) {
-          //Todo: Save user.uid anon=false
+          await _secureStorage.write(key: 'userId', value: user.uid);
+          await _secureStorage.write(key: 'isAnonymous', value: 'false');
 
           successfulLoggedInCallback();
           ScaffoldMessenger.of(context).showSnackBar(
@@ -242,7 +251,8 @@ class AuthService {
         final User user = _userCredential.user!;
 
         if (await containData(user.uid)) {
-          //Todo: Save user.uid anon=false
+          await _secureStorage.write(key: 'userId', value: user.uid);
+          await _secureStorage.write(key: 'isAnonymous', value: 'false');
 
           successfulLoggedInCallback();
           ScaffoldMessenger.of(context).showSnackBar(

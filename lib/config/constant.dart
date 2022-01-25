@@ -6,3 +6,4 @@ const double briefIconSize = 28.0;
 
 const double descriptionIconSize = 12.0;
 const double detailIconSize = 16.0;
+final String anonymousUserId = 'dYKweW80lMSbtRmUJXz6ymJrNMB2';

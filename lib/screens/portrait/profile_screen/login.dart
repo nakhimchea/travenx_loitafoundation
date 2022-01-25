@@ -112,6 +112,7 @@ class CustomAppBar extends StatelessWidget {
           margin: EdgeInsets.only(top: 56.0, right: 30.0),
           child: TextButton(
             onPressed: skippedCallback,
+            //Todo: Save Anonymous uid in storage with Anon=true
             style: ButtonStyle(
                 overlayColor: MaterialStateProperty.all(Colors.transparent)),
             child: Text(
@@ -160,6 +161,7 @@ class LoginAppBar extends StatelessWidget {
             padding: EdgeInsets.only(top: 20.0, right: 20.0),
             child: TextButton(
               onPressed: skippedCallback,
+              //Todo: Save Anonymous uid in storage with Anon=true
               style: ButtonStyle(
                   overlayColor: MaterialStateProperty.all(Colors.transparent)),
               child: Text(

@@ -25,6 +25,7 @@ class _ProfileState extends State<Profile> {
       body: CustomScrollView(
         slivers: [
           SliverToBoxAdapter(
+            //Todo: Get data with storage/uid
             child: ShortProfile(userProfile: userProfile),
           ),
           SliverPadding(

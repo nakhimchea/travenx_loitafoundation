@@ -111,12 +111,14 @@ class AuthService {
               'backgroundUrl':
                   'assets/images/profile_screen/dummy_background.png',
             });
+            //Todo: Save _fbGgUserCredential uid anon=false
           } catch (e) {
             print(
                 'Push Data to Firestore with FB/Google SignIn: ${e.toString()}');
           }
         } else {
           if (await containData(_phoneUserCredential.user!.uid)) {
+            //Todo: Save _phoneUserCredential uid anon=false
           } else {
             try {
               await _firestore
@@ -129,6 +131,7 @@ class AuthService {
                 'backgroundUrl':
                     'assets/images/profile_screen/dummy_background.png',
               });
+              //Todo: Save _phoneUserCredential uid anon=false
             } catch (e) {
               print(
                   'Push Data to Firestore with Phone SignIn: ${e.toString()}');
@@ -191,6 +194,8 @@ class AuthService {
         final User user = _userCredential.user!;
 
         if (await containData(user.uid)) {
+          //Todo: Save user.uid anon=false
+
           successfulLoggedInCallback();
           ScaffoldMessenger.of(context).showSnackBar(
               _buildSnackBar(contentCode: 'successful_login', duration: 3));
@@ -215,8 +220,10 @@ class AuthService {
       late UserCredential _userCredential;
 
       if (kIsWeb) {
-        _userCredential = await _auth.signInWithPopup(GoogleAuthProvider());
-        _googleAuthCredential = _userCredential.credential!;
+        _userCredential = await _auth
+            .signInWithPopup(GoogleAuthProvider())
+            .whenComplete(
+                () => _googleAuthCredential = _userCredential.credential!);
       } else {
         final GoogleSignInAuthentication googleSignInAuthentication =
             await GoogleSignIn().signIn().then((googleSignInAccount) async =>
@@ -235,6 +242,8 @@ class AuthService {
         final User user = _userCredential.user!;
 
         if (await containData(user.uid)) {
+          //Todo: Save user.uid anon=false
+
           successfulLoggedInCallback();
           ScaffoldMessenger.of(context).showSnackBar(
               _buildSnackBar(contentCode: 'successful_login', duration: 3));

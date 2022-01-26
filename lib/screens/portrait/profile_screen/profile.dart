@@ -4,8 +4,8 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:travenx_loitafoundation/config/constant.dart';
 import 'package:travenx_loitafoundation/config/palette.dart';
 import 'package:travenx_loitafoundation/config/variable.dart';
-import 'package:travenx_loitafoundation/data_holders/profile_data.dart';
 import 'package:travenx_loitafoundation/icons/icons.dart';
+import 'package:travenx_loitafoundation/models/profile_object_model.dart';
 import 'package:travenx_loitafoundation/widgets/portrait/profile_screen/profile_widget.dart';
 
 class Profile extends StatefulWidget {
@@ -27,7 +27,7 @@ class _ProfileState extends State<Profile> {
         slivers: [
           SliverToBoxAdapter(
             //Todo: Get data with storage/uid
-            child: ShortProfile(userProfile: userProfile),
+            child: ShortProfile(userProfile: ProfileObject()),
           ),
           SliverPadding(
             padding: EdgeInsets.symmetric(

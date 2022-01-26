@@ -56,7 +56,7 @@ class ShortProfile extends StatelessWidget {
                 ),
                 SizedBox(height: 5.0),
                 Text(
-                  '+855 ${userProfile.phoneNumber[0] == '0' ? userProfile.phoneNumber.substring(1) : userProfile.phoneNumber}',
+                  userProfile.phoneNumber,
                   textScaleFactor: textScaleFactor,
                   style: Theme.of(context).textTheme.bodyText1,
                 ),

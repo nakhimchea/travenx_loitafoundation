@@ -8,7 +8,7 @@ class ProfileObject {
     this.imageProfileUrl = 'assets/images/profile_screen/dummy_profile.png',
     this.imageBackgroundUrl =
         'assets/images/profile_screen/dummy_background.png',
-    this.displayName = 'ដើរ លេង',
-    this.phoneNumber = '0123456789',
+    this.displayName = 'គ្មានឈ្មោះ',
+    this.phoneNumber = '+85512345678',
   });
 }

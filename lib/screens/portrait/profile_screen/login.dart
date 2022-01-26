@@ -9,11 +9,11 @@ import 'package:travenx_loitafoundation/widgets/portrait/profile_screen/profile_
 
 class Login extends StatefulWidget {
   final void Function() loggedInCallback;
-  final void Function() setProfileCallback;
+  final void Function() getProfileCallback;
   const Login({
     Key? key,
     required this.loggedInCallback,
-    required this.setProfileCallback,
+    required this.getProfileCallback,
   }) : super(key: key);
 
   @override
@@ -68,12 +68,12 @@ class _LoginState extends State<Login> {
                           isPhoneLoginCallback: hasPhoneLogin,
                           successfulLoggedInCallback: widget.loggedInCallback,
                           fbGgAuthCredentialCallback: setAuthCredential,
-                          setProfileCallback: widget.setProfileCallback,
+                          setProfileCallback: widget.getProfileCallback,
                         )
                       : PhoneLogin(
                           fbGgAuthCredential: _fbGgAuthCredential,
                           successfulLoggedInCallback: widget.loggedInCallback,
-                          setProfileCallback: widget.setProfileCallback,
+                          setProfileCallback: widget.getProfileCallback,
                         ),
                 ),
                 PolicyAgreement(),

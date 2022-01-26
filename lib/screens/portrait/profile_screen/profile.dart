@@ -212,11 +212,15 @@ class _ProfileState extends State<Profile> {
                     textColor: Color(0xFFC23616),
                     trailing: [],
                     onTap: () async {
-                      await FirebaseAuth.instance.signOut();
-                      await FlutterSecureStorage().delete(key: 'userId');
-                      await FlutterSecureStorage().delete(key: 'isAnonymous');
-                      widget.cleanProfileCallback();
-                      widget.loggedInCallback();
+                      try {
+                        await FirebaseAuth.instance.signOut();
+                        await FlutterSecureStorage().delete(key: 'userId');
+                        await FlutterSecureStorage().delete(key: 'isAnonymous');
+                        widget.cleanProfileCallback();
+                        widget.loggedInCallback();
+                      } catch (_) {
+                        print('Cannot Sign User out');
+                      }
                     },
                   ),
                   SizedBox(height: 20.0),

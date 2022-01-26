@@ -171,8 +171,8 @@ class AuthService {
       void Function(AuthCredential) pushFacebookAuthCredential,
       void Function() setProfileCallback) async {
     try {
-      late AuthCredential _facebookAuthCredential;
-      late UserCredential _userCredential;
+      AuthCredential _facebookAuthCredential;
+      UserCredential? _userCredential;
 
       if (kIsWeb) {
         _userCredential = await _auth
@@ -235,14 +235,12 @@ class AuthService {
       void Function(AuthCredential) pushGoogleAuthCredential,
       void Function() setProfileCallback) async {
     try {
-      late AuthCredential _googleAuthCredential;
-      late UserCredential _userCredential;
+      AuthCredential _googleAuthCredential;
+      UserCredential? _userCredential;
 
       if (kIsWeb) {
-        _userCredential = await _auth
-            .signInWithPopup(GoogleAuthProvider())
-            .whenComplete(
-                () => _googleAuthCredential = _userCredential.credential!);
+        _userCredential = await _auth.signInWithPopup(GoogleAuthProvider());
+        _googleAuthCredential = _userCredential.credential!;
       } else {
         final GoogleSignInAuthentication googleSignInAuthentication =
             await GoogleSignIn().signIn().then((googleSignInAccount) async =>
@@ -274,7 +272,7 @@ class AuthService {
       } else
         print('Can\'t logged in user.');
     } catch (e) {
-      print(e.toString());
+      print(e);
       ScaffoldMessenger.of(context)
           .showSnackBar(_buildSnackBar(contentCode: 'invalid_google_account'));
     }

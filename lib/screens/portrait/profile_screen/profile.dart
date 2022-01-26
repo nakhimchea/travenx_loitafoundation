@@ -5,14 +5,23 @@ import 'package:travenx_loitafoundation/config/constant.dart';
 import 'package:travenx_loitafoundation/config/palette.dart';
 import 'package:travenx_loitafoundation/config/variable.dart';
 import 'package:travenx_loitafoundation/icons/icons.dart';
-import 'package:travenx_loitafoundation/models/profile_object_model.dart';
 import 'package:travenx_loitafoundation/widgets/portrait/profile_screen/profile_widget.dart';
 
 class Profile extends StatefulWidget {
   final void Function() loggedInCallback;
+  final String displayName;
+  final String phoneNumber;
+  final String profileUrl;
+  final String backgroundUrl;
+  final void Function() cleanProfileCallback;
   const Profile({
     Key? key,
     required this.loggedInCallback,
+    required this.displayName,
+    required this.phoneNumber,
+    required this.profileUrl,
+    required this.backgroundUrl,
+    required this.cleanProfileCallback,
   }) : super(key: key);
 
   @override
@@ -26,8 +35,12 @@ class _ProfileState extends State<Profile> {
       body: CustomScrollView(
         slivers: [
           SliverToBoxAdapter(
-            //Todo: Get data with storage/uid
-            child: ShortProfile(userProfile: ProfileObject()),
+            child: ShortProfile(
+              displayName: widget.displayName,
+              phoneNumber: widget.phoneNumber,
+              profileUrl: widget.profileUrl,
+              backgroundUrl: widget.backgroundUrl,
+            ),
           ),
           SliverPadding(
             padding: EdgeInsets.symmetric(
@@ -202,6 +215,7 @@ class _ProfileState extends State<Profile> {
                       await FirebaseAuth.instance.signOut();
                       await FlutterSecureStorage().delete(key: 'userId');
                       await FlutterSecureStorage().delete(key: 'isAnonymous');
+                      widget.cleanProfileCallback();
                       widget.loggedInCallback();
                     },
                   ),

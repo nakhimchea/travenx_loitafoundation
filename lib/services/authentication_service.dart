@@ -85,8 +85,12 @@ class AuthService {
       .get()
       .then((_document) => _document.data() != null ? true : false);
 
-  Future<void> signInWithPhoneNumber(BuildContext context, String smsCodeId,
-      String otpNumber, void Function() successfulLoggedInCallback,
+  Future<void> signInWithPhoneNumber(
+      BuildContext context,
+      String smsCodeId,
+      String otpNumber,
+      void Function() successfulLoggedInCallback,
+      void Function() setProfileCallback,
       [AuthCredential? fbGgAuthCredential]) async {
     try {
       final AuthCredential _phoneAuthCredential = PhoneAuthProvider.credential(
@@ -116,6 +120,7 @@ class AuthService {
             await _secureStorage.write(
                 key: 'userId', value: _fbGgUserCredential.user!.uid);
             await _secureStorage.write(key: 'isAnonymous', value: 'false');
+            setProfileCallback();
           } catch (e) {
             print(
                 'Push Data to Firestore with FB/Google SignIn: ${e.toString()}');
@@ -125,6 +130,7 @@ class AuthService {
             await _secureStorage.write(
                 key: 'userId', value: _phoneUserCredential.user!.uid);
             await _secureStorage.write(key: 'isAnonymous', value: 'false');
+            setProfileCallback();
           } else {
             try {
               await _firestore
@@ -140,6 +146,7 @@ class AuthService {
               await _secureStorage.write(
                   key: 'userId', value: _phoneUserCredential.user!.uid);
               await _secureStorage.write(key: 'isAnonymous', value: 'false');
+              setProfileCallback();
             } catch (e) {
               print(
                   'Push Data to Firestore with Phone SignIn: ${e.toString()}');
@@ -161,7 +168,8 @@ class AuthService {
   Future<void> signInWithFacebook(
       BuildContext context,
       void Function() successfulLoggedInCallback,
-      void Function(AuthCredential) pushFacebookAuthCredential) async {
+      void Function(AuthCredential) pushFacebookAuthCredential,
+      void Function() setProfileCallback) async {
     try {
       late AuthCredential _facebookAuthCredential;
       late UserCredential _userCredential;
@@ -204,6 +212,7 @@ class AuthService {
         if (await containData(user.uid)) {
           await _secureStorage.write(key: 'userId', value: user.uid);
           await _secureStorage.write(key: 'isAnonymous', value: 'false');
+          setProfileCallback();
 
           successfulLoggedInCallback();
           ScaffoldMessenger.of(context).showSnackBar(
@@ -223,7 +232,8 @@ class AuthService {
   Future<void> signInWithGoogle(
       BuildContext context,
       void Function() successfulLoggedInCallback,
-      void Function(AuthCredential) pushGoogleAuthCredential) async {
+      void Function(AuthCredential) pushGoogleAuthCredential,
+      void Function() setProfileCallback) async {
     try {
       late AuthCredential _googleAuthCredential;
       late UserCredential _userCredential;
@@ -253,6 +263,7 @@ class AuthService {
         if (await containData(user.uid)) {
           await _secureStorage.write(key: 'userId', value: user.uid);
           await _secureStorage.write(key: 'isAnonymous', value: 'false');
+          setProfileCallback();
 
           successfulLoggedInCallback();
           ScaffoldMessenger.of(context).showSnackBar(

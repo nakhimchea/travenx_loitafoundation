@@ -6,3 +6,5 @@ const double briefIconSize = 28.0;
 
 const double descriptionIconSize = 12.0;
 const double detailIconSize = 16.0;
+
+const double profilePictureDiameter = 100.0;

@@ -9,9 +9,11 @@ import 'package:travenx_loitafoundation/widgets/portrait/profile_screen/profile_
 
 class Login extends StatefulWidget {
   final void Function() loggedInCallback;
+  final void Function() setProfileCallback;
   const Login({
     Key? key,
     required this.loggedInCallback,
+    required this.setProfileCallback,
   }) : super(key: key);
 
   @override
@@ -66,10 +68,12 @@ class _LoginState extends State<Login> {
                           isPhoneLoginCallback: hasPhoneLogin,
                           successfulLoggedInCallback: widget.loggedInCallback,
                           fbGgAuthCredentialCallback: setAuthCredential,
+                          setProfileCallback: widget.setProfileCallback,
                         )
                       : PhoneLogin(
                           fbGgAuthCredential: _fbGgAuthCredential,
                           successfulLoggedInCallback: widget.loggedInCallback,
+                          setProfileCallback: widget.setProfileCallback,
                         ),
                 ),
                 PolicyAgreement(),
@@ -195,6 +199,7 @@ class LoginMethods extends StatefulWidget {
   final void Function() isPhoneLoginCallback;
   final void Function() successfulLoggedInCallback;
   final void Function(AuthCredential) fbGgAuthCredentialCallback;
+  final void Function() setProfileCallback;
 
   const LoginMethods({
     Key? key,
@@ -202,6 +207,7 @@ class LoginMethods extends StatefulWidget {
     required this.isPhoneLoginCallback,
     required this.successfulLoggedInCallback,
     required this.fbGgAuthCredentialCallback,
+    required this.setProfileCallback,
   }) : super(key: key);
 
   @override
@@ -233,6 +239,7 @@ class _LoginMethodsState extends State<LoginMethods> {
                           context,
                           widget.successfulLoggedInCallback,
                           widget.fbGgAuthCredentialCallback,
+                          widget.setProfileCallback,
                         )
                         .whenComplete(() => setState(() => _isLoading = false));
                   }),
@@ -248,6 +255,7 @@ class _LoginMethodsState extends State<LoginMethods> {
                         context,
                         widget.successfulLoggedInCallback,
                         widget.fbGgAuthCredentialCallback,
+                        widget.setProfileCallback,
                       )
                       .whenComplete(() => setState(() => _isLoading = false));
                 },
@@ -321,10 +329,12 @@ class GradientButton extends StatelessWidget {
 class PhoneLogin extends StatefulWidget {
   final AuthCredential? fbGgAuthCredential;
   final void Function() successfulLoggedInCallback;
+  final void Function() setProfileCallback;
   const PhoneLogin({
     Key? key,
     this.fbGgAuthCredential,
     required this.successfulLoggedInCallback,
+    required this.setProfileCallback,
   }) : super(key: key);
 
   @override
@@ -418,6 +428,7 @@ class _PhoneLoginState extends State<PhoneLogin> {
                                   _smsCodeId,
                                   _otpNumber,
                                   widget.successfulLoggedInCallback,
+                                  widget.setProfileCallback,
                                   widget.fbGgAuthCredential,
                                 )
                                 .whenComplete(

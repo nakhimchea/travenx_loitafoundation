@@ -5,7 +5,8 @@ import 'package:travenx_loitafoundation/config/palette.dart';
 import 'package:travenx_loitafoundation/config/variable.dart';
 import 'package:travenx_loitafoundation/services/authentication_service.dart';
 import 'package:travenx_loitafoundation/widgets/custom_loading.dart';
-import 'package:travenx_loitafoundation/widgets/portrait/profile_screen/profile_widget.dart';
+import 'package:travenx_loitafoundation/widgets/portrait/profile_screen/login_card_button.dart';
+import 'package:travenx_loitafoundation/widgets/portrait/profile_screen/login_text_field.dart';
 
 class Login extends StatefulWidget {
   final void Function() loggedInCallback;

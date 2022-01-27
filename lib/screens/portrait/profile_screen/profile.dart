@@ -5,7 +5,8 @@ import 'package:travenx_loitafoundation/config/constant.dart';
 import 'package:travenx_loitafoundation/config/palette.dart';
 import 'package:travenx_loitafoundation/config/variable.dart';
 import 'package:travenx_loitafoundation/icons/icons.dart';
-import 'package:travenx_loitafoundation/widgets/portrait/profile_screen/profile_widget.dart';
+import 'package:travenx_loitafoundation/widgets/portrait/profile_screen/profile_category.dart';
+import 'package:travenx_loitafoundation/widgets/portrait/profile_screen/short_profile.dart';
 
 class Profile extends StatefulWidget {
   final void Function() loggedInCallback;

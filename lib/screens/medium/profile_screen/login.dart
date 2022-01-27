@@ -2,7 +2,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:travenx_loitafoundation/config/palette.dart';
-import 'package:travenx_loitafoundation/config/variable.dart';
 import 'package:travenx_loitafoundation/services/authentication_service.dart';
 import 'package:travenx_loitafoundation/widgets/custom_loading.dart';
 import 'package:travenx_loitafoundation/widgets/medium/home_screen/login_card_button.dart';
@@ -48,7 +47,7 @@ class _LoginState extends State<Login> {
                 image: AssetImage(
                   'assets/images/profile_screen/scaffold_background.png',
                 ),
-                fit: BoxFit.fill,
+                fit: BoxFit.cover,
               ),
             ),
             child: !_isPhoneLogin
@@ -62,7 +61,8 @@ class _LoginState extends State<Login> {
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
                 Container(
-                  margin: EdgeInsets.only(bottom: 67.0),
+                  margin: EdgeInsets.only(
+                      bottom: MediaQuery.of(context).size.height / 15),
                   child: !_isPhoneLogin
                       ? LoginMethods(
                           isPhoneLogin: _isPhoneLogin,
@@ -106,7 +106,7 @@ class CustomAppBar extends StatelessWidget {
           margin: EdgeInsets.only(top: 44.0, left: 16.0),
           child: Text(
             'Travenx',
-            textScaleFactor: textScaleFactor,
+            textScaleFactor: MediaQuery.of(context).size.width / 667,
             style: const TextStyle(
               color: Colors.white,
               fontSize: 28.0,
@@ -115,7 +115,10 @@ class CustomAppBar extends StatelessWidget {
           ),
         ),
         Container(
-          margin: EdgeInsets.only(top: 56.0, right: 30.0),
+          margin: EdgeInsets.only(
+            top: 56.0,
+            right: MediaQuery.of(context).size.width / 20 - 25,
+          ),
           child: TextButton(
             onPressed: () async {
               await FlutterSecureStorage().write(key: 'userId', value: '');
@@ -127,11 +130,12 @@ class CustomAppBar extends StatelessWidget {
                 overlayColor: MaterialStateProperty.all(Colors.transparent)),
             child: Text(
               'រំលង',
+              textScaleFactor: MediaQuery.of(context).size.width / 720,
               style: const TextStyle(
                 color: Colors.white,
                 fontSize: 16.0,
                 fontFamily: 'Nokora',
-                fontWeight: FontWeight.w700,
+                fontWeight: FontWeight.w500,
               ),
             ),
           ),
@@ -150,25 +154,22 @@ class LoginAppBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: 127.0,
-      alignment: Alignment.bottomCenter,
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    return Padding(
+      padding: const EdgeInsets.only(top: 50.0),
+      child: Column(
         children: [
-          Container(width: 50.0),
           Text(
             'ចុះឈ្មោះគណនី លេខទូរសព្ទ',
-            textScaleFactor: textScaleFactor,
+            textScaleFactor: MediaQuery.of(context).size.width / 800,
             style: const TextStyle(
               color: Colors.white,
               fontSize: 20.0,
               fontFamily: 'Nokora',
-              fontWeight: FontWeight.w700,
+              fontWeight: FontWeight.w600,
             ),
           ),
-          Padding(
-            padding: EdgeInsets.only(top: 20.0, right: 20.0),
+          Align(
+            alignment: Alignment.topRight,
             child: TextButton(
               onPressed: () async {
                 await FlutterSecureStorage().write(key: 'userId', value: '');
@@ -180,11 +181,12 @@ class LoginAppBar extends StatelessWidget {
                   overlayColor: MaterialStateProperty.all(Colors.transparent)),
               child: Text(
                 'រំលង',
+                textScaleFactor: MediaQuery.of(context).size.width / 720,
                 style: const TextStyle(
                   color: Colors.white,
-                  fontSize: 16.0,
+                  fontSize: 14.0,
                   fontFamily: 'Nokora',
-                  fontWeight: FontWeight.w700,
+                  fontWeight: FontWeight.w500,
                 ),
               ),
             ),
@@ -314,6 +316,7 @@ class GradientButton extends StatelessWidget {
                       : Colors.transparent)),
               child: Text(
                 title,
+                textScaleFactor: constraints.maxWidth / 300,
                 style: Theme.of(context).textTheme.headline1!.copyWith(
                     color: isCodeSent
                         ? Palette.priceColor
@@ -380,15 +383,15 @@ class _PhoneLoginState extends State<PhoneLogin> {
         children: [
           Text(
             'សូមបំពេញលេខទូរសព្ទ',
-            textScaleFactor: textScaleFactor,
+            textScaleFactor: constraints.maxWidth / 200,
             style: TextStyle(
               color: Colors.black38,
-              fontSize: 18.0,
+              fontSize: 14.0,
               fontFamily: 'Nokora',
               fontWeight: FontWeight.w500,
             ),
           ),
-          SizedBox(height: 50.0),
+          SizedBox(height: MediaQuery.of(context).size.height / 25),
           Column(
             children: [
               LoginTextField(
@@ -400,7 +403,7 @@ class _PhoneLoginState extends State<PhoneLogin> {
                 isCodeSentCallback: _toggleCodeSent,
                 showLoginCallback: _toggleShowLogin,
               ),
-              SizedBox(height: 26.0),
+              SizedBox(height: MediaQuery.of(context).size.height / 50),
               LoginTextField(
                 logoUrl:
                     'assets/icons/profile_screen/one_time_password_logo.png',
@@ -413,7 +416,7 @@ class _PhoneLoginState extends State<PhoneLogin> {
                 phoneNumber: _phoneNumber,
                 showLoginCallback: _toggleShowLogin,
               ),
-              SizedBox(height: 50.0),
+              SizedBox(height: MediaQuery.of(context).size.height / 30),
               _isLoading
                   ? Loading()
                   : _showLogin
@@ -447,35 +450,36 @@ class _PhoneLoginState extends State<PhoneLogin> {
 }
 
 class PolicyAgreement extends StatelessWidget {
-  const PolicyAgreement({Key? key}) : super(key: key);
-
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () => print('Policy Button click...'),
-      child: Column(
-        children: [
-          Text(
-            'តាមរយ:ការប្រើកម្មវិធីនេះ អ្នកយល់ព្រមទទួលយក',
-            style: const TextStyle(
-              color: Colors.white60,
-              fontSize: 12.0,
-              height: 1.67,
-              fontFamily: 'Nokora',
-              fontWeight: FontWeight.w400,
+      child: LayoutBuilder(
+        builder: (context, constraints) => Column(
+          children: [
+            Text(
+              'តាមរយ:ការប្រើកម្មវិធីនេះ អ្នកយល់ព្រមទទួលយក',
+              textScaleFactor: constraints.maxWidth / 200,
+              style: const TextStyle(
+                color: Colors.white60,
+                fontSize: 8.0,
+                fontFamily: 'Nokora',
+                fontWeight: FontWeight.w400,
+              ),
             ),
-          ),
-          Text(
-            'លក្ខខណ្ឌ និងគោលនយោបាយឯកជនភាព',
-            style: const TextStyle(
-              color: Colors.white60,
-              fontSize: 12.0,
-              height: 1.67,
-              fontFamily: 'Nokora',
-              fontWeight: FontWeight.w700,
+            SizedBox(height: 3),
+            Text(
+              'លក្ខខណ្ឌ និងគោលនយោបាយឯកជនភាព',
+              textScaleFactor: constraints.maxWidth / 200,
+              style: const TextStyle(
+                color: Colors.white60,
+                fontSize: 8.0,
+                fontFamily: 'Nokora',
+                fontWeight: FontWeight.w700,
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
@@ -490,33 +494,37 @@ class SignInRequest extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        Text(
-          'មានគណនីរួច? ',
-          style: const TextStyle(
-            color: Colors.white,
-            fontSize: 14.0,
-            height: 3,
-            fontFamily: 'Nokora',
-            fontWeight: FontWeight.w400,
-          ),
-        ),
-        GestureDetector(
-          onTap: isPhoneLoginCallback,
-          child: Text(
-            'ចូលតាមគណនីផ្សេងទៀត',
+    return LayoutBuilder(
+      builder: (context, constraints) => Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Text(
+            'មានគណនីរួច? ',
+            textScaleFactor: constraints.maxWidth / 200,
             style: const TextStyle(
               color: Colors.white,
-              fontSize: 14.0,
+              fontSize: 9.0,
               height: 3,
               fontFamily: 'Nokora',
-              fontWeight: FontWeight.w700,
+              fontWeight: FontWeight.w400,
             ),
           ),
-        ),
-      ],
+          GestureDetector(
+            onTap: isPhoneLoginCallback,
+            child: Text(
+              'ចូលតាមគណនីផ្សេងទៀត',
+              textScaleFactor: constraints.maxWidth / 200,
+              style: const TextStyle(
+                color: Colors.white,
+                fontSize: 9.0,
+                height: 3,
+                fontFamily: 'Nokora',
+                fontWeight: FontWeight.w700,
+              ),
+            ),
+          ),
+        ],
+      ),
     );
   }
 }
@@ -530,33 +538,37 @@ class SignUpRequest extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        Text(
-          'ត្រូវការគណនី? ',
-          style: const TextStyle(
-            color: Colors.white,
-            fontSize: 14.0,
-            height: 3,
-            fontFamily: 'Nokora',
-            fontWeight: FontWeight.w400,
-          ),
-        ),
-        GestureDetector(
-          onTap: isPhoneLoginCallback,
-          child: Text(
-            'ចុះឈ្មោះឥឡូវនេះ',
+    return LayoutBuilder(
+      builder: (context, constraints) => Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Text(
+            'ត្រូវការគណនី? ',
+            textScaleFactor: constraints.maxWidth / 200,
             style: const TextStyle(
               color: Colors.white,
-              fontSize: 14.0,
+              fontSize: 9.0,
               height: 3,
               fontFamily: 'Nokora',
-              fontWeight: FontWeight.w700,
+              fontWeight: FontWeight.w400,
             ),
           ),
-        ),
-      ],
+          GestureDetector(
+            onTap: isPhoneLoginCallback,
+            child: Text(
+              'ចុះឈ្មោះឥឡូវនេះ',
+              textScaleFactor: constraints.maxWidth / 200,
+              style: const TextStyle(
+                color: Colors.white,
+                fontSize: 9.0,
+                height: 3,
+                fontFamily: 'Nokora',
+                fontWeight: FontWeight.w700,
+              ),
+            ),
+          ),
+        ],
+      ),
     );
   }
 }

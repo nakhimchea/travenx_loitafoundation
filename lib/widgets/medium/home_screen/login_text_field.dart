@@ -61,18 +61,19 @@ class _LoginTextFieldState extends State<LoginTextField> {
     return _isLoading
         ? Loading()
         : Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 30.0),
+            padding: EdgeInsets.symmetric(
+                horizontal: widget.constraints.maxWidth / 10 - 15),
             child: Stack(
               children: [
                 Container(
                   height: (MediaQuery.of(context).size.height / 16)
                       .ceil()
                       .toDouble(),
+                  width: double.infinity,
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(15.0),
                     child: Image.asset(
                       'assets/images/profile_screen/card_background.png',
-                      width: widget.constraints.maxWidth - 60,
                       fit: BoxFit.cover,
                     ),
                   ),
@@ -88,32 +89,41 @@ class _LoginTextFieldState extends State<LoginTextField> {
                   child: Row(
                     children: [
                       Container(
-                        padding: const EdgeInsets.only(left: 30.0),
+                        padding: EdgeInsets.only(
+                            left: widget.constraints.maxWidth / 6 - 20),
                         child: Image.asset(
                           widget.logoUrl,
-                          width: 23.0,
-                          height: 23.0,
+                          width: 5 + widget.constraints.maxWidth / 20,
+                          height: 5 + widget.constraints.maxWidth / 20,
                         ),
                       ),
-                      SizedBox(width: 20.0),
+                      SizedBox(width: widget.constraints.maxWidth / 10 - 10),
                       Container(
-                        width: widget.constraints.maxWidth - 167.0,
+                        width: 19 * widget.constraints.maxWidth / 60 + 63,
                         child: Row(
                           children: [
                             Expanded(
                               child: TextField(
                                 style: TextStyle(
-                                    color: Theme.of(context).primaryColor),
+                                  color: Theme.of(context).primaryColor,
+                                  fontSize:
+                                      10 * widget.constraints.maxWidth / 200,
+                                  fontFamily: 'Nokora',
+                                ),
                                 enabled: !widget.isCodeSent,
                                 autofocus: !widget.isCodeSent,
                                 onChanged: widget.onChangedCallback,
                                 decoration: InputDecoration(
                                   hintText: widget.hintText,
                                   hintStyle: TextStyle(
-                                      color: Theme.of(context)
-                                          .textTheme
-                                          .bodyText1!
-                                          .color),
+                                    color: Theme.of(context)
+                                        .textTheme
+                                        .bodyText1!
+                                        .color,
+                                    fontSize:
+                                        10 * widget.constraints.maxWidth / 200,
+                                    fontFamily: 'Nokora',
+                                  ),
                                   border: InputBorder.none,
                                 ),
                                 keyboardType: TextInputType.number,
@@ -148,9 +158,12 @@ class _LoginTextFieldState extends State<LoginTextField> {
                                           ),
                                           child: Text(
                                             'ផ្ញើលេខកូដ',
+                                            textScaleFactor:
+                                                widget.constraints.maxWidth /
+                                                    200,
                                             style: const TextStyle(
                                               color: Color(0xAAF7B731),
-                                              fontSize: 18.0,
+                                              fontSize: 12.0,
                                               fontFamily: 'Nokora',
                                               fontWeight: FontWeight.w600,
                                             ),
@@ -161,10 +174,12 @@ class _LoginTextFieldState extends State<LoginTextField> {
                                         visible: !widget.isCodeSent,
                                         child: Text(
                                           '$_countSeconds វិនាទី',
+                                          textScaleFactor:
+                                              widget.constraints.maxWidth / 200,
                                           style: TextStyle(
                                             color:
                                                 Theme.of(context).disabledColor,
-                                            fontSize: 16.0,
+                                            fontSize: 12.0,
                                             fontFamily: 'Nokora',
                                             fontWeight: FontWeight.w600,
                                           ),

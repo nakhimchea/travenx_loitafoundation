@@ -6,8 +6,6 @@ import 'package:travenx_loitafoundation/screens/landscape/screens.dart';
 import 'custom_nav_bar.dart';
 
 class LandscapeBody extends StatefulWidget {
-  const LandscapeBody({Key? key}) : super(key: key);
-
   @override
   _LandscapeBodyState createState() => _LandscapeBodyState();
 }

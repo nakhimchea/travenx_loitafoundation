@@ -56,8 +56,6 @@ class MyApp extends StatelessWidget {
 }
 
 class ResponsiveDecider extends StatefulWidget {
-  const ResponsiveDecider({Key? key}) : super(key: key);
-
   @override
   _ResponsiveDeciderState createState() => _ResponsiveDeciderState();
 }
@@ -140,7 +138,7 @@ class _ResponsiveDeciderState extends State<ResponsiveDecider> {
     _onRefresh();
   }
 
-  bool _isLoading = false;
+  bool _isLoading = true;
 
   @override
   Widget build(BuildContext context) {
@@ -162,9 +160,9 @@ class _ResponsiveDeciderState extends State<ResponsiveDecider> {
                     decoration: BoxDecoration(
                       image: DecorationImage(
                         image: AssetImage(
-                          'assets/images/profile_screen/scaffold_background.png',
+                          'assets/images/loading_scaffold.png',
                         ),
-                        fit: BoxFit.fill,
+                        fit: BoxFit.cover,
                       ),
                     ),
                     child: Container(

@@ -1,7 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:travenx_loitafoundation/config/constant.dart';
-import 'package:travenx_loitafoundation/config/variable.dart';
 import 'package:travenx_loitafoundation/helpers/profile_clipper.dart';
 import 'package:travenx_loitafoundation/models/profile_object_model.dart';
 
@@ -65,29 +64,29 @@ class ShortProfile extends StatelessWidget {
                 child: ClipOval(
                   child: profileUrl == ''
                       ? Image(
-                          height: profilePictureDiameter,
-                          width: profilePictureDiameter,
+                          height: constraints.maxWidth / 5,
+                          width: constraints.maxWidth / 5,
                           image: AssetImage(_anonymous.imageProfileUrl),
                           fit: BoxFit.contain)
                       : profileUrl.split('/').first == 'assets'
                           ? Image(
-                              height: profilePictureDiameter,
-                              width: profilePictureDiameter,
+                              height: constraints.maxWidth / 5,
+                              width: constraints.maxWidth / 5,
                               image: AssetImage(profileUrl),
                               fit: BoxFit.contain)
                           : CachedNetworkImage(
-                              height: profilePictureDiameter,
-                              width: profilePictureDiameter,
+                              height: constraints.maxWidth / 5,
+                              width: constraints.maxWidth / 5,
                               imageUrl: profileUrl,
                               placeholder: (context, _) => Image(
-                                  height: profilePictureDiameter,
-                                  width: profilePictureDiameter,
+                                  height: constraints.maxWidth / 5,
+                                  width: constraints.maxWidth / 5,
                                   image: AssetImage(
                                       'assets/images/profile_screen/dummy_profile.png'),
                                   fit: BoxFit.contain),
                               errorWidget: (context, _, __) => Container(
-                                  height: profilePictureDiameter,
-                                  width: profilePictureDiameter,
+                                  height: constraints.maxWidth / 5,
+                                  width: constraints.maxWidth / 5,
                                   child: Center(
                                       child: Text('Unable to Load Images'))),
                               fit: BoxFit.contain),
@@ -104,13 +103,13 @@ class ShortProfile extends StatelessWidget {
               children: [
                 Text(
                   '${displayName != '' ? displayName : _anonymous.displayName}',
-                  textScaleFactor: textScaleFactor,
+                  textScaleFactor: constraints.maxWidth / 300,
                   style: Theme.of(context).textTheme.headline2,
                 ),
                 SizedBox(height: 5.0),
                 Text(
                   phoneNumber != '' ? phoneNumber : _anonymous.phoneNumber,
-                  textScaleFactor: textScaleFactor,
+                  textScaleFactor: constraints.maxWidth / 300,
                   style: Theme.of(context).textTheme.bodyText1,
                 ),
               ],

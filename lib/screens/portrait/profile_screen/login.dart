@@ -447,8 +447,6 @@ class _PhoneLoginState extends State<PhoneLogin> {
 }
 
 class PolicyAgreement extends StatelessWidget {
-  const PolicyAgreement({Key? key}) : super(key: key);
-
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -460,17 +458,16 @@ class PolicyAgreement extends StatelessWidget {
             style: const TextStyle(
               color: Colors.white60,
               fontSize: 12.0,
-              height: 1.67,
               fontFamily: 'Nokora',
               fontWeight: FontWeight.w400,
             ),
           ),
+          SizedBox(height: 3),
           Text(
             'លក្ខខណ្ឌ និងគោលនយោបាយឯកជនភាព',
             style: const TextStyle(
               color: Colors.white60,
               fontSize: 12.0,
-              height: 1.67,
               fontFamily: 'Nokora',
               fontWeight: FontWeight.w700,
             ),

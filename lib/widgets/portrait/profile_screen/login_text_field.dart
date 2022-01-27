@@ -103,17 +103,21 @@ class _LoginTextFieldState extends State<LoginTextField> {
                             Expanded(
                               child: TextField(
                                 style: TextStyle(
-                                    color: Theme.of(context).primaryColor),
+                                  color: Theme.of(context).primaryColor,
+                                  fontFamily: 'Nokora',
+                                ),
                                 enabled: !widget.isCodeSent,
                                 autofocus: !widget.isCodeSent,
                                 onChanged: widget.onChangedCallback,
                                 decoration: InputDecoration(
                                   hintText: widget.hintText,
                                   hintStyle: TextStyle(
-                                      color: Theme.of(context)
-                                          .textTheme
-                                          .bodyText1!
-                                          .color),
+                                    color: Theme.of(context)
+                                        .textTheme
+                                        .bodyText1!
+                                        .color,
+                                    fontFamily: 'Nokora',
+                                  ),
                                   border: InputBorder.none,
                                 ),
                                 keyboardType: TextInputType.number,

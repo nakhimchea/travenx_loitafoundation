@@ -48,7 +48,7 @@ class _LoginState extends State<Login> {
                 image: AssetImage(
                   'assets/images/profile_screen/scaffold_background.png',
                 ),
-                fit: BoxFit.fill,
+                fit: BoxFit.cover,
               ),
             ),
             child: !_isPhoneLogin

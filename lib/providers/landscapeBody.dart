@@ -6,16 +6,32 @@ import 'package:travenx_loitafoundation/screens/landscape/screens.dart';
 import 'custom_nav_bar.dart';
 
 class LandscapeBody extends StatefulWidget {
+  final bool isLoggedIn;
+  final String displayName;
+  final String phoneNumber;
+  final String profileUrl;
+  final String backgroundUrl;
+  final void Function() cleanProfileCallback;
+  final void Function() loggedInCallback;
+  final void Function() getProfileCallback;
+  const LandscapeBody({
+    Key? key,
+    required this.isLoggedIn,
+    required this.displayName,
+    required this.phoneNumber,
+    required this.profileUrl,
+    required this.backgroundUrl,
+    required this.cleanProfileCallback,
+    required this.loggedInCallback,
+    required this.getProfileCallback,
+  }) : super(key: key);
+
   @override
   _LandscapeBodyState createState() => _LandscapeBodyState();
 }
 
 class _LandscapeBodyState extends State<LandscapeBody> {
-  final List<Widget> _screens = [
-    HomeScreen(),
-    ChatScreen(),
-    WalletScreen(),
-  ];
+  List<Widget> _screens = [];
 
   final Map<String, List<IconData>> _icons = const {
     'ទំព័រដើម': [CustomOutlinedIcons.home, CustomFilledIcons.home],
@@ -24,6 +40,35 @@ class _LandscapeBodyState extends State<LandscapeBody> {
   };
   @override
   Widget build(BuildContext context) {
+    setState(() => _screens = [
+          HomeScreen(
+              isLoggedIn: widget.isLoggedIn,
+              displayName: widget.displayName,
+              phoneNumber: widget.phoneNumber,
+              profileUrl: widget.profileUrl,
+              backgroundUrl: widget.backgroundUrl,
+              cleanProfileCallback: widget.cleanProfileCallback,
+              loggedInCallback: widget.loggedInCallback,
+              getProfileCallback: widget.getProfileCallback),
+          ChatScreen(
+              isLoggedIn: widget.isLoggedIn,
+              displayName: widget.displayName,
+              phoneNumber: widget.phoneNumber,
+              profileUrl: widget.profileUrl,
+              backgroundUrl: widget.backgroundUrl,
+              cleanProfileCallback: widget.cleanProfileCallback,
+              loggedInCallback: widget.loggedInCallback,
+              getProfileCallback: widget.getProfileCallback),
+          WalletScreen(
+              isLoggedIn: widget.isLoggedIn,
+              displayName: widget.displayName,
+              phoneNumber: widget.phoneNumber,
+              profileUrl: widget.profileUrl,
+              backgroundUrl: widget.backgroundUrl,
+              cleanProfileCallback: widget.cleanProfileCallback,
+              loggedInCallback: widget.loggedInCallback,
+              getProfileCallback: widget.getProfileCallback),
+        ]);
     return DefaultTabController(
       length: _icons.length,
       child: Scaffold(

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:travenx_loitafoundation/screens/medium/profile_screen/profile_layout.dart';
+import 'package:travenx_loitafoundation/screens/medium/profile_layout/profile_layout.dart';
 
 class HomeScreen extends StatefulWidget {
   final bool isLoggedIn;

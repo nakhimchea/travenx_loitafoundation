@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:travenx_loitafoundation/screens/medium/profile_screen/login.dart';
-import 'package:travenx_loitafoundation/screens/medium/profile_screen/profile.dart';
+import 'package:travenx_loitafoundation/screens/medium/profile_layout/login.dart';
+import 'package:travenx_loitafoundation/screens/medium/profile_layout/profile.dart';
 
 class ProfileLayout extends StatefulWidget {
   final bool isLoggedIn;

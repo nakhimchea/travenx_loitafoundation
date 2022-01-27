@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:travenx_loitafoundation/config/variable.dart';
 
 class LoginCardButton extends StatelessWidget {
   final String leadingUrl;
@@ -53,9 +54,10 @@ class LoginCardButton extends StatelessWidget {
                     Flexible(
                       child: Text(
                         title,
+                        textScaleFactor: textScaleFactor,
                         style: TextStyle(
                           color: Colors.black,
-                          fontSize: 16.0,
+                          fontSize: 15.0,
                           fontFamily: 'Nokora',
                           fontWeight: FontWeight.w400,
                         ),
@@ -64,9 +66,10 @@ class LoginCardButton extends StatelessWidget {
                     ),
                     Text(
                       trailing,
+                      textScaleFactor: textScaleFactor,
                       style: TextStyle(
                         color: Colors.black,
-                        fontSize: 16.0,
+                        fontSize: 15.0,
                         fontFamily: 'Poppins',
                         fontWeight: FontWeight.w500,
                       ),

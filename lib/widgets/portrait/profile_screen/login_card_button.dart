@@ -44,7 +44,7 @@ class LoginCardButton extends StatelessWidget {
               ),
               child: Padding(
                 padding: EdgeInsets.symmetric(
-                  horizontal: MediaQuery.of(context).size.width / 4 - 30,
+                  horizontal: MediaQuery.of(context).size.width / 4 - 50,
                 ),
                 child: Row(
                   children: [

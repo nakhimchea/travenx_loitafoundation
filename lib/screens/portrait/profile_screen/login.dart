@@ -62,7 +62,8 @@ class _LoginState extends State<Login> {
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
                 Container(
-                  margin: EdgeInsets.only(bottom: 67.0),
+                  margin: EdgeInsets.only(
+                      bottom: MediaQuery.of(context).size.height / 15),
                   child: !_isPhoneLogin
                       ? LoginMethods(
                           isPhoneLogin: _isPhoneLogin,
@@ -151,12 +152,12 @@ class LoginAppBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 127.0,
+      height: MediaQuery.of(context).size.height / 6.9,
       alignment: Alignment.bottomCenter,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Container(width: 50.0),
+          SizedBox(width: 50.0),
           Text(
             'ចុះឈ្មោះគណនី លេខទូរសព្ទ',
             textScaleFactor: textScaleFactor,
@@ -314,6 +315,7 @@ class GradientButton extends StatelessWidget {
                       : Colors.transparent)),
               child: Text(
                 title,
+                textScaleFactor: MediaQuery.of(context).size.width / 428,
                 style: Theme.of(context).textTheme.headline1!.copyWith(
                     color: isCodeSent
                         ? Palette.priceColor
@@ -388,7 +390,7 @@ class _PhoneLoginState extends State<PhoneLogin> {
               fontWeight: FontWeight.w500,
             ),
           ),
-          SizedBox(height: 50.0),
+          SizedBox(height: MediaQuery.of(context).size.height / 17),
           Column(
             children: [
               LoginTextField(
@@ -400,7 +402,7 @@ class _PhoneLoginState extends State<PhoneLogin> {
                 isCodeSentCallback: _toggleCodeSent,
                 showLoginCallback: _toggleShowLogin,
               ),
-              SizedBox(height: 26.0),
+              SizedBox(height: MediaQuery.of(context).size.height / 34),
               LoginTextField(
                 logoUrl:
                     'assets/icons/profile_screen/one_time_password_logo.png',
@@ -413,7 +415,7 @@ class _PhoneLoginState extends State<PhoneLogin> {
                 phoneNumber: _phoneNumber,
                 showLoginCallback: _toggleShowLogin,
               ),
-              SizedBox(height: 50.0),
+              SizedBox(height: MediaQuery.of(context).size.height / 17),
               _isLoading
                   ? Loading()
                   : _showLogin

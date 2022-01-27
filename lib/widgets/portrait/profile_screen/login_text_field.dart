@@ -152,6 +152,11 @@ class _LoginTextFieldState extends State<LoginTextField> {
                                           ),
                                           child: Text(
                                             'ផ្ញើលេខកូដ',
+                                            textScaleFactor:
+                                                MediaQuery.of(context)
+                                                        .size
+                                                        .width /
+                                                    428,
                                             style: const TextStyle(
                                               color: Color(0xAAF7B731),
                                               fontSize: 18.0,

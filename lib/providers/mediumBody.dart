@@ -51,8 +51,24 @@ class _MediumBodyState extends State<MediumBody> {
               cleanProfileCallback: widget.cleanProfileCallback,
               loggedInCallback: widget.loggedInCallback,
               getProfileCallback: widget.getProfileCallback),
-          ChatScreen(),
-          WalletScreen(),
+          ChatScreen(
+              isLoggedIn: widget.isLoggedIn,
+              displayName: widget.displayName,
+              phoneNumber: widget.phoneNumber,
+              profileUrl: widget.profileUrl,
+              backgroundUrl: widget.backgroundUrl,
+              cleanProfileCallback: widget.cleanProfileCallback,
+              loggedInCallback: widget.loggedInCallback,
+              getProfileCallback: widget.getProfileCallback),
+          WalletScreen(
+              isLoggedIn: widget.isLoggedIn,
+              displayName: widget.displayName,
+              phoneNumber: widget.phoneNumber,
+              profileUrl: widget.profileUrl,
+              backgroundUrl: widget.backgroundUrl,
+              cleanProfileCallback: widget.cleanProfileCallback,
+              loggedInCallback: widget.loggedInCallback,
+              getProfileCallback: widget.getProfileCallback),
         ]);
     return DefaultTabController(
       length: _icons.length,

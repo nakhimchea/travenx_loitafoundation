@@ -144,10 +144,7 @@ class _ResponsiveDeciderState extends State<ResponsiveDecider> {
 
   @override
   Widget build(BuildContext context) {
-    textScaleFactor =
-        MediaQuery.of(context).size.height > MediaQuery.of(context).size.width
-            ? MediaQuery.of(context).size.width / 375
-            : MediaQuery.of(context).size.height / 667;
+    textScaleFactor = MediaQuery.of(context).size.width / 375;
     textScaleFactor = textScaleFactor > 1.5 ? 1.5 : textScaleFactor;
 
     Future.delayed(Duration(seconds: 2))

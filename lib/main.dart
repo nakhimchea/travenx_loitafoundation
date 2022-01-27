@@ -140,7 +140,7 @@ class _ResponsiveDeciderState extends State<ResponsiveDecider> {
     _onRefresh();
   }
 
-  bool _isLoading = true;
+  bool _isLoading = false;
 
   @override
   Widget build(BuildContext context) {
@@ -199,7 +199,16 @@ class _ResponsiveDeciderState extends State<ResponsiveDecider> {
               loggedInCallback: _toggleLoggedIn,
               getProfileCallback: _getProfileData,
             ),
-            mediumBody: MediumBody(),
+            mediumBody: MediumBody(
+              isLoggedIn: _isLoggedIn,
+              displayName: _displayName,
+              phoneNumber: _phoneNumber,
+              profileUrl: _profileUrl,
+              backgroundUrl: _backgroundUrl,
+              cleanProfileCallback: _cleanProfileData,
+              loggedInCallback: _toggleLoggedIn,
+              getProfileCallback: _getProfileData,
+            ),
             landscapeBody: LandscapeBody(),
           );
   }

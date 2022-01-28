@@ -22,7 +22,7 @@ class CustomNavBar extends StatelessWidget {
             (key, icon) => MapEntry(
               key,
               Tab(
-                iconMargin: EdgeInsets.only(top: 10.0, bottom: 5.0),
+                iconMargin: EdgeInsets.only(top: 5.0, bottom: 5.0),
                 icon: Icon(
                   key == icons.keys.elementAt(selectedIndex)
                       ? icon[1]

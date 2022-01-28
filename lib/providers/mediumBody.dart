@@ -78,13 +78,10 @@ class _MediumBodyState extends State<MediumBody> {
           index: selectedIndex >= 3 ? 0 : selectedIndex,
           children: _screens,
         ),
-        bottomNavigationBar: Padding(
-          padding: const EdgeInsets.only(bottom: 16.0),
-          child: CustomNavBar(
-            icons: _icons,
-            selectedIndex: selectedIndex >= 3 ? 0 : selectedIndex,
-            onTap: (index) => setState(() => selectedIndex = index),
-          ),
+        bottomNavigationBar: CustomNavBar(
+          icons: _icons,
+          selectedIndex: selectedIndex >= 3 ? 0 : selectedIndex,
+          onTap: (index) => setState(() => selectedIndex = index),
         ),
       ),
     );

@@ -104,6 +104,7 @@ class _LoginTextFieldState extends State<LoginTextField> {
                           children: [
                             Expanded(
                               child: TextField(
+                                textAlignVertical: TextAlignVertical.center,
                                 style: TextStyle(
                                   color: Theme.of(context).primaryColor,
                                   fontSize:
@@ -155,6 +156,8 @@ class _LoginTextFieldState extends State<LoginTextField> {
                                                 MaterialStateProperty.all(
                                               Colors.transparent,
                                             ),
+                                            padding: MaterialStateProperty.all(
+                                                EdgeInsets.zero),
                                           ),
                                           child: Text(
                                             'ផ្ញើលេខកូដ',

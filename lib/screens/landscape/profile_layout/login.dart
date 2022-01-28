@@ -318,9 +318,11 @@ class GradientButton extends StatelessWidget {
             child: TextButton(
               onPressed: onPressed,
               style: ButtonStyle(
-                  overlayColor: MaterialStateProperty.all(isCodeSent
-                      ? Palette.priceColor.withOpacity(0.2)
-                      : Colors.transparent)),
+                overlayColor: MaterialStateProperty.all(isCodeSent
+                    ? Palette.priceColor.withOpacity(0.2)
+                    : Colors.transparent),
+                padding: MaterialStateProperty.all(EdgeInsets.zero),
+              ),
               child: Text(
                 title,
                 textScaleFactor: constraints.maxWidth / 300,

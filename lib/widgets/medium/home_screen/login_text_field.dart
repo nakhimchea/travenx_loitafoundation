@@ -104,6 +104,7 @@ class _LoginTextFieldState extends State<LoginTextField> {
                           children: [
                             Expanded(
                               child: TextField(
+                                textAlignVertical: TextAlignVertical.center,
                                 style: TextStyle(
                                   color: Theme.of(context).primaryColor,
                                   fontSize:

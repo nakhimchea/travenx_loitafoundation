@@ -40,7 +40,7 @@ class _LoginState extends State<Login> {
       builder: (context, constraints) => Stack(
         children: [
           Container(
-            alignment: Alignment.topCenter,
+            alignment: Alignment(0, -1.1),
             width: constraints.maxWidth,
             height: constraints.maxHeight,
             decoration: BoxDecoration(
@@ -104,7 +104,10 @@ class CustomAppBar extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         Container(
-          margin: EdgeInsets.only(top: 44.0, left: 16.0),
+          margin: EdgeInsets.only(
+              top: MediaQuery.of(context).size.height / 11,
+              left: 16.0,
+              right: 16.0),
           child: Text(
             'Travenx',
             textScaleFactor: textScaleFactor,
@@ -116,7 +119,9 @@ class CustomAppBar extends StatelessWidget {
           ),
         ),
         Container(
-          margin: EdgeInsets.only(top: 56.0, right: 30.0),
+          margin: EdgeInsets.only(
+              top: MediaQuery.of(context).size.height / 9,
+              right: MediaQuery.of(context).size.width / 20),
           child: TextButton(
             onPressed: () async {
               await FlutterSecureStorage().write(key: 'userId', value: '');
@@ -270,13 +275,11 @@ class _LoginMethodsState extends State<LoginMethods> {
 class GradientButton extends StatelessWidget {
   final String title;
   final bool isCodeSent;
-  final BoxConstraints constraints;
   final void Function() onPressed;
   const GradientButton({
     Key? key,
     required this.title,
     required this.isCodeSent,
-    required this.constraints,
     required this.onPressed,
   }) : super(key: key);
 
@@ -287,20 +290,20 @@ class GradientButton extends StatelessWidget {
       child: Stack(
         children: [
           Container(
-            width: constraints.maxWidth / 3,
+            width: MediaQuery.of(context).size.width / 3,
             height: (MediaQuery.of(context).size.height / 12).ceil().toDouble(),
             child: ClipRRect(
               borderRadius: BorderRadius.circular(15.0),
               child: Image.asset(
                 'assets/images/profile_screen/card_background.png',
-                width: constraints.maxWidth - 60,
+                width: MediaQuery.of(context).size.width - 60,
                 fit: BoxFit.cover,
               ),
             ),
           ),
           Container(
             margin: EdgeInsets.all(3.0),
-            width: constraints.maxWidth / 3 - 6,
+            width: MediaQuery.of(context).size.width / 3 - 6,
             height: ((MediaQuery.of(context).size.height / 12).ceil() - 6)
                 .toDouble(),
             decoration: BoxDecoration(
@@ -376,75 +379,68 @@ class _PhoneLoginState extends State<PhoneLogin> {
 
   @override
   Widget build(BuildContext context) {
-    return LayoutBuilder(builder: (context, constraints) {
-      return Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Text(
-            'សូមបំពេញលេខទូរសព្ទ',
-            textScaleFactor: textScaleFactor,
-            style: TextStyle(
-              color: Colors.black38,
-              fontSize: 18.0,
-              fontFamily: 'Nokora',
-              fontWeight: FontWeight.w500,
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Text(
+          'សូមបំពេញលេខទូរសព្ទ',
+          textScaleFactor: textScaleFactor,
+          style: TextStyle(
+            color: Colors.black38,
+            fontSize: 18.0,
+            fontFamily: 'Nokora',
+            fontWeight: FontWeight.w500,
+          ),
+        ),
+        SizedBox(height: MediaQuery.of(context).size.height / 17),
+        Column(
+          children: [
+            LoginTextField(
+              logoUrl: 'assets/icons/profile_screen/phone_logo.png',
+              hintText: '012345678',
+              onChangedCallback: _getPhoneNumber,
+              isCodeSent: _isCodeSent,
+              isCodeSentCallback: _toggleCodeSent,
+              showLoginCallback: _toggleShowLogin,
             ),
-          ),
-          SizedBox(height: MediaQuery.of(context).size.height / 17),
-          Column(
-            children: [
-              LoginTextField(
-                logoUrl: 'assets/icons/profile_screen/phone_logo.png',
-                hintText: '012345678',
-                constraints: constraints,
-                onChangedCallback: _getPhoneNumber,
-                isCodeSent: _isCodeSent,
-                isCodeSentCallback: _toggleCodeSent,
-                showLoginCallback: _toggleShowLogin,
-              ),
-              SizedBox(height: MediaQuery.of(context).size.height / 34),
-              LoginTextField(
-                logoUrl:
-                    'assets/icons/profile_screen/one_time_password_logo.png',
-                hintText: '******',
-                constraints: constraints,
-                onChangedCallback: _getOtpNumber,
-                isCodeSent: !_isCodeSent,
-                isCodeSentCallback: _toggleCodeSent,
-                smsCodeIdSentCallback: _getSmsCodeId,
-                phoneNumber: _phoneNumber,
-                showLoginCallback: _toggleShowLogin,
-              ),
-              SizedBox(height: MediaQuery.of(context).size.height / 17),
-              _isLoading
-                  ? Loading()
-                  : _showLogin
-                      ? GradientButton(
-                          title: 'ចូល',
-                          isCodeSent: _isCodeSent,
-                          constraints: constraints,
-                          onPressed: () async {
-                            if (_isCodeSent) setState(() => _isLoading = true);
-                            await AuthService()
-                                .signInWithPhoneNumber(
-                                  context,
-                                  _smsCodeId,
-                                  _otpNumber,
-                                  widget.successfulLoggedInCallback,
-                                  widget.setProfileCallback,
-                                  widget.fbGgAuthCredential,
-                                )
-                                .whenComplete(
-                                    () => setState(() => _isLoading = false));
-                          },
-                        )
-                      : SizedBox(
-                          height: MediaQuery.of(context).size.height / 16),
-            ],
-          ),
-        ],
-      );
-    });
+            SizedBox(height: MediaQuery.of(context).size.height / 34),
+            LoginTextField(
+              logoUrl: 'assets/icons/profile_screen/one_time_password_logo.png',
+              hintText: '******',
+              onChangedCallback: _getOtpNumber,
+              isCodeSent: !_isCodeSent,
+              isCodeSentCallback: _toggleCodeSent,
+              smsCodeIdSentCallback: _getSmsCodeId,
+              phoneNumber: _phoneNumber,
+              showLoginCallback: _toggleShowLogin,
+            ),
+            SizedBox(height: MediaQuery.of(context).size.height / 17),
+            _isLoading
+                ? Loading()
+                : _showLogin
+                    ? GradientButton(
+                        title: 'ចូល',
+                        isCodeSent: _isCodeSent,
+                        onPressed: () async {
+                          if (_isCodeSent) setState(() => _isLoading = true);
+                          await AuthService()
+                              .signInWithPhoneNumber(
+                                context,
+                                _smsCodeId,
+                                _otpNumber,
+                                widget.successfulLoggedInCallback,
+                                widget.setProfileCallback,
+                                widget.fbGgAuthCredential,
+                              )
+                              .whenComplete(
+                                  () => setState(() => _isLoading = false));
+                        },
+                      )
+                    : SizedBox(height: MediaQuery.of(context).size.height / 16),
+          ],
+        ),
+      ],
+    );
   }
 }
 

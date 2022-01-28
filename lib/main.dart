@@ -214,6 +214,16 @@ class _ResponsiveDeciderState extends State<ResponsiveDecider> {
               loggedInCallback: _toggleLoggedIn,
               getProfileCallback: _getProfileData,
             ),
+            wideBody: WideBody(
+              isLoggedIn: _isLoggedIn,
+              displayName: _displayName,
+              phoneNumber: _phoneNumber,
+              profileUrl: _profileUrl,
+              backgroundUrl: _backgroundUrl,
+              cleanProfileCallback: _cleanProfileData,
+              loggedInCallback: _toggleLoggedIn,
+              getProfileCallback: _getProfileData,
+            ),
           );
   }
 }

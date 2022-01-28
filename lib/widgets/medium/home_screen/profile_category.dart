@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:travenx_loitafoundation/config/constant.dart';
 
 class ProfileCategory extends StatelessWidget {
   final Widget icon;
@@ -23,10 +22,17 @@ class ProfileCategory extends StatelessWidget {
       onTap: onTap,
       child: LayoutBuilder(
         builder: (context, constraints) => Container(
-          margin: EdgeInsets.symmetric(vertical: 4.0),
+          margin: EdgeInsets.symmetric(
+              vertical: constraints.maxWidth / 300 > 1.6
+                  ? 5
+                  : constraints.maxWidth / 100),
           padding: EdgeInsets.symmetric(
-              horizontal: kHPadding,
-              vertical: MediaQuery.of(context).size.height / 60),
+              horizontal: constraints.maxWidth / 300 > 1.6
+                  ? 16
+                  : constraints.maxWidth / 18.75,
+              vertical: constraints.maxWidth / 300 > 1.6
+                  ? 15
+                  : constraints.maxWidth / 32),
           alignment: Alignment.centerLeft,
           decoration: BoxDecoration(
             color: Theme.of(context).bottomAppBarColor,
@@ -36,11 +42,16 @@ class ProfileCategory extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               icon,
-              SizedBox(width: kHPadding),
+              SizedBox(
+                  width: constraints.maxWidth / 300 > 1.6
+                      ? 10
+                      : constraints.maxWidth / 30),
               Expanded(
                 child: Text(
                   title,
-                  textScaleFactor: constraints.maxWidth / 200,
+                  textScaleFactor: constraints.maxWidth / 200 > 1.6
+                      ? 1.6
+                      : constraints.maxWidth / 200,
                   style: TextStyle(
                     color: textColor != null
                         ? textColor

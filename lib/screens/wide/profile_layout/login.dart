@@ -4,8 +4,8 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:travenx_loitafoundation/config/palette.dart';
 import 'package:travenx_loitafoundation/services/authentication_service.dart';
 import 'package:travenx_loitafoundation/widgets/custom_loading.dart';
-import 'package:travenx_loitafoundation/widgets/medium/home_screen/login_card_button.dart';
-import 'package:travenx_loitafoundation/widgets/medium/home_screen/login_text_field.dart';
+import 'package:travenx_loitafoundation/widgets/wide/home_screen/login_card_button.dart';
+import 'package:travenx_loitafoundation/widgets/wide/home_screen/login_text_field.dart';
 
 class Login extends StatefulWidget {
   final void Function() loggedInCallback;
@@ -39,7 +39,6 @@ class _LoginState extends State<Login> {
       builder: (context, constraints) => Stack(
         children: [
           Container(
-            alignment: Alignment.topCenter,
             width: constraints.maxWidth,
             height: constraints.maxHeight,
             decoration: BoxDecoration(
@@ -50,157 +49,145 @@ class _LoginState extends State<Login> {
                 fit: BoxFit.cover,
               ),
             ),
-            child: !_isPhoneLogin
-                ? CustomAppBar(skippedCallback: widget.loggedInCallback)
-                : LoginAppBar(skippedCallback: widget.loggedInCallback),
           ),
-          Positioned(
-            width: constraints.maxWidth,
-            bottom: 10.0,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                Container(
-                  margin: EdgeInsets.only(
-                      bottom: MediaQuery.of(context).size.height / 15),
+          CustomScrollView(
+            slivers: [
+              SliverAppBar(
+                toolbarHeight: 100,
+                backgroundColor: Colors.transparent,
+                centerTitle: !_isPhoneLogin ? false : true,
+                title: Padding(
+                  padding: EdgeInsets.only(top: 50),
                   child: !_isPhoneLogin
-                      ? LoginMethods(
-                          isPhoneLogin: _isPhoneLogin,
-                          isPhoneLoginCallback: hasPhoneLogin,
-                          successfulLoggedInCallback: widget.loggedInCallback,
-                          fbGgAuthCredentialCallback: setAuthCredential,
-                          setProfileCallback: widget.getProfileCallback,
+                      ? Text(
+                          'Travenx',
+                          textScaleFactor: constraints.maxWidth / 300 > 1.6
+                              ? 1.6
+                              : constraints.maxWidth / 300,
+                          style: const TextStyle(
+                            color: Colors.white,
+                            fontSize: 28.0,
+                            fontWeight: FontWeight.w700,
+                          ),
                         )
-                      : PhoneLogin(
-                          fbGgAuthCredential: _fbGgAuthCredential,
-                          successfulLoggedInCallback: widget.loggedInCallback,
-                          setProfileCallback: widget.getProfileCallback,
+                      : Text(
+                          'ចុះឈ្មោះគណនី លេខទូរសព្ទ',
+                          textScaleFactor: constraints.maxWidth / 300 > 1.6
+                              ? 1.6
+                              : constraints.maxWidth / 300,
+                          style: const TextStyle(
+                            color: Colors.white,
+                            fontSize: 20.0,
+                            fontFamily: 'Nokora',
+                            fontWeight: FontWeight.w600,
+                          ),
                         ),
                 ),
-                PolicyAgreement(),
-                !_isPhoneLogin
-                    ? SignUpRequest(isPhoneLoginCallback: hasPhoneLogin)
-                    : SignInRequest(isPhoneLoginCallback: hasLoginMethods),
-              ],
-            ),
+                actions: [
+                  TextButton(
+                    onPressed: () async {
+                      await FlutterSecureStorage()
+                          .write(key: 'userId', value: '');
+                      await FlutterSecureStorage()
+                          .write(key: 'isAnonymous', value: 'true');
+                      widget.loggedInCallback();
+                    },
+                    style: ButtonStyle(
+                        overlayColor:
+                            MaterialStateProperty.all(Colors.transparent)),
+                    child: Padding(
+                      padding: EdgeInsets.only(
+                        top: MediaQuery.of(context).size.height / 30 + 50,
+                        right: constraints.maxWidth / 20 - 5,
+                      ),
+                      child: Text(
+                        'រំលង',
+                        textScaleFactor: constraints.maxWidth / 300 > 1.6
+                            ? 1.6
+                            : constraints.maxWidth / 300,
+                        style: const TextStyle(
+                          color: Colors.white,
+                          fontSize: 16.0,
+                          fontFamily: 'Nokora',
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              SliverToBoxAdapter(
+                  child: SizedBox(
+                      height: MediaQuery.of(context).size.height / 10)),
+              SliverToBoxAdapter(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    Container(
+                      margin: EdgeInsets.only(
+                          bottom: MediaQuery.of(context).size.height / 15),
+                      child: !_isPhoneLogin
+                          ? LoginMethods(
+                              isPhoneLogin: _isPhoneLogin,
+                              isPhoneLoginCallback: hasPhoneLogin,
+                              successfulLoggedInCallback:
+                                  widget.loggedInCallback,
+                              fbGgAuthCredentialCallback: setAuthCredential,
+                              setProfileCallback: widget.getProfileCallback,
+                            )
+                          : PhoneLogin(
+                              fbGgAuthCredential: _fbGgAuthCredential,
+                              successfulLoggedInCallback:
+                                  widget.loggedInCallback,
+                              setProfileCallback: widget.getProfileCallback,
+                            ),
+                    ),
+                    PolicyAgreement(),
+                    !_isPhoneLogin
+                        ? SignUpRequest(isPhoneLoginCallback: hasPhoneLogin)
+                        : SignInRequest(isPhoneLoginCallback: hasLoginMethods),
+                  ],
+                ),
+              ),
+            ],
           ),
         ],
       ),
     );
-  }
-}
 
-class CustomAppBar extends StatelessWidget {
-  final void Function() skippedCallback;
-  const CustomAppBar({
-    Key? key,
-    required this.skippedCallback,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        Container(
-          margin: EdgeInsets.only(top: 44.0, left: 16.0),
-          child: Text(
-            'Travenx',
-            textScaleFactor: MediaQuery.of(context).size.width / 667,
-            style: const TextStyle(
-              color: Colors.white,
-              fontSize: 28.0,
-              fontWeight: FontWeight.w700,
-            ),
-          ),
-        ),
-        Container(
-          margin: EdgeInsets.only(
-            top: 56.0,
-            right: MediaQuery.of(context).size.width / 20 - 25,
-          ),
-          child: TextButton(
-            onPressed: () async {
-              await FlutterSecureStorage().write(key: 'userId', value: '');
-              await FlutterSecureStorage()
-                  .write(key: 'isAnonymous', value: 'true');
-              skippedCallback();
-            },
-            style: ButtonStyle(
-                overlayColor: MaterialStateProperty.all(Colors.transparent)),
-            child: Text(
-              'រំលង',
-              textScaleFactor: MediaQuery.of(context).size.width / 720,
-              style: const TextStyle(
-                color: Colors.white,
-                fontSize: 16.0,
-                fontFamily: 'Nokora',
-                fontWeight: FontWeight.w500,
-              ),
-            ),
-          ),
-        )
-      ],
-    );
-  }
-}
-
-class LoginAppBar extends StatelessWidget {
-  final void Function() skippedCallback;
-  const LoginAppBar({
-    Key? key,
-    required this.skippedCallback,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return LayoutBuilder(
-      builder: (context, constraints) => Padding(
-        padding: const EdgeInsets.only(top: 50.0),
-        child: Column(
-          children: [
-            Text(
-              'ចុះឈ្មោះគណនី លេខទូរសព្ទ',
-              textScaleFactor: constraints.maxWidth / 350 > 1.6
-                  ? 1.6
-                  : constraints.maxWidth / 350,
-              style: const TextStyle(
-                color: Colors.white,
-                fontSize: 20.0,
-                fontFamily: 'Nokora',
-                fontWeight: FontWeight.w600,
-              ),
-            ),
-            Align(
-              alignment: Alignment.topRight,
-              child: TextButton(
-                onPressed: () async {
-                  await FlutterSecureStorage().write(key: 'userId', value: '');
-                  await FlutterSecureStorage()
-                      .write(key: 'isAnonymous', value: 'true');
-                  skippedCallback();
-                },
-                style: ButtonStyle(
-                    overlayColor:
-                        MaterialStateProperty.all(Colors.transparent)),
-                child: Text(
-                  'រំលង',
-                  textScaleFactor: constraints.maxWidth / 350 > 1.6
-                      ? 1.6
-                      : constraints.maxWidth / 350,
-                  style: const TextStyle(
-                    color: Colors.white,
-                    fontSize: 14.0,
-                    fontFamily: 'Nokora',
-                    fontWeight: FontWeight.w500,
-                  ),
-                ),
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
+    //       Positioned(
+    //         width: constraints.maxWidth,
+    //         bottom: 10.0,
+    //         child: Column(
+    //           mainAxisAlignment: MainAxisAlignment.end,
+    //           children: [
+    //             Container(
+    //               margin: EdgeInsets.only(
+    //                   bottom: MediaQuery.of(context).size.height / 15),
+    //               child: !_isPhoneLogin
+    //                   ? LoginMethods(
+    //                       isPhoneLogin: _isPhoneLogin,
+    //                       isPhoneLoginCallback: hasPhoneLogin,
+    //                       successfulLoggedInCallback: widget.loggedInCallback,
+    //                       fbGgAuthCredentialCallback: setAuthCredential,
+    //                       setProfileCallback: widget.getProfileCallback,
+    //                     )
+    //                   : PhoneLogin(
+    //                       fbGgAuthCredential: _fbGgAuthCredential,
+    //                       successfulLoggedInCallback: widget.loggedInCallback,
+    //                       setProfileCallback: widget.getProfileCallback,
+    //                     ),
+    //             ),
+    //             PolicyAgreement(),
+    //             !_isPhoneLogin
+    //                 ? SignUpRequest(isPhoneLoginCallback: hasPhoneLogin)
+    //                 : SignInRequest(isPhoneLoginCallback: hasLoginMethods),
+    //           ],
+    //         ),
+    //       ),
+    //     ],
+    //   ),
+    // );
   }
 }
 
@@ -296,7 +283,7 @@ class GradientButton extends StatelessWidget {
         children: [
           Container(
             width: constraints.maxWidth / 3,
-            height: (MediaQuery.of(context).size.height / 12).ceil().toDouble(),
+            height: 66.0,
             child: ClipRRect(
               borderRadius: BorderRadius.circular(15.0),
               child: Image.asset(
@@ -309,8 +296,7 @@ class GradientButton extends StatelessWidget {
           Container(
             margin: EdgeInsets.all(3.0),
             width: constraints.maxWidth / 3 - 6,
-            height: ((MediaQuery.of(context).size.height / 12).ceil() - 6)
-                .toDouble(),
+            height: 60.0,
             decoration: BoxDecoration(
               color: Colors.white,
               borderRadius: BorderRadius.circular(14.0),
@@ -325,9 +311,9 @@ class GradientButton extends StatelessWidget {
               ),
               child: Text(
                 title,
-                textScaleFactor: constraints.maxWidth / 280 > 1.5
+                textScaleFactor: constraints.maxWidth / 300 > 1.5
                     ? 1.5
-                    : constraints.maxWidth / 280,
+                    : constraints.maxWidth / 300,
                 style: Theme.of(context).textTheme.headline1!.copyWith(
                     color: isCodeSent
                         ? Palette.priceColor

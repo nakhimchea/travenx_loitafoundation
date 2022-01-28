@@ -108,9 +108,15 @@ class _LoginTextFieldState extends State<LoginTextField> {
                                 style: TextStyle(
                                   color: Theme.of(context).primaryColor,
                                   fontSize:
-                                      10 * widget.constraints.maxWidth / 200,
+                                      widget.constraints.maxWidth / 200 > 1.6
+                                          ? 16
+                                          : widget.constraints.maxWidth / 20,
                                   fontFamily: 'Nokora',
                                 ),
+                                cursorHeight:
+                                    widget.constraints.maxWidth / 200 > 1.6
+                                        ? 16
+                                        : widget.constraints.maxWidth / 20,
                                 enabled: !widget.isCodeSent,
                                 autofocus: !widget.isCodeSent,
                                 onChanged: widget.onChangedCallback,
@@ -122,7 +128,9 @@ class _LoginTextFieldState extends State<LoginTextField> {
                                         .bodyText1!
                                         .color,
                                     fontSize:
-                                        10 * widget.constraints.maxWidth / 200,
+                                        widget.constraints.maxWidth / 200 > 1.6
+                                            ? 16
+                                            : widget.constraints.maxWidth / 20,
                                     fontFamily: 'Nokora',
                                   ),
                                   border: InputBorder.none,
@@ -159,8 +167,12 @@ class _LoginTextFieldState extends State<LoginTextField> {
                                           ),
                                           child: Text(
                                             'ផ្ញើលេខកូដ',
-                                            textScaleFactor:
-                                                widget.constraints.maxWidth /
+                                            textScaleFactor: widget.constraints
+                                                            .maxWidth /
+                                                        200 >
+                                                    1.6
+                                                ? 1.6
+                                                : widget.constraints.maxWidth /
                                                     200,
                                             style: const TextStyle(
                                               color: Color(0xAAF7B731),
@@ -175,8 +187,13 @@ class _LoginTextFieldState extends State<LoginTextField> {
                                         visible: !widget.isCodeSent,
                                         child: Text(
                                           '$_countSeconds វិនាទី',
-                                          textScaleFactor:
-                                              widget.constraints.maxWidth / 200,
+                                          textScaleFactor: widget.constraints
+                                                          .maxWidth /
+                                                      200 >
+                                                  1.6
+                                              ? 1.6
+                                              : widget.constraints.maxWidth /
+                                                  200,
                                           style: TextStyle(
                                             color:
                                                 Theme.of(context).disabledColor,

@@ -7,6 +7,7 @@ import 'package:travenx_loitafoundation/widgets/custom_loading.dart';
 class LoginTextField extends StatefulWidget {
   final String logoUrl;
   final String hintText;
+  final BoxConstraints constraints;
   final void Function(String) onChangedCallback;
   final bool isCodeSent;
   final void Function() isCodeSentCallback;
@@ -18,6 +19,7 @@ class LoginTextField extends StatefulWidget {
     Key? key,
     required this.logoUrl,
     required this.hintText,
+    required this.constraints,
     required this.onChangedCallback,
     required this.isCodeSent,
     required this.isCodeSentCallback,
@@ -59,26 +61,24 @@ class _LoginTextFieldState extends State<LoginTextField> {
     return _isLoading
         ? Loading()
         : Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 30.0),
+            padding: EdgeInsets.symmetric(
+                horizontal: widget.constraints.maxWidth / 10 - 12),
             child: Stack(
               children: [
                 Container(
-                  height: (MediaQuery.of(context).size.height / 16)
-                      .ceil()
-                      .toDouble(),
+                  height: 54.0,
+                  width: double.infinity,
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(15.0),
                     child: Image.asset(
                       'assets/images/profile_screen/card_background.png',
-                      width: MediaQuery.of(context).size.width - 60,
                       fit: BoxFit.cover,
                     ),
                   ),
                 ),
                 Container(
                   margin: EdgeInsets.all(2.0),
-                  height: ((MediaQuery.of(context).size.height / 16).ceil() - 4)
-                      .toDouble(),
+                  height: 50.0,
                   decoration: BoxDecoration(
                     color: Colors.white,
                     borderRadius: BorderRadius.circular(14.0),
@@ -86,30 +86,34 @@ class _LoginTextFieldState extends State<LoginTextField> {
                   child: Row(
                     children: [
                       Container(
-                        padding: const EdgeInsets.only(left: 30.0),
+                        padding: EdgeInsets.only(
+                            left: widget.constraints.maxWidth / 6 - 20),
                         child: Image.asset(
                           widget.logoUrl,
-                          width: 23.0,
-                          height: 23.0,
+                          width: 5 + widget.constraints.maxWidth / 20,
+                          height: 5 + widget.constraints.maxWidth / 20,
                         ),
                       ),
-                      SizedBox(width: 20.0),
+                      SizedBox(width: widget.constraints.maxWidth / 10 - 10),
                       Container(
-                        width: MediaQuery.of(context).size.width - 167.0,
+                        width: 19 * widget.constraints.maxWidth / 60 + 57,
                         child: Row(
                           children: [
                             Expanded(
                               child: TextField(
+                                textAlignVertical: TextAlignVertical.center,
                                 style: TextStyle(
                                   color: Theme.of(context).primaryColor,
+                                  fontSize:
+                                      widget.constraints.maxWidth / 200 > 1.6
+                                          ? 16
+                                          : widget.constraints.maxWidth / 20,
                                   fontFamily: 'Nokora',
                                 ),
                                 cursorHeight:
-                                    MediaQuery.of(context).size.width / 200 >
-                                            1.6
+                                    widget.constraints.maxWidth / 200 > 1.6
                                         ? 16
-                                        : MediaQuery.of(context).size.width /
-                                            20,
+                                        : widget.constraints.maxWidth / 20,
                                 enabled: !widget.isCodeSent,
                                 autofocus: !widget.isCodeSent,
                                 onChanged: widget.onChangedCallback,
@@ -120,6 +124,10 @@ class _LoginTextFieldState extends State<LoginTextField> {
                                         .textTheme
                                         .bodyText1!
                                         .color,
+                                    fontSize:
+                                        widget.constraints.maxWidth / 200 > 1.6
+                                            ? 16
+                                            : widget.constraints.maxWidth / 20,
                                     fontFamily: 'Nokora',
                                   ),
                                   border: InputBorder.none,
@@ -153,17 +161,21 @@ class _LoginTextFieldState extends State<LoginTextField> {
                                                 MaterialStateProperty.all(
                                               Colors.transparent,
                                             ),
+                                            padding: MaterialStateProperty.all(
+                                                EdgeInsets.zero),
                                           ),
                                           child: Text(
                                             'ផ្ញើលេខកូដ',
-                                            textScaleFactor:
-                                                MediaQuery.of(context)
-                                                        .size
-                                                        .width /
-                                                    428,
+                                            textScaleFactor: widget.constraints
+                                                            .maxWidth /
+                                                        200 >
+                                                    1.6
+                                                ? 1.6
+                                                : widget.constraints.maxWidth /
+                                                    200,
                                             style: const TextStyle(
                                               color: Color(0xAAF7B731),
-                                              fontSize: 18.0,
+                                              fontSize: 12.0,
                                               fontFamily: 'Nokora',
                                               fontWeight: FontWeight.w600,
                                             ),
@@ -174,10 +186,17 @@ class _LoginTextFieldState extends State<LoginTextField> {
                                         visible: !widget.isCodeSent,
                                         child: Text(
                                           '$_countSeconds វិនាទី',
+                                          textScaleFactor: widget.constraints
+                                                          .maxWidth /
+                                                      200 >
+                                                  1.6
+                                              ? 1.6
+                                              : widget.constraints.maxWidth /
+                                                  200,
                                           style: TextStyle(
                                             color:
                                                 Theme.of(context).disabledColor,
-                                            fontSize: 16.0,
+                                            fontSize: 12.0,
                                             fontFamily: 'Nokora',
                                             fontWeight: FontWeight.w600,
                                           ),

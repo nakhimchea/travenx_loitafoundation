@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:travenx_loitafoundation/config/palette.dart';
 import 'package:travenx_loitafoundation/icons/icons.dart';
-import 'package:travenx_loitafoundation/widgets/medium/home_screen/profile_category.dart';
-import 'package:travenx_loitafoundation/widgets/medium/home_screen/short_profile.dart';
+import 'package:travenx_loitafoundation/widgets/wide/home_screen/profile_category.dart';
+import 'package:travenx_loitafoundation/widgets/wide/home_screen/short_profile.dart';
 
 class Profile extends StatefulWidget {
   final void Function() loggedInCallback;
@@ -236,7 +236,10 @@ class _ProfileState extends State<Profile> {
                       title: 'ចែករំលែកកម្មវិធី',
                       trailing: [],
                     ),
-                    SizedBox(height: 20.0),
+                    SizedBox(
+                        height: constraints.maxWidth / 300 > 1.6
+                            ? 22
+                            : constraints.maxWidth / 23),
                     ProfileCategory(
                       icon: Icon(
                         CustomOutlinedIcons.logout,

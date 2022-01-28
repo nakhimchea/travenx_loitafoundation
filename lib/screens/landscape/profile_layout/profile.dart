@@ -1,7 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import 'package:travenx_loitafoundation/config/constant.dart';
 import 'package:travenx_loitafoundation/config/palette.dart';
 import 'package:travenx_loitafoundation/icons/icons.dart';
 import 'package:travenx_loitafoundation/widgets/landscape/home_screen/profile_category.dart';
@@ -45,8 +44,12 @@ class _ProfileState extends State<Profile> {
             ),
             SliverPadding(
               padding: EdgeInsets.symmetric(
-                horizontal: kHPadding,
-                vertical: kVPadding,
+                horizontal: constraints.maxWidth / 300 > 1.6
+                    ? 16
+                    : constraints.maxWidth / 18.75,
+                vertical: constraints.maxWidth / 300 > 1.6
+                    ? 10
+                    : constraints.maxWidth / 30,
               ),
               sliver: SliverToBoxAdapter(
                 child: Column(
@@ -55,7 +58,9 @@ class _ProfileState extends State<Profile> {
                       icon: Icon(
                         CustomOutlinedIcons.user,
                         color: Theme.of(context).primaryColor,
-                        size: 20.0,
+                        size: constraints.maxWidth / 300 > 1.6
+                            ? 22
+                            : constraints.maxWidth / 23,
                       ),
                       title: 'ប្រវត្តិរូប',
                       trailing: [
@@ -70,7 +75,9 @@ class _ProfileState extends State<Profile> {
                       icon: Icon(
                         CustomOutlinedIcons.bookmark,
                         color: Theme.of(context).primaryColor,
-                        size: 20.0,
+                        size: constraints.maxWidth / 300 > 1.6
+                            ? 22
+                            : constraints.maxWidth / 23,
                       ),
                       title: 'បានរក្សាទុក',
                       trailing: [
@@ -85,7 +92,9 @@ class _ProfileState extends State<Profile> {
                       icon: Icon(
                         CustomOutlinedIcons.star,
                         color: Theme.of(context).primaryColor,
-                        size: 20.0,
+                        size: constraints.maxWidth / 300 > 1.6
+                            ? 22
+                            : constraints.maxWidth / 23,
                       ),
                       title: 'បានវាយតម្លៃ',
                       trailing: [
@@ -96,12 +105,17 @@ class _ProfileState extends State<Profile> {
                         )
                       ],
                     ),
-                    SizedBox(height: 20.0),
+                    SizedBox(
+                        height: constraints.maxWidth / 300 > 1.6
+                            ? 22
+                            : constraints.maxWidth / 23),
                     ProfileCategory(
                       icon: Icon(
                         CustomOutlinedIcons.location,
                         color: Theme.of(context).hintColor,
-                        size: 20.0,
+                        size: constraints.maxWidth / 300 > 1.6
+                            ? 22
+                            : constraints.maxWidth / 23,
                       ),
                       title: 'ចុះឈ្មោះទីតាំង ឬអាជីវកម្ម',
                       textColor: Theme.of(context).hintColor,
@@ -113,18 +127,25 @@ class _ProfileState extends State<Profile> {
                         )
                       ],
                     ),
-                    SizedBox(height: 20.0),
+                    SizedBox(
+                        height: constraints.maxWidth / 300 > 1.6
+                            ? 22
+                            : constraints.maxWidth / 23),
                     ProfileCategory(
                       icon: Icon(
                         CustomOutlinedIcons.setting,
                         color: Theme.of(context).primaryIconTheme.color,
-                        size: 20.0,
+                        size: constraints.maxWidth / 300 > 1.6
+                            ? 22
+                            : constraints.maxWidth / 23,
                       ),
                       title: 'ភាសា',
                       trailing: [
                         Text(
                           'ភាសាខ្មែរ',
-                          textScaleFactor: constraints.maxWidth / 300,
+                          textScaleFactor: constraints.maxWidth / 300 > 1.6
+                              ? 1.6
+                              : constraints.maxWidth / 300,
                           style: Theme.of(context)
                               .textTheme
                               .bodyText1!
@@ -142,7 +163,9 @@ class _ProfileState extends State<Profile> {
                       icon: Icon(
                         CustomOutlinedIcons.warning,
                         color: Theme.of(context).primaryIconTheme.color,
-                        size: 20.0,
+                        size: constraints.maxWidth / 300 > 1.6
+                            ? 22
+                            : constraints.maxWidth / 23,
                       ),
                       title: 'អំពីយើង',
                       trailing: [
@@ -157,7 +180,9 @@ class _ProfileState extends State<Profile> {
                       icon: Icon(
                         CustomOutlinedIcons.file,
                         color: Theme.of(context).primaryIconTheme.color,
-                        size: 20.0,
+                        size: constraints.maxWidth / 300 > 1.6
+                            ? 22
+                            : constraints.maxWidth / 23,
                       ),
                       title: 'លក្ខខណ្ឌ និងគោលការណ៍ផ្សេងៗ',
                       trailing: [
@@ -172,7 +197,9 @@ class _ProfileState extends State<Profile> {
                       icon: Icon(
                         CustomOutlinedIcons.help,
                         color: Theme.of(context).primaryIconTheme.color,
-                        size: 20.0,
+                        size: constraints.maxWidth / 300 > 1.6
+                            ? 22
+                            : constraints.maxWidth / 23,
                       ),
                       title: 'សំនួរ/ចម្លើយ',
                       trailing: [
@@ -183,12 +210,17 @@ class _ProfileState extends State<Profile> {
                         )
                       ],
                     ),
-                    SizedBox(height: 20.0),
+                    SizedBox(
+                        height: constraints.maxWidth / 300 > 1.6
+                            ? 22
+                            : constraints.maxWidth / 23),
                     ProfileCategory(
                       icon: Icon(
                         CustomFilledIcons.star,
                         color: Palette.priceColor,
-                        size: 20.0,
+                        size: constraints.maxWidth / 300 > 1.6
+                            ? 22
+                            : constraints.maxWidth / 23,
                       ),
                       title: 'វាយតម្លៃកម្មវិធី',
                       trailing: [],
@@ -197,17 +229,24 @@ class _ProfileState extends State<Profile> {
                       icon: Icon(
                         CustomFilledIcons.share,
                         color: Theme.of(context).hintColor,
-                        size: 20.0,
+                        size: constraints.maxWidth / 300 > 1.6
+                            ? 22
+                            : constraints.maxWidth / 23,
                       ),
                       title: 'ចែករំលែកកម្មវិធី',
                       trailing: [],
                     ),
-                    SizedBox(height: 20.0),
+                    SizedBox(
+                        height: constraints.maxWidth / 300 > 1.6
+                            ? 22
+                            : constraints.maxWidth / 23),
                     ProfileCategory(
                       icon: Icon(
                         CustomOutlinedIcons.logout,
                         color: Color(0xFFC23616),
-                        size: 20.0,
+                        size: constraints.maxWidth / 300 > 1.6
+                            ? 22
+                            : constraints.maxWidth / 23,
                       ),
                       title: 'ចាកចេញ',
                       textColor: Color(0xFFC23616),
@@ -225,10 +264,15 @@ class _ProfileState extends State<Profile> {
                         }
                       },
                     ),
-                    SizedBox(height: 20.0),
+                    SizedBox(
+                        height: constraints.maxWidth / 300 > 1.6
+                            ? 22
+                            : constraints.maxWidth / 23),
                     Text(
                       'កម្មវិធីជំនាន់ទី ១.០',
-                      textScaleFactor: constraints.maxWidth / 300,
+                      textScaleFactor: constraints.maxWidth / 300 > 1.6
+                          ? 1.6
+                          : constraints.maxWidth / 300,
                       style: Theme.of(context).textTheme.bodyText1,
                     ),
                   ],

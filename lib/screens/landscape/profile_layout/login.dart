@@ -106,10 +106,14 @@ class CustomAppBar extends StatelessWidget {
         children: [
           Container(
             margin: EdgeInsets.only(
-                top: MediaQuery.of(context).size.height / 8, left: 16.0),
+                top: MediaQuery.of(context).size.height / 8,
+                left: 16.0,
+                right: 16.0),
             child: Text(
               'Travenx',
-              textScaleFactor: constraints.maxWidth / 300,
+              textScaleFactor: constraints.maxWidth / 300 > 1.6
+                  ? 1.6
+                  : constraints.maxWidth / 300,
               style: const TextStyle(
                 color: Colors.white,
                 fontSize: 28.0,
@@ -133,7 +137,9 @@ class CustomAppBar extends StatelessWidget {
                   overlayColor: MaterialStateProperty.all(Colors.transparent)),
               child: Text(
                 'រំលង',
-                textScaleFactor: constraints.maxWidth / 300,
+                textScaleFactor: constraints.maxWidth / 300 > 1.6
+                    ? 1.6
+                    : constraints.maxWidth / 300,
                 style: const TextStyle(
                   color: Colors.white,
                   fontSize: 16.0,
@@ -165,7 +171,9 @@ class LoginAppBar extends StatelessWidget {
           children: [
             Text(
               'ចុះឈ្មោះគណនី លេខទូរសព្ទ',
-              textScaleFactor: constraints.maxWidth / 300,
+              textScaleFactor: constraints.maxWidth / 300 > 1.6
+                  ? 1.6
+                  : constraints.maxWidth / 300,
               style: const TextStyle(
                 color: Colors.white,
                 fontSize: 20.0,
@@ -187,7 +195,9 @@ class LoginAppBar extends StatelessWidget {
                         MaterialStateProperty.all(Colors.transparent)),
                 child: Text(
                   'រំលង',
-                  textScaleFactor: constraints.maxWidth / 300,
+                  textScaleFactor: constraints.maxWidth / 300 > 1.6
+                      ? 1.6
+                      : constraints.maxWidth / 300,
                   style: const TextStyle(
                     color: Colors.white,
                     fontSize: 14.0,
@@ -325,7 +335,9 @@ class GradientButton extends StatelessWidget {
               ),
               child: Text(
                 title,
-                textScaleFactor: constraints.maxWidth / 300,
+                textScaleFactor: constraints.maxWidth / 300 > 1.5
+                    ? 1.5
+                    : constraints.maxWidth / 300,
                 style: Theme.of(context).textTheme.headline1!.copyWith(
                     color: isCodeSent
                         ? Palette.priceColor
@@ -392,7 +404,9 @@ class _PhoneLoginState extends State<PhoneLogin> {
         children: [
           Text(
             'សូមបំពេញលេខទូរសព្ទ',
-            textScaleFactor: constraints.maxWidth / 200,
+            textScaleFactor: constraints.maxWidth / 200 > 1.6
+                ? 1.6
+                : constraints.maxWidth / 200,
             style: TextStyle(
               color: Colors.black38,
               fontSize: 14.0,
@@ -468,7 +482,9 @@ class PolicyAgreement extends StatelessWidget {
           children: [
             Text(
               'តាមរយ:ការប្រើកម្មវិធីនេះ អ្នកយល់ព្រមទទួលយក',
-              textScaleFactor: constraints.maxWidth / 200,
+              textScaleFactor: constraints.maxWidth / 200 > 1.6
+                  ? 1.6
+                  : constraints.maxWidth / 200,
               style: const TextStyle(
                 color: Colors.white60,
                 fontSize: 8.0,
@@ -479,7 +495,9 @@ class PolicyAgreement extends StatelessWidget {
             SizedBox(height: 3),
             Text(
               'លក្ខខណ្ឌ និងគោលនយោបាយឯកជនភាព',
-              textScaleFactor: constraints.maxWidth / 200,
+              textScaleFactor: constraints.maxWidth / 200 > 1.6
+                  ? 1.6
+                  : constraints.maxWidth / 200,
               style: const TextStyle(
                 color: Colors.white60,
                 fontSize: 8.0,
@@ -509,7 +527,9 @@ class SignInRequest extends StatelessWidget {
         children: [
           Text(
             'មានគណនីរួច? ',
-            textScaleFactor: constraints.maxWidth / 200,
+            textScaleFactor: constraints.maxWidth / 200 > 1.6
+                ? 1.6
+                : constraints.maxWidth / 200,
             style: const TextStyle(
               color: Colors.white,
               fontSize: 9.0,
@@ -522,7 +542,9 @@ class SignInRequest extends StatelessWidget {
             onTap: isPhoneLoginCallback,
             child: Text(
               'ចូលតាមគណនីផ្សេងទៀត',
-              textScaleFactor: constraints.maxWidth / 200,
+              textScaleFactor: constraints.maxWidth / 200 > 1.6
+                  ? 1.6
+                  : constraints.maxWidth / 200,
               style: const TextStyle(
                 color: Colors.white,
                 fontSize: 9.0,
@@ -553,7 +575,9 @@ class SignUpRequest extends StatelessWidget {
         children: [
           Text(
             'ត្រូវការគណនី? ',
-            textScaleFactor: constraints.maxWidth / 200,
+            textScaleFactor: constraints.maxWidth / 200 > 1.6
+                ? 1.6
+                : constraints.maxWidth / 200,
             style: const TextStyle(
               color: Colors.white,
               fontSize: 9.0,
@@ -566,7 +590,9 @@ class SignUpRequest extends StatelessWidget {
             onTap: isPhoneLoginCallback,
             child: Text(
               'ចុះឈ្មោះឥឡូវនេះ',
-              textScaleFactor: constraints.maxWidth / 200,
+              textScaleFactor: constraints.maxWidth / 200 > 1.6
+                  ? 1.6
+                  : constraints.maxWidth / 200,
               style: const TextStyle(
                 color: Colors.white,
                 fontSize: 9.0,

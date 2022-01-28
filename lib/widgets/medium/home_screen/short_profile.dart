@@ -1,6 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:travenx_loitafoundation/config/constant.dart';
 import 'package:travenx_loitafoundation/helpers/profile_clipper.dart';
 import 'package:travenx_loitafoundation/models/profile_object_model.dart';
 
@@ -96,20 +95,28 @@ class ShortProfile extends StatelessWidget {
           ),
           Padding(
             padding: EdgeInsets.symmetric(
-              horizontal: kHPadding,
-              vertical: kHPadding,
+              horizontal: constraints.maxWidth / 300 > 1.6
+                  ? 16
+                  : constraints.maxWidth / 18.75,
+              vertical: constraints.maxWidth / 300 > 1.6
+                  ? 16
+                  : constraints.maxWidth / 18.75,
             ),
             child: Column(
               children: [
                 Text(
                   '${displayName != '' ? displayName : _anonymous.displayName}',
-                  textScaleFactor: constraints.maxWidth / 300,
+                  textScaleFactor: constraints.maxWidth / 300 > 1.6
+                      ? 1.6
+                      : constraints.maxWidth / 300,
                   style: Theme.of(context).textTheme.headline2,
                 ),
                 SizedBox(height: 5.0),
                 Text(
                   phoneNumber != '' ? phoneNumber : _anonymous.phoneNumber,
-                  textScaleFactor: constraints.maxWidth / 300,
+                  textScaleFactor: constraints.maxWidth / 300 > 1.6
+                      ? 1.6
+                      : constraints.maxWidth / 300,
                   style: Theme.of(context).textTheme.bodyText1,
                 ),
               ],

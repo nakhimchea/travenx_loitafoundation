@@ -106,20 +106,15 @@ class CustomAppBar extends StatelessWidget {
         children: [
           Container(
             margin: EdgeInsets.only(
-                top: MediaQuery.of(context).size.height / 8,
-                left: 16.0,
-                right: 16.0),
-            child: Text(
-              'Travenx',
-              textScaleFactor: constraints.maxWidth / 300 > 1.6
-                  ? 1.6
-                  : constraints.maxWidth / 300,
-              style: const TextStyle(
-                color: Colors.white,
-                fontSize: 28.0,
-                fontWeight: FontWeight.w700,
-              ),
-            ),
+                top: MediaQuery.of(context).size.height / 8, left: 16.0),
+            child: Text('Travenx',
+                textScaleFactor: constraints.maxWidth / 300 > 1.6
+                    ? 1.6
+                    : constraints.maxWidth / 300,
+                style: Theme.of(context)
+                    .textTheme
+                    .headline6!
+                    .copyWith(color: Colors.white)),
           ),
           Container(
             margin: EdgeInsets.only(
@@ -135,18 +130,12 @@ class CustomAppBar extends StatelessWidget {
               },
               style: ButtonStyle(
                   overlayColor: MaterialStateProperty.all(Colors.transparent)),
-              child: Text(
-                'រំលង',
-                textScaleFactor: constraints.maxWidth / 300 > 1.6
-                    ? 1.6
-                    : constraints.maxWidth / 300,
-                style: const TextStyle(
-                  color: Colors.white,
-                  fontSize: 16.0,
-                  fontFamily: 'Nokora',
-                  fontWeight: FontWeight.w500,
-                ),
-              ),
+              child: Text('រំលង',
+                  textScaleFactor: constraints.maxWidth / 300 > 1.6
+                      ? 1.6
+                      : constraints.maxWidth / 300,
+                  style: Theme.of(context).textTheme.headline3!.copyWith(
+                      color: Colors.white, fontWeight: FontWeight.w500)),
             ),
           )
         ],
@@ -169,18 +158,14 @@ class LoginAppBar extends StatelessWidget {
         padding: EdgeInsets.only(top: MediaQuery.of(context).size.height / 15),
         child: Column(
           children: [
-            Text(
-              'ចុះឈ្មោះគណនី លេខទូរសព្ទ',
-              textScaleFactor: constraints.maxWidth / 300 > 1.6
-                  ? 1.6
-                  : constraints.maxWidth / 300,
-              style: const TextStyle(
-                color: Colors.white,
-                fontSize: 20.0,
-                fontFamily: 'Nokora',
-                fontWeight: FontWeight.w600,
-              ),
-            ),
+            Text('ចុះឈ្មោះគណនី លេខទូរសព្ទ',
+                textScaleFactor: constraints.maxWidth / 300 > 1.6
+                    ? 1.6
+                    : constraints.maxWidth / 300,
+                style: Theme.of(context)
+                    .textTheme
+                    .headline2!
+                    .copyWith(color: Colors.white)),
             Align(
               alignment: Alignment.topRight,
               child: TextButton(
@@ -193,18 +178,14 @@ class LoginAppBar extends StatelessWidget {
                 style: ButtonStyle(
                     overlayColor:
                         MaterialStateProperty.all(Colors.transparent)),
-                child: Text(
-                  'រំលង',
-                  textScaleFactor: constraints.maxWidth / 300 > 1.6
-                      ? 1.6
-                      : constraints.maxWidth / 300,
-                  style: const TextStyle(
-                    color: Colors.white,
-                    fontSize: 14.0,
-                    fontFamily: 'Nokora',
-                    fontWeight: FontWeight.w500,
-                  ),
-                ),
+                child: Text('រំលង',
+                    textScaleFactor: constraints.maxWidth / 300 > 1.6
+                        ? 1.6
+                        : constraints.maxWidth / 300,
+                    style: Theme.of(context).textTheme.headline3!.copyWith(
+                        color: Colors.white,
+                        fontSize: 14.0,
+                        fontWeight: FontWeight.w500)),
               ),
             ),
           ],
@@ -322,7 +303,7 @@ class GradientButton extends StatelessWidget {
             height: ((MediaQuery.of(context).size.height / 12).ceil() - 6)
                 .toDouble(),
             decoration: BoxDecoration(
-              color: Colors.white,
+              color: Theme.of(context).bottomAppBarColor,
               borderRadius: BorderRadius.circular(14.0),
             ),
             child: TextButton(
@@ -402,18 +383,11 @@ class _PhoneLoginState extends State<PhoneLogin> {
       return Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Text(
-            'សូមបំពេញលេខទូរសព្ទ',
-            textScaleFactor: constraints.maxWidth / 200 > 1.6
-                ? 1.6
-                : constraints.maxWidth / 200,
-            style: TextStyle(
-              color: Colors.black38,
-              fontSize: 14.0,
-              fontFamily: 'Nokora',
-              fontWeight: FontWeight.w500,
-            ),
-          ),
+          Text('សូមបំពេញលេខទូរសព្ទ',
+              textScaleFactor: constraints.maxWidth / 200 > 1.6
+                  ? 1.6
+                  : constraints.maxWidth / 200,
+              style: Theme.of(context).textTheme.bodyText1),
           SizedBox(height: MediaQuery.of(context).size.height / 25),
           Column(
             children: [
@@ -480,31 +454,23 @@ class PolicyAgreement extends StatelessWidget {
       child: LayoutBuilder(
         builder: (context, constraints) => Column(
           children: [
-            Text(
-              'តាមរយ:ការប្រើកម្មវិធីនេះ អ្នកយល់ព្រមទទួលយក',
-              textScaleFactor: constraints.maxWidth / 200 > 1.6
-                  ? 1.6
-                  : constraints.maxWidth / 200,
-              style: const TextStyle(
-                color: Colors.white60,
-                fontSize: 8.0,
-                fontFamily: 'Nokora',
-                fontWeight: FontWeight.w400,
-              ),
-            ),
+            Text('តាមរយ:ការប្រើកម្មវិធីនេះ អ្នកយល់ព្រមទទួលយក',
+                textScaleFactor: constraints.maxWidth / 200 > 1.6
+                    ? 1.6
+                    : constraints.maxWidth / 200,
+                style: Theme.of(context)
+                    .textTheme
+                    .button!
+                    .copyWith(fontSize: 8.0)),
             SizedBox(height: 3),
-            Text(
-              'លក្ខខណ្ឌ និងគោលនយោបាយឯកជនភាព',
-              textScaleFactor: constraints.maxWidth / 200 > 1.6
-                  ? 1.6
-                  : constraints.maxWidth / 200,
-              style: const TextStyle(
-                color: Colors.white60,
-                fontSize: 8.0,
-                fontFamily: 'Nokora',
-                fontWeight: FontWeight.w700,
-              ),
-            ),
+            Text('លក្ខខណ្ឌ និងគោលនយោបាយឯកជនភាព',
+                textScaleFactor: constraints.maxWidth / 200 > 1.6
+                    ? 1.6
+                    : constraints.maxWidth / 200,
+                style: Theme.of(context)
+                    .textTheme
+                    .button!
+                    .copyWith(fontSize: 8.0, fontWeight: FontWeight.w700)),
           ],
         ),
       ),
@@ -525,34 +491,25 @@ class SignInRequest extends StatelessWidget {
       builder: (context, constraints) => Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Text(
-            'មានគណនីរួច? ',
-            textScaleFactor: constraints.maxWidth / 200 > 1.6
-                ? 1.6
-                : constraints.maxWidth / 200,
-            style: const TextStyle(
-              color: Colors.white,
-              fontSize: 9.0,
-              height: 3,
-              fontFamily: 'Nokora',
-              fontWeight: FontWeight.w400,
-            ),
-          ),
-          GestureDetector(
-            onTap: isPhoneLoginCallback,
-            child: Text(
-              'ចូលតាមគណនីផ្សេងទៀត',
+          Text('មានគណនីរួច? ',
               textScaleFactor: constraints.maxWidth / 200 > 1.6
                   ? 1.6
                   : constraints.maxWidth / 200,
-              style: const TextStyle(
-                color: Colors.white,
-                fontSize: 9.0,
-                height: 3,
-                fontFamily: 'Nokora',
-                fontWeight: FontWeight.w700,
-              ),
-            ),
+              style: Theme.of(context).textTheme.headline4!.copyWith(
+                  color: Theme.of(context).bottomAppBarColor,
+                  fontSize: 9.0,
+                  height: 3.0,
+                  fontWeight: FontWeight.w400)),
+          GestureDetector(
+            onTap: isPhoneLoginCallback,
+            child: Text('ចូលតាមគណនីផ្សេងទៀត',
+                textScaleFactor: constraints.maxWidth / 200 > 1.6
+                    ? 1.6
+                    : constraints.maxWidth / 200,
+                style: Theme.of(context).textTheme.headline4!.copyWith(
+                    color: Theme.of(context).bottomAppBarColor,
+                    fontSize: 9.0,
+                    height: 3.0)),
           ),
         ],
       ),
@@ -573,34 +530,25 @@ class SignUpRequest extends StatelessWidget {
       builder: (context, constraints) => Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Text(
-            'ត្រូវការគណនី? ',
-            textScaleFactor: constraints.maxWidth / 200 > 1.6
-                ? 1.6
-                : constraints.maxWidth / 200,
-            style: const TextStyle(
-              color: Colors.white,
-              fontSize: 9.0,
-              height: 3,
-              fontFamily: 'Nokora',
-              fontWeight: FontWeight.w400,
-            ),
-          ),
-          GestureDetector(
-            onTap: isPhoneLoginCallback,
-            child: Text(
-              'ចុះឈ្មោះឥឡូវនេះ',
+          Text('ត្រូវការគណនី? ',
               textScaleFactor: constraints.maxWidth / 200 > 1.6
                   ? 1.6
                   : constraints.maxWidth / 200,
-              style: const TextStyle(
-                color: Colors.white,
-                fontSize: 9.0,
-                height: 3,
-                fontFamily: 'Nokora',
-                fontWeight: FontWeight.w700,
-              ),
-            ),
+              style: Theme.of(context).textTheme.headline4!.copyWith(
+                  color: Theme.of(context).bottomAppBarColor,
+                  fontSize: 9.0,
+                  height: 3.0,
+                  fontWeight: FontWeight.w400)),
+          GestureDetector(
+            onTap: isPhoneLoginCallback,
+            child: Text('ចុះឈ្មោះឥឡូវនេះ',
+                textScaleFactor: constraints.maxWidth / 200 > 1.6
+                    ? 1.6
+                    : constraints.maxWidth / 200,
+                style: Theme.of(context).textTheme.headline4!.copyWith(
+                    color: Theme.of(context).bottomAppBarColor,
+                    fontSize: 9.0,
+                    height: 3.0)),
           ),
         ],
       ),

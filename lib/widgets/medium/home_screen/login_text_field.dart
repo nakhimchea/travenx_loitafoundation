@@ -83,7 +83,7 @@ class _LoginTextFieldState extends State<LoginTextField> {
                   height: ((MediaQuery.of(context).size.height / 16).ceil() - 4)
                       .toDouble(),
                   decoration: BoxDecoration(
-                    color: Colors.white,
+                    color: Theme.of(context).bottomAppBarColor,
                     borderRadius: BorderRadius.circular(14.0),
                   ),
                   child: Row(
@@ -124,8 +124,7 @@ class _LoginTextFieldState extends State<LoginTextField> {
                                   hintText: widget.hintText,
                                   hintStyle: TextStyle(
                                     color: Theme.of(context)
-                                        .textTheme
-                                        .bodyText1!
+                                        .primaryIconTheme
                                         .color,
                                     fontSize:
                                         widget.constraints.maxWidth / 200 > 1.6
@@ -165,8 +164,28 @@ class _LoginTextFieldState extends State<LoginTextField> {
                                               Colors.transparent,
                                             ),
                                           ),
-                                          child: Text(
-                                            'ផ្ញើលេខកូដ',
+                                          child: Text('ផ្ញើលេខកូដ',
+                                              textScaleFactor:
+                                                  widget.constraints.maxWidth /
+                                                              200 >
+                                                          1.6
+                                                      ? 1.6
+                                                      : widget.constraints
+                                                              .maxWidth /
+                                                          200,
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .subtitle1!
+                                                  .copyWith(
+                                                      fontSize: 12.0,
+                                                      fontFamily: 'Nokora',
+                                                      fontWeight:
+                                                          FontWeight.w600)),
+                                        ),
+                                      ),
+                                      Visibility(
+                                        visible: !widget.isCodeSent,
+                                        child: Text('$_countSeconds វិនាទី',
                                             textScaleFactor: widget.constraints
                                                             .maxWidth /
                                                         200 >
@@ -174,34 +193,14 @@ class _LoginTextFieldState extends State<LoginTextField> {
                                                 ? 1.6
                                                 : widget.constraints.maxWidth /
                                                     200,
-                                            style: const TextStyle(
-                                              color: Color(0xAAF7B731),
-                                              fontSize: 12.0,
-                                              fontFamily: 'Nokora',
-                                              fontWeight: FontWeight.w600,
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                      Visibility(
-                                        visible: !widget.isCodeSent,
-                                        child: Text(
-                                          '$_countSeconds វិនាទី',
-                                          textScaleFactor: widget.constraints
-                                                          .maxWidth /
-                                                      200 >
-                                                  1.6
-                                              ? 1.6
-                                              : widget.constraints.maxWidth /
-                                                  200,
-                                          style: TextStyle(
-                                            color:
-                                                Theme.of(context).disabledColor,
-                                            fontSize: 12.0,
-                                            fontFamily: 'Nokora',
-                                            fontWeight: FontWeight.w600,
-                                          ),
-                                        ),
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .button!
+                                                .copyWith(
+                                                    color: Theme.of(context)
+                                                        .disabledColor,
+                                                    fontWeight:
+                                                        FontWeight.w600)),
                                       ),
                                     ],
                                   )

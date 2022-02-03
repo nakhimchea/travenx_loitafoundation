@@ -41,7 +41,7 @@ class LoginCardButton extends StatelessWidget {
                 height: ((MediaQuery.of(context).size.height / 16).ceil() - 4)
                     .toDouble(),
                 decoration: BoxDecoration(
-                  color: Colors.white,
+                  color: Theme.of(context).bottomAppBarColor,
                   borderRadius: BorderRadius.circular(14.0),
                 ),
                 child: Padding(
@@ -60,12 +60,11 @@ class LoginCardButton extends StatelessWidget {
                           textScaleFactor: constraints.maxWidth / 200 > 1.6
                               ? 1.6
                               : constraints.maxWidth / 200,
-                          style: TextStyle(
-                            color: Colors.black,
-                            fontSize: 10.0,
-                            fontFamily: 'Nokora',
-                            fontWeight: FontWeight.w400,
-                          ),
+                          style: Theme.of(context)
+                              .textTheme
+                              .headline4!
+                              .copyWith(
+                                  fontSize: 10.0, fontWeight: FontWeight.w400),
                           overflow: TextOverflow.ellipsis,
                         ),
                       ),
@@ -74,12 +73,11 @@ class LoginCardButton extends StatelessWidget {
                         textScaleFactor: constraints.maxWidth / 200 > 1.6
                             ? 1.6
                             : constraints.maxWidth / 200,
-                        style: TextStyle(
-                          color: Colors.black,
-                          fontSize: 10.0,
-                          fontFamily: 'Poppins',
-                          fontWeight: FontWeight.w500,
-                        ),
+                        style: Theme.of(context).textTheme.headline4!.copyWith(
+                              fontSize: 10.0,
+                              fontFamily: 'Poppins',
+                              fontWeight: FontWeight.w500,
+                            ),
                       ),
                     ],
                   ),

@@ -138,7 +138,7 @@ class _ResponsiveDeciderState extends State<ResponsiveDecider> {
     _onRefresh();
   }
 
-  bool _isLoading = true;
+  bool _isLoading = false; //TODO: change this to true when app completed
 
   @override
   Widget build(BuildContext context) {
@@ -160,7 +160,7 @@ class _ResponsiveDeciderState extends State<ResponsiveDecider> {
                     decoration: BoxDecoration(
                       image: DecorationImage(
                         image: AssetImage(
-                          'assets/images/loading_scaffold.png',
+                          'assets/images/travenx.png',
                         ),
                         fit: BoxFit.cover,
                       ),

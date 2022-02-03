@@ -40,7 +40,7 @@ class LoginCardButton extends StatelessWidget {
               height: ((MediaQuery.of(context).size.height / 16).ceil() - 4)
                   .toDouble(),
               decoration: BoxDecoration(
-                color: Colors.white,
+                color: Theme.of(context).bottomAppBarColor,
                 borderRadius: BorderRadius.circular(14.0),
               ),
               child: Padding(
@@ -55,11 +55,9 @@ class LoginCardButton extends StatelessWidget {
                       child: Text(
                         title,
                         textScaleFactor: textScaleFactor,
-                        style: TextStyle(
-                          color: Colors.black,
+                        style: Theme.of(context).textTheme.headline4!.copyWith(
                           fontSize: 15.0,
-                          fontFamily: 'Nokora',
-                          fontWeight: FontWeight.w400,
+                          fontWeight: FontWeight.w400
                         ),
                         overflow: TextOverflow.ellipsis,
                       ),
@@ -67,11 +65,10 @@ class LoginCardButton extends StatelessWidget {
                     Text(
                       trailing,
                       textScaleFactor: textScaleFactor,
-                      style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 15.0,
-                        fontFamily: 'Poppins',
-                        fontWeight: FontWeight.w500,
+                      style: Theme.of(context).textTheme.headline4!.copyWith(
+                          fontSize: 15.0,
+                          fontFamily: 'Poppins',
+                          fontWeight: FontWeight.w500,
                       ),
                     ),
                   ],

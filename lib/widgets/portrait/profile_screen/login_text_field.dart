@@ -80,7 +80,7 @@ class _LoginTextFieldState extends State<LoginTextField> {
                   height: ((MediaQuery.of(context).size.height / 16).ceil() - 4)
                       .toDouble(),
                   decoration: BoxDecoration(
-                    color: Colors.white,
+                    color: Theme.of(context).bottomAppBarColor,
                     borderRadius: BorderRadius.circular(14.0),
                   ),
                   child: Row(
@@ -117,8 +117,7 @@ class _LoginTextFieldState extends State<LoginTextField> {
                                   hintText: widget.hintText,
                                   hintStyle: TextStyle(
                                     color: Theme.of(context)
-                                        .textTheme
-                                        .bodyText1!
+                                        .primaryIconTheme
                                         .color,
                                     fontFamily: 'Nokora',
                                   ),
@@ -154,34 +153,34 @@ class _LoginTextFieldState extends State<LoginTextField> {
                                               Colors.transparent,
                                             ),
                                           ),
-                                          child: Text(
-                                            'ផ្ញើលេខកូដ',
-                                            textScaleFactor:
-                                                MediaQuery.of(context)
-                                                        .size
-                                                        .width /
-                                                    428,
-                                            style: const TextStyle(
-                                              color: Color(0xAAF7B731),
-                                              fontSize: 18.0,
-                                              fontFamily: 'Nokora',
-                                              fontWeight: FontWeight.w600,
-                                            ),
-                                          ),
+                                          child: Text('ផ្ញើលេខកូដ',
+                                              textScaleFactor:
+                                                  MediaQuery.of(context)
+                                                          .size
+                                                          .width /
+                                                      428,
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .subtitle1!
+                                                  .copyWith(
+                                                      fontSize: 18.0,
+                                                      fontFamily: 'Nokora',
+                                                      fontWeight:
+                                                          FontWeight.w600)),
                                         ),
                                       ),
                                       Visibility(
                                         visible: !widget.isCodeSent,
-                                        child: Text(
-                                          '$_countSeconds វិនាទី',
-                                          style: TextStyle(
-                                            color:
-                                                Theme.of(context).disabledColor,
-                                            fontSize: 16.0,
-                                            fontFamily: 'Nokora',
-                                            fontWeight: FontWeight.w600,
-                                          ),
-                                        ),
+                                        child: Text('$_countSeconds វិនាទី',
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .subtitle1!
+                                                .copyWith(
+                                                    color: Theme.of(context)
+                                                        .disabledColor,
+                                                    fontFamily: 'Nokora',
+                                                    fontWeight:
+                                                        FontWeight.w600)),
                                       ),
                                     ],
                                   )

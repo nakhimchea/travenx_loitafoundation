@@ -16,7 +16,7 @@ dependencies:
   cached_network_image: ^3.1.0
 
   # get vector file as image
-  flutter_svg: ^1.0.0
+  flutter_svg: ^0.22.0
 
   # get readmore button package
   readmore: ^2.1.0
@@ -54,10 +54,15 @@ flutter:
   assets:
     - assets/images/
     - assets/images/home_screen/
+    - assets/images/home_screen/sub/
     - assets/images/home_subscreen/
     - assets/images/chat_screen/
     - assets/images/profile_screen/
+    - assets/images/wallet_screen/
     - assets/icons/profile_screen/
+    - assets/icons/
+    - assets/icons/home_screen/
+    - assets/icons/home_screen/sub/
 
   fonts:
     - family: Nokora

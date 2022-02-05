@@ -1,15 +1,15 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:travenx_loitafoundation/services/firestore_service.dart';
 import 'package:travenx_loitafoundation/widgets/custom_snackbar_content.dart';
 
 class AuthService {
   final FirebaseAuth _auth = FirebaseAuth.instance;
-  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+  final _firestoreService = FirestoreService();
   final FlutterSecureStorage _secureStorage = FlutterSecureStorage();
 
   SnackBar _buildSnackBar(
@@ -79,12 +79,6 @@ class AuthService {
     }
   }
 
-  Future<bool> containData(String userId) async => await _firestore
-      .collection('profile_screen')
-      .doc(userId)
-      .get()
-      .then((_document) => _document.data() != null ? true : false);
-
   Future<void> signInWithPhoneNumber(
       BuildContext context,
       String smsCodeId,
@@ -107,16 +101,13 @@ class AuthService {
               await _auth.signInWithCredential(fbGgAuthCredential);
 
           try {
-            await _firestore
-                .collection('profile_screen')
-                .doc(_fbGgUserCredential.user!.uid)
-                .set({
-              'displayName': _fbGgUserCredential.user!.displayName,
-              'phoneNumber': _phoneUserCredential.user!.phoneNumber,
-              'profileUrl': _fbGgUserCredential.user!.photoURL,
-              'backgroundUrl':
-                  'assets/images/profile_screen/dummy_background.png',
-            });
+            await _firestoreService.uploadProfileData(
+              _fbGgUserCredential.user!.uid,
+              _fbGgUserCredential.user!.displayName,
+              _phoneUserCredential.user!.phoneNumber,
+              _fbGgUserCredential.user!.photoURL,
+              'assets/images/profile_screen/dummy_background.png',
+            );
             await _secureStorage.write(
                 key: 'userId', value: _fbGgUserCredential.user!.uid);
             await _secureStorage.write(key: 'isAnonymous', value: 'false');
@@ -126,23 +117,21 @@ class AuthService {
                 'Push Data to Firestore with FB/Google SignIn: ${e.toString()}');
           }
         } else {
-          if (await containData(_phoneUserCredential.user!.uid)) {
+          if (await _firestoreService
+              .hasProfileData(_phoneUserCredential.user!.uid)) {
             await _secureStorage.write(
                 key: 'userId', value: _phoneUserCredential.user!.uid);
             await _secureStorage.write(key: 'isAnonymous', value: 'false');
             setProfileCallback();
           } else {
             try {
-              await _firestore
-                  .collection('profile_screen')
-                  .doc(_phoneUserCredential.user!.uid)
-                  .set({
-                'displayName': 'ដើរ លេង',
-                'phoneNumber': _phoneUserCredential.user!.phoneNumber,
-                'profileUrl': 'assets/images/profile_screen/dummy_profile.png',
-                'backgroundUrl':
-                    'assets/images/profile_screen/dummy_background.png',
-              });
+              await _firestoreService.uploadProfileData(
+                _phoneUserCredential.user!.uid,
+                'ដើរ លេង',
+                _phoneUserCredential.user!.phoneNumber,
+                'assets/images/profile_screen/dummy_profile.png',
+                'assets/images/profile_screen/dummy_background.png',
+              );
               await _secureStorage.write(
                   key: 'userId', value: _phoneUserCredential.user!.uid);
               await _secureStorage.write(key: 'isAnonymous', value: 'false');
@@ -209,7 +198,7 @@ class AuthService {
       if (_userCredential.user != null) {
         final User user = _userCredential.user!;
 
-        if (await containData(user.uid)) {
+        if (await _firestoreService.hasProfileData(user.uid)) {
           await _secureStorage.write(key: 'userId', value: user.uid);
           await _secureStorage.write(key: 'isAnonymous', value: 'false');
           setProfileCallback();
@@ -258,7 +247,7 @@ class AuthService {
       if (_userCredential.user != null) {
         final User user = _userCredential.user!;
 
-        if (await containData(user.uid)) {
+        if (await _firestoreService.hasProfileData(user.uid)) {
           await _secureStorage.write(key: 'userId', value: user.uid);
           await _secureStorage.write(key: 'isAnonymous', value: 'false');
           setProfileCallback();

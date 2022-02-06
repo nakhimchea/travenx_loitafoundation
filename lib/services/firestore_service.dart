@@ -3,14 +3,22 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 class FirestoreService {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
-  Future<bool> hasProfileData(
+  Future<DocumentSnapshot<Map<String, dynamic>>> _getProfileData(
     String atUserId,
   ) async =>
       await _firestore
           .collection('profile_screen')
           .doc(atUserId)
           .get()
-          .then((_document) => _document.data() != null ? true : false);
+          .catchError((e) {
+        print('Cannot retrieve profile data: ${e.toString()}');
+      });
+
+  Future<bool> hasProfileData(
+    String atUserId,
+  ) async =>
+      await _getProfileData(atUserId)
+          .then((documentSnapshot) => documentSnapshot.exists ? true : false);
 
   Future<void> uploadProfileData(
     String atUserId,
@@ -24,6 +32,9 @@ class FirestoreService {
         'phoneNumber': phoneNumber,
         'profileUrl': profileUrl,
         'backgroundUrl': backgroundUrl,
+        'postIds': [],
+      }).catchError((e) {
+        print('Cannot upload profile data: ${e.toString()}');
       });
 
   Future<void> updateProfileData(
@@ -33,5 +44,46 @@ class FirestoreService {
   ) async =>
       await _firestore.collection('profile_screen').doc(atUserId).update({
         key: value,
+      }).catchError((e) {
+        print('Cannot update profile data: ${e.toString()}');
       });
+
+  Future<List<dynamic>> _readPostIds(
+    String atUserId,
+  ) async =>
+      await _getProfileData(atUserId).then((documentSnapshot) =>
+          documentSnapshot.exists ? documentSnapshot.get('postIds') : []);
+
+  Future<void> addPostId2Profile(
+    String atUserId,
+    dynamic postId,
+  ) async {
+    List<dynamic> _postIds = await _readPostIds(atUserId);
+    _postIds.add(postId);
+
+    await _firestore.collection('profile_screen').doc(atUserId).set(
+      {'postIds': _postIds},
+      SetOptions(merge: true),
+    ).catchError((e) {
+      print('Cannot add Post ID to UserProfile: $e');
+    });
+  }
+
+  Future<void> setPromotionData(
+    String atPostId,
+    Map<String, dynamic> data,
+  ) async =>
+      await _firestore
+          .collection('promotions')
+          .doc(atPostId)
+          .set(
+            data,
+            SetOptions(merge: true),
+          )
+          .catchError((e) {
+        print('Cannot set merge profile data: ${e.toString()}');
+      });
+
+  Future<QuerySnapshot<Map<String, dynamic>>> getPromotionData() async =>
+      await _firestore.collection('promotions').limit(2).get();
 }

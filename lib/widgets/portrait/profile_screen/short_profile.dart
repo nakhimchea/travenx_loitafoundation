@@ -79,6 +79,7 @@ class ShortProfile extends StatelessWidget {
                               height: profilePictureDiameter,
                               width: profilePictureDiameter,
                               imageUrl: profileUrl,
+                              fit: BoxFit.contain,
                               placeholder: (context, _) => Image(
                                   height: profilePictureDiameter,
                                   width: profilePictureDiameter,
@@ -90,7 +91,7 @@ class ShortProfile extends StatelessWidget {
                                   width: profilePictureDiameter,
                                   child: Center(
                                       child: Text('Unable to Load Images'))),
-                              fit: BoxFit.contain),
+                            ),
                 ),
               ),
             ],

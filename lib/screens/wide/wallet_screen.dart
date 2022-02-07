@@ -48,12 +48,28 @@ class _WalletScreenState extends State<WalletScreen> {
           ),
           Expanded(
             flex: 3,
-            child: Container(),
+            child: Container(
+              child: LayoutBuilder(
+                builder: (context, constraints) => Image.asset(
+                  'assets/images/profile_screen/scaffold_background.png',
+                  height: constraints.maxHeight,
+                  width: constraints.maxWidth,
+                  fit: BoxFit.cover,
+                ),
+              ),
+            ),
           ),
           Expanded(
             flex: 2,
             child: Container(
-              color: Colors.purple.shade800,
+              child: LayoutBuilder(
+                builder: (context, constraints) => Image.asset(
+                  'assets/images/profile_screen/scaffold_background.png',
+                  height: constraints.maxHeight,
+                  width: constraints.maxWidth,
+                  fit: BoxFit.cover,
+                ),
+              ),
             ),
           ),
         ],

@@ -49,7 +49,14 @@ class _WalletScreenState extends State<WalletScreen> {
           Expanded(
             flex: 3,
             child: Container(
-              height: double.infinity,
+              child: LayoutBuilder(
+                builder: (context, constraints) => Image.asset(
+                  'assets/images/profile_screen/scaffold_background.png',
+                  height: constraints.maxHeight,
+                  width: constraints.maxWidth,
+                  fit: BoxFit.cover,
+                ),
+              ),
             ),
           ),
         ],

@@ -3,7 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 class FirestoreService {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
-  Future<DocumentSnapshot<Map<String, dynamic>>> _getProfileData(
+  Future<DocumentSnapshot<Map<String, dynamic>>> getProfileData(
     String atUserId,
   ) async =>
       await _firestore
@@ -17,7 +17,7 @@ class FirestoreService {
   Future<bool> hasProfileData(
     String atUserId,
   ) async =>
-      await _getProfileData(atUserId)
+      await getProfileData(atUserId)
           .then((documentSnapshot) => documentSnapshot.exists ? true : false);
 
   Future<void> uploadProfileData(
@@ -51,7 +51,7 @@ class FirestoreService {
   Future<List<dynamic>> _readPostIds(
     String atUserId,
   ) async =>
-      await _getProfileData(atUserId).then((documentSnapshot) =>
+      await getProfileData(atUserId).then((documentSnapshot) =>
           documentSnapshot.exists ? documentSnapshot.get('postIds') : []);
 
   Future<void> addPostId2Profile(
@@ -81,9 +81,37 @@ class FirestoreService {
             SetOptions(merge: true),
           )
           .catchError((e) {
-        print('Cannot set merge profile data: ${e.toString()}');
+        print('Cannot set merge promotion data: ${e.toString()}');
       });
 
   Future<QuerySnapshot<Map<String, dynamic>>> getPromotionData() async =>
       await _firestore.collection('promotions').limit(2).get();
+
+  Future<void> setProvinceData(
+    String province,
+    String atPostId,
+    Map<String, dynamic> data,
+  ) async =>
+      await _firestore
+          .collection('home_screen')
+          .doc('provinces')
+          .collection(province)
+          .doc(atPostId)
+          .set(
+            data,
+            SetOptions(merge: true),
+          )
+          .catchError((e) {
+        print('Cannot set merge province data: ${e.toString()}');
+      });
+
+  Future<QuerySnapshot<Map<String, dynamic>>> getProvinceData(
+    String province,
+  ) async =>
+      await _firestore
+          .collection('home_screen')
+          .doc('provinces')
+          .collection(province)
+          .limit(2)
+          .get();
 }

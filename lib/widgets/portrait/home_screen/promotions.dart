@@ -2,7 +2,8 @@ import 'dart:ui';
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:travenx_loitafoundation/config/configs.dart';
+import 'package:travenx_loitafoundation/config/configs.dart'
+    show kHPadding, textScaleFactor, descriptionIconSize, Palette;
 import 'package:travenx_loitafoundation/icons/icons.dart';
 import 'package:travenx_loitafoundation/models/post_object_model.dart';
 

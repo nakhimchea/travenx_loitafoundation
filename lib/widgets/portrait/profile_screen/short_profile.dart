@@ -56,8 +56,9 @@ class ShortProfile extends StatelessWidget {
                               child: Image.asset(
                                   'assets/images/profile_screen/dummy_background.png'),
                             ),
-                            errorWidget: (context, _, __) =>
-                                Center(child: Text('Unable to Load Images')),
+                            errorWidget: (context, _, __) => Center(
+                              child: Text('Unable to Load Image'),
+                            ),
                           ),
               ),
               Positioned(
@@ -86,8 +87,9 @@ class ShortProfile extends StatelessWidget {
                                 child: Image.asset(
                                     'assets/images/profile_screen/dummy_profile.png'),
                               ),
-                              errorWidget: (context, _, __) =>
-                                  Center(child: Text('Unable to Load Images')),
+                              errorWidget: (context, _, __) => Center(
+                                child: Text('Unable to Load Image'),
+                              ),
                             ),
                 ),
               ),

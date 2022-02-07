@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:travenx_loitafoundation/helpers/profile_clipper.dart';
@@ -45,18 +47,17 @@ class ShortProfile extends StatelessWidget {
                             height: constraints.maxWidth * 9 / 16,
                             width: double.infinity,
                             imageUrl: backgroundUrl,
-                            placeholder: (context, _) => Image(
-                                height: constraints.maxWidth * 9 / 16,
-                                width: double.infinity,
-                                image: AssetImage(
-                                    'assets/images/profile_screen/dummy_background.png'),
-                                fit: BoxFit.cover),
-                            errorWidget: (context, _, __) => Container(
-                                height: constraints.maxWidth * 9 / 16,
-                                width: double.infinity,
-                                child: Center(
-                                    child: Text('Unable to Load Images'))),
-                            fit: BoxFit.cover),
+                            fit: BoxFit.cover,
+                            placeholder: (context, _) => ImageFiltered(
+                              imageFilter:
+                                  ImageFilter.blur(sigmaX: 10, sigmaY: 10),
+                              child: Image.asset(
+                                  'assets/images/profile_screen/dummy_background.png'),
+                            ),
+                            errorWidget: (context, _, __) => Center(
+                              child: Text('Unable to Load Image'),
+                            ),
+                          ),
               ),
               Positioned(
                 bottom: 0.0,
@@ -77,18 +78,17 @@ class ShortProfile extends StatelessWidget {
                               height: constraints.maxWidth / 5,
                               width: constraints.maxWidth / 5,
                               imageUrl: profileUrl,
-                              placeholder: (context, _) => Image(
-                                  height: constraints.maxWidth / 5,
-                                  width: constraints.maxWidth / 5,
-                                  image: AssetImage(
-                                      'assets/images/profile_screen/dummy_profile.png'),
-                                  fit: BoxFit.contain),
-                              errorWidget: (context, _, __) => Container(
-                                  height: constraints.maxWidth / 5,
-                                  width: constraints.maxWidth / 5,
-                                  child: Center(
-                                      child: Text('Unable to Load Images'))),
-                              fit: BoxFit.contain),
+                              fit: BoxFit.contain,
+                              placeholder: (context, _) => ImageFiltered(
+                                imageFilter:
+                                    ImageFilter.blur(sigmaX: 10, sigmaY: 10),
+                                child: Image.asset(
+                                    'assets/images/profile_screen/dummy_profile.png'),
+                              ),
+                              errorWidget: (context, _, __) => Center(
+                                child: Text('Unable to Load Image'),
+                              ),
+                            ),
                 ),
               ),
             ],

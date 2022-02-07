@@ -1,3 +1,6 @@
+import 'dart:ui';
+
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:travenx_loitafoundation/config/configs.dart';
 import 'package:travenx_loitafoundation/icons/icons.dart';
@@ -63,12 +66,27 @@ class _PromotionCard extends StatelessWidget {
           children: <Widget>[
             ClipRRect(
               borderRadius: BorderRadius.circular(15.0),
-              child: Image(
-                image: AssetImage(promotion.imageUrls.elementAt(0)),
-                height: double.infinity,
-                width: MediaQuery.of(context).size.width / 2,
-                fit: BoxFit.cover,
-              ),
+              child: promotion.imageUrls.elementAt(0).split('/').first ==
+                      'assets'
+                  ? Image(
+                      height: double.infinity,
+                      width: MediaQuery.of(context).size.width / 2,
+                      image: AssetImage(promotion.imageUrls.elementAt(0)),
+                      fit: BoxFit.cover,
+                    )
+                  : CachedNetworkImage(
+                      height: double.infinity,
+                      width: MediaQuery.of(context).size.width / 2,
+                      imageUrl: promotion.imageUrls.elementAt(0),
+                      fit: BoxFit.cover,
+                      placeholder: (context, _) => ImageFiltered(
+                        imageFilter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
+                        child: Image.asset('assets/images/travenx_180.png'),
+                      ),
+                      errorWidget: (context, _, __) => Center(
+                        child: Text('Unable to Load Image...'),
+                      ),
+                    ),
             ),
             Container(
               height: double.infinity,

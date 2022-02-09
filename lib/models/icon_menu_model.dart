@@ -77,4 +77,12 @@ final List<ModelIconMenu> modelIconMenus = [
     ),
     label: 'តំបន់ផ្សេងៗ',
   ),
+  ModelIconMenu(
+    icon: SvgPicture.asset(
+      'assets/icons/home_screen/ic_locations.svg',
+      width: iconSize,
+      height: iconSize,
+    ),
+    label: 'តំបន់ទាំងអស់',
+  ),
 ];

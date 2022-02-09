@@ -16,7 +16,7 @@ class _HomeScreenState extends State<HomeScreen>
   late TabController _tabController;
   final FirestoreService _firestoreService = FirestoreService();
 
-  List<List<PostObject>> iconMenus = [];
+  //List<List<PostObject>> iconMenus = [];
   List<PostObject> promotions = [];
   List<Province> provinces = [
     Province(
@@ -146,12 +146,12 @@ class _HomeScreenState extends State<HomeScreen>
     ),
   ];
 
-  void assignIconMenuData() async {
-    for (ModelIconMenu modelIconMenu in modelIconMenus)
-      iconMenus.add(postTranslator(await _firestoreService
-          .getIconMenuData(modelIconMenu.label)
-          .then((snapshot) => snapshot.docs)));
-  }
+  // void assignIconMenuData() async {
+  //   for (ModelIconMenu modelIconMenu in modelIconMenus)
+  //     iconMenus.add(postTranslator(await _firestoreService
+  //         .getIconMenuData(modelIconMenu.label)
+  //         .then((snapshot) => snapshot.docs)));
+  // }
 
   void assignPromotionData() async {
     promotions = postTranslator(await _firestoreService
@@ -203,15 +203,15 @@ class _HomeScreenState extends State<HomeScreen>
           SliverToBoxAdapter(
             child: SearchBar(),
           ),
-          // SliverPadding(
-          //   padding: const EdgeInsets.symmetric(
-          //     horizontal: kHPadding,
-          //     vertical: kVPadding + 6.0,
-          //   ),
-          //   sliver: SliverToBoxAdapter(
-          //     child: IconsMenu(iconMenus: iconMenus),
-          //   ),
-          // ),
+          SliverPadding(
+            padding: const EdgeInsets.symmetric(
+              horizontal: kHPadding,
+              vertical: kVPadding + 6.0,
+            ),
+            sliver: SliverToBoxAdapter(
+              child: IconsMenu(),
+            ),
+          ),
           // SliverPadding(
           //   padding: const EdgeInsets.only(
           //     top: 6.0,
@@ -221,15 +221,15 @@ class _HomeScreenState extends State<HomeScreen>
           //     child: Promotions(promotions: promotions),
           //   ),
           // ),
-          SliverPadding(
-            padding: const EdgeInsets.symmetric(
-              horizontal: kHPadding,
-              vertical: kVPadding,
-            ),
-            sliver: SliverToBoxAdapter(
-              child: Provinces(provinces: provinces),
-            ),
-          ),
+          // SliverPadding(
+          //   padding: const EdgeInsets.symmetric(
+          //     horizontal: kHPadding,
+          //     vertical: kVPadding,
+          //   ),
+          //   sliver: SliverToBoxAdapter(
+          //     child: Provinces(provinces: provinces),
+          //   ),
+          // ),
         ],
       ),
     );

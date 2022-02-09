@@ -1,72 +1,29 @@
 import 'package:flutter/material.dart';
+import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:travenx_loitafoundation/config/configs.dart'
     show kHPadding, kVPadding, textScaleFactor;
+import 'package:travenx_loitafoundation/helpers/post_translator.dart';
 import 'package:travenx_loitafoundation/icons/icons.dart';
 import 'package:travenx_loitafoundation/models/icon_menu_model.dart';
 import 'package:travenx_loitafoundation/models/post_object_model.dart';
+import 'package:travenx_loitafoundation/services/firestore_service.dart';
 import 'package:travenx_loitafoundation/widgets/portrait/card_tile_item.dart';
 
 class IconMenuTab extends StatefulWidget {
   final int initIndex;
-  final List<List<PostObject>> iconMenus;
 
-  const IconMenuTab({
-    Key? key,
-    required this.initIndex,
-    required this.iconMenus,
-  }) : super(key: key);
+  const IconMenuTab({Key? key, required this.initIndex}) : super(key: key);
 
   @override
   _IconMenuTabState createState() => _IconMenuTabState();
 }
 
-class _IconMenuTabState extends State<IconMenuTab> {
-  List<ListView> _buildIconMenusList() {
-    const double _vPadding = 8;
-    List<ListView> tabBarListItems = [];
+class _IconMenuTabState extends State<IconMenuTab>
+    with SingleTickerProviderStateMixin {
+  List<List<PostObject>> iconMenus = [[], [], [], [], [], [], [], []];
 
-    List<PostObject> allPlaces = [];
-    widget.iconMenus
-        .forEach((list) => list.forEach((element) => allPlaces.add(element)));
-
-    for (int i = 0; i < widget.iconMenus.length; i++) {
-      tabBarListItems.add(
-        ListView.builder(
-          padding: const EdgeInsets.only(
-            left: kHPadding,
-            right: kHPadding,
-            top: kVPadding + 2.0,
-            bottom: kVPadding + 6.0,
-          ),
-          itemBuilder: (BuildContext context, int index) {
-            return CardTileItem(
-              placeObject: widget.iconMenus[i].elementAt(index),
-              vPadding: _vPadding,
-            );
-          },
-          itemCount: widget.iconMenus[i].length,
-        ),
-      );
-    }
-    tabBarListItems.add(
-      ListView.builder(
-        padding: const EdgeInsets.only(
-          left: kHPadding,
-          right: kHPadding,
-          top: kVPadding + 2.0,
-          bottom: kVPadding + 6.0,
-        ),
-        itemBuilder: (BuildContext context, int index) {
-          return CardTileItem(
-            placeObject: allPlaces.elementAt(index),
-            vPadding: _vPadding,
-          );
-        },
-        itemCount: allPlaces.length,
-      ),
-    );
-    return tabBarListItems;
-  }
+  void addListIconMenu(List<PostObject> postList) =>
+      iconMenus.elementAt(widget.initIndex).addAll(postList);
 
   @override
   Widget build(BuildContext context) {
@@ -119,6 +76,136 @@ class _IconMenuTabState extends State<IconMenuTab> {
         ),
         body: TabBarView(children: _buildIconMenusList()),
       ),
+    );
+  }
+
+  List<TabListView> _buildIconMenusList() {
+    const double _vPadding = 8;
+    List<TabListView> tabBarListItems = [];
+
+    List<PostObject> allPlaces = [];
+
+    for (int i = 0; i < 9; i++) {
+      tabBarListItems.add(TabListView(
+        vPadding: _vPadding,
+        initIndex: widget.initIndex,
+        iconMenus: iconMenus,
+        iconMenuCallback: addListIconMenu,
+      ));
+    }
+    // widget.iconMenus
+    //     .forEach((list) => list.forEach((element) => allPlaces.add(element)));
+    //
+    // for (int i = 0; i < widget.iconMenus.length; i++) {
+    //   tabBarListItems.add(TabListView());
+    // }
+    // tabBarListItems.add(
+    //   ListView.builder(
+    //     padding: const EdgeInsets.only(
+    //       left: kHPadding,
+    //       right: kHPadding,
+    //       top: kVPadding + 2.0,
+    //       bottom: kVPadding + 6.0,
+    //     ),
+    //     itemBuilder: (BuildContext context, int index) {
+    //       return CardTileItem(
+    //         placeObject: allPlaces.elementAt(index),
+    //         vPadding: _vPadding,
+    //       );
+    //     },
+    //     itemCount: allPlaces.length,
+    //   ),
+    // );
+    return tabBarListItems;
+  }
+}
+
+class TabListView extends StatefulWidget {
+  final double vPadding;
+  final int initIndex;
+  final List<List<PostObject>> iconMenus;
+  final void Function(List<PostObject>) iconMenuCallback;
+  const TabListView({
+    Key? key,
+    this.vPadding = 8.0,
+    required this.initIndex,
+    required this.iconMenus,
+    required this.iconMenuCallback,
+  }) : super(key: key);
+
+  @override
+  _TabListViewState createState() => _TabListViewState();
+}
+
+class _TabListViewState extends State<TabListView> {
+  RefreshController _refreshController =
+      RefreshController(initialRefresh: true);
+  final FirestoreService _firestoreService = FirestoreService();
+
+  void assignIconMenuData() async {
+    for (ModelIconMenu modelIconMenu in modelIconMenus)
+      widget.iconMenuCallback(postTranslator(await _firestoreService
+          .getIconMenuData(modelIconMenu.label)
+          .then((snapshot) => snapshot.docs)));
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    assignIconMenuData();
+  }
+
+  Widget _buildList() => ListView.builder(
+        padding: const EdgeInsets.only(
+          left: kHPadding,
+          right: kHPadding,
+          top: kVPadding + 2.0,
+          bottom: kVPadding + 6.0,
+        ),
+        itemBuilder: (BuildContext context, int index) {
+          return CardTileItem(
+            placeObject: widget.iconMenus[widget.initIndex].elementAt(index),
+            vPadding: 8,
+          );
+        },
+        itemCount: widget.iconMenus[widget.initIndex].length,
+      );
+
+  @override
+  Widget build(BuildContext context) {
+    return SmartRefresher(
+      controller: _refreshController,
+      enablePullUp: true,
+      child: _buildList(),
+      physics: BouncingScrollPhysics(),
+      footer: ClassicFooter(
+        loadStyle: LoadStyle.ShowWhenLoading,
+        completeDuration: Duration(milliseconds: 500),
+      ),
+      onRefresh: () async {
+        //monitor fetch data from network
+        await Future.delayed(Duration(milliseconds: 1000));
+
+        // for (int i = 0; i < 10; i++) {
+        //   data.add("Item $i");
+        // }
+
+        if (mounted) setState(() {});
+        _refreshController.refreshCompleted();
+
+        // if(failed){
+        //  _refreshController.refreshFailed();
+        // }
+      },
+      onLoading: () async {
+        //monitor fetch data from network
+        await Future.delayed(Duration(milliseconds: 180));
+        // for (int i = 0; i < 10; i++) {
+        //   data.add("Item $i");
+        // }
+        if (mounted) setState(() {});
+        _refreshController.loadFailed();
+      },
     );
   }
 }

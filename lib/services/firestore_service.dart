@@ -69,6 +69,37 @@ class FirestoreService {
     });
   }
 
+  Future<void> setIconMenuData(
+    String iconMenu,
+    String atPostId,
+    Map<String, dynamic> data,
+  ) async =>
+      await _firestore
+          .collection('home_screen')
+          .doc('icon_menus')
+          .collection(iconMenu)
+          .doc(atPostId)
+          .set(
+            data,
+            SetOptions(merge: true),
+          )
+          .catchError((e) {
+        print('Cannot set merge icon menu data: ${e.toString()}');
+      });
+
+  Future<QuerySnapshot<Map<String, dynamic>>> getIconMenuData(
+    String iconMenu,
+  ) async =>
+      await _firestore
+          .collection('home_screen')
+          .doc('icon_menus')
+          .collection(iconMenu)
+          .limit(2)
+          .get()
+          .catchError((e) {
+        print('Cannot get icon menu data: ${e.toString()}');
+      });
+
   Future<void> setPromotionData(
     String atPostId,
     Map<String, dynamic> data,
@@ -85,7 +116,9 @@ class FirestoreService {
       });
 
   Future<QuerySnapshot<Map<String, dynamic>>> getPromotionData() async =>
-      await _firestore.collection('promotions').limit(2).get();
+      await _firestore.collection('promotions').limit(2).get().catchError((e) {
+        print('Cannot get promotion data: ${e.toString()}');
+      });
 
   Future<void> setProvinceData(
     String province,
@@ -113,5 +146,8 @@ class FirestoreService {
           .doc('provinces')
           .collection(province)
           .limit(2)
-          .get();
+          .get()
+          .catchError((e) {
+        print('Cannot get province data: ${e.toString()}');
+      });
 }

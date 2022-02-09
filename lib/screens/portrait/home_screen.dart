@@ -1,4 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:travenx_loitafoundation/config/configs.dart'
     show kHPadding, kVPadding, textScaleFactor;
@@ -17,6 +16,7 @@ class _HomeScreenState extends State<HomeScreen>
   late TabController _tabController;
   final FirestoreService _firestoreService = FirestoreService();
 
+  List<List<PostObject>> iconMenus = [];
   List<PostObject> promotions = [];
   List<Province> provinces = [
     Province(
@@ -146,19 +146,28 @@ class _HomeScreenState extends State<HomeScreen>
     ),
   ];
 
-  void assignPromotionData() async {
-    final List<QueryDocumentSnapshot<Map<String, dynamic>>> _promotions =
-        await _firestoreService
-            .getPromotionData()
-            .then((snapshot) => snapshot.docs);
-    promotions = postTranslator(_promotions);
+  void assignIconMenuData() async {
+    for (ModelIconMenu modelIconMenu in modelIconMenus)
+      iconMenus.add(postTranslator(await _firestoreService
+          .getIconMenuData(modelIconMenu.label)
+          .then((snapshot) => snapshot.docs)));
   }
+
+  void assignPromotionData() async {
+    promotions = postTranslator(await _firestoreService
+        .getPromotionData()
+        .then((snapshot) => snapshot.docs));
+  }
+
+  void assignProvinceData() async {}
 
   @override
   void initState() {
     super.initState();
     _tabController = TabController(length: 5, vsync: this);
+    //assignIconMenuData();
     //assignPromotionData();
+    //assignProvinceData();
   }
 
   @override
@@ -194,6 +203,15 @@ class _HomeScreenState extends State<HomeScreen>
           SliverToBoxAdapter(
             child: SearchBar(),
           ),
+          // SliverPadding(
+          //   padding: const EdgeInsets.symmetric(
+          //     horizontal: kHPadding,
+          //     vertical: kVPadding + 6.0,
+          //   ),
+          //   sliver: SliverToBoxAdapter(
+          //     child: IconsMenu(iconMenus: iconMenus),
+          //   ),
+          // ),
           // SliverPadding(
           //   padding: const EdgeInsets.only(
           //     top: 6.0,

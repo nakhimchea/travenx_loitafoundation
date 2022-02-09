@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:travenx_loitafoundation/config/configs.dart'
-    show kHPadding, kVPadding, textScaleFactor, iconSize, Palette;
+    show kHPadding, kVPadding, textScaleFactor, iconSize;
 import 'package:travenx_loitafoundation/models/icon_menu_model.dart';
 import 'package:travenx_loitafoundation/models/post_object_model.dart';
 import 'package:travenx_loitafoundation/screens/portrait/home_screen/icon_menu_tab.dart';
@@ -27,9 +27,8 @@ class IconsMenu extends StatelessWidget {
   Widget build(BuildContext context) {
     return iconMenus.length < 8
         ? Container(
-            height: 2 * (10 * textScaleFactor + iconSize + kVPadding) + 10,
-            child: Center(
-                child: CircularProgressIndicator(color: Palette.priceColor)),
+            height: 2 * (10 * textScaleFactor + iconSize + kVPadding) + 19.3,
+            child: Center(child: CircularProgressIndicator.adaptive()),
           )
         : Column(
             children: [

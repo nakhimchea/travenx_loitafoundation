@@ -17,7 +17,7 @@ class Promotions extends StatelessWidget {
     if (promotions.isEmpty) {
       return Container(
         height: MediaQuery.of(context).size.height / 3.15,
-        child: Center(child: CircularProgressIndicator(color: Colors.white54)),
+        child: Center(child: CircularProgressIndicator.adaptive()),
       );
     } else {
       promotions.shuffle();

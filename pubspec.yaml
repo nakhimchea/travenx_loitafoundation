@@ -21,6 +21,9 @@ dependencies:
   # get readmore button package
   readmore: ^2.1.0
 
+  # ListView load more
+  pull_to_refresh: ^2.0.0
+
   # state management package
   provider: ^6.0.1
 

@@ -90,7 +90,7 @@ class _ProvincesItem extends StatelessWidget {
       onTap: () => Navigator.push(
         context,
         MaterialPageRoute(
-          builder: (_) => ProvinceRoute(),
+          builder: (_) => ProvinceRoute(modelProvince: modelProvince),
         ),
       ),
       child: Padding(
@@ -164,7 +164,9 @@ class _ProvincesItem extends StatelessWidget {
 }
 
 class ProvinceRoute extends StatefulWidget {
-  const ProvinceRoute({Key? key}) : super(key: key);
+  final ModelProvince modelProvince;
+  const ProvinceRoute({Key? key, required this.modelProvince})
+      : super(key: key);
 
   @override
   _ProvinceRouteState createState() => _ProvinceRouteState();

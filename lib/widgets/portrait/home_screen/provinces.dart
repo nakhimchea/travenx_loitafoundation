@@ -55,7 +55,9 @@ class _ProvinceCard extends StatelessWidget {
           ? Navigator.push(
               context, MaterialPageRoute(builder: (_) => ProvinceRoutes()))
           : Navigator.push(
-              context, MaterialPageRoute(builder: (_) => ProvinceRoute())),
+              context,
+              MaterialPageRoute(
+                  builder: (_) => ProvinceRoute(modelProvince: modelProvince))),
       child: Padding(
         padding: const EdgeInsets.only(bottom: kVPadding),
         child: Stack(

@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:travenx_loitafoundation/config/configs.dart'
     show kHPadding, kVPadding, textScaleFactor, kCardTileVPadding;
@@ -99,6 +100,7 @@ class _BuildIconMenuListState extends State<_BuildIconMenuList> {
       RefreshController(initialRefresh: true);
   final FirestoreService _firestoreService = FirestoreService();
   bool _isRefreshable = true;
+  bool _isLoadable = true;
 
   List<PostObject> postList = [];
   DocumentSnapshot? _lastDoc;
@@ -125,82 +127,42 @@ class _BuildIconMenuListState extends State<_BuildIconMenuList> {
     Widget _footer;
 
     if (mode == LoadStatus.idle)
-      _footer = Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Icon(
-            Icons.keyboard_arrow_up_outlined,
-            size: 14,
-            color: Theme.of(context).primaryIconTheme.color,
-          ),
-          SizedBox(width: 10),
-          Text(
-            'រុញឡើង ទាញទិន្នន័យ',
-            style: Theme.of(context).textTheme.button,
-          ),
-        ],
+      _footer = Center(
+        child: Icon(
+          Icons.keyboard_arrow_up_outlined,
+          size: 22,
+          color: Theme.of(context).primaryColor,
+        ),
       );
     else if (mode == LoadStatus.loading)
-      _footer = Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          SizedBox(
-              height: 10,
-              width: 10,
-              child: CircularProgressIndicator.adaptive()),
-          SizedBox(width: 10),
-          Text(
-            'កំពុងទាញយកកន្លែងថ្មីៗ...',
-            style: Theme.of(context).textTheme.button,
-          ),
-        ],
+      _footer = Center(
+        child: SpinKitFadingCircle(
+          size: 22,
+          color: Theme.of(context).primaryColor,
+        ),
       );
     else if (mode == LoadStatus.failed)
-      _footer = Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Icon(
-            Icons.error_outline_outlined,
-            size: 14,
-            color: Theme.of(context).primaryIconTheme.color,
-          ),
-          SizedBox(width: 10),
-          Text(
-            'មិនអាចទាញទិន្នន័យបាន!',
-            style: Theme.of(context).textTheme.button,
-          ),
-        ],
+      _footer = Center(
+        child: Icon(
+          Icons.error_outline_outlined,
+          size: 22,
+          color: Theme.of(context).primaryColor,
+        ),
       );
     else if (mode == LoadStatus.canLoading)
-      _footer = Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          SizedBox(
-              height: 10,
-              width: 10,
-              child: CircularProgressIndicator.adaptive()),
-          SizedBox(width: 10),
-          Text(
-            'មានកន្លែងថ្មី',
-            style: Theme.of(context).textTheme.button,
-          ),
-        ],
+      _footer = Center(
+        child: SpinKitFadingCircle(
+          size: 22,
+          color: Theme.of(context).primaryColor,
+        ),
       );
     else
-      _footer = Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Icon(
-            Icons.info_outline,
-            size: 14,
-            color: Theme.of(context).primaryIconTheme.color,
-          ),
-          SizedBox(width: 10),
-          Text(
-            'គ្មានកន្លែងថ្មី!',
-            style: Theme.of(context).textTheme.button,
-          ),
-        ],
+      _footer = Center(
+        child: Icon(
+          Icons.info_outline,
+          size: 22,
+          color: Theme.of(context).primaryColor,
+        ),
       );
 
     return _footer;
@@ -211,12 +173,11 @@ class _BuildIconMenuListState extends State<_BuildIconMenuList> {
     return SmartRefresher(
       controller: _refreshController,
       enablePullDown: _isRefreshable,
-      enablePullUp: true,
+      enablePullUp: _isLoadable,
       child: _buildList(),
       physics: BouncingScrollPhysics(),
       footer: CustomFooter(
         loadStyle: LoadStyle.ShowWhenLoading,
-        height: 50.0,
         builder: loadingBuilder,
       ),
       onRefresh: () async {
@@ -228,9 +189,9 @@ class _BuildIconMenuListState extends State<_BuildIconMenuList> {
                     .label,
                 _lastDoc)
             .then((snapshot) {
-          setState(() {
-            if (snapshot.docs.isNotEmpty) _lastDoc = snapshot.docs.last;
-          });
+          setState(() => snapshot.docs.isNotEmpty
+              ? _lastDoc = snapshot.docs.last
+              : _isLoadable = false);
           return snapshot.docs;
         }));
         if (mounted) setState(() => _isRefreshable = false);
@@ -246,9 +207,9 @@ class _BuildIconMenuListState extends State<_BuildIconMenuList> {
                       .label,
                   _lastDoc)
               .then((snapshot) {
-            setState(() {
-              if (snapshot.docs.isNotEmpty) _lastDoc = snapshot.docs.last;
-            });
+            setState(() => snapshot.docs.isNotEmpty
+                ? _lastDoc = snapshot.docs.last
+                : _isLoadable = false);
             return snapshot.docs;
           })));
         if (mounted) setState(() {});

@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:travenx_loitafoundation/config/configs.dart'
     show kHPadding, kVPadding, textScaleFactor;
-import 'package:travenx_loitafoundation/helpers/post_translator.dart';
 import 'package:travenx_loitafoundation/models/home_screen_models.dart';
-import 'package:travenx_loitafoundation/services/firestore_service.dart';
 import 'package:travenx_loitafoundation/widgets/portrait/home_screen/widgets.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -14,9 +12,7 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen>
     with SingleTickerProviderStateMixin {
   late TabController _tabController;
-  final FirestoreService _firestoreService = FirestoreService();
 
-  List<PostObject> promotions = [];
   List<Province> provinces = [
     Province(
       label: 'ភ្នំពេញ',
@@ -145,20 +141,10 @@ class _HomeScreenState extends State<HomeScreen>
     ),
   ];
 
-  void assignPromotionData() async {
-    promotions = postTranslator(await _firestoreService
-        .getPromotionData()
-        .then((snapshot) => snapshot.docs));
-  }
-
-  void assignProvinceData() async {}
-
   @override
   void initState() {
     super.initState();
     _tabController = TabController(length: 5, vsync: this);
-    //assignPromotionData();
-    //assignProvinceData();
   }
 
   @override
@@ -194,33 +180,33 @@ class _HomeScreenState extends State<HomeScreen>
           SliverToBoxAdapter(
             child: SearchBar(),
           ),
-          SliverPadding(
-            padding: const EdgeInsets.symmetric(
-              horizontal: kHPadding,
-              vertical: kVPadding + 6.0,
-            ),
-            sliver: SliverToBoxAdapter(
-              child: IconsMenu(),
-            ),
-          ),
+          // SliverPadding(
+          //   padding: const EdgeInsets.symmetric(
+          //     horizontal: kHPadding,
+          //     vertical: kVPadding + 6.0,
+          //   ),
+          //   sliver: SliverToBoxAdapter(
+          //     child: IconsMenu(),
+          //   ),
+          // ),
           // SliverPadding(
           //   padding: const EdgeInsets.only(
           //     top: 6.0,
           //     bottom: kVPadding,
           //   ),
           //   sliver: SliverToBoxAdapter(
-          //     child: Promotions(promotions: promotions),
+          //     child: Promotions(),
           //   ),
           // ),
-          // SliverPadding(
-          //   padding: const EdgeInsets.symmetric(
-          //     horizontal: kHPadding,
-          //     vertical: kVPadding,
-          //   ),
-          //   sliver: SliverToBoxAdapter(
-          //     child: Provinces(provinces: provinces),
-          //   ),
-          // ),
+          SliverPadding(
+            padding: const EdgeInsets.symmetric(
+              horizontal: kHPadding,
+              vertical: kVPadding,
+            ),
+            sliver: SliverToBoxAdapter(
+              child: Provinces(provinces: provinces),
+            ),
+          ),
         ],
       ),
     );

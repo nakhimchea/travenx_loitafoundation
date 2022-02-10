@@ -127,10 +127,25 @@ class FirestoreService {
         print('Cannot set merge promotion data: ${e.toString()}');
       });
 
-  Future<QuerySnapshot<Map<String, dynamic>>> getPromotionData() async =>
-      await _firestore.collection('promotions').limit(2).get().catchError((e) {
-        print('Cannot get promotion data: ${e.toString()}');
-      });
+  Future<QuerySnapshot<Map<String, dynamic>>> getPromotionData(
+    DocumentSnapshot? lastDoc,
+  ) async =>
+      lastDoc != null
+          ? await _firestore
+              .collection('promotions')
+              .startAfterDocument(lastDoc)
+              .limit(2)
+              .get()
+              .catchError((e) {
+              print('Cannot get promotion data: ${e.toString()}');
+            })
+          : await _firestore
+              .collection('promotions')
+              .limit(2)
+              .get()
+              .catchError((e) {
+              print('Cannot get promotion data: ${e.toString()}');
+            });
 
   Future<void> setProvinceData(
     String province,

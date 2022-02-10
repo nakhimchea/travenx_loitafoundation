@@ -1,57 +1,150 @@
 import 'dart:ui';
 
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:travenx_loitafoundation/config/configs.dart'
     show kHPadding, textScaleFactor, descriptionIconSize, Palette;
+import 'package:travenx_loitafoundation/helpers/post_translator.dart';
 import 'package:travenx_loitafoundation/icons/icons.dart';
 import 'package:travenx_loitafoundation/models/post_object_model.dart';
+import 'package:travenx_loitafoundation/services/firestore_service.dart';
 
-class Promotions extends StatelessWidget {
-  final List<PostObject> promotions;
+class Promotions extends StatefulWidget {
+  const Promotions({Key? key}) : super(key: key);
 
-  const Promotions({Key? key, required this.promotions}) : super(key: key);
+  @override
+  _PromotionsState createState() => _PromotionsState();
+}
+
+class _PromotionsState extends State<Promotions> {
+  RefreshController _refreshController =
+      RefreshController(initialRefresh: true);
+  final FirestoreService _firestoreService = FirestoreService();
+  bool _isRefreshable = true;
+  bool _isLoadable = true;
+
+  List<PostObject> postList = [];
+  DocumentSnapshot? _lastDoc;
+
+  Widget _buildList() {
+    return ListView.builder(
+      itemCount: postList.length,
+      scrollDirection: Axis.horizontal,
+      physics: BouncingScrollPhysics(),
+      itemBuilder: (BuildContext context, int index) {
+        if (index == postList.length - 1)
+          return Padding(
+            padding: const EdgeInsets.only(right: 8.0),
+            child: _PromotionCard(post: postList[index]),
+          );
+        else if (index == 0)
+          return Padding(
+            padding: const EdgeInsets.only(left: kHPadding),
+            child: _PromotionCard(post: postList[index]),
+          );
+        else
+          return _PromotionCard(post: postList[index]);
+      },
+    );
+  }
+
+  Widget loadingBuilder(BuildContext context, LoadStatus? mode) {
+    Widget _footer;
+
+    if (mode == LoadStatus.idle)
+      _footer = Center(
+        child: Icon(
+          Icons.keyboard_arrow_left_outlined,
+          size: 22,
+          color: Theme.of(context).primaryColor,
+        ),
+      );
+    else if (mode == LoadStatus.loading)
+      _footer = Center(
+        child: SpinKitFadingCircle(
+          size: 22,
+          color: Theme.of(context).primaryColor,
+        ),
+      );
+    else if (mode == LoadStatus.failed)
+      _footer = Center(
+        child: Icon(
+          Icons.error_outline_outlined,
+          size: 22,
+          color: Theme.of(context).primaryColor,
+        ),
+      );
+    else if (mode == LoadStatus.canLoading)
+      _footer = Center(
+        child: SpinKitFadingCircle(
+          size: 22,
+          color: Theme.of(context).primaryColor,
+        ),
+      );
+    else
+      _footer = Center(
+        child: Icon(
+          Icons.info_outline,
+          size: 22,
+          color: Theme.of(context).primaryColor,
+        ),
+      );
+
+    return _footer;
+  }
 
   @override
   Widget build(BuildContext context) {
-    if (promotions.isEmpty) {
-      return Container(
-        height: MediaQuery.of(context).size.height / 3.15,
-        child: Center(child: CircularProgressIndicator.adaptive()),
-      );
-    } else {
-      promotions.shuffle();
-      return Container(
-        height: MediaQuery.of(context).size.height / 3.15,
-        child: ListView.builder(
-          physics: BouncingScrollPhysics(),
-          itemCount: promotions.length,
-          scrollDirection: Axis.horizontal,
-          itemBuilder: (BuildContext context, int index) {
-            if (index == promotions.length - 1)
-              return Padding(
-                padding: const EdgeInsets.only(right: 8.0),
-                child: _PromotionCard(promotion: promotions[index]),
-              );
-            else if (index == 0)
-              return Padding(
-                padding: const EdgeInsets.only(left: kHPadding),
-                child: _PromotionCard(promotion: promotions[index]),
-              );
-            else
-              return _PromotionCard(promotion: promotions[index]);
-          },
+    return Container(
+      height: MediaQuery.of(context).size.height / 3.15,
+      child: SmartRefresher(
+        controller: _refreshController,
+        enablePullDown: _isRefreshable,
+        enablePullUp: _isLoadable,
+        child: _buildList(),
+        header: CustomHeader(builder: (_, __) => SizedBox.shrink()),
+        footer: CustomFooter(
+          loadStyle: LoadStyle.ShowWhenLoading,
+          builder: loadingBuilder,
         ),
-      );
-    }
+        onRefresh: () async {
+          postList = postTranslator(await _firestoreService
+              .getPromotionData(_lastDoc)
+              .then((snapshot) {
+            setState(() => snapshot.docs.isNotEmpty
+                ? _lastDoc = snapshot.docs.last
+                : _isLoadable = false);
+            return snapshot.docs;
+          }));
+          if (mounted) setState(() => _isRefreshable = false);
+          _refreshController.refreshCompleted();
+        },
+        onLoading: () async {
+          postList = List.from(postList)
+            ..addAll(postTranslator(await _firestoreService
+                .getPromotionData(_lastDoc)
+                .then((snapshot) {
+              setState(() => snapshot.docs.isNotEmpty
+                  ? _lastDoc = snapshot.docs.last
+                  : _isLoadable = false);
+              return snapshot.docs;
+            })));
+          if (mounted) setState(() {});
+          _refreshController.loadComplete();
+        },
+      ),
+    );
   }
 }
 
 class _PromotionCard extends StatelessWidget {
-  final PostObject promotion;
+  final PostObject post;
 
-  const _PromotionCard({Key? key, required this.promotion}) : super(key: key);
+  const _PromotionCard({Key? key, required this.post}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -68,18 +161,17 @@ class _PromotionCard extends StatelessWidget {
           children: <Widget>[
             ClipRRect(
               borderRadius: BorderRadius.circular(15.0),
-              child: promotion.imageUrls.elementAt(0).split('/').first ==
-                      'assets'
+              child: post.imageUrls.elementAt(0).split('/').first == 'assets'
                   ? Image(
                       height: double.infinity,
                       width: MediaQuery.of(context).size.width / 2,
-                      image: AssetImage(promotion.imageUrls.elementAt(0)),
+                      image: AssetImage(post.imageUrls.elementAt(0)),
                       fit: BoxFit.cover,
                     )
                   : CachedNetworkImage(
                       height: double.infinity,
                       width: MediaQuery.of(context).size.width / 2,
-                      imageUrl: promotion.imageUrls.elementAt(0),
+                      imageUrl: post.imageUrls.elementAt(0),
                       fit: BoxFit.cover,
                       placeholder: (context, _) => ImageFiltered(
                         imageFilter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
@@ -108,7 +200,7 @@ class _PromotionCard extends StatelessWidget {
                     title: Padding(
                       padding: const EdgeInsets.symmetric(vertical: 5.0),
                       child: Text(
-                        promotion.title,
+                        post.title,
                         maxLines: 2,
                         textScaleFactor: textScaleFactor,
                         style: Theme.of(context)
@@ -131,7 +223,7 @@ class _PromotionCard extends StatelessWidget {
                           Padding(
                             padding: const EdgeInsets.only(left: 5.0),
                             child: Text(
-                              promotion.location,
+                              post.location,
                               textScaleFactor: textScaleFactor,
                               style: Theme.of(context)
                                   .textTheme
@@ -146,7 +238,7 @@ class _PromotionCard extends StatelessWidget {
                       ),
                     ),
                     trailing: Text(
-                      '\$${promotion.price % 1 == 0 ? promotion.price.toStringAsFixed(0) : promotion.price.toStringAsFixed(1)}',
+                      '\$${post.price % 1 == 0 ? post.price.toStringAsFixed(0) : post.price.toStringAsFixed(1)}',
                       textScaleFactor: textScaleFactor,
                       style: Theme.of(context).textTheme.subtitle1,
                       overflow:
@@ -171,7 +263,7 @@ class _PromotionCard extends StatelessWidget {
                             Padding(
                               padding: const EdgeInsets.only(left: 5.0),
                               child: Text(
-                                promotion.briefDescription!.ratings
+                                post.briefDescription!.ratings
                                     .toStringAsFixed(1),
                                 textScaleFactor: textScaleFactor,
                                 style: Theme.of(context)
@@ -195,7 +287,7 @@ class _PromotionCard extends StatelessWidget {
                             Padding(
                               padding: const EdgeInsets.only(left: 5.0),
                               child: Text(
-                                promotion.briefDescription!.views.toString(),
+                                post.briefDescription!.views.toString(),
                                 textScaleFactor: textScaleFactor,
                                 style: Theme.of(context)
                                     .textTheme

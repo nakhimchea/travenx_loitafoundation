@@ -165,6 +165,42 @@ class FirestoreService {
         print('Cannot set merge province data: ${e.toString()}');
       });
 
+  Future<String> getProvinceCounter(
+    String atProvince,
+  ) async =>
+      await _firestore
+          .collection('home_screen')
+          .doc('provinces_total_posts')
+          .get()
+          .then((snapshot) => snapshot.get(atProvince).toString())
+          .catchError((e) {
+        print('Cannot get province counter: $e');
+      });
+
+  Future<void> increaseProvinceCounter(
+    String atProvince,
+  ) async =>
+      await _firestore
+          .collection('home_screen')
+          .doc('provinces_total_posts')
+          .update({
+        atProvince: int.parse(await getProvinceCounter(atProvince)) + 1
+      }).catchError((e) {
+        print('Cannot update value in provinces_total_posts: $e');
+      });
+
+  Future<void> decreaseProvinceCounter(
+    String atProvince,
+  ) async =>
+      await _firestore
+          .collection('home_screen')
+          .doc('provinces_total_posts')
+          .update({
+        atProvince: int.parse(await getProvinceCounter(atProvince)) - 1
+      }).catchError((e) {
+        print('Cannot update value in provinces_total_posts: $e');
+      });
+
   Future<QuerySnapshot<Map<String, dynamic>>> getProvinceData(
     String province,
   ) async =>

@@ -4,6 +4,7 @@ import 'package:travenx_loitafoundation/config/configs.dart'
     show kHPadding, kVPadding, textScaleFactor, Palette;
 import 'package:travenx_loitafoundation/icons/icons.dart';
 import 'package:travenx_loitafoundation/models/province_model.dart';
+import 'package:travenx_loitafoundation/screens/portrait/home_screen/province_routes.dart';
 
 class Provinces extends StatelessWidget {
   const Provinces({Key? key}) : super(key: key);
@@ -50,20 +51,11 @@ class _ProvinceCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {}, //TODO: Route to the next page
-      // () => isLast
-      // ? Navigator.push(
-      //     context,
-      //     MaterialPageRoute(
-      //       builder: (_) => ProvincesSubscreen(provinces: provinces!),
-      //     ),
-      //   )
-      // : Navigator.push(
-      //     context,
-      //     MaterialPageRoute(
-      //       builder: (_) => ProvinceSubscreen(province: province),
-      //     ),
-      //   ),
+      onTap: () => modelProvince == modelProvinces.last
+          ? Navigator.push(
+              context, MaterialPageRoute(builder: (_) => ProvinceRoutes()))
+          : Navigator.push(
+              context, MaterialPageRoute(builder: (_) => ProvinceRoute())),
       child: Padding(
         padding: const EdgeInsets.only(bottom: kVPadding),
         child: Stack(

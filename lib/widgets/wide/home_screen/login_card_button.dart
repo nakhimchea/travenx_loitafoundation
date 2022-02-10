@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 
 class LoginCardButton extends StatelessWidget {
@@ -63,7 +64,9 @@ class LoginCardButton extends StatelessWidget {
                               .headline4!
                               .copyWith(
                                   fontSize: 10.0, fontWeight: FontWeight.w400),
-                          overflow: TextOverflow.ellipsis,
+                          overflow: kIsWeb
+                              ? TextOverflow.clip
+                              : TextOverflow.ellipsis,
                         ),
                       ),
                       Text(

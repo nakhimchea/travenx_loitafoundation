@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:travenx_loitafoundation/config/variable.dart';
 
@@ -56,20 +57,19 @@ class LoginCardButton extends StatelessWidget {
                         title,
                         textScaleFactor: textScaleFactor,
                         style: Theme.of(context).textTheme.headline4!.copyWith(
-                          fontSize: 15.0,
-                          fontWeight: FontWeight.w400
-                        ),
-                        overflow: TextOverflow.ellipsis,
+                            fontSize: 15.0, fontWeight: FontWeight.w400),
+                        overflow:
+                            kIsWeb ? TextOverflow.clip : TextOverflow.ellipsis,
                       ),
                     ),
                     Text(
                       trailing,
                       textScaleFactor: textScaleFactor,
                       style: Theme.of(context).textTheme.headline4!.copyWith(
-                          fontSize: 15.0,
-                          fontFamily: 'Poppins',
-                          fontWeight: FontWeight.w500,
-                      ),
+                            fontSize: 15.0,
+                            fontFamily: 'Poppins',
+                            fontWeight: FontWeight.w500,
+                          ),
                     ),
                   ],
                 ),

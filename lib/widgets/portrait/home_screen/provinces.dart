@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:travenx_loitafoundation/config/configs.dart'
     show kHPadding, kVPadding, textScaleFactor, Palette;
@@ -122,7 +123,8 @@ class _ProvinceCard extends StatelessWidget {
                         .textTheme
                         .headline1!
                         .copyWith(color: Color(0xDDFFFFFF)),
-                    overflow: TextOverflow.ellipsis,
+                    overflow:
+                        kIsWeb ? TextOverflow.clip : TextOverflow.ellipsis,
                   ),
                   isLast
                       ? Padding(

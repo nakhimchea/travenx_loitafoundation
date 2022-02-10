@@ -1,6 +1,7 @@
 import 'dart:ui';
 
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:travenx_loitafoundation/config/configs.dart'
     show kHPadding, textScaleFactor, descriptionIconSize, Palette;
@@ -114,7 +115,8 @@ class _PromotionCard extends StatelessWidget {
                             .textTheme
                             .headline2!
                             .copyWith(color: Colors.white),
-                        overflow: TextOverflow.ellipsis,
+                        overflow:
+                            kIsWeb ? TextOverflow.clip : TextOverflow.ellipsis,
                       ),
                     ),
                     subtitle: Padding(
@@ -135,7 +137,9 @@ class _PromotionCard extends StatelessWidget {
                                   .textTheme
                                   .bodyText2!
                                   .copyWith(color: Colors.white),
-                              overflow: TextOverflow.ellipsis,
+                              overflow: kIsWeb
+                                  ? TextOverflow.clip
+                                  : TextOverflow.ellipsis,
                             ),
                           ),
                         ],
@@ -145,7 +149,8 @@ class _PromotionCard extends StatelessWidget {
                       '\$${promotion.price % 1 == 0 ? promotion.price.toStringAsFixed(0) : promotion.price.toStringAsFixed(1)}',
                       textScaleFactor: textScaleFactor,
                       style: Theme.of(context).textTheme.subtitle1,
-                      overflow: TextOverflow.ellipsis,
+                      overflow:
+                          kIsWeb ? TextOverflow.clip : TextOverflow.ellipsis,
                     ),
                   ),
                   Padding(
@@ -173,7 +178,9 @@ class _PromotionCard extends StatelessWidget {
                                     .textTheme
                                     .headline5!
                                     .copyWith(color: Colors.white),
-                                overflow: TextOverflow.ellipsis,
+                                overflow: kIsWeb
+                                    ? TextOverflow.clip
+                                    : TextOverflow.ellipsis,
                               ),
                             ),
                           ],
@@ -194,7 +201,9 @@ class _PromotionCard extends StatelessWidget {
                                     .textTheme
                                     .subtitle2!
                                     .copyWith(color: Colors.white),
-                                overflow: TextOverflow.ellipsis,
+                                overflow: kIsWeb
+                                    ? TextOverflow.clip
+                                    : TextOverflow.ellipsis,
                               ),
                             ),
                           ],

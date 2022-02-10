@@ -1,3 +1,7 @@
+import 'dart:ui';
+
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:travenx_loitafoundation/config/configs.dart'
     show kHPadding, textScaleFactor, descriptionIconSize, Palette;
@@ -37,10 +41,23 @@ class CardTileItem extends StatelessWidget {
                   topLeft: Radius.circular(15.0),
                   bottomLeft: Radius.circular(15.0),
                 ),
-                child: Image(
-                  image: AssetImage(placeObject.imageUrls.elementAt(0)),
-                  fit: BoxFit.cover,
-                ),
+                child: placeObject.imageUrls.elementAt(0).split('/').first ==
+                        'assets'
+                    ? Image(
+                        image: AssetImage(placeObject.imageUrls.elementAt(0)),
+                        fit: BoxFit.cover,
+                      )
+                    : CachedNetworkImage(
+                        imageUrl: placeObject.imageUrls.elementAt(0),
+                        fit: BoxFit.cover,
+                        placeholder: (context, _) => ImageFiltered(
+                          imageFilter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
+                          child: Image.asset('assets/images/travenx_180.png'),
+                        ),
+                        errorWidget: (context, _, __) => Center(
+                          child: Text('Unable to Load Image...'),
+                        ),
+                      ),
               ),
             ),
             Container(
@@ -70,13 +87,17 @@ class CardTileItem extends StatelessWidget {
                           placeObject.title,
                           textScaleFactor: textScaleFactor,
                           style: Theme.of(context).textTheme.headline4,
-                          overflow: TextOverflow.ellipsis,
+                          overflow: kIsWeb
+                              ? TextOverflow.clip
+                              : TextOverflow.ellipsis,
                         ),
                         Text(
                           '\$${placeObject.price % 1 == 0 ? placeObject.price.toStringAsFixed(0) : placeObject.price.toStringAsFixed(1)}',
                           textScaleFactor: textScaleFactor,
                           style: Theme.of(context).textTheme.subtitle1,
-                          overflow: TextOverflow.ellipsis,
+                          overflow: kIsWeb
+                              ? TextOverflow.clip
+                              : TextOverflow.ellipsis,
                         ),
                       ],
                     ),
@@ -94,7 +115,9 @@ class CardTileItem extends StatelessWidget {
                             placeObject.location,
                             textScaleFactor: textScaleFactor,
                             style: Theme.of(context).textTheme.bodyText2,
-                            overflow: TextOverflow.ellipsis,
+                            overflow: kIsWeb
+                                ? TextOverflow.clip
+                                : TextOverflow.ellipsis,
                           ),
                         ),
                       ],
@@ -108,7 +131,9 @@ class CardTileItem extends StatelessWidget {
                           textScaleFactor: textScaleFactor,
                           maxLines: 3,
                           style: Theme.of(context).textTheme.bodyText2,
-                          overflow: TextOverflow.ellipsis,
+                          overflow: kIsWeb
+                              ? TextOverflow.clip
+                              : TextOverflow.ellipsis,
                         ),
                       ),
                     ),
@@ -129,7 +154,9 @@ class CardTileItem extends StatelessWidget {
                                     .toStringAsFixed(1),
                                 textScaleFactor: textScaleFactor,
                                 style: Theme.of(context).textTheme.headline5,
-                                overflow: TextOverflow.ellipsis,
+                                overflow: kIsWeb
+                                    ? TextOverflow.clip
+                                    : TextOverflow.ellipsis,
                               ),
                             ),
                           ],
@@ -147,7 +174,9 @@ class CardTileItem extends StatelessWidget {
                                 placeObject.briefDescription!.views.toString(),
                                 textScaleFactor: textScaleFactor,
                                 style: Theme.of(context).textTheme.subtitle2,
-                                overflow: TextOverflow.ellipsis,
+                                overflow: kIsWeb
+                                    ? TextOverflow.clip
+                                    : TextOverflow.ellipsis,
                               ),
                             ),
                           ],

@@ -1,4 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:travenx_loitafoundation/config/constant.dart';
@@ -129,7 +130,8 @@ class _ProfileState extends State<Profile> {
                             .textTheme
                             .bodyText1!
                             .copyWith(color: Theme.of(context).primaryColor),
-                        overflow: TextOverflow.ellipsis,
+                        overflow:
+                            kIsWeb ? TextOverflow.clip : TextOverflow.ellipsis,
                       ),
                       Icon(
                         Icons.arrow_forward_ios_sharp,

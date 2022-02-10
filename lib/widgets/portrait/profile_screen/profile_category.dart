@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:travenx_loitafoundation/config/constant.dart';
 import 'package:travenx_loitafoundation/config/variable.dart';
@@ -46,7 +47,7 @@ class ProfileCategory extends StatelessWidget {
                 fontFamily: 'Nokora',
                 fontWeight: FontWeight.w400,
               ),
-              overflow: TextOverflow.ellipsis,
+              overflow: kIsWeb ? TextOverflow.clip : TextOverflow.ellipsis,
             ),
             Expanded(
               child: Row(

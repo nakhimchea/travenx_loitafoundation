@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:travenx_loitafoundation/config/variable.dart';
 
@@ -41,7 +42,7 @@ class CustomNavBar extends StatelessWidget {
                           .textTheme
                           .bodyText2!
                           .copyWith(color: Theme.of(context).primaryColor),
-                  overflow: TextOverflow.ellipsis,
+                  overflow: kIsWeb ? TextOverflow.clip : TextOverflow.ellipsis,
                 ),
               ),
             ),

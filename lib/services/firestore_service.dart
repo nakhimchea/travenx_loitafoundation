@@ -89,16 +89,28 @@ class FirestoreService {
 
   Future<QuerySnapshot<Map<String, dynamic>>> getIconMenuData(
     String iconMenu,
+    DocumentSnapshot? lastDoc,
   ) async =>
-      await _firestore
-          .collection('home_screen')
-          .doc('icon_menus')
-          .collection(iconMenu)
-          .limit(2)
-          .get()
-          .catchError((e) {
-        print('Cannot get icon menu data: ${e.toString()}');
-      });
+      lastDoc != null
+          ? await _firestore
+              .collection('home_screen')
+              .doc('icon_menus')
+              .collection(iconMenu)
+              .startAfterDocument(lastDoc)
+              .limit(2)
+              .get()
+              .catchError((e) {
+              print('Cannot get icon menu data: ${e.toString()}');
+            })
+          : await _firestore
+              .collection('home_screen')
+              .doc('icon_menus')
+              .collection(iconMenu)
+              .limit(2)
+              .get()
+              .catchError((e) {
+              print('Cannot get icon menu data: ${e.toString()}');
+            });
 
   Future<void> setPromotionData(
     String atPostId,

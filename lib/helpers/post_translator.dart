@@ -23,7 +23,7 @@ List<PostObject> postTranslator(
 
     _title = post.get('title').toString();
     _location = post.get('location').toString();
-    _price = post.get('price');
+    _price = double.parse(post.get('price').toString());
 
     if (post.get('activities') != null)
       for (var activity in post.get('activities')) {
@@ -56,7 +56,8 @@ List<PostObject> postTranslator(
 
       if (post.get('briefDescription') != null)
         _briefDescription = BriefDescription(
-            ratings: post.get('briefDescription')['ratings'],
+            ratings: double.parse(
+                post.get('briefDescription')['ratings'].toString()),
             distance: post.get('briefDescription')['distance'],
             temperature: post.get('briefDescription')['temperature'],
             views: post.get('briefDescription')['views']);

@@ -194,24 +194,24 @@ class _HomeScreenState extends State<HomeScreen>
           SliverToBoxAdapter(
             child: SearchBar(),
           ),
-          // SliverPadding(
-          //   padding: const EdgeInsets.symmetric(
-          //     horizontal: kHPadding,
-          //     vertical: kVPadding + 6.0,
-          //   ),
-          //   sliver: SliverToBoxAdapter(
-          //     child: IconsMenu(),
-          //   ),
-          // ),
           SliverPadding(
-            padding: const EdgeInsets.only(
-              top: 6.0,
-              bottom: kVPadding,
+            padding: const EdgeInsets.symmetric(
+              horizontal: kHPadding,
+              vertical: kVPadding + 6.0,
             ),
             sliver: SliverToBoxAdapter(
-              child: Promotions(promotions: promotions),
+              child: IconsMenu(),
             ),
           ),
+          // SliverPadding(
+          //   padding: const EdgeInsets.only(
+          //     top: 6.0,
+          //     bottom: kVPadding,
+          //   ),
+          //   sliver: SliverToBoxAdapter(
+          //     child: Promotions(promotions: promotions),
+          //   ),
+          // ),
           // SliverPadding(
           //   padding: const EdgeInsets.symmetric(
           //     horizontal: kHPadding,

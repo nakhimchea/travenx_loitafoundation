@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:travenx_loitafoundation/config/configs.dart'
@@ -100,6 +101,7 @@ class _BuildIconMenuListState extends State<_BuildIconMenuList> {
   bool _isRefreshable = true;
 
   List<PostObject> postList = [];
+  DocumentSnapshot? _lastDoc;
 
   Widget _buildList() {
     return ListView.builder(
@@ -119,6 +121,91 @@ class _BuildIconMenuListState extends State<_BuildIconMenuList> {
     );
   }
 
+  Widget loadingBuilder(BuildContext context, LoadStatus? mode) {
+    Widget _footer;
+
+    if (mode == LoadStatus.idle)
+      _footer = Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Icon(
+            Icons.keyboard_arrow_up_outlined,
+            size: 14,
+            color: Theme.of(context).primaryIconTheme.color,
+          ),
+          SizedBox(width: 10),
+          Text(
+            'រុញឡើង ទាញទិន្នន័យ',
+            style: Theme.of(context).textTheme.button,
+          ),
+        ],
+      );
+    else if (mode == LoadStatus.loading)
+      _footer = Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          SizedBox(
+              height: 10,
+              width: 10,
+              child: CircularProgressIndicator.adaptive()),
+          SizedBox(width: 10),
+          Text(
+            'កំពុងទាញយកកន្លែងថ្មីៗ...',
+            style: Theme.of(context).textTheme.button,
+          ),
+        ],
+      );
+    else if (mode == LoadStatus.failed)
+      _footer = Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Icon(
+            Icons.error_outline_outlined,
+            size: 14,
+            color: Theme.of(context).primaryIconTheme.color,
+          ),
+          SizedBox(width: 10),
+          Text(
+            'មិនអាចទាញទិន្នន័យបាន!',
+            style: Theme.of(context).textTheme.button,
+          ),
+        ],
+      );
+    else if (mode == LoadStatus.canLoading)
+      _footer = Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          SizedBox(
+              height: 10,
+              width: 10,
+              child: CircularProgressIndicator.adaptive()),
+          SizedBox(width: 10),
+          Text(
+            'មានកន្លែងថ្មី',
+            style: Theme.of(context).textTheme.button,
+          ),
+        ],
+      );
+    else
+      _footer = Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Icon(
+            Icons.info_outline,
+            size: 14,
+            color: Theme.of(context).primaryIconTheme.color,
+          ),
+          SizedBox(width: 10),
+          Text(
+            'គ្មានកន្លែងថ្មី!',
+            style: Theme.of(context).textTheme.button,
+          ),
+        ],
+      );
+
+    return _footer;
+  }
+
   @override
   Widget build(BuildContext context) {
     return SmartRefresher(
@@ -127,17 +214,25 @@ class _BuildIconMenuListState extends State<_BuildIconMenuList> {
       enablePullUp: true,
       child: _buildList(),
       physics: BouncingScrollPhysics(),
-      footer: ClassicFooter(
+      footer: CustomFooter(
         loadStyle: LoadStyle.ShowWhenLoading,
-        completeDuration: Duration(milliseconds: 500),
+        height: 50.0,
+        builder: loadingBuilder,
       ),
       onRefresh: () async {
         assert(DefaultTabController.of(context) != null);
         postList = postTranslator(await _firestoreService
-            .getIconMenuData(modelIconMenus
-                .elementAt(DefaultTabController.of(context)!.index)
-                .label)
-            .then((snapshot) => snapshot.docs));
+            .getIconMenuData(
+                modelIconMenus
+                    .elementAt(DefaultTabController.of(context)!.index)
+                    .label,
+                _lastDoc)
+            .then((snapshot) {
+          setState(() {
+            if (snapshot.docs.isNotEmpty) _lastDoc = snapshot.docs.last;
+          });
+          return snapshot.docs;
+        }));
         if (mounted) setState(() => _isRefreshable = false);
         _refreshController.refreshCompleted();
       },
@@ -145,10 +240,17 @@ class _BuildIconMenuListState extends State<_BuildIconMenuList> {
         assert(DefaultTabController.of(context) != null);
         postList = List.from(postList)
           ..addAll(postTranslator(await _firestoreService
-              .getIconMenuData(modelIconMenus
-                  .elementAt(DefaultTabController.of(context)!.index)
-                  .label)
-              .then((snapshot) => snapshot.docs)));
+              .getIconMenuData(
+                  modelIconMenus
+                      .elementAt(DefaultTabController.of(context)!.index)
+                      .label,
+                  _lastDoc)
+              .then((snapshot) {
+            setState(() {
+              if (snapshot.docs.isNotEmpty) _lastDoc = snapshot.docs.last;
+            });
+            return snapshot.docs;
+          })));
         if (mounted) setState(() {});
         _refreshController.loadComplete();
       },

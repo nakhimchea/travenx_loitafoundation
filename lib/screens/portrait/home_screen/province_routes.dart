@@ -73,7 +73,7 @@ class ProvinceRoutes extends StatelessWidget {
   }
 }
 
-class _ProvincesItem extends StatelessWidget {
+class _ProvincesItem extends StatefulWidget {
   final ModelProvince modelProvince;
   final double vPadding;
 
@@ -84,17 +84,22 @@ class _ProvincesItem extends StatelessWidget {
   }) : super(key: key);
 
   @override
+  __ProvincesItemState createState() => __ProvincesItemState();
+}
+
+class __ProvincesItemState extends State<_ProvincesItem> {
+  @override
   Widget build(BuildContext context) {
     final double _imageSize = MediaQuery.of(context).size.height / 8.12;
     return GestureDetector(
       onTap: () => Navigator.push(
         context,
         MaterialPageRoute(
-          builder: (_) => ProvinceRoute(modelProvince: modelProvince),
+          builder: (_) => ProvinceRoute(modelProvince: widget.modelProvince),
         ),
       ),
       child: Padding(
-        padding: EdgeInsets.symmetric(vertical: vPadding / 2),
+        padding: EdgeInsets.symmetric(vertical: widget.vPadding / 2),
         child: Row(
           children: [
             Container(
@@ -106,7 +111,7 @@ class _ProvincesItem extends StatelessWidget {
                   bottomLeft: Radius.circular(15.0),
                 ),
                 child: Image(
-                  image: AssetImage(modelProvince.imageUrl),
+                  image: AssetImage(widget.modelProvince.imageUrl),
                   fit: BoxFit.cover,
                 ),
               ),
@@ -130,7 +135,7 @@ class _ProvincesItem extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      modelProvince.label,
+                      widget.modelProvince.label,
                       textScaleFactor: textScaleFactor,
                       style: Theme.of(context).textTheme.headline2,
                       overflow: TextOverflow.ellipsis,
@@ -175,6 +180,6 @@ class ProvinceRoute extends StatefulWidget {
 class _ProvinceRouteState extends State<ProvinceRoute> {
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return Scaffold();
   }
 }

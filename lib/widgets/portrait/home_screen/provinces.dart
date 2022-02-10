@@ -6,12 +6,7 @@ import 'package:travenx_loitafoundation/icons/icons.dart';
 import 'package:travenx_loitafoundation/models/province_model.dart';
 
 class Provinces extends StatelessWidget {
-  final List<Province> provinces;
-
-  const Provinces({
-    Key? key,
-    required this.provinces,
-  }) : super(key: key);
+  const Provinces({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -29,23 +24,15 @@ class Provinces extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                _ProvinceCard(province: provinces[0]),
-                _ProvinceCard(province: provinces[1]),
+                _ProvinceCard(modelProvince: modelProvinces.elementAt(0)),
+                _ProvinceCard(modelProvince: modelProvinces.elementAt(1)),
               ],
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                _ProvinceCard(province: provinces[2]),
-                _ProvinceCard(
-                  // Special condition for image and label of HomeScreen card
-                  province: Province(
-                    label: 'ទាំងអស់',
-                    imageUrl: 'assets/images/home_screen/default.jpg',
-                  ),
-                  isLast: true,
-                  provinces: provinces,
-                ),
+                _ProvinceCard(modelProvince: modelProvinces.elementAt(2)),
+                _ProvinceCard(modelProvince: modelProvinces.last),
               ],
             ),
           ],
@@ -56,16 +43,9 @@ class Provinces extends StatelessWidget {
 }
 
 class _ProvinceCard extends StatelessWidget {
-  final bool isLast;
-  final Province province;
-  final List<Province>? provinces;
+  final ModelProvince modelProvince;
 
-  _ProvinceCard({
-    Key? key,
-    this.isLast = false,
-    required this.province,
-    this.provinces,
-  }) : super(key: key);
+  _ProvinceCard({Key? key, required this.modelProvince}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -91,7 +71,7 @@ class _ProvinceCard extends StatelessWidget {
             ClipRRect(
               borderRadius: BorderRadius.circular(15.0),
               child: Image(
-                image: AssetImage(province.imageUrl),
+                image: AssetImage(modelProvince.imageUrl),
                 height: MediaQuery.of(context).size.height / 8,
                 width:
                     (MediaQuery.of(context).size.width - (kHPadding * 2) - 10) /
@@ -108,8 +88,9 @@ class _ProvinceCard extends StatelessWidget {
                   (MediaQuery.of(context).size.width - (kHPadding * 2) - 10) /
                       2,
               decoration: BoxDecoration(
-                gradient:
-                    !isLast ? Palette.whiteGradient : Palette.blackGradient,
+                gradient: modelProvince != modelProvinces.last
+                    ? Palette.whiteGradient
+                    : Palette.blackGradient,
                 borderRadius: BorderRadius.circular(15.0),
               ),
               child: Row(
@@ -117,7 +98,7 @@ class _ProvinceCard extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
                   Text(
-                    province.label,
+                    modelProvince.label,
                     textScaleFactor: textScaleFactor,
                     style: Theme.of(context)
                         .textTheme
@@ -126,13 +107,13 @@ class _ProvinceCard extends StatelessWidget {
                     overflow:
                         kIsWeb ? TextOverflow.clip : TextOverflow.ellipsis,
                   ),
-                  isLast
+                  modelProvince == modelProvinces.last
                       ? Padding(
                           padding: const EdgeInsets.symmetric(vertical: 8.0),
                           child: Icon(
                             CustomOutlinedIcons.right,
-                            size: 24.0, //Todo: Here is no change yet
-                            color: Color(0xDDFFFFFF),
+                            size: 24.0,
+                            color: const Color(0xDDFFFFFF),
                           ),
                         )
                       : const SizedBox.shrink(),

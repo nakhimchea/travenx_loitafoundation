@@ -127,7 +127,8 @@ class CustomAppBar extends StatelessWidget {
               skippedCallback();
             },
             style: ButtonStyle(
-                overlayColor: MaterialStateProperty.all(Colors.transparent)),
+                overlayColor:
+                    MaterialStateProperty.all<Color>(Colors.transparent)),
             child: Text('រំលង',
                 style: Theme.of(context)
                     .textTheme
@@ -172,7 +173,8 @@ class LoginAppBar extends StatelessWidget {
                 skippedCallback();
               },
               style: ButtonStyle(
-                  overlayColor: MaterialStateProperty.all(Colors.transparent)),
+                  overlayColor:
+                      MaterialStateProperty.all<Color>(Colors.transparent)),
               child: Text('រំលង',
                   style: Theme.of(context)
                       .textTheme
@@ -298,7 +300,7 @@ class GradientButton extends StatelessWidget {
             child: TextButton(
               onPressed: onPressed,
               style: ButtonStyle(
-                  overlayColor: MaterialStateProperty.all(isCodeSent
+                  overlayColor: MaterialStateProperty.all<Color>(isCodeSent
                       ? Palette.priceColor.withOpacity(0.2)
                       : Colors.transparent)),
               child: Text(

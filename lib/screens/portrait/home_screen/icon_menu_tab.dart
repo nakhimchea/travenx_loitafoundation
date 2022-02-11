@@ -239,7 +239,7 @@ class CustomTabBar extends StatelessWidget {
         borderRadius: BorderRadius.circular(18.0),
       ),
       indicatorPadding: const EdgeInsets.symmetric(vertical: 6.0),
-      overlayColor: MaterialStateProperty.all(Colors.transparent),
+      overlayColor: MaterialStateProperty.all<Color>(Colors.transparent),
       labelColor: Colors.white,
       labelStyle: Theme.of(context).textTheme.button,
       unselectedLabelColor: Theme.of(context).textTheme.button!.color,

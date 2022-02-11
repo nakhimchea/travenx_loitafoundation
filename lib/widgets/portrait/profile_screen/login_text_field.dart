@@ -148,8 +148,8 @@ class _LoginTextFieldState extends State<LoginTextField> {
                                             });
                                           },
                                           style: ButtonStyle(
-                                            overlayColor:
-                                                MaterialStateProperty.all(
+                                            overlayColor: MaterialStateProperty
+                                                .all<Color>(
                                               Colors.transparent,
                                             ),
                                           ),

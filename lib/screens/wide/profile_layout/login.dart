@@ -86,8 +86,8 @@ class _LoginState extends State<Login> {
                       widget.loggedInCallback();
                     },
                     style: ButtonStyle(
-                        overlayColor:
-                            MaterialStateProperty.all(Colors.transparent)),
+                        overlayColor: MaterialStateProperty.all<Color>(
+                            Colors.transparent)),
                     child: Padding(
                       padding: EdgeInsets.only(
                         top: MediaQuery.of(context).size.height / 30 + 50,
@@ -261,10 +261,10 @@ class GradientButton extends StatelessWidget {
             child: TextButton(
               onPressed: onPressed,
               style: ButtonStyle(
-                overlayColor: MaterialStateProperty.all(isCodeSent
+                overlayColor: MaterialStateProperty.all<Color>(isCodeSent
                     ? Palette.priceColor.withOpacity(0.2)
                     : Colors.transparent),
-                padding: MaterialStateProperty.all(EdgeInsets.zero),
+                padding: MaterialStateProperty.all<EdgeInsets>(EdgeInsets.zero),
               ),
               child: Text(
                 title,

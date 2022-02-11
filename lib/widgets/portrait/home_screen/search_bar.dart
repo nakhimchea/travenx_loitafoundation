@@ -22,7 +22,7 @@ class SearchBar extends StatelessWidget {
         //     await FirestoreService().getProfileData(_currentUser.uid).then(
         //         (DocumentSnapshot<Map<String, dynamic>>
         //             documentSnapshot) async {
-        //       await FirestoreService().setIconMenuData('សួនសត្វ', _postId, {
+        //       await FirestoreService().setIconMenuData('បោះតង់', _postId, {
         //         'clientId': _currentUser.uid,
         //         'clientDisplayName': documentSnapshot.get('displayName'),
         //         'clientProfileUrl': documentSnapshot.get('profileUrl'),
@@ -304,6 +304,118 @@ class SearchBar extends StatelessWidget {
         //     });
         //     await FirestoreService().increaseProvinceCounter('កែប');
         //     await FirestoreService().increaseProvinceCounter('ទាំងអស់');
+        //   } catch (e) {
+        //     print('Unknown Error: $e');
+        //   }
+        // }
+        // ----------------- Merchant Push TabBar Menu ------------------------ //TODO:
+        // final User? _currentUser = FirebaseAuth.instance.currentUser;
+        // String _postId = DateTime.now().millisecondsSinceEpoch.toString();
+        // if (_currentUser != null) {
+        //   try {
+        //     await FirestoreService().getProfileData(_currentUser.uid).then(
+        //         (DocumentSnapshot<Map<String, dynamic>>
+        //             documentSnapshot) async {
+        //       await FirestoreService().setTabBarData('ច្រើនទស្សនា', _postId, {
+        //         'clientId': _currentUser.uid,
+        //         'clientDisplayName': documentSnapshot.get('displayName'),
+        //         'clientProfileUrl': documentSnapshot.get('profileUrl'),
+        //         'clientPhoneNumber': documentSnapshot.get('phoneNumber'),
+        //         'imageUrls': [
+        //           'assets/images/travenx.png',
+        //           'assets/images/travenx.png',
+        //           'assets/images/travenx.png',
+        //         ],
+        //         'title': 'ដើរលេងបន្ទាប់',
+        //         'location': 'ខេត្តកំពត កម្ពុជា',
+        //         'price': 25,
+        //         'activities': [
+        //           'boating',
+        //           'swimming',
+        //           'relaxing',
+        //           'fishing',
+        //           'diving',
+        //         ],
+        //         'details': {
+        //           'mapImageUrl': 'assets/images/travenx.png',
+        //           'textDetail':
+        //               'ខេត្តកំពត កម្ពុជាខេត្តកំពត កម្ពុជាខេត្តកំពត កម្ពុជាខេត្តកំពត កម្ពុជាខេត្តកំពត កម្ពុជាខេត្តកំពត កម្ពុជាខេត្តកំពត កម្ពុជាខេត្តកំពត កម្ពុជាខេត្តកំពត កម្ពុជាខេត្តកំពត កម្ពុជាខេត្តកំពត កម្ពុជាខេត្តកំពត កម្ពុជាខេត្តកំពត កម្ពុជាខេត្តកំពត កម្ពុជាខេត្តកំពត កម្ពុជាខេត្តកំពត កម្ពុជាខេត្តកំពត កម្ពុជាខេត្តកំពត ខេត្តកំពត កម្ពុជាខេត្តកំពត កម្ពុជាខេត្តកំពត កម្ពុជាខេត្តកំពត កម្ពុជាខេត្តកំពត កម្ពុជាខេត្តកំពត កម្ពុជាខេត្តកំពត កម្ពុជាខេត្តកំពត កម្ពុជាខេត្តកំពត កម្ពុជាខេត្តកំពត កម្ពុជាខេត្តកំពត កម្ពុជាខេត្តកំពត កម្ពុជាខេត្តកំពត កម្ពុជាខេត្តកំពត កម្ពុជាខេត្តកំពត កម្ពុជាខេត្តកំពត កម្ពុជាខេត្តកំពត កម្ពុជាខេត្តកំពត',
+        //         },
+        //         'briefDescription': {
+        //           'ratings': 4.5,
+        //           'distance': 60000,
+        //           'temperature': 36,
+        //           'views': 1236,
+        //         },
+        //         'policies': [
+        //           'ខេត្តកំពត កម្ពុជាខេត្តកំពត កម្ពុជាខេត្តកំពត កម្ពុជាខេត្តកំពត កម្ពុជាខេត្តកំពត កម្ពុជាខេត្តកំពត កម្ពុជាខេត្តកំពត',
+        //           'ខេត្តកំពត កម្ពុជាខេត្តកំពត កម្ពុជាខេត្តកំពត កម្ពុជាខេត្តកំពត កម្ពុជាខេត្តកំពត កម្ពុជាខេត្តកំពត កម្ពុជាខេត្តកំពត កម្ពុជាខេត្តកំពត',
+        //           'ខេត្តកំពត កម្ពុជាខេត្តកំពត កម្ពុជាខេត្តកំពត កម្ពុជាខេត្តកំពត កម្ពុជាខេត្តកំពត កម្ពុជាខេត្តកំពត',
+        //           'ខេត្តកំពត កម្ពុជាខេត្តកំពត កម្ពុជាខេត្តកំពត កម្ពុជាខេត្តកំពត កម្ពុជាខេត្តកំពត កម្ពុជាខេត្តកំពត កម្ពុជាខេត្តកំពត',
+        //           'ខេត្តកំពត កម្ពុជាខេត្តកំពត កម្ពុជាខេត្តកំពត កម្ពុជាខេត្តកំពត កម្ពុជាខេត្តកំពត កម្ពុជាខេត្តកំពត កម្ពុជាខេត្តកំពត កម្ពុជាខេត្តកំពត',
+        //         ],
+        //         'galleryUrls': [
+        //           'assets/images/travenx.png',
+        //           'assets/images/travenx.png',
+        //           'assets/images/travenx.png',
+        //           'assets/images/travenx.png',
+        //           'assets/images/travenx.png',
+        //         ],
+        //       });
+        //       await FirestoreService().setTabBarData('ទាំងអស់', _postId, {
+        //         'clientId': _currentUser.uid,
+        //         'clientDisplayName': documentSnapshot.get('displayName'),
+        //         'clientProfileUrl': documentSnapshot.get('profileUrl'),
+        //         'clientPhoneNumber': documentSnapshot.get('phoneNumber'),
+        //         'imageUrls': [
+        //           'assets/images/travenx.png',
+        //           'assets/images/travenx.png',
+        //           'assets/images/travenx.png',
+        //         ],
+        //         'title': 'ដើរលេងបន្ទាប់',
+        //         'location': 'ខេត្តកំពត កម្ពុជា',
+        //         'price': 25,
+        //         'activities': [
+        //           'boating',
+        //           'swimming',
+        //           'relaxing',
+        //           'fishing',
+        //           'diving',
+        //         ],
+        //         'details': {
+        //           'mapImageUrl': 'assets/images/travenx.png',
+        //           'textDetail':
+        //               'ខេត្តកំពត កម្ពុជាខេត្តកំពត កម្ពុជាខេត្តកំពត កម្ពុជាខេត្តកំពត កម្ពុជាខេត្តកំពត កម្ពុជាខេត្តកំពត កម្ពុជាខេត្តកំពត កម្ពុជាខេត្តកំពត កម្ពុជាខេត្តកំពត កម្ពុជាខេត្តកំពត កម្ពុជាខេត្តកំពត កម្ពុជាខេត្តកំពត កម្ពុជាខេត្តកំពត កម្ពុជាខេត្តកំពត កម្ពុជាខេត្តកំពត កម្ពុជាខេត្តកំពត កម្ពុជាខេត្តកំពត កម្ពុជាខេត្តកំពត ខេត្តកំពត កម្ពុជាខេត្តកំពត កម្ពុជាខេត្តកំពត កម្ពុជាខេត្តកំពត កម្ពុជាខេត្តកំពត កម្ពុជាខេត្តកំពត កម្ពុជាខេត្តកំពត កម្ពុជាខេត្តកំពត កម្ពុជាខេត្តកំពត កម្ពុជាខេត្តកំពត កម្ពុជាខេត្តកំពត កម្ពុជាខេត្តកំពត កម្ពុជាខេត្តកំពត កម្ពុជាខេត្តកំពត កម្ពុជាខេត្តកំពត កម្ពុជាខេត្តកំពត កម្ពុជាខេត្តកំពត កម្ពុជាខេត្តកំពត',
+        //         },
+        //         'briefDescription': {
+        //           'ratings': 4.5,
+        //           'distance': 60000,
+        //           'temperature': 36,
+        //           'views': 1236,
+        //         },
+        //         'policies': [
+        //           'ខេត្តកំពត កម្ពុជាខេត្តកំពត កម្ពុជាខេត្តកំពត កម្ពុជាខេត្តកំពត កម្ពុជាខេត្តកំពត កម្ពុជាខេត្តកំពត កម្ពុជាខេត្តកំពត',
+        //           'ខេត្តកំពត កម្ពុជាខេត្តកំពត កម្ពុជាខេត្តកំពត កម្ពុជាខេត្តកំពត កម្ពុជាខេត្តកំពត កម្ពុជាខេត្តកំពត កម្ពុជាខេត្តកំពត កម្ពុជាខេត្តកំពត',
+        //           'ខេត្តកំពត កម្ពុជាខេត្តកំពត កម្ពុជាខេត្តកំពត កម្ពុជាខេត្តកំពត កម្ពុជាខេត្តកំពត កម្ពុជាខេត្តកំពត',
+        //           'ខេត្តកំពត កម្ពុជាខេត្តកំពត កម្ពុជាខេត្តកំពត កម្ពុជាខេត្តកំពត កម្ពុជាខេត្តកំពត កម្ពុជាខេត្តកំពត កម្ពុជាខេត្តកំពត',
+        //           'ខេត្តកំពត កម្ពុជាខេត្តកំពត កម្ពុជាខេត្តកំពត កម្ពុជាខេត្តកំពត កម្ពុជាខេត្តកំពត កម្ពុជាខេត្តកំពត កម្ពុជាខេត្តកំពត កម្ពុជាខេត្តកំពត',
+        //         ],
+        //         'galleryUrls': [
+        //           'assets/images/travenx.png',
+        //           'assets/images/travenx.png',
+        //           'assets/images/travenx.png',
+        //           'assets/images/travenx.png',
+        //           'assets/images/travenx.png',
+        //         ],
+        //       });
+        //     }).catchError((e) {
+        //       print('Cannot get user ID: $e');
+        //     });
+        //     await FirestoreService()
+        //         .addPostId2Profile(_currentUser.uid, _postId)
+        //         .catchError((e) {
+        //       print('Cannot get user IDD: $e');
+        //     });
         //   } catch (e) {
         //     print('Unknown Error: $e');
         //   }

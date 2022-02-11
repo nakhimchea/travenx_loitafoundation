@@ -78,8 +78,56 @@ class _HomeScreenState extends State<HomeScreen>
           //     child: Provinces(),
           //   ),
           // ),
+          SliverPadding(
+            padding: EdgeInsets.symmetric(horizontal: kHPadding),
+            sliver: SliverPersistentHeader(
+              pinned: true,
+              delegate: PersistentHeader(
+                tabBar: CustomTabBar(tabController: _tabController),
+              ),
+            ),
+          ),
+          SliverPadding(
+            padding: const EdgeInsets.only(
+              left: kHPadding,
+              right: kHPadding,
+              bottom: kVPadding,
+            ),
+            sliver: SliverToBoxAdapter(
+              child: CustomTabBarList(tabController: _tabController),
+            ),
+          ),
         ],
       ),
     );
+  }
+}
+
+class PersistentHeader extends SliverPersistentHeaderDelegate {
+  final Widget tabBar;
+
+  PersistentHeader({required this.tabBar});
+
+  @override
+  Widget build(
+      BuildContext context, double shrinkOffset, bool overlapsContent) {
+    return Container(
+      width: MediaQuery.of(context).size.width - 2 * kHPadding,
+      height: 55.0,
+      color: Theme.of(context).scaffoldBackgroundColor,
+      alignment: Alignment.center,
+      child: tabBar,
+    );
+  }
+
+  @override
+  double get maxExtent => 55.0;
+
+  @override
+  double get minExtent => 55.0;
+
+  @override
+  bool shouldRebuild(SliverPersistentHeaderDelegate oldDelegate) {
+    return true;
   }
 }

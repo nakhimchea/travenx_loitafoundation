@@ -226,4 +226,35 @@ class FirestoreService {
               .catchError((e) {
               print('Cannot get icon menu data: ${e.toString()}');
             });
+
+  Future<void> setTabBarData(
+    String tab,
+    String atPostId,
+    Map<String, dynamic> data,
+  ) async =>
+      await _firestore
+          .collection('home_screen')
+          .doc('tab_lists')
+          .collection(tab)
+          .doc(atPostId)
+          .set(
+            data,
+            SetOptions(merge: true),
+          )
+          .catchError((e) {
+        print('Cannot set merge icon menu data: ${e.toString()}');
+      });
+
+  Future<QuerySnapshot<Map<String, dynamic>>> getTabBarData(
+    String tab,
+  ) async =>
+      await _firestore
+          .collection('home_screen')
+          .doc('tab_lists')
+          .collection(tab)
+          .limit(5)
+          .get()
+          .catchError((e) {
+        print('Cannot get icon menu data: ${e.toString()}');
+      });
 }

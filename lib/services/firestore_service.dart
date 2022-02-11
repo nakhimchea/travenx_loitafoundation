@@ -204,14 +204,26 @@ class FirestoreService {
 
   Future<QuerySnapshot<Map<String, dynamic>>> getProvinceData(
     String province,
+    DocumentSnapshot? lastDoc,
   ) async =>
-      await _firestore
-          .collection('home_screen')
-          .doc('provinces')
-          .collection(province)
-          .limit(2)
-          .get()
-          .catchError((e) {
-        print('Cannot get province data: ${e.toString()}');
-      });
+      lastDoc != null
+          ? await _firestore
+              .collection('home_screen')
+              .doc('provinces')
+              .collection(province)
+              .startAfterDocument(lastDoc)
+              .limit(2)
+              .get()
+              .catchError((e) {
+              print('Cannot get icon menu data: ${e.toString()}');
+            })
+          : await _firestore
+              .collection('home_screen')
+              .doc('provinces')
+              .collection(province)
+              .limit(2)
+              .get()
+              .catchError((e) {
+              print('Cannot get icon menu data: ${e.toString()}');
+            });
 }

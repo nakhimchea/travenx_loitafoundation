@@ -181,8 +181,8 @@ class FirestoreService {
           .collection('home_screen')
           .doc('provinces_total_posts')
           .update({
-        atProvince: int.parse(
-                await getProvinceCounter().then((data) => data[atProvince])) +
+        atProvince: int.parse(await getProvinceCounter()
+                .then((data) => data[atProvince].toString())) +
             1
       }).catchError((e) {
         print('Cannot update value in provinces_total_posts: $e');
@@ -195,8 +195,8 @@ class FirestoreService {
           .collection('home_screen')
           .doc('provinces_total_posts')
           .update({
-        atProvince: int.parse(
-                await getProvinceCounter().then((data) => data[atProvince])) -
+        atProvince: int.parse(await getProvinceCounter()
+                .then((data) => data[atProvince].toString())) -
             1
       }).catchError((e) {
         print('Cannot update value in provinces_total_posts: $e');

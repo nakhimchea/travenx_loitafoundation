@@ -177,9 +177,8 @@ class _PromotionCard extends StatelessWidget {
                         imageFilter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
                         child: Image.asset('assets/images/travenx_180.png'),
                       ),
-                      errorWidget: (context, _, __) => Center(
-                        child: Text('Unable to Load Image...'),
-                      ),
+                      errorWidget: (context, _, __) =>
+                          Image.asset('assets/images/travenx_180.png'),
                     ),
             ),
             Container(

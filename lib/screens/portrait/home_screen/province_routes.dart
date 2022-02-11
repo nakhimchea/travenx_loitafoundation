@@ -297,6 +297,14 @@ class _ProvinceListState extends State<_ProvinceList> {
                     ),
                   ],
                 );
+              else if (index == postList.length - 1)
+                return Padding(
+                  padding: const EdgeInsets.only(bottom: 20),
+                  child: CardTileItem(
+                    placeObject: postList.elementAt(index),
+                    vPadding: widget.vPadding,
+                  ),
+                );
               else
                 return CardTileItem(
                   placeObject: postList.elementAt(index),
@@ -373,6 +381,7 @@ class _ProvinceListState extends State<_ProvinceList> {
       enablePullDown: _isRefreshable,
       enablePullUp: _isLoadable,
       child: _buildList(),
+      header: CustomHeader(builder: (_, __) => SizedBox.shrink()),
       footer: CustomFooter(
         loadStyle: LoadStyle.ShowWhenLoading,
         builder: loadingBuilder,

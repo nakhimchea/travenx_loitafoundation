@@ -69,15 +69,15 @@ class _HomeScreenState extends State<HomeScreen>
           //     child: Promotions(),
           //   ),
           // ),
-          SliverPadding(
-            padding: const EdgeInsets.symmetric(
-              horizontal: kHPadding,
-              vertical: kVPadding,
-            ),
-            sliver: SliverToBoxAdapter(
-              child: Provinces(),
-            ),
-          ),
+          // SliverPadding(
+          //   padding: const EdgeInsets.symmetric(
+          //     horizontal: kHPadding,
+          //     vertical: kVPadding,
+          //   ),
+          //   sliver: SliverToBoxAdapter(
+          //     child: Provinces(),
+          //   ),
+          // ),
         ],
       ),
     );

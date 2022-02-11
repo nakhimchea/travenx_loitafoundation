@@ -3,9 +3,30 @@ import 'package:travenx_loitafoundation/config/configs.dart'
     show kHPadding, textScaleFactor, kCardTileVPadding;
 import 'package:travenx_loitafoundation/icons/icons.dart';
 import 'package:travenx_loitafoundation/models/home_screen_models.dart';
+import 'package:travenx_loitafoundation/services/firestore_service.dart';
 
-class ProvinceRoutes extends StatelessWidget {
+class ProvinceRoutes extends StatefulWidget {
   const ProvinceRoutes({Key? key}) : super(key: key);
+
+  @override
+  _ProvinceRoutesState createState() => _ProvinceRoutesState();
+}
+
+class _ProvinceRoutesState extends State<ProvinceRoutes> {
+  final FirestoreService _firestoreService = FirestoreService();
+
+  Map<String, dynamic>? postCounters;
+
+  void setPostCounters() async {
+    Map<String, dynamic> _data = await _firestoreService.getProvinceCounter();
+    setState(() => postCounters = _data);
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    setPostCounters();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -58,6 +79,10 @@ class ProvinceRoutes extends StatelessWidget {
                         kCardTileVPadding,
                     child: _ProvincesItem(
                       modelProvince: modelProvinces.elementAt(index),
+                      totalPosts: postCounters == null
+                          ? '0'
+                          : postCounters![modelProvinces.elementAt(index).label]
+                              .toString(),
                       vPadding: kCardTileVPadding,
                     ),
                   );
@@ -73,21 +98,18 @@ class ProvinceRoutes extends StatelessWidget {
   }
 }
 
-class _ProvincesItem extends StatefulWidget {
+class _ProvincesItem extends StatelessWidget {
   final ModelProvince modelProvince;
+  final String totalPosts;
   final double vPadding;
 
   const _ProvincesItem({
     Key? key,
     required this.modelProvince,
+    required this.totalPosts,
     required this.vPadding,
   }) : super(key: key);
 
-  @override
-  __ProvincesItemState createState() => __ProvincesItemState();
-}
-
-class __ProvincesItemState extends State<_ProvincesItem> {
   @override
   Widget build(BuildContext context) {
     final double _imageSize = MediaQuery.of(context).size.height / 8.12;
@@ -95,11 +117,11 @@ class __ProvincesItemState extends State<_ProvincesItem> {
       onTap: () => Navigator.push(
         context,
         MaterialPageRoute(
-          builder: (_) => ProvinceRoute(modelProvince: widget.modelProvince),
+          builder: (_) => ProvinceRoute(modelProvince: modelProvince),
         ),
       ),
       child: Padding(
-        padding: EdgeInsets.symmetric(vertical: widget.vPadding / 2),
+        padding: EdgeInsets.symmetric(vertical: vPadding / 2),
         child: Row(
           children: [
             Container(
@@ -111,7 +133,7 @@ class __ProvincesItemState extends State<_ProvincesItem> {
                   bottomLeft: Radius.circular(15.0),
                 ),
                 child: Image(
-                  image: AssetImage(widget.modelProvince.imageUrl),
+                  image: AssetImage(modelProvince.imageUrl),
                   fit: BoxFit.cover,
                 ),
               ),
@@ -135,7 +157,7 @@ class __ProvincesItemState extends State<_ProvincesItem> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      widget.modelProvince.label,
+                      modelProvince.label,
                       textScaleFactor: textScaleFactor,
                       style: Theme.of(context).textTheme.headline2,
                       overflow: TextOverflow.ellipsis,
@@ -149,7 +171,7 @@ class __ProvincesItemState extends State<_ProvincesItem> {
                           style: Theme.of(context).textTheme.button,
                         ),
                         Text(
-                          '153',
+                          totalPosts,
                           textScaleFactor: textScaleFactor,
                           style: Theme.of(context).textTheme.button!.copyWith(
                               color: Theme.of(context).primaryColor,

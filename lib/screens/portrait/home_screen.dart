@@ -78,6 +78,9 @@ class _HomeScreenState extends State<HomeScreen>
           //     child: Provinces(),
           //   ),
           // ),
+          SliverToBoxAdapter(
+            child: Nearbys(),
+          ),
           // SliverPadding(
           //   padding: EdgeInsets.symmetric(horizontal: kHPadding),
           //   sliver: SliverPersistentHeader(

@@ -65,10 +65,13 @@ class _CustomTabBarListState extends State<CustomTabBarList> {
   ];
 
   List<List<PostObject>> tabLists = [];
-  void setTabBarData() => tabs.forEach((tab) async => tabLists.add(
-      postTranslator(await _firestoreService
+
+  void setTabBarData() async {
+    for (String tab in tabs)
+      tabLists.add(postTranslator(await _firestoreService
           .getTabBarData(tab)
-          .then((snapshot) => snapshot.docs))));
+          .then((snapshot) => snapshot.docs)));
+  }
 
   @override
   void initState() {
@@ -99,7 +102,7 @@ class _CustomTabBarListState extends State<CustomTabBarList> {
     return Container(
       height:
           MediaQuery.of(context).size.height * 5 / 6.16 + kCardTileVPadding * 5,
-      child: tabLists.length == 0
+      child: tabLists.length < 5
           ? Center(child: CircularProgressIndicator.adaptive())
           : TabBarView(
               controller: widget.tabController,

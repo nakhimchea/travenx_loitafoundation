@@ -70,6 +70,7 @@ class _IconMenuTabState extends State<IconMenuTab> {
           ),
         ),
         body: TabBarView(
+          physics: NeverScrollableScrollPhysics(),
           children: _buildIconMenusList(vPadding: kCardTileVPadding),
         ),
       ),

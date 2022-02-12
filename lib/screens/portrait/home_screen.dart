@@ -78,25 +78,25 @@ class _HomeScreenState extends State<HomeScreen>
           //     child: Provinces(),
           //   ),
           // ),
-          SliverPadding(
-            padding: EdgeInsets.symmetric(horizontal: kHPadding),
-            sliver: SliverPersistentHeader(
-              pinned: true,
-              delegate: PersistentHeader(
-                tabBar: CustomTabBar(tabController: _tabController),
-              ),
-            ),
-          ),
-          SliverPadding(
-            padding: const EdgeInsets.only(
-              left: kHPadding,
-              right: kHPadding,
-              bottom: kVPadding,
-            ),
-            sliver: SliverToBoxAdapter(
-              child: CustomTabBarList(tabController: _tabController),
-            ),
-          ),
+          // SliverPadding(
+          //   padding: EdgeInsets.symmetric(horizontal: kHPadding),
+          //   sliver: SliverPersistentHeader(
+          //     pinned: true,
+          //     delegate: PersistentHeader(
+          //       tabBar: CustomTabBar(tabController: _tabController),
+          //     ),
+          //   ),
+          // ),
+          // SliverPadding(
+          //   padding: const EdgeInsets.only(
+          //     left: kHPadding,
+          //     right: kHPadding,
+          //     bottom: kVPadding,
+          //   ),
+          //   sliver: SliverToBoxAdapter(
+          //     child: CustomTabBarList(tabController: _tabController),
+          //   ),
+          // ),
         ],
       ),
     );

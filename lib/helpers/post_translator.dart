@@ -5,18 +5,18 @@ List<PostObject> postTranslator(
     List<QueryDocumentSnapshot<Map<String, dynamic>>> posts) {
   List<PostObject> _postObjects = [];
 
-  List<String> _imageUrls = [];
-  String _title = '';
-  String _location = '';
-  double _price = 0;
-  List<Activity> _activities = [];
-  Details? _details = Details(textDetail: '', mapImageUrl: '');
-  BriefDescription? _briefDescription =
-      BriefDescription(ratings: 5, distance: 500, temperature: 32, views: 0);
-  List<String>? _policies = [];
-  List<String>? _galleryUrls = [];
-
   for (var post in posts) {
+    List<String> _imageUrls = [];
+    String _title = '';
+    String _location = '';
+    double _price = 0;
+    List<Activity> _activities = [];
+    Details? _details = Details(textDetail: '', mapImageUrl: '');
+    BriefDescription? _briefDescription =
+        BriefDescription(ratings: 5, distance: 500, temperature: 32, views: 0);
+    List<String>? _policies = [];
+    List<String>? _galleryUrls = [];
+
     if (post.get('imageUrls') != null)
       for (var imageUrl in post.get('imageUrls'))
         _imageUrls.add(imageUrl.toString());

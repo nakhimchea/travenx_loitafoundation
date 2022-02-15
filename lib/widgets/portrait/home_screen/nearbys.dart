@@ -4,10 +4,10 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:travenx_loitafoundation/config/configs.dart'
     show kHPadding, textScaleFactor, descriptionIconSize, Palette;
-import 'package:travenx_loitafoundation/helpers/post_translator.dart';
 import 'package:travenx_loitafoundation/icons/icons.dart';
 import 'package:travenx_loitafoundation/models/post_object_model.dart';
 import 'package:travenx_loitafoundation/services/firestore_service.dart';
+import 'package:travenx_loitafoundation/services/geolocator_service.dart';
 
 class Nearbys extends StatefulWidget {
   const Nearbys({Key? key}) : super(key: key);
@@ -17,6 +17,18 @@ class Nearbys extends StatefulWidget {
 }
 
 class _NearbysState extends State<Nearbys> {
+  void getCoordination() async {
+    final list =
+        await GeoLocatorService().getCurrentCoordination(context: context);
+    print(list);
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    getCoordination();
+  }
+
   RefreshController _refreshController =
       RefreshController(initialRefresh: true);
   final FirestoreService _firestoreService = FirestoreService();
@@ -125,28 +137,28 @@ class _NearbysState extends State<Nearbys> {
             ),
             onRefresh: () async {
               //TODO: Change here according to GeoLocator
-              postList = postTranslator(await _firestoreService
-                  .getPromotionData(_lastDoc)
-                  .then((snapshot) {
-                setState(() => snapshot.docs.isNotEmpty
-                    ? _lastDoc = snapshot.docs.last
-                    : _isLoadable = false);
-                return snapshot.docs;
-              }));
+              // postList = postTranslator(await _firestoreService
+              //     .getPromotionData(_lastDoc)
+              //     .then((snapshot) {
+              //   setState(() => snapshot.docs.isNotEmpty
+              //       ? _lastDoc = snapshot.docs.last
+              //       : _isLoadable = false);
+              //   return snapshot.docs;
+              // }));
               if (mounted) setState(() => _isRefreshable = false);
               _refreshController.refreshCompleted();
             },
             onLoading: () async {
               //TODO: Change here according to GeoLocator
-              postList = List.from(postList)
-                ..addAll(postTranslator(await _firestoreService
-                    .getPromotionData(_lastDoc)
-                    .then((snapshot) {
-                  setState(() => snapshot.docs.isNotEmpty
-                      ? _lastDoc = snapshot.docs.last
-                      : _isLoadable = false);
-                  return snapshot.docs;
-                })));
+              // postList = List.from(postList)
+              //   ..addAll(postTranslator(await _firestoreService
+              //       .getPromotionData(_lastDoc)
+              //       .then((snapshot) {
+              //     setState(() => snapshot.docs.isNotEmpty
+              //         ? _lastDoc = snapshot.docs.last
+              //         : _isLoadable = false);
+              //     return snapshot.docs;
+              //   })));
               if (mounted) setState(() {});
               _refreshController.loadComplete();
             },

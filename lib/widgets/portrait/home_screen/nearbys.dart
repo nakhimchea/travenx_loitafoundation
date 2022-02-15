@@ -1,5 +1,8 @@
+import 'dart:convert';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:travenx_loitafoundation/config/configs.dart'
@@ -8,6 +11,7 @@ import 'package:travenx_loitafoundation/icons/icons.dart';
 import 'package:travenx_loitafoundation/models/post_object_model.dart';
 import 'package:travenx_loitafoundation/services/firestore_service.dart';
 import 'package:travenx_loitafoundation/services/geolocator_service.dart';
+import 'package:travenx_loitafoundation/services/internet_service.dart';
 
 class Nearbys extends StatefulWidget {
   const Nearbys({Key? key}) : super(key: key);
@@ -17,18 +21,6 @@ class Nearbys extends StatefulWidget {
 }
 
 class _NearbysState extends State<Nearbys> {
-  void getCoordination() async {
-    final list =
-        await GeoLocatorService().getCurrentCoordination(context: context);
-    print(list);
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    getCoordination();
-  }
-
   RefreshController _refreshController =
       RefreshController(initialRefresh: true);
   final FirestoreService _firestoreService = FirestoreService();
@@ -107,6 +99,32 @@ class _NearbysState extends State<Nearbys> {
       );
 
     return _footer;
+  }
+
+  final InternetService _internetService = InternetService();
+  String cityName = 'ភ្នំពេញ';
+
+  final String _owmReverseGeocodingUrl =
+      'http://api.openweathermap.org/geo/1.0/reverse?';
+
+  void _setLocationCity() async {
+    final String coordination =
+        await GeoLocatorService().getCurrentCoordination();
+    if (coordination != '') {
+      final String _responseBody = await _internetService.httpGetResponseBody(
+          url:
+              '$_owmReverseGeocodingUrl$coordination&appid=${await FlutterSecureStorage().read(key: 'owmKey')}');
+      final String enCityName =
+          jsonDecode(_responseBody)[0]['state'].toString();
+//TODO: Translate English City Name to Khmer name and retrieve data from the internet
+      print(enCityName);
+    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _setLocationCity();
   }
 
   @override

@@ -112,6 +112,15 @@ class _ResponsiveDeciderState extends State<ResponsiveDecider> {
         aOptions: AndroidOptions(encryptedSharedPreferences: true));
 
     try {
+      if (await _secureStorage.read(key: 'owmKey') == null)
+        await _secureStorage.write(
+            key: 'owmKey',
+            value: await _firestore
+                .collection('api_keys')
+                .doc('owm')
+                .get()
+                .then((snapshot) => snapshot.get('key').toString()));
+
       if (await _secureStorage.read(key: 'isAnonymous') == 'false') {
         Map<String, dynamic> _profileData = await _firestore
             .collection('profile_screen')

@@ -179,20 +179,27 @@ class _NearbysState extends State<Nearbys> {
                   )
                 : TextButton(
                     onPressed: () async {
-                      if (await GeoLocatorService().openLocationSettings()) if (await Geolocator
-                          .isLocationServiceEnabled()) {
-                        setState(() {
-                          _isRefreshable = true;
-                          _isLoadable = true;
-                          cityName = '';
-                          postList = [];
-                          _lastDoc = null;
-                        });
-                        _setLocationCity();
-                      } else
-                        print('Location service is still disabled.');
-                      else
-                        print('Failed to open Location settings.');
+                      try {
+                        if (await GeoLocatorService().openLocationSettings()) if (await Geolocator
+                            .isLocationServiceEnabled()) {
+                          setState(() {
+                            _isRefreshable = true;
+                            _isLoadable = true;
+                            cityName = '';
+                            postList = [];
+                            _lastDoc = null;
+                          });
+
+                          //Slowdown Future request permissions from location settings
+                          Future.delayed(Duration(milliseconds: 50))
+                              .whenComplete(() => _setLocationCity());
+                        } else
+                          print('Location service is still disabled.');
+                        else
+                          print('Failed to open Location settings.');
+                      } catch (e) {
+                        print('Unknown Error: $e');
+                      }
                     },
                     style: ButtonStyle(
                       padding: MaterialStateProperty.all(EdgeInsets.zero),
@@ -252,6 +259,7 @@ class _NearbysState extends State<Nearbys> {
                 height: MediaQuery.of(context).size.height / 3.75 + 10,
                 child: SmartRefresher(
                   controller: _refreshController,
+                  physics: BouncingScrollPhysics(),
                   enablePullDown: _isRefreshable,
                   enablePullUp: _isLoadable,
                   child: _buildList(),

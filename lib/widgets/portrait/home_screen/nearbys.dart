@@ -190,8 +190,8 @@ class _NearbysState extends State<Nearbys> {
                               _lastDoc = null;
                             });
 
-                            //Slowdown Future request permissions from location settings
-                            Future.delayed(Duration(milliseconds: 50))
+                            //Slowdown the postList state for Smart Refresher
+                            Future.delayed(Duration(milliseconds: 250))
                                 .whenComplete(() => _setLocationCity());
                           } else
                             print('Location service is still disabled.');

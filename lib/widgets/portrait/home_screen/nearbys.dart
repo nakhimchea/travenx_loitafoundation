@@ -180,22 +180,22 @@ class _NearbysState extends State<Nearbys> {
                 : TextButton(
                     onPressed: () async {
                       try {
-                        if (await GeoLocatorService().openLocationSettings()) if (await Geolocator
-                            .isLocationServiceEnabled()) {
-                          setState(() {
-                            _isRefreshable = true;
-                            _isLoadable = true;
-                            cityName = '';
-                            postList = [];
-                            _lastDoc = null;
-                          });
+                        if (await GeoLocatorService().openLocationSettings()) {
+                          if (await Geolocator.isLocationServiceEnabled()) {
+                            setState(() {
+                              _isRefreshable = true;
+                              _isLoadable = true;
+                              cityName = '';
+                              postList = [];
+                              _lastDoc = null;
+                            });
 
-                          //Slowdown Future request permissions from location settings
-                          Future.delayed(Duration(milliseconds: 50))
-                              .whenComplete(() => _setLocationCity());
+                            //Slowdown Future request permissions from location settings
+                            Future.delayed(Duration(milliseconds: 50))
+                                .whenComplete(() => _setLocationCity());
+                          } else
+                            print('Location service is still disabled.');
                         } else
-                          print('Location service is still disabled.');
-                        else
                           print('Failed to open Location settings.');
                       } catch (e) {
                         print('Unknown Error: $e');

@@ -378,6 +378,7 @@ class _ProvinceListState extends State<_ProvinceList> {
   Widget build(BuildContext context) {
     return SmartRefresher(
       controller: _refreshController,
+      physics: BouncingScrollPhysics(),
       enablePullDown: _isRefreshable,
       enablePullUp: _isLoadable,
       child: _buildList(),

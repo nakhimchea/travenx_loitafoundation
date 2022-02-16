@@ -103,6 +103,7 @@ class _PromotionsState extends State<Promotions> {
       height: MediaQuery.of(context).size.height / 3.15,
       child: SmartRefresher(
         controller: _refreshController,
+        physics: BouncingScrollPhysics(),
         enablePullDown: _isRefreshable,
         enablePullUp: _isLoadable,
         child: _buildList(),

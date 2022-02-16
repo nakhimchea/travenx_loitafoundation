@@ -173,10 +173,10 @@ class _BuildIconMenuListState extends State<_BuildIconMenuList> {
   Widget build(BuildContext context) {
     return SmartRefresher(
       controller: _refreshController,
+      physics: BouncingScrollPhysics(),
       enablePullDown: _isRefreshable,
       enablePullUp: _isLoadable,
       child: _buildList(),
-      physics: BouncingScrollPhysics(),
       footer: CustomFooter(
         loadStyle: LoadStyle.ShowWhenLoading,
         builder: loadingBuilder,

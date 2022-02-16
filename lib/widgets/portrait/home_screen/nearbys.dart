@@ -145,10 +145,19 @@ class _NearbysState extends State<Nearbys> {
             ? kIsWeb
                 ? Container(
                     height: 40,
-                    color: Theme.of(context).cardColor,
+                    color: Theme.of(context).disabledColor,
                     child: ListView(
                       scrollDirection: Axis.horizontal,
                       children: [
+                        const SizedBox(width: kHPadding),
+                        Center(
+                          child: Icon(
+                            CustomFilledIcons.location,
+                            color: Theme.of(context).primaryIconTheme.color,
+                            size: 16,
+                          ),
+                        ),
+                        const SizedBox(width: 5),
                         Center(
                           child: Text(
                             'សេវាប្រាប់ទិសតំបន់ត្រូវបានបិទ។ ទីតាំងបានកំណត់នៅភ្នំពេញ។ ',
@@ -157,13 +166,14 @@ class _NearbysState extends State<Nearbys> {
                         ),
                         Center(
                           child: Text(
-                            'ចុចលើនិមិត្តសញ្ញាទីតាំងដើម្បីបើកឡើងវិញ!',
+                            'ចុចលើនិមិត្តសញ្ញាទីតាំងខាងលើ ដើម្បីបើកឡើងវិញ!',
                             style: Theme.of(context)
                                 .textTheme
                                 .button!
                                 .copyWith(color: Theme.of(context).hintColor),
                           ),
                         ),
+                        const SizedBox(width: kHPadding),
                       ],
                     ),
                   )
@@ -189,11 +199,19 @@ class _NearbysState extends State<Nearbys> {
                     ),
                     child: Container(
                       height: 40,
-                      padding: const EdgeInsets.only(left: kHPadding),
-                      color: Theme.of(context).cardColor,
+                      color: Theme.of(context).disabledColor,
                       child: ListView(
                         scrollDirection: Axis.horizontal,
                         children: [
+                          const SizedBox(width: kHPadding),
+                          Center(
+                            child: Icon(
+                              CustomFilledIcons.location,
+                              color: Theme.of(context).primaryIconTheme.color,
+                              size: 16,
+                            ),
+                          ),
+                          const SizedBox(width: 5),
                           Center(
                             child: Text(
                               'សេវាប្រាប់ទិសតំបន់ត្រូវបានបិទ។ ទីតាំងបានកំណត់នៅភ្នំពេញ។ ',
@@ -209,6 +227,7 @@ class _NearbysState extends State<Nearbys> {
                                   .copyWith(color: Theme.of(context).hintColor),
                             ),
                           ),
+                          const SizedBox(width: kHPadding),
                         ],
                       ),
                     ),

@@ -1,12 +1,16 @@
 import 'dart:convert';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:travenx_loitafoundation/config/configs.dart'
     show kHPadding, textScaleFactor, descriptionIconSize, Palette;
+import 'package:travenx_loitafoundation/helpers/city_name_translator.dart';
+import 'package:travenx_loitafoundation/helpers/post_translator.dart';
 import 'package:travenx_loitafoundation/icons/icons.dart';
 import 'package:travenx_loitafoundation/models/post_object_model.dart';
 import 'package:travenx_loitafoundation/services/firestore_service.dart';
@@ -21,9 +25,10 @@ class Nearbys extends StatefulWidget {
 }
 
 class _NearbysState extends State<Nearbys> {
-  RefreshController _refreshController =
+  final RefreshController _refreshController =
       RefreshController(initialRefresh: true);
   final FirestoreService _firestoreService = FirestoreService();
+
   bool _isRefreshable = true;
   bool _isLoadable = true;
 
@@ -102,23 +107,27 @@ class _NearbysState extends State<Nearbys> {
   }
 
   final InternetService _internetService = InternetService();
-  String cityName = 'ភ្នំពេញ';
-
-  final String _owmReverseGeocodingUrl =
-      'http://api.openweathermap.org/geo/1.0/reverse?';
+  String cityName = '';
 
   void _setLocationCity() async {
-    final String coordination =
+    final FlutterSecureStorage _secureStorage = FlutterSecureStorage(
+        iOptions:
+            IOSOptions(accessibility: IOSAccessibility.unlocked_this_device),
+        aOptions: AndroidOptions(encryptedSharedPreferences: true));
+    final String _owmReverseGeocodingUrl =
+        'http://api.openweathermap.org/geo/1.0/reverse?';
+    final String _coordination =
         await GeoLocatorService().getCurrentCoordination();
-    if (coordination != '') {
+    if (_coordination != '') {
       final String _responseBody = await _internetService.httpGetResponseBody(
           url:
-              '$_owmReverseGeocodingUrl$coordination&appid=${await FlutterSecureStorage().read(key: 'owmKey')}');
-      final String enCityName =
+              '$_owmReverseGeocodingUrl$_coordination&appid=${await _secureStorage.read(key: 'owmKey')}');
+      final String _enCityName =
           jsonDecode(_responseBody)[0]['state'].toString();
-//TODO: Translate English City Name to Khmer name and retrieve data from the internet
-      print(enCityName);
-    }
+
+      setState(() => cityName = cityNameTranslator(enCityName: _enCityName));
+    } else
+      setState(() => cityName = 'denied');
   }
 
   @override
@@ -132,6 +141,80 @@ class _NearbysState extends State<Nearbys> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
+        cityName == 'denied'
+            ? kIsWeb
+                ? Container(
+                    height: 40,
+                    color: Theme.of(context).cardColor,
+                    child: ListView(
+                      scrollDirection: Axis.horizontal,
+                      children: [
+                        Center(
+                          child: Text(
+                            'សេវាប្រាប់ទិសតំបន់ត្រូវបានបិទ។ ទីតាំងបានកំណត់នៅភ្នំពេញ។ ',
+                            style: Theme.of(context).textTheme.button,
+                          ),
+                        ),
+                        Center(
+                          child: Text(
+                            'ចុចលើនិមិត្តសញ្ញាទីតាំងដើម្បីបើកឡើងវិញ!',
+                            style: Theme.of(context)
+                                .textTheme
+                                .button!
+                                .copyWith(color: Theme.of(context).hintColor),
+                          ),
+                        ),
+                      ],
+                    ),
+                  )
+                : TextButton(
+                    onPressed: () async {
+                      if (await GeoLocatorService().openLocationSettings()) if (await Geolocator
+                          .isLocationServiceEnabled()) {
+                        setState(() {
+                          _isRefreshable = true;
+                          _isLoadable = true;
+                          cityName = '';
+                          postList = [];
+                          _lastDoc = null;
+                        });
+                        _setLocationCity();
+                      } else
+                        print('Location service is still disabled.');
+                      else
+                        print('Failed to open Location settings.');
+                    },
+                    style: ButtonStyle(
+                      padding: MaterialStateProperty.all(EdgeInsets.zero),
+                    ),
+                    child: Container(
+                      height: 40,
+                      padding: const EdgeInsets.only(left: kHPadding),
+                      color: Theme.of(context).cardColor,
+                      child: ListView(
+                        scrollDirection: Axis.horizontal,
+                        children: [
+                          Center(
+                            child: Text(
+                              'សេវាប្រាប់ទិសតំបន់ត្រូវបានបិទ។ ទីតាំងបានកំណត់នៅភ្នំពេញ។ ',
+                              style: Theme.of(context).textTheme.button,
+                            ),
+                          ),
+                          Center(
+                            child: Text(
+                              'ចុចទីនេះដើម្បីបើកឡើងវិញ!',
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .button!
+                                  .copyWith(color: Theme.of(context).hintColor),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  )
+            : SizedBox.shrink(),
+        const SizedBox(height: 10.0),
         Padding(
           padding: const EdgeInsets.only(left: kHPadding),
           child: Text(
@@ -141,47 +224,54 @@ class _NearbysState extends State<Nearbys> {
           ),
         ),
         const SizedBox(height: 10.0),
-        Container(
-          height: MediaQuery.of(context).size.height / 3.75 + 10,
-          child: SmartRefresher(
-            controller: _refreshController,
-            enablePullDown: _isRefreshable,
-            enablePullUp: _isLoadable,
-            child: _buildList(),
-            header: CustomHeader(builder: (_, __) => SizedBox.shrink()),
-            footer: CustomFooter(
-              loadStyle: LoadStyle.ShowWhenLoading,
-              builder: loadingBuilder,
-            ),
-            onRefresh: () async {
-              //TODO: Change here according to GeoLocator
-              // postList = postTranslator(await _firestoreService
-              //     .getPromotionData(_lastDoc)
-              //     .then((snapshot) {
-              //   setState(() => snapshot.docs.isNotEmpty
-              //       ? _lastDoc = snapshot.docs.last
-              //       : _isLoadable = false);
-              //   return snapshot.docs;
-              // }));
-              if (mounted) setState(() => _isRefreshable = false);
-              _refreshController.refreshCompleted();
-            },
-            onLoading: () async {
-              //TODO: Change here according to GeoLocator
-              // postList = List.from(postList)
-              //   ..addAll(postTranslator(await _firestoreService
-              //       .getPromotionData(_lastDoc)
-              //       .then((snapshot) {
-              //     setState(() => snapshot.docs.isNotEmpty
-              //         ? _lastDoc = snapshot.docs.last
-              //         : _isLoadable = false);
-              //     return snapshot.docs;
-              //   })));
-              if (mounted) setState(() {});
-              _refreshController.loadComplete();
-            },
-          ),
-        ),
+        cityName == ''
+            ? Container(
+                alignment: Alignment.center,
+                height: MediaQuery.of(context).size.height / 3.75 + 10,
+                child: CircularProgressIndicator.adaptive())
+            : Container(
+                height: MediaQuery.of(context).size.height / 3.75 + 10,
+                child: SmartRefresher(
+                  controller: _refreshController,
+                  enablePullDown: _isRefreshable,
+                  enablePullUp: _isLoadable,
+                  child: _buildList(),
+                  header: CustomHeader(builder: (_, __) => SizedBox.shrink()),
+                  footer: CustomFooter(
+                    loadStyle: LoadStyle.ShowWhenLoading,
+                    builder: loadingBuilder,
+                  ),
+                  onRefresh: () async {
+                    postList = postTranslator(await _firestoreService
+                        .getProvinceData(
+                            cityName == 'denied' ? 'ភ្នំពេញ' : cityName,
+                            _lastDoc)
+                        .then((snapshot) {
+                      setState(() => snapshot.docs.isNotEmpty
+                          ? _lastDoc = snapshot.docs.last
+                          : _isLoadable = false);
+                      return snapshot.docs;
+                    }));
+                    if (mounted) setState(() => _isRefreshable = false);
+                    _refreshController.refreshCompleted();
+                  },
+                  onLoading: () async {
+                    postList = List.from(postList)
+                      ..addAll(postTranslator(await _firestoreService
+                          .getProvinceData(
+                              cityName == 'denied' ? 'ភ្នំពេញ' : cityName,
+                              _lastDoc)
+                          .then((snapshot) {
+                        setState(() => snapshot.docs.isNotEmpty
+                            ? _lastDoc = snapshot.docs.last
+                            : _isLoadable = false);
+                        return snapshot.docs;
+                      })));
+                    if (mounted) setState(() {});
+                    _refreshController.loadComplete();
+                  },
+                ),
+              ),
       ],
     );
   }

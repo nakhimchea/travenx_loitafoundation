@@ -14,4 +14,7 @@ class GeoLocatorService {
     }
     return positionCoordination;
   }
+
+  Future<bool> openLocationSettings() async =>
+      await Geolocator.openLocationSettings();
 }

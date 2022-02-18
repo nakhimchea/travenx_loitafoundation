@@ -238,7 +238,9 @@ class _PromotionCard extends StatelessWidget {
                       ),
                     ),
                     trailing: Text(
-                      '\$${post.price % 1 == 0 ? post.price.toStringAsFixed(0) : post.price.toStringAsFixed(1)}',
+                      post.price == 0
+                          ? 'Free'
+                          : '\$${post.price % 1 == 0 ? post.price.toStringAsFixed(0) : post.price.toStringAsFixed(1)}',
                       textScaleFactor: textScaleFactor,
                       style: Theme.of(context).textTheme.subtitle1,
                       overflow:

@@ -434,7 +434,9 @@ class _NearbyCard extends StatelessWidget {
                     top: MediaQuery.of(context).size.height / 40.0,
                     right: 0.0,
                     child: Text(
-                      '\$${placeObject.price % 1 == 0 ? placeObject.price.toStringAsFixed(0) : placeObject.price.toStringAsFixed(1)}',
+                      placeObject.price == 0
+                          ? 'Free'
+                          : '\$${placeObject.price % 1 == 0 ? placeObject.price.toStringAsFixed(0) : placeObject.price.toStringAsFixed(1)}',
                       textScaleFactor: textScaleFactor,
                       style: Theme.of(context).textTheme.subtitle1,
                       overflow: TextOverflow.ellipsis,

@@ -91,7 +91,9 @@ class CardTileItem extends StatelessWidget {
                               : TextOverflow.ellipsis,
                         ),
                         Text(
-                          '\$${placeObject.price % 1 == 0 ? placeObject.price.toStringAsFixed(0) : placeObject.price.toStringAsFixed(1)}',
+                          placeObject.price == 0
+                              ? 'Free'
+                              : '\$${placeObject.price % 1 == 0 ? placeObject.price.toStringAsFixed(0) : placeObject.price.toStringAsFixed(1)}',
                           textScaleFactor: textScaleFactor,
                           style: Theme.of(context).textTheme.subtitle1,
                           overflow: kIsWeb

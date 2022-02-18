@@ -1,7 +1,7 @@
 import 'package:geolocator/geolocator.dart';
 
 class GeoLocatorService {
-  Future<String> getCurrentCoordination() async {
+  static Future<String> getCurrentCoordination() async {
     String positionCoordination = '';
     try {
       await Geolocator.requestPermission();
@@ -15,6 +15,6 @@ class GeoLocatorService {
     return positionCoordination;
   }
 
-  Future<bool> openLocationSettings() async =>
+  static Future<bool> openLocationSettings() async =>
       await Geolocator.openLocationSettings();
 }

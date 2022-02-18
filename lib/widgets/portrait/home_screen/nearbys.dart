@@ -35,7 +35,7 @@ class _NearbysState extends State<Nearbys> {
   List<PostObject> postList = [];
   DocumentSnapshot? _lastDoc;
 
-  static double _hPadding = 10;
+  double _hPadding = 10;
 
   Widget _buildList() {
     return ListView.builder(
@@ -106,7 +106,6 @@ class _NearbysState extends State<Nearbys> {
     return _footer;
   }
 
-  final InternetService _internetService = InternetService();
   String cityName = '';
 
   void _setLocationCity() async {
@@ -117,9 +116,9 @@ class _NearbysState extends State<Nearbys> {
     final String _owmReverseGeocodingUrl =
         'http://api.openweathermap.org/geo/1.0/reverse?';
     final String _coordination =
-        await GeoLocatorService().getCurrentCoordination();
+        await GeoLocatorService.getCurrentCoordination();
     if (_coordination != '') {
-      final String _responseBody = await _internetService.httpGetResponseBody(
+      final String _responseBody = await InternetService.httpGetResponseBody(
           url:
               '$_owmReverseGeocodingUrl$_coordination&appid=${await _secureStorage.read(key: 'owmKey')}');
       final String _enCityName =
@@ -180,7 +179,7 @@ class _NearbysState extends State<Nearbys> {
                 : TextButton(
                     onPressed: () async {
                       try {
-                        if (await GeoLocatorService().openLocationSettings()) {
+                        if (await GeoLocatorService.openLocationSettings()) {
                           if (await Geolocator.isLocationServiceEnabled()) {
                             setState(() {
                               _isRefreshable = true;

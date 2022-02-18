@@ -6,16 +6,28 @@ List<PostObject> postTranslator(
   List<PostObject> _postObjects = [];
 
   for (var post in posts) {
+    String _clientId = '';
+    String _clientDisplayName = '';
+    String _clientPhoneNumber = '';
+    String _clientProfileUrl = '';
     List<String> _imageUrls = [];
     String _title = '';
     String _location = '';
+    String _positionCoordination = '';
     double _price = 0;
-    List<Activity> _activities = [];
-    Details? _details = Details(textDetail: '', mapImageUrl: '');
+    String? _openHours = '';
+    String? _announcement = '';
     BriefDescription? _briefDescription =
         BriefDescription(ratings: 5, distance: 500, temperature: 32, views: 0);
+    List<Activity> _activities = [];
+    Details? _details = Details(textDetail: '', mapImageUrl: '');
     List<String>? _policies = [];
-    List<String>? _galleryUrls = [];
+    String? _postId = '';
+
+    _clientId = post.get('clientId').toString();
+    _clientDisplayName = post.get('clientDisplayName').toString();
+    _clientPhoneNumber = post.get('clientPhoneNumber').toString();
+    _clientProfileUrl = post.get('clientProfileUrl').toString();
 
     if (post.get('imageUrls') != null)
       for (var imageUrl in post.get('imageUrls'))
@@ -23,7 +35,26 @@ List<PostObject> postTranslator(
 
     _title = post.get('title').toString();
     _location = post.get('location').toString();
+    _positionCoordination = post.get('positionCoordination').toString();
     _price = double.parse(post.get('price').toString());
+
+    try {
+      if (post.get('openHours') != null)
+        _openHours = post.get('openHours').toString();
+
+      if (post.get('announcement') != null)
+        _announcement = post.get('announcement').toString();
+
+      if (post.get('briefDescription') != null)
+        _briefDescription = BriefDescription(
+            ratings: double.parse(
+                post.get('briefDescription')['ratings'].toString()),
+            distance: post.get('briefDescription')['distance'],
+            temperature: post.get('briefDescription')['temperature'],
+            views: post.get('briefDescription')['views']);
+    } catch (e) {
+      print('Data\'s unavailable: $e');
+    }
 
     if (post.get('activities') != null)
       for (var activity in post.get('activities')) {
@@ -54,34 +85,31 @@ List<PostObject> postTranslator(
             textDetail: post.get('details')['textDetail'].toString(),
             mapImageUrl: post.get('details')['mapImageUrl'].toString());
 
-      if (post.get('briefDescription') != null)
-        _briefDescription = BriefDescription(
-            ratings: double.parse(
-                post.get('briefDescription')['ratings'].toString()),
-            distance: post.get('briefDescription')['distance'],
-            temperature: post.get('briefDescription')['temperature'],
-            views: post.get('briefDescription')['views']);
-
       if (post.get('policies') != null)
         for (var policy in post.get('policies'))
           _policies.add(policy.toString());
 
-      if (post.get('galleryUrls') != null)
-        for (var galleryUrl in post.get('galleryUrls'))
-          _galleryUrls.add(galleryUrl.toString());
+      if (post.get('postId') != null) _postId = post.get('postId').toString();
     } catch (e) {
       print('Data\'s unavailable: $e');
     }
     _postObjects.add(PostObject(
+        clientId: _clientId,
+        clientDisplayName: _clientDisplayName,
+        clientPhoneNumber: _clientPhoneNumber,
+        clientProfileUrl: _clientProfileUrl,
         imageUrls: _imageUrls,
         title: _title,
         location: _location,
+        positionCoordination: _positionCoordination,
         price: _price,
+        openHours: _openHours,
+        announcement: _announcement,
+        briefDescription: _briefDescription,
         activities: _activities,
         details: _details,
-        briefDescription: _briefDescription,
         policies: _policies,
-        galleryUrls: _galleryUrls));
+        postId: _postId));
   }
 
   return _postObjects;

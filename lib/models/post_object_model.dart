@@ -2,26 +2,54 @@ import 'package:flutter/widgets.dart' show Widget;
 import 'package:flutter_svg/flutter_svg.dart';
 
 class PostObject {
+  final String clientId;
+  final String clientDisplayName;
+  final String clientPhoneNumber;
+  final String clientProfileUrl;
   final List<String> imageUrls;
   final String title;
   final String location;
+  final String positionCoordination;
   final double price;
+  final String? openHours;
+  final String? announcement;
+  final BriefDescription? briefDescription;
   final List<Activity> activities;
   final Details? details;
-  final BriefDescription? briefDescription;
   final List<String>? policies;
-  final List<String>? galleryUrls;
+  final String? postId;
 
   PostObject({
+    required this.clientId,
+    required this.clientDisplayName,
+    required this.clientPhoneNumber,
+    required this.clientProfileUrl,
     required this.imageUrls,
     required this.title,
     required this.location,
+    required this.positionCoordination,
     required this.price,
+    this.openHours,
+    this.announcement,
+    this.briefDescription,
     required this.activities,
     this.details,
-    this.briefDescription,
     this.policies,
-    this.galleryUrls,
+    this.postId,
+  });
+}
+
+class BriefDescription {
+  final double ratings;
+  final int distance;
+  final int temperature;
+  final int views;
+
+  BriefDescription({
+    required this.ratings,
+    required this.distance,
+    required this.temperature,
+    required this.views,
   });
 }
 
@@ -70,16 +98,44 @@ class Details {
   });
 }
 
-class BriefDescription {
-  final double ratings;
-  final int distance;
-  final int temperature;
-  final int views;
+class Gallery {
+  final String userId;
+  final String userProfileUrl;
+  final String userDisplayName;
+  final String dateTime;
+  final String imageUrl;
+  final int likes;
+  final int dislikes;
 
-  BriefDescription({
-    required this.ratings,
-    required this.distance,
-    required this.temperature,
-    required this.views,
+  Gallery({
+    required this.userId,
+    required this.userProfileUrl,
+    required this.userDisplayName,
+    required this.dateTime,
+    required this.imageUrl,
+    required this.likes,
+    required this.dislikes,
+  });
+}
+
+class Review {
+  final String userId;
+  final String userProfileUrl;
+  final String userDisplayName;
+  final int rating;
+  final String dateTime;
+  final String? description;
+  final int likes;
+  final int dislikes;
+
+  Review({
+    required this.userId,
+    required this.userProfileUrl,
+    required this.userDisplayName,
+    required this.rating,
+    required this.dateTime,
+    this.description,
+    required this.likes,
+    required this.dislikes,
   });
 }

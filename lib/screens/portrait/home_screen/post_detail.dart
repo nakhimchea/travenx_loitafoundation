@@ -35,12 +35,12 @@ class _PostDetailState extends State<PostDetail> {
       body: CustomScrollView(
         physics: BouncingScrollPhysics(),
         slivers: [
-          SliverPadding(
-            padding: EdgeInsets.only(top: 44.0),
-            sliver: SliverToBoxAdapter(
-              child: PostCover(post: widget.post),
-            ),
-          ),
+          // SliverPadding(
+          //   padding: EdgeInsets.only(top: 44.0),
+          //   sliver: SliverToBoxAdapter(
+          //     child: PostCover(post: widget.post),
+          //   ),
+          // ),
           SliverPadding(
             padding: EdgeInsets.symmetric(
               horizontal: kHPadding,
@@ -50,36 +50,36 @@ class _PostDetailState extends State<PostDetail> {
               child: PostHeader(post: widget.post),
             ),
           ),
-          SliverPadding(
-            padding: EdgeInsets.symmetric(
-              horizontal: kHPadding,
-              vertical: kVPadding,
-            ),
-            sliver: SliverToBoxAdapter(
-              child: AnnouncementCard(post: widget.post),
-            ),
-          ),
-          SliverPadding(
-            padding: EdgeInsets.symmetric(
-              horizontal: kHPadding,
-              vertical: kVPadding,
-            ),
-            sliver: SliverToBoxAdapter(
-              child: BriefDescriptionCard(post: widget.post),
-            ),
-          ),
-          SliverPadding(
-            padding: EdgeInsets.symmetric(
-              horizontal: kHPadding,
-              vertical: kVPadding,
-            ),
-            sliver: SliverToBoxAdapter(
-              child: PostDetails(post: widget.post),
-            ),
-          ),
-          SliverToBoxAdapter(
-            child: Policies(post: widget.post),
-          ),
+          // SliverPadding(
+          //   padding: EdgeInsets.symmetric(
+          //     horizontal: kHPadding,
+          //     vertical: kVPadding,
+          //   ),
+          //   sliver: SliverToBoxAdapter(
+          //     child: AnnouncementCard(post: widget.post),
+          //   ),
+          // ),
+          // SliverPadding(
+          //   padding: EdgeInsets.symmetric(
+          //     horizontal: kHPadding,
+          //     vertical: kVPadding,
+          //   ),
+          //   sliver: SliverToBoxAdapter(
+          //     child: BriefDescriptionCard(post: widget.post),
+          //   ),
+          // ),
+          // SliverPadding(
+          //   padding: EdgeInsets.symmetric(
+          //     horizontal: kHPadding,
+          //     vertical: kVPadding,
+          //   ),
+          //   sliver: SliverToBoxAdapter(
+          //     child: PostDetails(post: widget.post),
+          //   ),
+          // ),
+          // SliverToBoxAdapter(
+          //   child: Policies(post: widget.post),
+          // ),
           SliverPadding(padding: EdgeInsets.only(bottom: 20.0)),
         ],
       ),

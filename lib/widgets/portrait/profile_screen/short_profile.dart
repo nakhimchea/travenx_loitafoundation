@@ -54,10 +54,14 @@ class ShortProfile extends StatelessWidget {
                               imageFilter:
                                   ImageFilter.blur(sigmaX: 10, sigmaY: 10),
                               child: Image.asset(
-                                  'assets/images/profile_screen/dummy_background.png'),
+                                'assets/images/profile_screen/dummy_background.png',
+                                fit: BoxFit.cover,
+                              ),
                             ),
                             errorWidget: (context, _, __) => Image.asset(
-                                'assets/images/profile_screen/dummy_background.png'),
+                              'assets/images/profile_screen/dummy_background.png',
+                              fit: BoxFit.cover,
+                            ),
                           ),
               ),
               Positioned(
@@ -84,10 +88,14 @@ class ShortProfile extends StatelessWidget {
                                 imageFilter:
                                     ImageFilter.blur(sigmaX: 10, sigmaY: 10),
                                 child: Image.asset(
-                                    'assets/images/profile_screen/dummy_profile.png'),
+                                  'assets/images/profile_screen/dummy_profile.png',
+                                  fit: BoxFit.contain,
+                                ),
                               ),
                               errorWidget: (context, _, __) => Image.asset(
-                                  'assets/images/profile_screen/dummy_profile.png'),
+                                'assets/images/profile_screen/dummy_profile.png',
+                                fit: BoxFit.contain,
+                              ),
                             ),
                 ),
               ),

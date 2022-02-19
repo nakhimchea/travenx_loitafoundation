@@ -1,3 +1,6 @@
+import 'dart:ui';
+
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:travenx_loitafoundation/config/configs.dart'
     show kHPadding, textScaleFactor;
@@ -31,11 +34,36 @@ class _PostCoverState extends State<PostCover> {
                   padding: const EdgeInsets.symmetric(horizontal: kHPadding),
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(15.0),
-                    child: Image(
-                      image: AssetImage(widget.post.imageUrls.elementAt(index)),
-                      width: MediaQuery.of(context).size.width - 2 * kHPadding,
-                      fit: BoxFit.cover,
-                    ),
+                    child: widget.post.imageUrls
+                                .elementAt(index)
+                                .split('/')
+                                .first ==
+                            'assets'
+                        ? Image(
+                            width: MediaQuery.of(context).size.width -
+                                2 * kHPadding,
+                            image: AssetImage(
+                                widget.post.imageUrls.elementAt(index)),
+                            fit: BoxFit.cover,
+                          )
+                        : CachedNetworkImage(
+                            width: MediaQuery.of(context).size.width -
+                                2 * kHPadding,
+                            imageUrl: widget.post.imageUrls.elementAt(index),
+                            fit: BoxFit.cover,
+                            placeholder: (context, _) => ImageFiltered(
+                              imageFilter:
+                                  ImageFilter.blur(sigmaX: 10, sigmaY: 10),
+                              child: Image.asset(
+                                'assets/images/travenx_180.png',
+                                fit: BoxFit.cover,
+                              ),
+                            ),
+                            errorWidget: (context, _, __) => Image.asset(
+                              'assets/images/travenx.png',
+                              fit: BoxFit.cover,
+                            ),
+                          ),
                   ),
                 );
               },

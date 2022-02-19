@@ -50,10 +50,15 @@ class CardTileItem extends StatelessWidget {
                         fit: BoxFit.cover,
                         placeholder: (context, _) => ImageFiltered(
                           imageFilter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
-                          child: Image.asset('assets/images/travenx_180.png'),
+                          child: Image.asset(
+                            'assets/images/travenx_180.png',
+                            fit: BoxFit.cover,
+                          ),
                         ),
-                        errorWidget: (context, _, __) =>
-                            Image.asset('assets/images/travenx_180.png'),
+                        errorWidget: (context, _, __) => Image.asset(
+                          'assets/images/travenx.png',
+                          fit: BoxFit.cover,
+                        ),
                       ),
               ),
             ),

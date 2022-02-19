@@ -8,7 +8,8 @@ class PostObject {
   final String clientProfileUrl;
   final List<String> imageUrls;
   final String title;
-  final String location;
+  final String state;
+  final String country;
   final String positionCoordination;
   final double price;
   final String? openHours;
@@ -26,7 +27,8 @@ class PostObject {
     required this.clientProfileUrl,
     required this.imageUrls,
     required this.title,
-    required this.location,
+    required this.state,
+    required this.country,
     required this.positionCoordination,
     required this.price,
     this.openHours,

@@ -110,7 +110,10 @@ class CardTileItem extends StatelessWidget {
                         Padding(
                           padding: const EdgeInsets.only(left: 5.0),
                           child: Text(
-                            post.location,
+                            (post.state == 'ភ្នំពេញ' ? 'រាជធានី' : 'ខេត្ត') +
+                                post.state +
+                                ' ' +
+                                post.country,
                             textScaleFactor: textScaleFactor,
                             style: Theme.of(context).textTheme.bodyText2,
                             overflow: kIsWeb

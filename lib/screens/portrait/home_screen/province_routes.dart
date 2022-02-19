@@ -454,7 +454,8 @@ class _ProvinceCover extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Text(
-                modelProvince.label,
+                (modelProvince.label == 'ភ្នំពេញ' ? 'រាជធានី' : 'ខេត្ត') +
+                    modelProvince.label,
                 textScaleFactor: textScaleFactor,
                 style: Theme.of(context)
                     .textTheme

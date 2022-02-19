@@ -12,7 +12,8 @@ List<PostObject> postTranslator(
     String _clientProfileUrl = '';
     List<String> _imageUrls = [];
     String _title = '';
-    String _location = '';
+    String _state = '';
+    String _country = '';
     String _positionCoordination = '';
     double _price = 0;
     String? _openHours = '';
@@ -34,7 +35,8 @@ List<PostObject> postTranslator(
         _imageUrls.add(imageUrl.toString());
 
     _title = post.get('title').toString();
-    _location = post.get('location').toString();
+    _state = post.get('state').toString();
+    _country = post.get('country').toString();
     _positionCoordination = post.get('positionCoordination').toString();
     _price = double.parse(post.get('price').toString());
 
@@ -100,7 +102,8 @@ List<PostObject> postTranslator(
         clientProfileUrl: _clientProfileUrl,
         imageUrls: _imageUrls,
         title: _title,
-        location: _location,
+        state: _state,
+        country: _country,
         positionCoordination: _positionCoordination,
         price: _price,
         openHours: _openHours,

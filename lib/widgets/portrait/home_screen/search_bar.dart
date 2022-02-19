@@ -33,9 +33,10 @@ class SearchBar extends StatelessWidget {
         //           'assets/images/travenx.png',
         //         ],
         //         'title': 'ដើរលេងបន្ទាប់',
-        //         'location': 'ខេត្តកំពត កម្ពុជា',
+        //         'state': 'កំពត',
+        //         'country': 'កម្ពុជា',
         //         'positionCoordination':
-        //             await GeoLocatorService().getCurrentCoordination(),
+        //             await GeoLocatorService.getCurrentCoordination(),
         //         'price': 0,
         //         'openHours': '9:00ព្រឹក-5:00ល្ងាច',
         //         'announcement':
@@ -67,52 +68,53 @@ class SearchBar extends StatelessWidget {
         //         ],
         //         'postId': _postId,
         //       });
-        // await FirestoreService()
-        //     .setIconMenuData('តំបន់ទាំងអស់', _postId, {
-        //   'clientId': _currentUser.uid,
-        //   'clientDisplayName': documentSnapshot.get('displayName'),
-        //   'clientProfileUrl': documentSnapshot.get('profileUrl'),
-        //   'clientPhoneNumber': documentSnapshot.get('phoneNumber'),
-        //   'imageUrls': [
-        //     'assets/images/travenx.png',
-        //     'assets/images/travenx.png',
-        //     'assets/images/travenx.png',
-        //   ],
-        //   'title': 'ដើរលេងបន្ទាប់',
-        //   'location': 'ខេត្តកំពត កម្ពុជា',
-        //   'positionCoordination':
-        //       await GeoLocatorService().getCurrentCoordination(),
-        //   'price': 0,
-        //   'openHours': '9:00ព្រឹក-5:00ល្ងាច',
-        //   'announcement':
-        //       'ខេត្តកំពត កម្ពុជាខេត្តកំពត កម្ពុជាខេត្តកំពត កម្ពុជាខេត្តកំពត កម្ពុជាខេត្តកំពត កម្ពុជាខេត្តកំពត កម្ពុជាខេត្តកំពត កម្ពុជាខេត្តកំពត កម្ពុជាខេត្តកំពត កម្ពុជាខេត្តកំពត កម្ពុជាខេត្តកំពត កម្ពុជាខេត្តកំពត កម្ពុជាខេត្តកំពត កម្ពុជាខេត្តកំពត កម្ពុជាខេត្តកំពត កម្ពុជាខេត្តកំពត កម្ពុជាខេត្តកំពត កម្ពុជាខេត្តកំពត ខេត្តកំពត កម្ពុជាខេត្តកំពត កម្ពុជាខេត្តកំពត កម្ពុជាខេត្តកំពត កម្ពុជាខេត្តកំពត កម្ពុជាខេត្តកំពត កម្ពុជាខេត្តកំពត កម្ពុជាខេត្តកំពត កម្ពុជាខេត្តកំពត កម្ពុជាខេត្តកំពត កម្ពុជាខេត្តកំពត កម្ពុជាខេត្តកំពត កម្ពុជាខេត្តកំពត កម្ពុជាខេត្តកំពត កម្ពុជាខេត្តកំពត កម្ពុជាខេត្តកំពត កម្ពុជាខេត្តកំពត កម្ពុជាខេត្តកំពត',
-        //   'briefDescription': {
-        //     'ratings': 4.5,
-        //     'distance': 60000,
-        //     'temperature': 36,
-        //     'views': 1236,
-        //   },
-        //   'activities': [
-        //     'boating',
-        //     'swimming',
-        //     'relaxing',
-        //     'fishing',
-        //     'diving',
-        //   ],
-        //   'details': {
-        //     'mapImageUrl': 'assets/images/travenx.png',
-        //     'textDetail':
-        //         'ខេត្តកំពត កម្ពុជាខេត្តកំពត កម្ពុជាខេត្តកំពត កម្ពុជាខេត្តកំពត កម្ពុជាខេត្តកំពត កម្ពុជាខេត្តកំពត កម្ពុជាខេត្តកំពត កម្ពុជាខេត្តកំពត កម្ពុជាខេត្តកំពត កម្ពុជាខេត្តកំពត កម្ពុជាខេត្តកំពត កម្ពុជាខេត្តកំពត កម្ពុជាខេត្តកំពត កម្ពុជាខេត្តកំពត កម្ពុជាខេត្តកំពត កម្ពុជាខេត្តកំពត កម្ពុជាខេត្តកំពត កម្ពុជាខេត្តកំពត ខេត្តកំពត កម្ពុជាខេត្តកំពត កម្ពុជាខេត្តកំពត កម្ពុជាខេត្តកំពត កម្ពុជាខេត្តកំពត កម្ពុជាខេត្តកំពត កម្ពុជាខេត្តកំពត កម្ពុជាខេត្តកំពត កម្ពុជាខេត្តកំពត កម្ពុជាខេត្តកំពត កម្ពុជាខេត្តកំពត កម្ពុជាខេត្តកំពត កម្ពុជាខេត្តកំពត កម្ពុជាខេត្តកំពត កម្ពុជាខេត្តកំពត កម្ពុជាខេត្តកំពត កម្ពុជាខេត្តកំពត កម្ពុជាខេត្តកំពត',
-        //   },
-        //   'policies': [
-        //     'ខេត្តកំពត កម្ពុជាខេត្តកំពត កម្ពុជាខេត្តកំពត កម្ពុជាខេត្តកំពត កម្ពុជាខេត្តកំពត កម្ពុជាខេត្តកំពត កម្ពុជាខេត្តកំពត',
-        //     'ខេត្តកំពត កម្ពុជាខេត្តកំពត កម្ពុជាខេត្តកំពត កម្ពុជាខេត្តកំពត កម្ពុជាខេត្តកំពត កម្ពុជាខេត្តកំពត កម្ពុជាខេត្តកំពត កម្ពុជាខេត្តកំពត',
-        //     'ខេត្តកំពត កម្ពុជាខេត្តកំពត កម្ពុជាខេត្តកំពត កម្ពុជាខេត្តកំពត កម្ពុជាខេត្តកំពត កម្ពុជាខេត្តកំពត',
-        //     'ខេត្តកំពត កម្ពុជាខេត្តកំពត កម្ពុជាខេត្តកំពត កម្ពុជាខេត្តកំពត កម្ពុជាខេត្តកំពត កម្ពុជាខេត្តកំពត កម្ពុជាខេត្តកំពត',
-        //     'ខេត្តកំពត កម្ពុជាខេត្តកំពត កម្ពុជាខេត្តកំពត កម្ពុជាខេត្តកំពត កម្ពុជាខេត្តកំពត កម្ពុជាខេត្តកំពត កម្ពុជាខេត្តកំពត កម្ពុជាខេត្តកំពត',
-        //   ],
-        //   'postId': _postId,
-        // });
+        //       await FirestoreService()
+        //           .setIconMenuData('តំបន់ទាំងអស់', _postId, {
+        //         'clientId': _currentUser.uid,
+        //         'clientDisplayName': documentSnapshot.get('displayName'),
+        //         'clientProfileUrl': documentSnapshot.get('profileUrl'),
+        //         'clientPhoneNumber': documentSnapshot.get('phoneNumber'),
+        //         'imageUrls': [
+        //           'assets/images/travenx.png',
+        //           'assets/images/travenx.png',
+        //           'assets/images/travenx.png',
+        //         ],
+        //         'title': 'ដើរលេងបន្ទាប់',
+        //         'state': 'កំពត',
+        //         'country': 'កម្ពុជា',
+        //         'positionCoordination':
+        //             await GeoLocatorService.getCurrentCoordination(),
+        //         'price': 0,
+        //         'openHours': '9:00ព្រឹក-5:00ល្ងាច',
+        //         'announcement':
+        //             'ខេត្តកំពត កម្ពុជាខេត្តកំពត កម្ពុជាខេត្តកំពត កម្ពុជាខេត្តកំពត កម្ពុជាខេត្តកំពត កម្ពុជាខេត្តកំពត កម្ពុជាខេត្តកំពត កម្ពុជាខេត្តកំពត កម្ពុជាខេត្តកំពត កម្ពុជាខេត្តកំពត កម្ពុជាខេត្តកំពត កម្ពុជាខេត្តកំពត កម្ពុជាខេត្តកំពត កម្ពុជាខេត្តកំពត កម្ពុជាខេត្តកំពត កម្ពុជាខេត្តកំពត កម្ពុជាខេត្តកំពត កម្ពុជាខេត្តកំពត ខេត្តកំពត កម្ពុជាខេត្តកំពត កម្ពុជាខេត្តកំពត កម្ពុជាខេត្តកំពត កម្ពុជាខេត្តកំពត កម្ពុជាខេត្តកំពត កម្ពុជាខេត្តកំពត កម្ពុជាខេត្តកំពត កម្ពុជាខេត្តកំពត កម្ពុជាខេត្តកំពត កម្ពុជាខេត្តកំពត កម្ពុជាខេត្តកំពត កម្ពុជាខេត្តកំពត កម្ពុជាខេត្តកំពត កម្ពុជាខេត្តកំពត កម្ពុជាខេត្តកំពត កម្ពុជាខេត្តកំពត កម្ពុជាខេត្តកំពត',
+        //         'briefDescription': {
+        //           'ratings': 4.5,
+        //           'distance': 60000,
+        //           'temperature': 36,
+        //           'views': 1236,
+        //         },
+        //         'activities': [
+        //           'boating',
+        //           'swimming',
+        //           'relaxing',
+        //           'fishing',
+        //           'diving',
+        //         ],
+        //         'details': {
+        //           'mapImageUrl': 'assets/images/travenx.png',
+        //           'textDetail':
+        //               'ខេត្តកំពត កម្ពុជាខេត្តកំពត កម្ពុជាខេត្តកំពត កម្ពុជាខេត្តកំពត កម្ពុជាខេត្តកំពត កម្ពុជាខេត្តកំពត កម្ពុជាខេត្តកំពត កម្ពុជាខេត្តកំពត កម្ពុជាខេត្តកំពត កម្ពុជាខេត្តកំពត កម្ពុជាខេត្តកំពត កម្ពុជាខេត្តកំពត កម្ពុជាខេត្តកំពត កម្ពុជាខេត្តកំពត កម្ពុជាខេត្តកំពត កម្ពុជាខេត្តកំពត កម្ពុជាខេត្តកំពត កម្ពុជាខេត្តកំពត ខេត្តកំពត កម្ពុជាខេត្តកំពត កម្ពុជាខេត្តកំពត កម្ពុជាខេត្តកំពត កម្ពុជាខេត្តកំពត កម្ពុជាខេត្តកំពត កម្ពុជាខេត្តកំពត កម្ពុជាខេត្តកំពត កម្ពុជាខេត្តកំពត កម្ពុជាខេត្តកំពត កម្ពុជាខេត្តកំពត កម្ពុជាខេត្តកំពត កម្ពុជាខេត្តកំពត កម្ពុជាខេត្តកំពត កម្ពុជាខេត្តកំពត កម្ពុជាខេត្តកំពត កម្ពុជាខេត្តកំពត កម្ពុជាខេត្តកំពត',
+        //         },
+        //         'policies': [
+        //           'ខេត្តកំពត កម្ពុជាខេត្តកំពត កម្ពុជាខេត្តកំពត កម្ពុជាខេត្តកំពត កម្ពុជាខេត្តកំពត កម្ពុជាខេត្តកំពត កម្ពុជាខេត្តកំពត',
+        //           'ខេត្តកំពត កម្ពុជាខេត្តកំពត កម្ពុជាខេត្តកំពត កម្ពុជាខេត្តកំពត កម្ពុជាខេត្តកំពត កម្ពុជាខេត្តកំពត កម្ពុជាខេត្តកំពត កម្ពុជាខេត្តកំពត',
+        //           'ខេត្តកំពត កម្ពុជាខេត្តកំពត កម្ពុជាខេត្តកំពត កម្ពុជាខេត្តកំពត កម្ពុជាខេត្តកំពត កម្ពុជាខេត្តកំពត',
+        //           'ខេត្តកំពត កម្ពុជាខេត្តកំពត កម្ពុជាខេត្តកំពត កម្ពុជាខេត្តកំពត កម្ពុជាខេត្តកំពត កម្ពុជាខេត្តកំពត កម្ពុជាខេត្តកំពត',
+        //           'ខេត្តកំពត កម្ពុជាខេត្តកំពត កម្ពុជាខេត្តកំពត កម្ពុជាខេត្តកំពត កម្ពុជាខេត្តកំពត កម្ពុជាខេត្តកំពត កម្ពុជាខេត្តកំពត កម្ពុជាខេត្តកំពត',
+        //         ],
+        //         'postId': _postId,
+        //       });
         //     }).catchError((e) {
         //       print('Cannot get user ID: $e');
         //     });
@@ -145,9 +147,10 @@ class SearchBar extends StatelessWidget {
         //                 'assets/images/travenx.png',
         //               ],
         //               'title': 'ដើរលេងបន្ទាប់',
-        //               'location': 'ខេត្តកំពត កម្ពុជា',
+        //               'state': 'កំពត',
+        //               'country': 'កម្ពុជា',
         //               'positionCoordination':
-        //                   await GeoLocatorService().getCurrentCoordination(),
+        //                   await GeoLocatorService.getCurrentCoordination(),
         //               'price': 0,
         //               'openHours': '9:00ព្រឹក-5:00ល្ងាច',
         //               'announcement':
@@ -210,9 +213,10 @@ class SearchBar extends StatelessWidget {
         //           'assets/images/travenx.png',
         //         ],
         //         'title': 'ដើរលេងបន្ទាប់',
-        //         'location': 'ខេត្តកំពត កម្ពុជា',
+        //         'state': 'កំពត',
+        //         'country': 'កម្ពុជា',
         //         'positionCoordination':
-        //             await GeoLocatorService().getCurrentCoordination(),
+        //             await GeoLocatorService.getCurrentCoordination(),
         //         'price': 0,
         //         'openHours': '9:00ព្រឹក-5:00ល្ងាច',
         //         'announcement':
@@ -276,9 +280,10 @@ class SearchBar extends StatelessWidget {
         //           'assets/images/travenx.png',
         //         ],
         //         'title': 'ដើរលេងបន្ទាប់',
-        //         'location': 'ខេត្តកំពត កម្ពុជា',
+        //         'state': 'កំពត',
+        //         'country': 'កម្ពុជា',
         //         'positionCoordination':
-        //             await GeoLocatorService().getCurrentCoordination(),
+        //             await GeoLocatorService.getCurrentCoordination(),
         //         'price': 0,
         //         'openHours': '9:00ព្រឹក-5:00ល្ងាច',
         //         'announcement':
@@ -321,9 +326,10 @@ class SearchBar extends StatelessWidget {
         //           'assets/images/travenx.png',
         //         ],
         //         'title': 'ដើរលេងបន្ទាប់',
-        //         'location': 'ខេត្តកំពត កម្ពុជា',
+        //         'state': 'កំពត',
+        //         'country': 'កម្ពុជា',
         //         'positionCoordination':
-        //             await GeoLocatorService().getCurrentCoordination(),
+        //             await GeoLocatorService.getCurrentCoordination(),
         //         'price': 0,
         //         'openHours': '9:00ព្រឹក-5:00ល្ងាច',
         //         'announcement':

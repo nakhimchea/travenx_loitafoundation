@@ -7,28 +7,27 @@ import 'package:travenx_loitafoundation/config/configs.dart'
     show kHPadding, textScaleFactor, descriptionIconSize, Palette;
 import 'package:travenx_loitafoundation/icons/icons.dart';
 import 'package:travenx_loitafoundation/models/post_object_model.dart';
+import 'package:travenx_loitafoundation/screens/portrait/home_screen/post_detail.dart';
 
 class CardTileItem extends StatelessWidget {
   final double vPadding;
-  final PostObject placeObject;
+  final PostObject post;
   const CardTileItem({
     Key? key,
     this.vPadding = 8.0,
-    required this.placeObject,
+    required this.post,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     final double _imageSize = MediaQuery.of(context).size.height / 6.16;
     return GestureDetector(
-      onTap: () {},
-      //TODO: Route User to detail page
-      //   () => Navigator.push(
-      // context,
-      // MaterialPageRoute(
-      //   builder: (_) => PostDetail(post: placeObject),
-      // ),
-      // ),
+      onTap: () => Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (_) => PostDetail(post: post),
+        ),
+      ),
       child: Padding(
         padding: EdgeInsets.symmetric(vertical: vPadding / 2),
         child: Row(
@@ -41,14 +40,13 @@ class CardTileItem extends StatelessWidget {
                   topLeft: Radius.circular(15.0),
                   bottomLeft: Radius.circular(15.0),
                 ),
-                child: placeObject.imageUrls.elementAt(0).split('/').first ==
-                        'assets'
+                child: post.imageUrls.elementAt(0).split('/').first == 'assets'
                     ? Image(
-                        image: AssetImage(placeObject.imageUrls.elementAt(0)),
+                        image: AssetImage(post.imageUrls.elementAt(0)),
                         fit: BoxFit.cover,
                       )
                     : CachedNetworkImage(
-                        imageUrl: placeObject.imageUrls.elementAt(0),
+                        imageUrl: post.imageUrls.elementAt(0),
                         fit: BoxFit.cover,
                         placeholder: (context, _) => ImageFiltered(
                           imageFilter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
@@ -81,9 +79,8 @@ class CardTileItem extends StatelessWidget {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        //TODO: Change all Ellipse overflow and modify all
                         Text(
-                          placeObject.title,
+                          post.title,
                           textScaleFactor: textScaleFactor,
                           style: Theme.of(context).textTheme.headline4,
                           overflow: kIsWeb
@@ -91,9 +88,9 @@ class CardTileItem extends StatelessWidget {
                               : TextOverflow.ellipsis,
                         ),
                         Text(
-                          placeObject.price == 0
+                          post.price == 0
                               ? 'Free'
-                              : '\$${placeObject.price % 1 == 0 ? placeObject.price.toStringAsFixed(0) : placeObject.price.toStringAsFixed(1)}',
+                              : '\$${post.price % 1 == 0 ? post.price.toStringAsFixed(0) : post.price.toStringAsFixed(1)}',
                           textScaleFactor: textScaleFactor,
                           style: Theme.of(context).textTheme.subtitle1,
                           overflow: kIsWeb
@@ -113,7 +110,7 @@ class CardTileItem extends StatelessWidget {
                         Padding(
                           padding: const EdgeInsets.only(left: 5.0),
                           child: Text(
-                            placeObject.location,
+                            post.location,
                             textScaleFactor: textScaleFactor,
                             style: Theme.of(context).textTheme.bodyText2,
                             overflow: kIsWeb
@@ -126,8 +123,8 @@ class CardTileItem extends StatelessWidget {
                     Expanded(
                       child: Center(
                         child: Text(
-                          (placeObject.details != null)
-                              ? placeObject.details!.textDetail
+                          (post.details != null)
+                              ? post.details!.textDetail
                               : '',
                           textScaleFactor: textScaleFactor,
                           maxLines: 3,
@@ -151,7 +148,7 @@ class CardTileItem extends StatelessWidget {
                             Padding(
                               padding: const EdgeInsets.only(left: 5.0),
                               child: Text(
-                                placeObject.briefDescription!.ratings
+                                post.briefDescription!.ratings
                                     .toStringAsFixed(1),
                                 textScaleFactor: textScaleFactor,
                                 style: Theme.of(context).textTheme.headline5,
@@ -172,7 +169,7 @@ class CardTileItem extends StatelessWidget {
                             Padding(
                               padding: const EdgeInsets.only(left: 5.0),
                               child: Text(
-                                placeObject.briefDescription!.views.toString(),
+                                post.briefDescription!.views.toString(),
                                 textScaleFactor: textScaleFactor,
                                 style: Theme.of(context).textTheme.subtitle2,
                                 overflow: kIsWeb

@@ -13,6 +13,7 @@ import 'package:travenx_loitafoundation/helpers/city_name_translator.dart';
 import 'package:travenx_loitafoundation/helpers/post_translator.dart';
 import 'package:travenx_loitafoundation/icons/icons.dart';
 import 'package:travenx_loitafoundation/models/post_object_model.dart';
+import 'package:travenx_loitafoundation/screens/portrait/home_screen/post_detail.dart';
 import 'package:travenx_loitafoundation/services/firestore_service.dart';
 import 'package:travenx_loitafoundation/services/geolocator_service.dart';
 import 'package:travenx_loitafoundation/services/internet_service.dart';
@@ -46,17 +47,15 @@ class _NearbysState extends State<Nearbys> {
         if (index == postList.length - 1)
           return Padding(
             padding: EdgeInsets.only(right: kHPadding - _hPadding),
-            child:
-                _NearbyCard(placeObject: postList[index], hPadding: _hPadding),
+            child: _NearbyCard(post: postList[index], hPadding: _hPadding),
           );
         if (index == 0)
           return Padding(
             padding: const EdgeInsets.only(left: kHPadding),
-            child:
-                _NearbyCard(placeObject: postList[index], hPadding: _hPadding),
+            child: _NearbyCard(post: postList[index], hPadding: _hPadding),
           );
         else
-          return _NearbyCard(placeObject: postList[index], hPadding: _hPadding);
+          return _NearbyCard(post: postList[index], hPadding: _hPadding);
       },
     );
   }
@@ -305,25 +304,23 @@ class _NearbysState extends State<Nearbys> {
 
 class _NearbyCard extends StatelessWidget {
   final double hPadding;
-  final PostObject placeObject;
+  final PostObject post;
 
   const _NearbyCard({
     Key? key,
     this.hPadding = 10.0,
-    required this.placeObject,
+    required this.post,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {},
-      //TODO: Navigate User to Detail Page
-      //     () => Navigator.push(
-      //   context,
-      //   MaterialPageRoute(
-      //     builder: (_) => PostDetail(post: nearby),
-      //   ),
-      // ),
+      onTap: () => Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (_) => PostDetail(post: post),
+        ),
+      ),
       child: Padding(
         padding: EdgeInsets.only(right: hPadding),
         child: Column(
@@ -338,7 +335,7 @@ class _NearbyCard extends StatelessWidget {
                   topRight: Radius.circular(15.0),
                 ),
                 child: Image(
-                  image: AssetImage(placeObject.imageUrls.elementAt(0)),
+                  image: AssetImage(post.imageUrls.elementAt(0)),
                   fit: BoxFit.cover,
                 ),
               ),
@@ -362,7 +359,7 @@ class _NearbyCard extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        placeObject.title,
+                        post.title,
                         textScaleFactor: textScaleFactor,
                         style: Theme.of(context).textTheme.headline4,
                         overflow: TextOverflow.ellipsis,
@@ -377,7 +374,7 @@ class _NearbyCard extends StatelessWidget {
                           Padding(
                             padding: const EdgeInsets.only(left: 5.0),
                             child: Text(
-                              placeObject.location,
+                              post.location,
                               textScaleFactor: textScaleFactor,
                               style: Theme.of(context).textTheme.bodyText2,
                               overflow: TextOverflow.ellipsis,
@@ -398,7 +395,7 @@ class _NearbyCard extends StatelessWidget {
                               Padding(
                                 padding: const EdgeInsets.only(left: 5.0),
                                 child: Text(
-                                  placeObject.briefDescription!.ratings
+                                  post.briefDescription!.ratings
                                       .toStringAsFixed(1),
                                   textScaleFactor: textScaleFactor,
                                   style: Theme.of(context).textTheme.headline5,
@@ -417,8 +414,7 @@ class _NearbyCard extends StatelessWidget {
                               Padding(
                                 padding: const EdgeInsets.only(left: 5.0),
                                 child: Text(
-                                  placeObject.briefDescription!.views
-                                      .toString(),
+                                  post.briefDescription!.views.toString(),
                                   textScaleFactor: textScaleFactor,
                                   style: Theme.of(context).textTheme.subtitle2,
                                   overflow: TextOverflow.ellipsis,
@@ -434,9 +430,9 @@ class _NearbyCard extends StatelessWidget {
                     top: MediaQuery.of(context).size.height / 40.0,
                     right: 0.0,
                     child: Text(
-                      placeObject.price == 0
+                      post.price == 0
                           ? 'Free'
-                          : '\$${placeObject.price % 1 == 0 ? placeObject.price.toStringAsFixed(0) : placeObject.price.toStringAsFixed(1)}',
+                          : '\$${post.price % 1 == 0 ? post.price.toStringAsFixed(0) : post.price.toStringAsFixed(1)}',
                       textScaleFactor: textScaleFactor,
                       style: Theme.of(context).textTheme.subtitle1,
                       overflow: TextOverflow.ellipsis,

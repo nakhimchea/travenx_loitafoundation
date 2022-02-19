@@ -116,7 +116,7 @@ class _BuildIconMenuListState extends State<_BuildIconMenuList> {
       ),
       itemBuilder: (BuildContext context, int index) {
         return CardTileItem(
-          placeObject: postList.elementAt(index),
+          post: postList.elementAt(index),
           vPadding: widget.vPadding,
         );
       },

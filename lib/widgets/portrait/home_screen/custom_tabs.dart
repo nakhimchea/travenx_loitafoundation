@@ -87,7 +87,7 @@ class _CustomTabBarListState extends State<CustomTabBarList> {
         _tabBarList.add(
           CardTileItem(
             vPadding: kCardTileVPadding,
-            placeObject: post,
+            post: post,
           ),
         );
 

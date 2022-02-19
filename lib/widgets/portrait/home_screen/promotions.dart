@@ -11,6 +11,7 @@ import 'package:travenx_loitafoundation/config/configs.dart'
 import 'package:travenx_loitafoundation/helpers/post_translator.dart';
 import 'package:travenx_loitafoundation/icons/icons.dart';
 import 'package:travenx_loitafoundation/models/post_object_model.dart';
+import 'package:travenx_loitafoundation/screens/portrait/home_screen/post_detail.dart';
 import 'package:travenx_loitafoundation/services/firestore_service.dart';
 
 class Promotions extends StatefulWidget {
@@ -150,12 +151,10 @@ class _PromotionCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {},
-      //TODO: Navigate User to Detail Screen
-      //     () => Navigator.push(
-      //   context,
-      //   MaterialPageRoute(builder: (_) => PostDetail(post: promotion)),
-      // ),
+      onTap: () => Navigator.push(
+        context,
+        MaterialPageRoute(builder: (_) => PostDetail(post: post)),
+      ),
       child: Padding(
         padding: const EdgeInsets.only(right: 8.0),
         child: Stack(

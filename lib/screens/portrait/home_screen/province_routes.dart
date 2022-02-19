@@ -292,7 +292,7 @@ class _ProvinceListState extends State<_ProvinceList> {
                       ),
                     ),
                     CardTileItem(
-                      placeObject: postList.elementAt(index),
+                      post: postList.elementAt(index),
                       vPadding: widget.vPadding,
                     ),
                   ],
@@ -301,13 +301,13 @@ class _ProvinceListState extends State<_ProvinceList> {
                 return Padding(
                   padding: const EdgeInsets.only(bottom: 20),
                   child: CardTileItem(
-                    placeObject: postList.elementAt(index),
+                    post: postList.elementAt(index),
                     vPadding: widget.vPadding,
                   ),
                 );
               else
                 return CardTileItem(
-                  placeObject: postList.elementAt(index),
+                  post: postList.elementAt(index),
                   vPadding: widget.vPadding,
                 );
             },

@@ -50,6 +50,15 @@ class _PostDetailState extends State<PostDetail> {
               child: PostHeader(post: widget.post),
             ),
           ),
+          SliverPadding(
+            padding: EdgeInsets.symmetric(
+              horizontal: kHPadding,
+              vertical: kVPadding,
+            ),
+            sliver: SliverToBoxAdapter(
+              child: Text('Mean ka ey dae bong?'),
+            ),
+          ),
           // SliverPadding(
           //   padding: EdgeInsets.symmetric(
           //     horizontal: kHPadding,

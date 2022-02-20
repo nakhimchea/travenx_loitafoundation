@@ -96,36 +96,41 @@ class PostHeader extends StatelessWidget {
           ],
         ),
         const SizedBox(height: 5.0),
-        Row(
-          children: [
-            Icon(
-              CustomFilledIcons.left,
-              color: Palette.tertiary,
-              size: detailIconSize,
-            ),
-            Padding(
-              padding: const EdgeInsets.only(left: 5.0),
-              child: Text(
-                'បើកដំណើរការ',
-                textScaleFactor: textScaleFactor,
-                style: Theme.of(context)
-                    .textTheme
-                    .bodyText1!
-                    .copyWith(color: Palette.tertiary),
-                overflow: TextOverflow.ellipsis,
+        post.openHours == null
+            ? SizedBox.shrink()
+            : Row(
+                children: [
+                  Icon(
+                    CustomFilledIcons.left,
+                    color: Palette.tertiary,
+                    size: detailIconSize,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 5.0),
+                    child: Text(
+                      'បើកដំណើរការ',
+                      textScaleFactor: textScaleFactor,
+                      style: Theme.of(context)
+                          .textTheme
+                          .bodyText1!
+                          .copyWith(color: Palette.tertiary),
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 5.0),
+                    child: Text(
+                      post.openHours!,
+                      textScaleFactor: textScaleFactor,
+                      style: Theme.of(context)
+                          .textTheme
+                          .bodyText1!
+                          .copyWith(color: Theme.of(context).iconTheme.color),
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                  ),
+                ],
               ),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(left: 5.0),
-              child: Text(
-                post.openHours!,
-                textScaleFactor: textScaleFactor,
-                style: Theme.of(context).textTheme.headline4,
-                overflow: TextOverflow.ellipsis,
-              ),
-            ),
-          ],
-        ),
       ],
     );
   }

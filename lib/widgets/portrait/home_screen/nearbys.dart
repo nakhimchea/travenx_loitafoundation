@@ -8,7 +8,7 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:travenx_loitafoundation/config/configs.dart'
-    show kHPadding, textScaleFactor, descriptionIconSize, Palette;
+    show kHPadding, textScaleFactor, descriptionIconSize;
 import 'package:travenx_loitafoundation/helpers/city_name_translator.dart';
 import 'package:travenx_loitafoundation/helpers/post_translator.dart';
 import 'package:travenx_loitafoundation/icons/icons.dart';
@@ -392,7 +392,7 @@ class _NearbyCard extends StatelessWidget {
                             children: [
                               Icon(
                                 CustomFilledIcons.star,
-                                color: Palette.priceColor,
+                                color: Theme.of(context).highlightColor,
                                 size: descriptionIconSize,
                               ),
                               Padding(
@@ -410,7 +410,7 @@ class _NearbyCard extends StatelessWidget {
                             children: [
                               Icon(
                                 CustomOutlinedIcons.view,
-                                color: Palette.tertiary,
+                                color: Theme.of(context).hintColor,
                                 size: descriptionIconSize,
                               ),
                               Padding(

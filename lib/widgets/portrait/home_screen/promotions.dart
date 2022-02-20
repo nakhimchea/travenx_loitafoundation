@@ -266,7 +266,7 @@ class _PromotionCard extends StatelessWidget {
                           children: [
                             Icon(
                               CustomFilledIcons.star,
-                              color: Palette.priceColor,
+                              color: Theme.of(context).highlightColor,
                               size: descriptionIconSize,
                             ),
                             Padding(
@@ -289,7 +289,7 @@ class _PromotionCard extends StatelessWidget {
                           children: [
                             Icon(
                               CustomOutlinedIcons.view,
-                              color: Palette.tertiary,
+                              color: Theme.of(context).hintColor,
                               size: descriptionIconSize,
                             ),
                             Padding(

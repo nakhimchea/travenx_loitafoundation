@@ -4,7 +4,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:travenx_loitafoundation/config/configs.dart'
-    show kHPadding, textScaleFactor, descriptionIconSize, Palette;
+    show kHPadding, textScaleFactor, descriptionIconSize;
 import 'package:travenx_loitafoundation/icons/icons.dart';
 import 'package:travenx_loitafoundation/models/post_object_model.dart';
 import 'package:travenx_loitafoundation/screens/portrait/home_screen/post_detail.dart';
@@ -150,7 +150,7 @@ class CardTileItem extends StatelessWidget {
                           children: [
                             Icon(
                               CustomFilledIcons.star,
-                              color: Palette.priceColor,
+                              color: Theme.of(context).highlightColor,
                               size: descriptionIconSize,
                             ),
                             Padding(
@@ -170,7 +170,7 @@ class CardTileItem extends StatelessWidget {
                           children: [
                             Icon(
                               CustomOutlinedIcons.view,
-                              color: Palette.tertiary,
+                              color: Theme.of(context).hintColor,
                               size: descriptionIconSize,
                             ),
                             Padding(

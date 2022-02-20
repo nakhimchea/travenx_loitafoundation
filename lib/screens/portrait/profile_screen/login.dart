@@ -1,7 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import 'package:travenx_loitafoundation/config/palette.dart';
 import 'package:travenx_loitafoundation/config/variable.dart';
 import 'package:travenx_loitafoundation/services/authentication_service.dart';
 import 'package:travenx_loitafoundation/widgets/custom_loading.dart';
@@ -301,14 +300,14 @@ class GradientButton extends StatelessWidget {
               onPressed: onPressed,
               style: ButtonStyle(
                   overlayColor: MaterialStateProperty.all<Color>(isCodeSent
-                      ? Palette.priceColor.withOpacity(0.2)
+                      ? Theme.of(context).highlightColor.withOpacity(0.2)
                       : Colors.transparent)),
               child: Text(
                 title,
                 textScaleFactor: MediaQuery.of(context).size.width / 428,
                 style: Theme.of(context).textTheme.headline1!.copyWith(
                     color: isCodeSent
-                        ? Palette.priceColor
+                        ? Theme.of(context).highlightColor
                         : Theme.of(context).disabledColor),
               ),
             ),

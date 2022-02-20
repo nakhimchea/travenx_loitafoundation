@@ -21,6 +21,7 @@ class Travenx {
     primaryColor: Palette.primary,
     hintColor: Palette.tertiary,
     errorColor: Palette.quaternary,
+    highlightColor: Palette.priceColor,
     primaryIconTheme: IconThemeData(
       color: LightPalette.secondaryColor,
       opacity: 1.0,
@@ -120,6 +121,7 @@ class Travenx {
     primaryColor: Palette.primary,
     hintColor: Palette.tertiary,
     errorColor: Palette.quaternary,
+    highlightColor: Palette.priceColor,
     primaryIconTheme: IconThemeData(
       color: DarkPalette.secondaryColor,
       opacity: 1.0,

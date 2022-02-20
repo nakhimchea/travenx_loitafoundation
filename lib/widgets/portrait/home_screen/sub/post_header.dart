@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:travenx_loitafoundation/config/configs.dart'
-    show textScaleFactor, descriptionIconSize, detailIconSize, Palette;
+    show textScaleFactor, descriptionIconSize, detailIconSize;
 import 'package:travenx_loitafoundation/icons/icons.dart';
 
 class PostHeader extends StatelessWidget {
@@ -43,7 +43,7 @@ class PostHeader extends StatelessWidget {
               children: [
                 Icon(
                   CustomFilledIcons.star,
-                  color: Palette.priceColor,
+                  color: Theme.of(context).highlightColor,
                   size: descriptionIconSize,
                 ),
                 Padding(
@@ -62,7 +62,7 @@ class PostHeader extends StatelessWidget {
               children: [
                 Icon(
                   CustomOutlinedIcons.view,
-                  color: Palette.tertiary,
+                  color: Theme.of(context).hintColor,
                   size: descriptionIconSize,
                 ),
                 Padding(
@@ -116,7 +116,7 @@ class PostHeader extends StatelessWidget {
                 children: [
                   Icon(
                     CustomFilledIcons.left,
-                    color: Palette.tertiary,
+                    color: Theme.of(context).hintColor,
                     size: detailIconSize,
                   ),
                   Padding(
@@ -127,7 +127,7 @@ class PostHeader extends StatelessWidget {
                       style: Theme.of(context)
                           .textTheme
                           .bodyText1!
-                          .copyWith(color: Palette.tertiary),
+                          .copyWith(color: Theme.of(context).hintColor),
                       overflow: TextOverflow.ellipsis,
                     ),
                   ),

@@ -4,7 +4,6 @@ import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:provider/provider.dart';
-import 'package:travenx_loitafoundation/config/palette.dart';
 import 'package:travenx_loitafoundation/config/variable.dart';
 import 'package:travenx_loitafoundation/providers/responsive_widget.dart';
 import 'package:travenx_loitafoundation/providers/theme_provider.dart';
@@ -187,7 +186,7 @@ class _ResponsiveDeciderState extends State<ResponsiveDecider> {
                       ),
                     ),
                   ),
-                  Loading(color: Palette.priceColor),
+                  Loading(color: Theme.of(context).highlightColor),
                 ],
               ),
             ),

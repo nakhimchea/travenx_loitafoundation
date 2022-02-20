@@ -3,7 +3,6 @@ import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:travenx_loitafoundation/config/constant.dart';
-import 'package:travenx_loitafoundation/config/palette.dart';
 import 'package:travenx_loitafoundation/config/variable.dart';
 import 'package:travenx_loitafoundation/icons/icons.dart';
 import 'package:travenx_loitafoundation/widgets/portrait/profile_screen/profile_category.dart';
@@ -189,7 +188,7 @@ class _ProfileState extends State<Profile> {
                   ProfileCategory(
                     icon: Icon(
                       CustomFilledIcons.star,
-                      color: Palette.priceColor,
+                      color: Theme.of(context).highlightColor,
                       size: 20.0,
                     ),
                     title: 'វាយតម្លៃកម្មវិធី',

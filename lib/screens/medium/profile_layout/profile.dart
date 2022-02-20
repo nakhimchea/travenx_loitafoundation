@@ -2,7 +2,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import 'package:travenx_loitafoundation/config/palette.dart';
 import 'package:travenx_loitafoundation/icons/icons.dart';
 import 'package:travenx_loitafoundation/widgets/medium/home_screen/profile_category.dart';
 import 'package:travenx_loitafoundation/widgets/medium/home_screen/short_profile.dart';
@@ -220,7 +219,7 @@ class _ProfileState extends State<Profile> {
                     ProfileCategory(
                       icon: Icon(
                         CustomFilledIcons.star,
-                        color: Palette.priceColor,
+                        color: Theme.of(context).highlightColor,
                         size: constraints.maxWidth / 300 > 1.6
                             ? 22
                             : constraints.maxWidth / 23,

@@ -16,14 +16,14 @@ List<PostObject> postTranslator(
     String _country = '';
     String _positionCoordination = '';
     double _price = 0;
-    String? _openHours = '';
-    String? _announcement = '';
-    BriefDescription? _briefDescription =
-        BriefDescription(ratings: 5, distance: 500, temperature: 32, views: 0);
+    String? _openHours;
+    String? _announcement;
+    double _ratings = 5;
+    int _views = 0;
     List<Activity> _activities = [];
-    Details? _details = Details(textDetail: '', mapImageUrl: '');
+    Details? _details;
     List<String>? _policies = [];
-    String? _postId = '';
+    String? _postId;
 
     _clientId = post.get('clientId').toString();
     _clientDisplayName = post.get('clientDisplayName').toString();
@@ -47,13 +47,10 @@ List<PostObject> postTranslator(
       if (post.get('announcement') != null)
         _announcement = post.get('announcement').toString();
 
-      if (post.get('briefDescription') != null)
-        _briefDescription = BriefDescription(
-            ratings: double.parse(
-                post.get('briefDescription')['ratings'].toString()),
-            distance: post.get('briefDescription')['distance'],
-            temperature: post.get('briefDescription')['temperature'],
-            views: post.get('briefDescription')['views']);
+      if (post.get('ratings') != null)
+        _ratings = double.parse(post.get('ratings').toString());
+
+      if (post.get('views') != null) _views = post.get('views');
     } catch (e) {
       print('Data\'s unavailable: $e');
     }
@@ -108,7 +105,8 @@ List<PostObject> postTranslator(
         price: _price,
         openHours: _openHours,
         announcement: _announcement,
-        briefDescription: _briefDescription,
+        ratings: _ratings,
+        views: _views,
         activities: _activities,
         details: _details,
         policies: _policies,

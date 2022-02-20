@@ -156,8 +156,7 @@ class CardTileItem extends StatelessWidget {
                             Padding(
                               padding: const EdgeInsets.only(left: 5.0),
                               child: Text(
-                                post.briefDescription!.ratings
-                                    .toStringAsFixed(1),
+                                post.ratings.toStringAsFixed(1),
                                 textScaleFactor: textScaleFactor,
                                 style: Theme.of(context).textTheme.headline5,
                                 overflow: kIsWeb
@@ -177,7 +176,7 @@ class CardTileItem extends StatelessWidget {
                             Padding(
                               padding: const EdgeInsets.only(left: 5.0),
                               child: Text(
-                                post.briefDescription!.views.toString(),
+                                post.views.toString(),
                                 textScaleFactor: textScaleFactor,
                                 style: Theme.of(context).textTheme.subtitle2,
                                 overflow: kIsWeb

@@ -47,8 +47,7 @@ class BriefDescriptionCard extends StatelessWidget {
       ),
     ];
 
-    final int _distance = post.briefDescription!.distance;
-    final int _views = post.briefDescription!.views;
+    final int _distance = 500;
     return Container(
       height: MediaQuery.of(context).size.height / 8.12,
       decoration: BoxDecoration(
@@ -60,7 +59,7 @@ class BriefDescriptionCard extends StatelessWidget {
         children: [
           _CardRowItem(
             icon: _briefDescriptionIcons.elementAt(0).icon,
-            text: post.briefDescription!.ratings.toStringAsFixed(1),
+            text: post.ratings.toStringAsFixed(1),
             subText: _briefDescriptionIcons.elementAt(0).label,
           ),
           _CardRowItem(
@@ -72,14 +71,14 @@ class BriefDescriptionCard extends StatelessWidget {
           ),
           _CardRowItem(
             icon: _briefDescriptionIcons.elementAt(2).icon,
-            text: '${post.briefDescription!.temperature.toStringAsFixed(0)}c',
+            text: '32c',
             subText: _briefDescriptionIcons.elementAt(2).label,
           ),
           _CardRowItem(
             icon: _briefDescriptionIcons.elementAt(3).icon,
-            text: (_views > 1000)
-                ? '${(_views / 1000).toStringAsFixed(1)}k'
-                : _views.toStringAsFixed(0),
+            text: (post.views > 1000)
+                ? '${(post.views / 1000).toStringAsFixed(1)}k'
+                : post.views.toStringAsFixed(0),
             subText: _briefDescriptionIcons.elementAt(3).label,
           ),
         ],

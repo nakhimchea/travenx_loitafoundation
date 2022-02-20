@@ -27,10 +27,10 @@ class AnnouncementCard extends StatelessWidget {
               Text(
                 'សេចក្ដីជូនដំណឹង',
                 textScaleFactor: textScaleFactor,
-                style: Theme.of(context)
-                    .textTheme
-                    .subtitle1!
-                    .copyWith(fontFamily: 'Nokora'),
+                style: Theme.of(context).textTheme.subtitle1!.copyWith(
+                      fontSize: 16.0,
+                      fontFamily: 'Nokora',
+                    ),
               ),
               const SizedBox(height: 10.0),
               RichText(
@@ -42,9 +42,7 @@ class AnnouncementCard extends StatelessWidget {
                   text: '    ',
                   children: [
                     TextSpan(
-                      text:
-                          'សេចក្ដីជូនដំណឹង ស្ដីពីការប្រឡងជ្រើសរើសសិស្ស និសិ្សត និងមន្ដ្រីរាជការស៊ីវិល ឲ្យចូលបម្រើការងារ នៅក្នុងក្របខណ្ឌ ក្រសួងវប្បធម៌ និងវិចិត្រសិល្បៈសេចក្ដីជូនដំណឹង ស្ដីពីការប្រឡងជ្រើសរើសសិស្ស និសិ្សត និងមន្ដ្រីរាជការស៊ីវិល ឲ្យចូលបម្រើការងារ នៅក្នុងក្របខណ្ឌ ក្រសួងវប្បធម៌ និងវិចិត្រសិល្បៈសេចក្ដីជូនដំណឹង ស្ដីពីការប្រឡងជ្រើសរើសសិស្ស និសិ្សត និងមន្ដ្រីរាជការស៊ីវិល ឲ្យចូលបម្រើការងារ នៅក្នុងក្របខណ្ឌ ក្រសួងវប្បធម៌ និងវិចិត្រសិល្បៈ'
-                              .substring(0, 200),
+                      text: post.announcement!.substring(0, 200),
                       style: Theme.of(context)
                           .textTheme
                           .headline4!

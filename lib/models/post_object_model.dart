@@ -14,7 +14,8 @@ class PostObject {
   final double price;
   final String? openHours;
   final String? announcement;
-  final BriefDescription? briefDescription;
+  final double ratings;
+  final int views;
   final List<Activity> activities;
   final Details? details;
   final List<String>? policies;
@@ -33,25 +34,12 @@ class PostObject {
     required this.price,
     this.openHours,
     this.announcement,
-    this.briefDescription,
+    required this.ratings,
+    required this.views,
     required this.activities,
     this.details,
     this.policies,
     this.postId,
-  });
-}
-
-class BriefDescription {
-  final double ratings;
-  final int distance;
-  final int temperature;
-  final int views;
-
-  BriefDescription({
-    required this.ratings,
-    required this.distance,
-    required this.temperature,
-    required this.views,
   });
 }
 

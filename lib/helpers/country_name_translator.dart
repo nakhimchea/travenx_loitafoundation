@@ -2,7 +2,7 @@ String countryNameTranslator({
   required String enCountryName,
 }) {
   final Map<String, String> countryPairs = {
-    'Phnom Penh': 'ភ្នំពេញ',
+    'KH': 'កម្ពុជា',
   };
   return countryPairs[enCountryName] != null
       ? countryPairs[enCountryName].toString()

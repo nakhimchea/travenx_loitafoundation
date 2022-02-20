@@ -4,12 +4,11 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:travenx_loitafoundation/config/configs.dart'
     show kHPadding, textScaleFactor;
-import 'package:travenx_loitafoundation/models/post_object_model.dart';
 
 class PostCover extends StatefulWidget {
-  final PostObject post;
+  final List<String> imageUrls;
 
-  const PostCover({Key? key, required this.post}) : super(key: key);
+  const PostCover({Key? key, required this.imageUrls}) : super(key: key);
 
   @override
   _PostCoverState createState() => _PostCoverState();
@@ -34,22 +33,19 @@ class _PostCoverState extends State<PostCover> {
                   padding: const EdgeInsets.symmetric(horizontal: kHPadding),
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(15.0),
-                    child: widget.post.imageUrls
-                                .elementAt(index)
-                                .split('/')
-                                .first ==
+                    child: widget.imageUrls.elementAt(index).split('/').first ==
                             'assets'
                         ? Image(
                             width: MediaQuery.of(context).size.width -
                                 2 * kHPadding,
-                            image: AssetImage(
-                                widget.post.imageUrls.elementAt(index)),
+                            image:
+                                AssetImage(widget.imageUrls.elementAt(index)),
                             fit: BoxFit.cover,
                           )
                         : CachedNetworkImage(
                             width: MediaQuery.of(context).size.width -
                                 2 * kHPadding,
-                            imageUrl: widget.post.imageUrls.elementAt(index),
+                            imageUrl: widget.imageUrls.elementAt(index),
                             fit: BoxFit.cover,
                             placeholder: (context, _) => ImageFiltered(
                               imageFilter:
@@ -67,7 +63,7 @@ class _PostCoverState extends State<PostCover> {
                   ),
                 );
               },
-              itemCount: widget.post.imageUrls.length,
+              itemCount: widget.imageUrls.length,
             ),
             onNotification: (notification) {
               if (notification is ScrollUpdateNotification) {
@@ -101,7 +97,7 @@ class _PostCoverState extends State<PostCover> {
             ),
             child: Center(
               child: Text(
-                '${_imagesIndex + 1}/${widget.post.imageUrls.length}',
+                '${_imagesIndex + 1}/${widget.imageUrls.length}',
                 textScaleFactor: textScaleFactor,
                 textAlign: TextAlign.center,
                 style: Theme.of(context)

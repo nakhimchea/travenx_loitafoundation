@@ -115,7 +115,7 @@ class _NearbysState extends State<Nearbys> {
     final String _owmReverseGeocodingUrl =
         'http://api.openweathermap.org/geo/1.0/reverse?';
     final String _coordination =
-        await GeoLocatorService.getCurrentCoordination();
+        await GeolocatorService.getCurrentCoordination();
     if (_coordination != '') {
       final String _responseBody = await InternetService.httpGetResponseBody(
           url:
@@ -178,7 +178,7 @@ class _NearbysState extends State<Nearbys> {
                 : TextButton(
                     onPressed: () async {
                       try {
-                        if (await GeoLocatorService.openLocationSettings()) {
+                        if (await GeolocatorService.openLocationSettings()) {
                           if (await Geolocator.isLocationServiceEnabled()) {
                             setState(() {
                               _isRefreshable = true;

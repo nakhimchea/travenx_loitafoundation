@@ -1,6 +1,6 @@
 import 'package:geolocator/geolocator.dart';
 
-class GeoLocatorService {
+class GeolocatorService {
   static Future<String> getCurrentCoordination() async {
     String positionCoordination = '';
     try {

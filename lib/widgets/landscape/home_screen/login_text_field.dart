@@ -179,10 +179,7 @@ class _LoginTextFieldState extends State<LoginTextField> {
                                                   .textTheme
                                                   .subtitle1!
                                                   .copyWith(
-                                                      fontSize: 12.0,
-                                                      fontFamily: 'Nokora',
-                                                      fontWeight:
-                                                          FontWeight.w600)),
+                                                      fontFamily: 'Nokora')),
                                         ),
                                       ),
                                       Visibility(

@@ -165,8 +165,9 @@ class Travenx {
       ),
       subtitle1: TextStyle(
         color: Palette.priceColor,
-        fontSize: 16.0,
-        fontWeight: FontWeight.w700,
+        fontSize: 12.0,
+        fontFamily: 'Poppins',
+        fontWeight: FontWeight.w600,
       ),
       subtitle2: TextStyle(
         color: DarkPalette.secondaryColor,

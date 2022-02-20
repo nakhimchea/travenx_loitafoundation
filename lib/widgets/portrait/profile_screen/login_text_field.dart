@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:travenx_loitafoundation/config/configs.dart';
 import 'package:travenx_loitafoundation/services/authentication_service.dart';
 import 'package:travenx_loitafoundation/widgets/custom_loading.dart';
 
@@ -102,14 +103,10 @@ class _LoginTextFieldState extends State<LoginTextField> {
                               child: TextField(
                                 style: TextStyle(
                                   color: Theme.of(context).primaryColor,
+                                  fontSize: 16.0,
                                   fontFamily: 'Nokora',
                                 ),
-                                cursorHeight:
-                                    MediaQuery.of(context).size.width / 200 >
-                                            1.6
-                                        ? 16
-                                        : MediaQuery.of(context).size.width /
-                                            20,
+                                cursorHeight: 16.0,
                                 enabled: !widget.isCodeSent,
                                 autofocus: !widget.isCodeSent,
                                 onChanged: widget.onChangedCallback,
@@ -154,33 +151,27 @@ class _LoginTextFieldState extends State<LoginTextField> {
                                             ),
                                           ),
                                           child: Text('ផ្ញើលេខកូដ',
-                                              textScaleFactor:
-                                                  MediaQuery.of(context)
-                                                          .size
-                                                          .width /
-                                                      428,
+                                              textScaleFactor: textScaleFactor,
                                               style: Theme.of(context)
                                                   .textTheme
                                                   .subtitle1!
                                                   .copyWith(
-                                                      fontSize: 18.0,
-                                                      fontFamily: 'Nokora',
-                                                      fontWeight:
-                                                          FontWeight.w600)),
+                                                      fontSize: 16.0,
+                                                      fontFamily: 'Nokora')),
                                         ),
                                       ),
                                       Visibility(
                                         visible: !widget.isCodeSent,
                                         child: Text('$_countSeconds វិនាទី',
+                                            textScaleFactor: textScaleFactor,
                                             style: Theme.of(context)
                                                 .textTheme
                                                 .subtitle1!
                                                 .copyWith(
                                                     color: Theme.of(context)
                                                         .disabledColor,
-                                                    fontFamily: 'Nokora',
-                                                    fontWeight:
-                                                        FontWeight.w600)),
+                                                    fontSize: 16.0,
+                                                    fontFamily: 'Nokora')),
                                       ),
                                     ],
                                   )

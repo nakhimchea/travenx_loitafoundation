@@ -36,7 +36,7 @@ class SearchBar extends StatelessWidget {
         //         'state': 'កំពត',
         //         'country': 'កម្ពុជា',
         //         'positionCoordination':
-        //             await GeoLocatorService.getCurrentCoordination(),
+        //             await GeolocatorService.getCurrentCoordination(),
         //         'price': 0,
         //         'openHours': '9:00ព្រឹក-5:00ល្ងាច',
         //         'announcement':
@@ -79,7 +79,7 @@ class SearchBar extends StatelessWidget {
         //         'state': 'កំពត',
         //         'country': 'កម្ពុជា',
         //         'positionCoordination':
-        //             await GeoLocatorService.getCurrentCoordination(),
+        //             await GeolocatorService.getCurrentCoordination(),
         //         'price': 0,
         //         'openHours': '9:00ព្រឹក-5:00ល្ងាច',
         //         'announcement':
@@ -142,7 +142,7 @@ class SearchBar extends StatelessWidget {
         //               'state': 'កំពត',
         //               'country': 'កម្ពុជា',
         //               'positionCoordination':
-        //                   await GeoLocatorService.getCurrentCoordination(),
+        //                   await GeolocatorService.getCurrentCoordination(),
         //               'price': 0,
         //               'openHours': '9:00ព្រឹក-5:00ល្ងាច',
         //               'announcement':
@@ -204,7 +204,7 @@ class SearchBar extends StatelessWidget {
         //         'state': 'កំពត',
         //         'country': 'កម្ពុជា',
         //         'positionCoordination':
-        //             await GeoLocatorService.getCurrentCoordination(),
+        //             await GeolocatorService.getCurrentCoordination(),
         //         'price': 0,
         //         'openHours': '9:00ព្រឹក-5:00ល្ងាច',
         //         'announcement':
@@ -267,7 +267,7 @@ class SearchBar extends StatelessWidget {
         //         'state': 'កំពត',
         //         'country': 'កម្ពុជា',
         //         'positionCoordination':
-        //             await GeoLocatorService.getCurrentCoordination(),
+        //             await GeolocatorService.getCurrentCoordination(),
         //         'price': 0,
         //         'openHours': '9:00ព្រឹក-5:00ល្ងាច',
         //         'announcement':
@@ -309,7 +309,7 @@ class SearchBar extends StatelessWidget {
         //         'state': 'កំពត',
         //         'country': 'កម្ពុជា',
         //         'positionCoordination':
-        //             await GeoLocatorService.getCurrentCoordination(),
+        //             await GeolocatorService.getCurrentCoordination(),
         //         'price': 0,
         //         'openHours': '9:00ព្រឹក-5:00ល្ងាច',
         //         'announcement':

@@ -2,12 +2,26 @@ import 'package:flutter/material.dart';
 import 'package:travenx_loitafoundation/config/configs.dart'
     show textScaleFactor, descriptionIconSize, detailIconSize, Palette;
 import 'package:travenx_loitafoundation/icons/icons.dart';
-import 'package:travenx_loitafoundation/models/post_object_model.dart';
 
 class PostHeader extends StatelessWidget {
-  final PostObject post;
+  final String title;
+  final double ratings;
+  final int views;
+  final double price;
+  final String state;
+  final String country;
+  final String? openHours;
 
-  const PostHeader({Key? key, required this.post}) : super(key: key);
+  const PostHeader({
+    Key? key,
+    required this.title,
+    required this.ratings,
+    required this.views,
+    required this.price,
+    required this.state,
+    required this.country,
+    required this.openHours,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +32,7 @@ class PostHeader extends StatelessWidget {
           children: [
             Expanded(
               child: Text(
-                post.title,
+                this.title,
                 maxLines: 2,
                 textScaleFactor: textScaleFactor,
                 style: Theme.of(context).textTheme.headline1,
@@ -35,7 +49,7 @@ class PostHeader extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.only(left: 5.0),
                   child: Text(
-                    post.ratings.toStringAsFixed(1),
+                    this.ratings.toStringAsFixed(1),
                     textScaleFactor: textScaleFactor,
                     style: Theme.of(context).textTheme.headline5,
                     overflow: TextOverflow.ellipsis,
@@ -54,7 +68,7 @@ class PostHeader extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.only(left: 5.0),
                   child: Text(
-                    post.views.toString(),
+                    this.views.toString(),
                     textScaleFactor: textScaleFactor,
                     style: Theme.of(context).textTheme.subtitle2,
                     overflow: TextOverflow.ellipsis,
@@ -65,9 +79,9 @@ class PostHeader extends StatelessWidget {
           ],
         ),
         Text(
-          post.price == 0
+          this.price == 0
               ? 'Free'
-              : '\$${post.price % 1 == 0 ? post.price.toStringAsFixed(0) : post.price.toStringAsFixed(2)}',
+              : '\$${this.price % 1 == 0 ? this.price.toStringAsFixed(0) : this.price.toStringAsFixed(2)}',
           textScaleFactor: textScaleFactor,
           style:
               Theme.of(context).textTheme.subtitle1!.copyWith(fontSize: 22.0),
@@ -84,10 +98,10 @@ class PostHeader extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.only(left: 5.0),
               child: Text(
-                (post.state == 'ភ្នំពេញ' ? 'រាជធានី' : 'ខេត្ត') +
-                    post.state +
+                (this.state == 'ភ្នំពេញ' ? 'រាជធានី' : 'ខេត្ត') +
+                    this.state +
                     ' ' +
-                    post.country,
+                    this.country,
                 textScaleFactor: textScaleFactor,
                 style: Theme.of(context).textTheme.bodyText1,
                 overflow: TextOverflow.ellipsis,
@@ -96,7 +110,7 @@ class PostHeader extends StatelessWidget {
           ],
         ),
         const SizedBox(height: 5.0),
-        post.openHours == null
+        this.openHours == null
             ? SizedBox.shrink()
             : Row(
                 children: [
@@ -120,7 +134,7 @@ class PostHeader extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.only(left: 5.0),
                     child: Text(
-                      post.openHours!,
+                      this.openHours!,
                       textScaleFactor: textScaleFactor,
                       style: Theme.of(context)
                           .textTheme

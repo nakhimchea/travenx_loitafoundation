@@ -38,7 +38,7 @@ class _PostDetailState extends State<PostDetail> {
           // SliverPadding(
           //   padding: EdgeInsets.only(top: 44.0),
           //   sliver: SliverToBoxAdapter(
-          //     child: PostCover(post: widget.post),
+          //     child: PostCover(imageUrls: widget.post.imageUrls),
           //   ),
           // ),
           SliverPadding(
@@ -47,7 +47,15 @@ class _PostDetailState extends State<PostDetail> {
               vertical: 25.0,
             ),
             sliver: SliverToBoxAdapter(
-              child: PostHeader(post: widget.post),
+              child: PostHeader(
+                title: widget.post.title,
+                ratings: widget.post.ratings,
+                views: widget.post.views,
+                price: widget.post.price,
+                state: widget.post.state,
+                country: widget.post.country,
+                openHours: widget.post.openHours,
+              ),
             ),
           ),
           SliverPadding(

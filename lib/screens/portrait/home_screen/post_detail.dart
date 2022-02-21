@@ -61,12 +61,12 @@ class _PostDetailState extends State<PostDetail> {
       body: CustomScrollView(
         physics: BouncingScrollPhysics(),
         slivers: [
-          // SliverPadding(
-          //   padding: EdgeInsets.only(top: 44.0),
-          //   sliver: SliverToBoxAdapter(
-          //     child: PostCover(imageUrls: widget.post.imageUrls),
-          //   ),
-          // ),
+          SliverPadding(
+            padding: EdgeInsets.only(top: 44.0),
+            sliver: SliverToBoxAdapter(
+              child: PostCover(imageUrls: widget.post.imageUrls),
+            ),
+          ),
           SliverPadding(
             padding: EdgeInsets.only(
               left: kHPadding,
@@ -85,18 +85,18 @@ class _PostDetailState extends State<PostDetail> {
               ),
             ),
           ),
-          // _weatherForecast != null
-          //     ? SliverPadding(
-          //         padding: EdgeInsets.symmetric(horizontal: kHPadding),
-          //         sliver: SliverToBoxAdapter(
-          //           child: WeatherAlerts(
-          //             forecast: _weatherForecast!.forecast,
-          //             sunrise: _weatherForecast!.sunrise,
-          //             sunset: _weatherForecast!.sunset,
-          //           ),
-          //         ),
-          //       )
-          //     : SliverToBoxAdapter(child: SizedBox.shrink()),
+          _weatherForecast != null
+              ? SliverPadding(
+                  padding: EdgeInsets.symmetric(horizontal: kHPadding),
+                  sliver: SliverToBoxAdapter(
+                    child: WeatherAlerts(
+                      forecast: _weatherForecast!.forecast,
+                      sunrise: _weatherForecast!.sunrise,
+                      sunset: _weatherForecast!.sunset,
+                    ),
+                  ),
+                )
+              : SliverToBoxAdapter(child: SizedBox.shrink()),
           widget.post.announcement != null
               ? SliverPadding(
                   padding: EdgeInsets.symmetric(
@@ -110,20 +110,20 @@ class _PostDetailState extends State<PostDetail> {
                   ),
                 )
               : SliverToBoxAdapter(child: SizedBox.shrink()),
-          // SliverPadding(
-          //   padding: EdgeInsets.symmetric(
-          //     horizontal: kHPadding,
-          //     vertical: kVPadding,
-          //   ),
-          //   sliver: SliverToBoxAdapter(
-          //     child: BriefDescriptionCard(
-          //       post: widget.post,
-          //       temperature: _weatherForecast == null
-          //           ? 30
-          //           : _weatherForecast!.temperature,
-          //     ),
-          //   ),
-          // ),
+          SliverPadding(
+            padding: EdgeInsets.symmetric(
+              horizontal: kHPadding,
+              vertical: kVPadding,
+            ),
+            sliver: SliverToBoxAdapter(
+              child: BriefDescriptionCard(
+                post: widget.post,
+                temperature: _weatherForecast == null
+                    ? 30
+                    : _weatherForecast!.temperature,
+              ),
+            ),
+          ),
           widget.post.activities.isNotEmpty
               ? SliverPadding(
                   padding: const EdgeInsets.symmetric(vertical: kVPadding),
@@ -132,22 +132,22 @@ class _PostDetailState extends State<PostDetail> {
                   ),
                 )
               : SliverToBoxAdapter(child: SizedBox.shrink()),
-          // widget.post.details != null
-          //     ? SliverPadding(
-          //         padding: EdgeInsets.symmetric(
-          //           horizontal: kHPadding,
-          //           vertical: kVPadding,
-          //         ),
-          //         sliver: SliverToBoxAdapter(
-          //           child: PostDetails(details: widget.post.details!),
-          //         ),
-          //       )
-          //     : SliverToBoxAdapter(child: SizedBox.shrink()),
-          // widget.post.policies != null
-          //     ? SliverToBoxAdapter(
-          //         child: Policies(policies: widget.post.policies!),
-          //       )
-          //     : SliverToBoxAdapter(child: SizedBox.shrink()),
+          widget.post.details != null
+              ? SliverPadding(
+                  padding: EdgeInsets.symmetric(
+                    horizontal: kHPadding,
+                    vertical: kVPadding,
+                  ),
+                  sliver: SliverToBoxAdapter(
+                    child: PostDetails(details: widget.post.details!),
+                  ),
+                )
+              : SliverToBoxAdapter(child: SizedBox.shrink()),
+          widget.post.policies != null
+              ? SliverToBoxAdapter(
+                  child: Policies(policies: widget.post.policies!),
+                )
+              : SliverToBoxAdapter(child: SizedBox.shrink()),
           SliverToBoxAdapter(
             child: PostNearbys(
               cityName: widget.post.state,

@@ -1,7 +1,7 @@
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:travenx_loitafoundation/config/configs.dart'
-    show kHPadding, textScaleFactor, Palette;
+    show kHPadding, textScaleFactor;
 
 class AnnouncementCard extends StatelessWidget {
   final String announcement;
@@ -61,7 +61,7 @@ class AnnouncementCard extends StatelessWidget {
                               style: Theme.of(context)
                                   .textTheme
                                   .headline4!
-                                  .copyWith(color: Palette.tertiary),
+                                  .copyWith(color: Theme.of(context).hintColor),
                             ),
                           ],
                         ),

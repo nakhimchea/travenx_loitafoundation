@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:readmore/readmore.dart';
 import 'package:travenx_loitafoundation/config/configs.dart'
-    show kHPadding, textScaleFactor, Palette;
+    show kHPadding, textScaleFactor;
 import 'package:travenx_loitafoundation/models/post_object_model.dart';
 
 class PostDetails extends StatelessWidget {
@@ -32,11 +32,11 @@ class PostDetails extends StatelessWidget {
           moreStyle: Theme.of(context)
               .textTheme
               .headline4!
-              .copyWith(color: Palette.tertiary),
+              .copyWith(color: Theme.of(context).hintColor),
           lessStyle: Theme.of(context)
               .textTheme
               .headline4!
-              .copyWith(color: Palette.tertiary),
+              .copyWith(color: Theme.of(context).hintColor),
         ),
         const SizedBox(height: 20.0),
         ClipRRect(
@@ -63,7 +63,7 @@ class PostDetails extends StatelessWidget {
               style: Theme.of(context)
                   .textTheme
                   .headline4!
-                  .copyWith(color: Palette.tertiary),
+                  .copyWith(color: Theme.of(context).hintColor),
             ),
           ),
         ),

@@ -1,7 +1,8 @@
+import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import 'package:travenx_loitafoundation/config/constant.dart'
-    show kHPadding, kVPadding;
+import 'package:travenx_loitafoundation/config/configs.dart'
+    show kHPadding, kVPadding, textScaleFactor;
 import 'package:travenx_loitafoundation/helpers/weather_forecast_extractor.dart';
 import 'package:travenx_loitafoundation/icons/icons.dart';
 import 'package:travenx_loitafoundation/models/home_screen_models.dart';
@@ -57,6 +58,78 @@ class _PostDetailState extends State<PostDetail> {
             iconSize: 24.0,
           ),
         ],
+      ),
+      bottomNavigationBar: Container(
+        height: MediaQuery.of(context).size.height / 10,
+        padding: const EdgeInsets.only(
+          left: kHPadding,
+          right: kHPadding,
+          top: kVPadding,
+          bottom: kVPadding + 16.0,
+        ),
+        color: Theme.of(context).bottomAppBarColor,
+        child: Row(
+          children: [
+            GestureDetector(
+              onTap: () => print('User tapped message...'),
+              child: CircleAvatar(
+                radius: MediaQuery.of(context).size.height / 20 -
+                    kVPadding -
+                    16.0 / 2,
+                backgroundColor: Theme.of(context).hintColor,
+                child: CircleAvatar(
+                  radius:
+                      MediaQuery.of(context).size.height / 20 - kVPadding - 10,
+                  backgroundColor: Theme.of(context).bottomAppBarColor,
+                  child: Icon(
+                    CustomFilledIcons.message,
+                    size: 24.0,
+                    color: Theme.of(context).hintColor,
+                  ),
+                ),
+              ),
+            ),
+            const SizedBox(width: kVPadding),
+            CircleAvatar(
+              radius: MediaQuery.of(context).size.height / 20 -
+                  kVPadding -
+                  16.0 / 2,
+              backgroundColor: Theme.of(context).primaryColor,
+              child: CircleAvatar(
+                radius:
+                    MediaQuery.of(context).size.height / 20 - kVPadding - 10,
+                backgroundColor: Theme.of(context).bottomAppBarColor,
+                child: Icon(
+                  Icons.call_rounded,
+                  size: 24.0,
+                  color: Theme.of(context).primaryColor,
+                ),
+              ),
+            ),
+            const SizedBox(width: kVPadding),
+            Expanded(
+              child: Container(
+                height: MediaQuery.of(context).size.height / 10 -
+                    2 * kVPadding -
+                    16.0,
+                alignment: Alignment.center,
+                decoration: BoxDecoration(
+                  color: Theme.of(context).primaryColor,
+                  borderRadius: BorderRadius.circular(15.0),
+                ),
+                child: Text(
+                  'ផលិតផល និង សេវាកម្ម',
+                  textScaleFactor: textScaleFactor,
+                  style: Theme.of(context)
+                      .textTheme
+                      .headline3!
+                      .copyWith(color: Colors.white),
+                  overflow: kIsWeb ? TextOverflow.clip : TextOverflow.ellipsis,
+                ),
+              ),
+            ),
+          ],
+        ),
       ),
       body: CustomScrollView(
         physics: BouncingScrollPhysics(),
@@ -154,7 +227,6 @@ class _PostDetailState extends State<PostDetail> {
               currentPostId: widget.post.postId,
             ),
           ),
-          SliverPadding(padding: EdgeInsets.only(bottom: 20.0)),
         ],
       ),
     );

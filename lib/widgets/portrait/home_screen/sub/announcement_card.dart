@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:travenx_loitafoundation/config/configs.dart'
     show kHPadding, textScaleFactor, Palette;
@@ -37,7 +38,7 @@ class AnnouncementCard extends StatelessWidget {
                 textAlign: TextAlign.justify,
                 maxLines: 6,
                 textScaleFactor: textScaleFactor,
-                overflow: TextOverflow.ellipsis,
+                overflow: kIsWeb ? TextOverflow.clip : TextOverflow.ellipsis,
                 text: TextSpan(
                   text: '    ',
                   children: [
@@ -49,14 +50,14 @@ class AnnouncementCard extends StatelessWidget {
                           .copyWith(fontWeight: FontWeight.w400),
                       children: [
                         TextSpan(
-                          text: ' ∙∙∙',
+                          text: ' ...',
                           style: Theme.of(context)
                               .textTheme
                               .headline4!
                               .copyWith(fontWeight: FontWeight.w400),
                           children: [
                             TextSpan(
-                              text: '   អានបន្ថែម',
+                              text: ' អានបន្ថែម',
                               style: Theme.of(context)
                                   .textTheme
                                   .headline4!

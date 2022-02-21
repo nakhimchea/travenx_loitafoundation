@@ -362,7 +362,8 @@ class _NearbyCard extends StatelessWidget {
                         post.title,
                         textScaleFactor: textScaleFactor,
                         style: Theme.of(context).textTheme.headline4,
-                        overflow: TextOverflow.ellipsis,
+                        overflow:
+                            kIsWeb ? TextOverflow.clip : TextOverflow.ellipsis,
                       ),
                       Row(
                         children: [
@@ -380,7 +381,9 @@ class _NearbyCard extends StatelessWidget {
                                   post.country,
                               textScaleFactor: textScaleFactor,
                               style: Theme.of(context).textTheme.bodyText2,
-                              overflow: TextOverflow.ellipsis,
+                              overflow: kIsWeb
+                                  ? TextOverflow.clip
+                                  : TextOverflow.ellipsis,
                             ),
                           ),
                         ],
@@ -401,7 +404,9 @@ class _NearbyCard extends StatelessWidget {
                                   post.ratings.toStringAsFixed(1),
                                   textScaleFactor: textScaleFactor,
                                   style: Theme.of(context).textTheme.headline5,
-                                  overflow: TextOverflow.ellipsis,
+                                  overflow: kIsWeb
+                                      ? TextOverflow.clip
+                                      : TextOverflow.ellipsis,
                                 ),
                               ),
                             ],
@@ -419,7 +424,9 @@ class _NearbyCard extends StatelessWidget {
                                   post.views.toString(),
                                   textScaleFactor: textScaleFactor,
                                   style: Theme.of(context).textTheme.subtitle2,
-                                  overflow: TextOverflow.ellipsis,
+                                  overflow: kIsWeb
+                                      ? TextOverflow.clip
+                                      : TextOverflow.ellipsis,
                                 ),
                               ),
                             ],
@@ -437,7 +444,8 @@ class _NearbyCard extends StatelessWidget {
                           : '\$${post.price % 1 == 0 ? post.price.toStringAsFixed(0) : post.price.toStringAsFixed(1)}',
                       textScaleFactor: textScaleFactor,
                       style: Theme.of(context).textTheme.subtitle1,
-                      overflow: TextOverflow.ellipsis,
+                      overflow:
+                          kIsWeb ? TextOverflow.clip : TextOverflow.ellipsis,
                     ),
                   ),
                 ],

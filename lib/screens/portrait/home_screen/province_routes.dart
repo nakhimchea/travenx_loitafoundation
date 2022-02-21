@@ -167,7 +167,8 @@ class _ProvincesItem extends StatelessWidget {
                       modelProvince.label,
                       textScaleFactor: textScaleFactor,
                       style: Theme.of(context).textTheme.headline2,
-                      overflow: TextOverflow.ellipsis,
+                      overflow:
+                          kIsWeb ? TextOverflow.clip : TextOverflow.ellipsis,
                     ),
                     SizedBox(height: MediaQuery.of(context).size.height / 60),
                     Row(

@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:travenx_loitafoundation/config/configs.dart'
     show textScaleFactor, descriptionIconSize, detailIconSize;
@@ -36,7 +37,7 @@ class PostHeader extends StatelessWidget {
                 maxLines: 2,
                 textScaleFactor: textScaleFactor,
                 style: Theme.of(context).textTheme.headline1,
-                overflow: TextOverflow.ellipsis,
+                overflow: kIsWeb ? TextOverflow.clip : TextOverflow.ellipsis,
               ),
             ),
             Row(
@@ -52,7 +53,8 @@ class PostHeader extends StatelessWidget {
                     this.ratings.toStringAsFixed(1),
                     textScaleFactor: textScaleFactor,
                     style: Theme.of(context).textTheme.headline5,
-                    overflow: TextOverflow.ellipsis,
+                    overflow:
+                        kIsWeb ? TextOverflow.clip : TextOverflow.ellipsis,
                   ),
                 ),
               ],
@@ -71,7 +73,8 @@ class PostHeader extends StatelessWidget {
                     this.views.toString(),
                     textScaleFactor: textScaleFactor,
                     style: Theme.of(context).textTheme.subtitle2,
-                    overflow: TextOverflow.ellipsis,
+                    overflow:
+                        kIsWeb ? TextOverflow.clip : TextOverflow.ellipsis,
                   ),
                 ),
               ],
@@ -85,7 +88,7 @@ class PostHeader extends StatelessWidget {
           textScaleFactor: textScaleFactor,
           style:
               Theme.of(context).textTheme.subtitle1!.copyWith(fontSize: 22.0),
-          overflow: TextOverflow.ellipsis,
+          overflow: kIsWeb ? TextOverflow.clip : TextOverflow.ellipsis,
         ),
         const SizedBox(height: 10.0),
         Row(
@@ -104,7 +107,7 @@ class PostHeader extends StatelessWidget {
                     this.country,
                 textScaleFactor: textScaleFactor,
                 style: Theme.of(context).textTheme.bodyText1,
-                overflow: TextOverflow.ellipsis,
+                overflow: kIsWeb ? TextOverflow.clip : TextOverflow.ellipsis,
               ),
             ),
           ],
@@ -128,7 +131,8 @@ class PostHeader extends StatelessWidget {
                           .textTheme
                           .bodyText1!
                           .copyWith(color: Theme.of(context).hintColor),
-                      overflow: TextOverflow.ellipsis,
+                      overflow:
+                          kIsWeb ? TextOverflow.clip : TextOverflow.ellipsis,
                     ),
                   ),
                   Padding(
@@ -140,7 +144,8 @@ class PostHeader extends StatelessWidget {
                           .textTheme
                           .bodyText1!
                           .copyWith(color: Theme.of(context).iconTheme.color),
-                      overflow: TextOverflow.ellipsis,
+                      overflow:
+                          kIsWeb ? TextOverflow.clip : TextOverflow.ellipsis,
                     ),
                   ),
                 ],

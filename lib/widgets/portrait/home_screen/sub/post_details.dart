@@ -5,9 +5,9 @@ import 'package:travenx_loitafoundation/config/configs.dart'
 import 'package:travenx_loitafoundation/models/post_object_model.dart';
 
 class PostDetails extends StatelessWidget {
-  final PostObject post;
+  final Details details;
 
-  const PostDetails({Key? key, required this.post}) : super(key: key);
+  const PostDetails({Key? key, required this.details}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +21,7 @@ class PostDetails extends StatelessWidget {
         ),
         const SizedBox(height: 10.0),
         ReadMoreText(
-          post.details!.textDetail,
+          this.details.textDetail,
           textScaleFactor: textScaleFactor,
           trimLines: 5,
           textAlign: TextAlign.justify,
@@ -52,13 +52,19 @@ class PostDetails extends StatelessWidget {
         ),
         const SizedBox(height: 10.0),
         Center(
-          child: Text(
-            'ចូលទៅកាន់ Google Map',
-            textScaleFactor: textScaleFactor,
-            style: Theme.of(context)
-                .textTheme
-                .headline4!
-                .copyWith(color: Palette.tertiary),
+          child: InkWell(
+            onTap: () {},
+            hoverColor: Colors.transparent,
+            splashColor: Colors.transparent,
+            highlightColor: Colors.transparent,
+            child: Text(
+              'ចូលទៅកាន់ Google Map',
+              textScaleFactor: textScaleFactor,
+              style: Theme.of(context)
+                  .textTheme
+                  .headline4!
+                  .copyWith(color: Palette.tertiary),
+            ),
           ),
         ),
       ],

@@ -2,7 +2,7 @@ import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:travenx_loitafoundation/config/configs.dart'
-    show kHPadding, kVPadding, textScaleFactor;
+    show kHPadding, kVPadding, textScaleFactor, selectedIndex;
 import 'package:travenx_loitafoundation/helpers/weather_forecast_extractor.dart';
 import 'package:travenx_loitafoundation/icons/icons.dart';
 import 'package:travenx_loitafoundation/models/home_screen_models.dart';
@@ -71,7 +71,11 @@ class _PostDetailState extends State<PostDetail> {
         child: Row(
           children: [
             GestureDetector(
-              onTap: () => print('User tapped message...'),
+              onTap: () {
+                selectedIndex = 1;
+                Navigator.popUntil(context, (route) => route.isFirst);
+                //TODO: Add another push to direct client chat
+              },
               child: CircleAvatar(
                 radius: MediaQuery.of(context).size.height / 20 -
                     kVPadding -

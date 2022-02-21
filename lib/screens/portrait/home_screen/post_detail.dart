@@ -124,6 +124,14 @@ class _PostDetailState extends State<PostDetail> {
           //     ),
           //   ),
           // ),
+          widget.post.activities.isNotEmpty
+              ? SliverPadding(
+                  padding: const EdgeInsets.symmetric(vertical: kVPadding),
+                  sliver: SliverToBoxAdapter(
+                    child: Activities(activities: widget.post.activities),
+                  ),
+                )
+              : SliverToBoxAdapter(child: SizedBox.shrink()),
           // widget.post.details != null
           //     ? SliverPadding(
           //         padding: EdgeInsets.symmetric(

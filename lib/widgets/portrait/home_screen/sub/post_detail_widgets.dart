@@ -1,3 +1,4 @@
+export 'activities.dart';
 export 'announcement_card.dart';
 export 'brief_description_card.dart';
 export 'policies.dart';

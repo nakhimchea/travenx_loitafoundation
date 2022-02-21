@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:travenx_loitafoundation/config/constant.dart'
     show kHPadding, kVPadding;
+import 'package:travenx_loitafoundation/helpers/weather_forecast_extractor.dart';
 import 'package:travenx_loitafoundation/icons/icons.dart';
 import 'package:travenx_loitafoundation/models/home_screen_models.dart';
+import 'package:travenx_loitafoundation/models/weather_forecast_model.dart';
+import 'package:travenx_loitafoundation/services/internet_service.dart';
 import 'package:travenx_loitafoundation/widgets/portrait/home_screen/sub/custom_floating_action_button.dart';
 import 'package:travenx_loitafoundation/widgets/portrait/home_screen/sub/post_detail_widgets.dart';
 
@@ -15,6 +19,28 @@ class PostDetail extends StatefulWidget {
 }
 
 class _PostDetailState extends State<PostDetail> {
+  ModelWeatherForecast? _weatherForecast;
+
+  void getWeatherForecast() async {
+    final FlutterSecureStorage _secureStorage = FlutterSecureStorage(
+        iOptions:
+            IOSOptions(accessibility: IOSAccessibility.unlocked_this_device),
+        aOptions: AndroidOptions(encryptedSharedPreferences: true));
+    final String _owmWeatherForecastUrl =
+        'http://api.openweathermap.org/data/2.5/forecast?';
+    final String _responseBody = await InternetService.httpGetResponseBody(
+        url:
+            '$_owmWeatherForecastUrl${widget.post.positionCoordination}&appid=${await _secureStorage.read(key: 'owmKey')}&units=metric');
+    setState(
+        () => _weatherForecast = weatherForecastExtractor(data: _responseBody));
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    getWeatherForecast();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -42,9 +68,10 @@ class _PostDetailState extends State<PostDetail> {
           //   ),
           // ),
           SliverPadding(
-            padding: EdgeInsets.symmetric(
-              horizontal: kHPadding,
-              vertical: 25.0,
+            padding: EdgeInsets.only(
+              left: kHPadding,
+              right: kHPadding,
+              top: 25.0,
             ),
             sliver: SliverToBoxAdapter(
               child: PostHeader(
@@ -58,15 +85,18 @@ class _PostDetailState extends State<PostDetail> {
               ),
             ),
           ),
-          SliverPadding(
-            padding: EdgeInsets.symmetric(
-              horizontal: kHPadding,
-              vertical: kVPadding,
-            ),
-            sliver: SliverToBoxAdapter(
-              child: Text('Mean ka ey dae bong?'),
-            ),
-          ),
+          _weatherForecast == null
+              ? SliverToBoxAdapter(child: SizedBox.shrink())
+              : SliverPadding(
+                  padding: EdgeInsets.symmetric(horizontal: kHPadding),
+                  sliver: SliverToBoxAdapter(
+                    child: WeatherAlerts(
+                      forecast: _weatherForecast!.forecast,
+                      sunrise: _weatherForecast!.sunrise,
+                      sunset: _weatherForecast!.sunset,
+                    ),
+                  ),
+                ),
           // SliverPadding(
           //   padding: EdgeInsets.symmetric(
           //     horizontal: kHPadding,
@@ -76,15 +106,15 @@ class _PostDetailState extends State<PostDetail> {
           //     child: AnnouncementCard(post: widget.post),
           //   ),
           // ),
-          // SliverPadding(
-          //   padding: EdgeInsets.symmetric(
-          //     horizontal: kHPadding,
-          //     vertical: kVPadding,
-          //   ),
-          //   sliver: SliverToBoxAdapter(
-          //     child: BriefDescriptionCard(post: widget.post),
-          //   ),
-          // ),
+          SliverPadding(
+            padding: EdgeInsets.symmetric(
+              horizontal: kHPadding,
+              vertical: kVPadding,
+            ),
+            sliver: SliverToBoxAdapter(
+              child: BriefDescriptionCard(post: widget.post),
+            ),
+          ),
           // SliverPadding(
           //   padding: EdgeInsets.symmetric(
           //     horizontal: kHPadding,

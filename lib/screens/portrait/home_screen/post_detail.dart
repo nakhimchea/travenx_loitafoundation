@@ -97,22 +97,27 @@ class _PostDetailState extends State<PostDetail> {
                     ),
                   ),
                 ),
-          // SliverPadding(
-          //   padding: EdgeInsets.symmetric(
-          //     horizontal: kHPadding,
-          //     vertical: kVPadding,
-          //   ),
-          //   sliver: SliverToBoxAdapter(
-          //     child: AnnouncementCard(post: widget.post),
-          //   ),
-          // ),
           SliverPadding(
             padding: EdgeInsets.symmetric(
               horizontal: kHPadding,
               vertical: kVPadding,
             ),
             sliver: SliverToBoxAdapter(
-              child: BriefDescriptionCard(post: widget.post),
+              child: AnnouncementCard(post: widget.post),
+            ),
+          ),
+          SliverPadding(
+            padding: EdgeInsets.symmetric(
+              horizontal: kHPadding,
+              vertical: kVPadding,
+            ),
+            sliver: SliverToBoxAdapter(
+              child: BriefDescriptionCard(
+                post: widget.post,
+                temperature: _weatherForecast == null
+                    ? 30
+                    : _weatherForecast!.temperature,
+              ),
             ),
           ),
           // SliverPadding(

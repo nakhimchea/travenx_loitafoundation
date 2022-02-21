@@ -7,8 +7,13 @@ import 'package:travenx_loitafoundation/models/post_object_model.dart';
 
 class BriefDescriptionCard extends StatelessWidget {
   final PostObject post;
+  final int temperature;
 
-  const BriefDescriptionCard({Key? key, required this.post}) : super(key: key);
+  const BriefDescriptionCard({
+    Key? key,
+    required this.post,
+    required this.temperature,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -71,7 +76,7 @@ class BriefDescriptionCard extends StatelessWidget {
           ),
           _CardRowItem(
             icon: _briefDescriptionIcons.elementAt(2).icon,
-            text: '32c',
+            text: '${this.temperature.toString()}c',
             subText: _briefDescriptionIcons.elementAt(2).label,
           ),
           _CardRowItem(

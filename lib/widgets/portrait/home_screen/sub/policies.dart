@@ -1,16 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:travenx_loitafoundation/config/configs.dart'
     show kHPadding, kVPadding, textScaleFactor;
-import 'package:travenx_loitafoundation/models/post_object_model.dart';
 
 class Policies extends StatelessWidget {
-  final PostObject post;
+  final List<String> policies;
 
-  const Policies({Key? key, required this.post}) : super(key: key);
+  const Policies({Key? key, required this.policies}) : super(key: key);
 
   List<Widget> _buildPolicies(BuildContext context) {
     List<Widget> policyList = [];
-    for (String policy in post.policies!)
+    for (String policy in this.policies)
       policyList.add(
         Text(
           '• ' + policy,
@@ -25,25 +24,23 @@ class Policies extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return post.policies != null
-        ? Padding(
-            padding: EdgeInsets.symmetric(
-              horizontal: kHPadding,
-              vertical: kVPadding,
-            ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                Text(
-                  'គោលការណ៍',
-                  textScaleFactor: textScaleFactor,
-                  style: Theme.of(context).textTheme.headline3,
-                ),
-                const SizedBox(height: 10.0),
-                Column(children: _buildPolicies(context)),
-              ],
-            ),
-          )
-        : const SizedBox.shrink();
+    return Padding(
+      padding: EdgeInsets.symmetric(
+        horizontal: kHPadding,
+        vertical: kVPadding,
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          Text(
+            'គោលការណ៍',
+            textScaleFactor: textScaleFactor,
+            style: Theme.of(context).textTheme.headline3,
+          ),
+          const SizedBox(height: 10.0),
+          Column(children: _buildPolicies(context)),
+        ],
+      ),
+    );
   }
 }

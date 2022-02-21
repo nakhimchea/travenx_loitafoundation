@@ -50,22 +50,6 @@ class CustomNavBar extends StatelessWidget {
           .values
           .toList(),
       onTap: onTap,
-      indicator: BoxDecoration(
-        border: Border(
-          top: BorderSide(
-            width: 3,
-            color: Theme.of(context).primaryColor,
-          ),
-          left: BorderSide(
-            width: 1.5,
-            color: Theme.of(context).bottomAppBarColor,
-          ),
-          right: BorderSide(
-            width: 1.5,
-            color: Theme.of(context).bottomAppBarColor,
-          ),
-        ),
-      ),
     );
   }
 }

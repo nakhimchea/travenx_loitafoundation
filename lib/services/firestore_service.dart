@@ -212,7 +212,7 @@ class FirestoreService {
               .doc('provinces')
               .collection(province)
               .startAfterDocument(lastDoc)
-              .limit(2)
+              .limit(3)
               .get()
               .catchError((e) {
               print('Cannot get icon menu data: ${e.toString()}');
@@ -221,7 +221,7 @@ class FirestoreService {
               .collection('home_screen')
               .doc('provinces')
               .collection(province)
-              .limit(2)
+              .limit(3)
               .get()
               .catchError((e) {
               print('Cannot get icon menu data: ${e.toString()}');

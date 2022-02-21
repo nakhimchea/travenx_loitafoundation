@@ -5,4 +5,5 @@ export 'policies.dart';
 export 'post_cover.dart';
 export 'post_details.dart';
 export 'post_header.dart';
+export 'post_nearbys.dart';
 export 'weather_alerts.dart';

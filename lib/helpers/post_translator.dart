@@ -23,7 +23,7 @@ List<PostObject> postTranslator(
     List<Activity> _activities = [];
     Details? _details;
     List<String>? _policies = [];
-    String? _postId;
+    String _postId = '';
 
     _clientId = post.get('clientId').toString();
     _clientDisplayName = post.get('clientDisplayName').toString();
@@ -87,11 +87,11 @@ List<PostObject> postTranslator(
       if (post.get('policies') != null)
         for (var policy in post.get('policies'))
           _policies.add(policy.toString());
-
-      if (post.get('postId') != null) _postId = post.get('postId').toString();
     } catch (e) {
       print('Data\'s unavailable: $e');
     }
+    _postId = post.get('postId').toString();
+
     _postObjects.add(PostObject(
         clientId: _clientId,
         clientDisplayName: _clientDisplayName,

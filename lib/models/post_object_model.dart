@@ -19,7 +19,7 @@ class PostObject {
   final List<Activity> activities;
   final Details? details;
   final List<String>? policies;
-  final String? postId;
+  final String postId;
 
   PostObject({
     required this.clientId,
@@ -39,7 +39,7 @@ class PostObject {
     required this.activities,
     this.details,
     this.policies,
-    this.postId,
+    required this.postId,
   });
 }
 

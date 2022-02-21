@@ -148,6 +148,12 @@ class _PostDetailState extends State<PostDetail> {
           //         child: Policies(policies: widget.post.policies!),
           //       )
           //     : SliverToBoxAdapter(child: SizedBox.shrink()),
+          SliverToBoxAdapter(
+            child: PostNearbys(
+              cityName: widget.post.state,
+              currentPostId: widget.post.postId,
+            ),
+          ),
           SliverPadding(padding: EdgeInsets.only(bottom: 20.0)),
         ],
       ),

@@ -85,50 +85,54 @@ class _PostDetailState extends State<PostDetail> {
               ),
             ),
           ),
-          _weatherForecast == null
-              ? SliverToBoxAdapter(child: SizedBox.shrink())
-              : SliverPadding(
-                  padding: EdgeInsets.symmetric(horizontal: kHPadding),
+          // _weatherForecast != null
+          //     ? SliverPadding(
+          //         padding: EdgeInsets.symmetric(horizontal: kHPadding),
+          //         sliver: SliverToBoxAdapter(
+          //           child: WeatherAlerts(
+          //             forecast: _weatherForecast!.forecast,
+          //             sunrise: _weatherForecast!.sunrise,
+          //             sunset: _weatherForecast!.sunset,
+          //           ),
+          //         ),
+          //       )
+          //     : SliverToBoxAdapter(child: SizedBox.shrink()),
+          widget.post.announcement != null
+              ? SliverPadding(
+                  padding: EdgeInsets.symmetric(
+                    horizontal: kHPadding,
+                    vertical: kVPadding,
+                  ),
                   sliver: SliverToBoxAdapter(
-                    child: WeatherAlerts(
-                      forecast: _weatherForecast!.forecast,
-                      sunrise: _weatherForecast!.sunrise,
-                      sunset: _weatherForecast!.sunset,
+                    child: AnnouncementCard(
+                      announcement: widget.post.announcement!,
                     ),
                   ),
-                ),
-          SliverPadding(
-            padding: EdgeInsets.symmetric(
-              horizontal: kHPadding,
-              vertical: kVPadding,
-            ),
-            sliver: SliverToBoxAdapter(
-              child: AnnouncementCard(post: widget.post),
-            ),
-          ),
-          SliverPadding(
-            padding: EdgeInsets.symmetric(
-              horizontal: kHPadding,
-              vertical: kVPadding,
-            ),
-            sliver: SliverToBoxAdapter(
-              child: BriefDescriptionCard(
-                post: widget.post,
-                temperature: _weatherForecast == null
-                    ? 30
-                    : _weatherForecast!.temperature,
-              ),
-            ),
-          ),
+                )
+              : SliverToBoxAdapter(child: SizedBox.shrink()),
           // SliverPadding(
           //   padding: EdgeInsets.symmetric(
           //     horizontal: kHPadding,
           //     vertical: kVPadding,
           //   ),
           //   sliver: SliverToBoxAdapter(
-          //     child: PostDetails(post: widget.post),
+          //     child: BriefDescriptionCard(
+          //       post: widget.post,
+          //       temperature: _weatherForecast == null
+          //           ? 30
+          //           : _weatherForecast!.temperature,
+          //     ),
           //   ),
           // ),
+          SliverPadding(
+            padding: EdgeInsets.symmetric(
+              horizontal: kHPadding,
+              vertical: kVPadding,
+            ),
+            sliver: SliverToBoxAdapter(
+              child: PostDetails(post: widget.post),
+            ),
+          ),
           // SliverToBoxAdapter(
           //   child: Policies(post: widget.post),
           // ),

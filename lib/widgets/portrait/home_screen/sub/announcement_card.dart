@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:travenx_loitafoundation/config/configs.dart'
     show kHPadding, textScaleFactor, Palette;
-import 'package:travenx_loitafoundation/models/post_object_model.dart';
 
 class AnnouncementCard extends StatelessWidget {
-  final PostObject post;
-  const AnnouncementCard({Key? key, required this.post}) : super(key: key);
+  final String announcement;
+  const AnnouncementCard({Key? key, required this.announcement})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -42,7 +42,7 @@ class AnnouncementCard extends StatelessWidget {
                   text: '    ',
                   children: [
                     TextSpan(
-                      text: post.announcement!.substring(0, 200),
+                      text: this.announcement.substring(0, 200),
                       style: Theme.of(context)
                           .textTheme
                           .headline4!

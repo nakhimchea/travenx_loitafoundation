@@ -6,60 +6,64 @@ ModelWeatherForecast weatherForecastExtractor({required String data}) {
   List<String> _forecast = [];
   String _sunrise = '';
   String _sunset = '';
-  int _temperature = 32;
+  int _temperature = 30;
 
-  if (jsonDecode(data)['cod'] == '200') {
-    List<String> _knowledge = [];
-    for (var snapshot in jsonDecode(data)['list']) {
-      DateTime _timeframe = DateTime.fromMillisecondsSinceEpoch(
-          int.parse(snapshot['dt'].toString()) * 1000);
-      if (double.parse(snapshot['pop'].toString()) >= 0.67 &&
-          _timeframe.hour >= 6) {
-        _knowledge.add(snapshot['dt'].toString() +
-            '/' +
-            snapshot['weather'][0]['description'].toString());
-      }
-    }
-
-    if (_knowledge.isNotEmpty) {
-      DateTime _previous = DateTime.fromMillisecondsSinceEpoch(
-          int.parse(_knowledge.first.split('/').first) * 1000);
-      _forecast.add(_dateTranslator(DateTime.fromMillisecondsSinceEpoch(
-              int.parse(_knowledge.first.split('/').first) * 1000)) +
-          '/' +
-          _conditionTranslator(_knowledge.first.split('/').last) +
-          '/' +
-          _timeTranslator(DateTime.fromMillisecondsSinceEpoch(
-              int.parse(_knowledge.first.split('/').first) * 1000)));
-      for (int index = 1; index < _knowledge.length; index++) {
-        final _timeframe = DateTime.fromMillisecondsSinceEpoch(
-            int.parse(_knowledge.elementAt(index).split('/').first) * 1000);
-        if (_timeframe.day > _previous.day) {
-          _previous = _timeframe;
-          _forecast.add(_dateTranslator(DateTime.fromMillisecondsSinceEpoch(
-                  int.parse(_knowledge.elementAt(index).split('/').first) *
-                      1000)) +
+  try {
+    if (jsonDecode(data)['cod'] == '200') {
+      List<String> _knowledge = [];
+      for (var snapshot in jsonDecode(data)['list']) {
+        DateTime _timeframe = DateTime.fromMillisecondsSinceEpoch(
+            int.parse(snapshot['dt'].toString()) * 1000);
+        if (double.parse(snapshot['pop'].toString()) >= 0.67 &&
+            _timeframe.hour >= 6) {
+          _knowledge.add(snapshot['dt'].toString() +
               '/' +
-              _conditionTranslator(
-                  _knowledge.elementAt(index).split('/').last) +
-              '/' +
-              _timeTranslator(DateTime.fromMillisecondsSinceEpoch(
-                  int.parse(_knowledge.elementAt(index).split('/').first) *
-                      1000)));
+              snapshot['weather'][0]['description'].toString());
         }
       }
+
+      if (_knowledge.isNotEmpty) {
+        DateTime _previous = DateTime.fromMillisecondsSinceEpoch(
+            int.parse(_knowledge.first.split('/').first) * 1000);
+        _forecast.add(_dateTranslator(DateTime.fromMillisecondsSinceEpoch(
+                int.parse(_knowledge.first.split('/').first) * 1000)) +
+            '/' +
+            _conditionTranslator(_knowledge.first.split('/').last) +
+            '/' +
+            _timeTranslator(DateTime.fromMillisecondsSinceEpoch(
+                int.parse(_knowledge.first.split('/').first) * 1000)));
+        for (int index = 1; index < _knowledge.length; index++) {
+          final _timeframe = DateTime.fromMillisecondsSinceEpoch(
+              int.parse(_knowledge.elementAt(index).split('/').first) * 1000);
+          if (_timeframe.day > _previous.day) {
+            _previous = _timeframe;
+            _forecast.add(_dateTranslator(DateTime.fromMillisecondsSinceEpoch(
+                    int.parse(_knowledge.elementAt(index).split('/').first) *
+                        1000)) +
+                '/' +
+                _conditionTranslator(
+                    _knowledge.elementAt(index).split('/').last) +
+                '/' +
+                _timeTranslator(DateTime.fromMillisecondsSinceEpoch(
+                    int.parse(_knowledge.elementAt(index).split('/').first) *
+                        1000)));
+          }
+        }
+      }
+
+      final DateTime _rise = DateTime.fromMillisecondsSinceEpoch(
+          int.parse(jsonDecode(data)['city']['sunrise'].toString()) * 1000);
+      final DateTime _set = DateTime.fromMillisecondsSinceEpoch(
+          int.parse(jsonDecode(data)['city']['sunset'].toString()) * 1000);
+
+      _sunrise = _timeTranslator(_rise);
+      _sunset = _timeTranslator(_set);
+      _temperature = (double.parse(
+              jsonDecode(data)['list'][0]['main']['feels_like'].toString()))
+          .toInt();
     }
-
-    final DateTime _rise = DateTime.fromMillisecondsSinceEpoch(
-        int.parse(jsonDecode(data)['city']['sunrise'].toString()) * 1000);
-    final DateTime _set = DateTime.fromMillisecondsSinceEpoch(
-        int.parse(jsonDecode(data)['city']['sunset'].toString()) * 1000);
-
-    _sunrise = _timeTranslator(_rise);
-    _sunset = _timeTranslator(_set);
-    _temperature = (double.parse(
-            jsonDecode(data)['list'][0]['main']['feels_like'].toString()))
-        .toInt();
+  } catch (_) {
+    print('Cannot get weather data.');
   }
 
   return ModelWeatherForecast(

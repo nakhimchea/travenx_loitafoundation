@@ -48,18 +48,18 @@ class _HomeScreenState extends State<HomeScreen>
               ),
             ],
           ),
-          // SliverToBoxAdapter(
-          //   child: SearchBar(),
-          // ),
-          // SliverPadding(
-          //   padding: const EdgeInsets.symmetric(
-          //     horizontal: kHPadding,
-          //     vertical: kVPadding + 6.0,
-          //   ),
-          //   sliver: SliverToBoxAdapter(
-          //     child: IconsMenu(),
-          //   ),
-          // ),
+          SliverToBoxAdapter(
+            child: SearchBar(),
+          ),
+          SliverPadding(
+            padding: const EdgeInsets.symmetric(
+              horizontal: kHPadding,
+              vertical: kVPadding + 6.0,
+            ),
+            sliver: SliverToBoxAdapter(
+              child: IconsMenu(),
+            ),
+          ),
           SliverPadding(
             padding: const EdgeInsets.only(
               top: 6.0,
@@ -69,37 +69,37 @@ class _HomeScreenState extends State<HomeScreen>
               child: Promotions(),
             ),
           ),
-          // SliverPadding(
-          //   padding: const EdgeInsets.symmetric(
-          //     horizontal: kHPadding,
-          //     vertical: kVPadding,
-          //   ),
-          //   sliver: SliverToBoxAdapter(
-          //     child: Provinces(),
-          //   ),
-          // ),
-          // SliverToBoxAdapter(
-          //   child: Nearbys(),
-          // ),
-          // SliverPadding(
-          //   padding: EdgeInsets.symmetric(horizontal: kHPadding),
-          //   sliver: SliverPersistentHeader(
-          //     pinned: true,
-          //     delegate: PersistentHeader(
-          //       tabBar: CustomTabBar(tabController: _tabController),
-          //     ),
-          //   ),
-          // ),
-          // SliverPadding(
-          //   padding: const EdgeInsets.only(
-          //     left: kHPadding,
-          //     right: kHPadding,
-          //     bottom: kVPadding,
-          //   ),
-          //   sliver: SliverToBoxAdapter(
-          //     child: CustomTabBarList(tabController: _tabController),
-          //   ),
-          // ),
+          SliverPadding(
+            padding: const EdgeInsets.symmetric(
+              horizontal: kHPadding,
+              vertical: kVPadding,
+            ),
+            sliver: SliverToBoxAdapter(
+              child: Provinces(),
+            ),
+          ),
+          SliverToBoxAdapter(
+            child: Nearbys(),
+          ),
+          SliverPadding(
+            padding: EdgeInsets.symmetric(horizontal: kHPadding),
+            sliver: SliverPersistentHeader(
+              pinned: true,
+              delegate: PersistentHeader(
+                tabBar: CustomTabBar(tabController: _tabController),
+              ),
+            ),
+          ),
+          SliverPadding(
+            padding: const EdgeInsets.only(
+              left: kHPadding,
+              right: kHPadding,
+              bottom: kVPadding,
+            ),
+            sliver: SliverToBoxAdapter(
+              child: CustomTabBarList(tabController: _tabController),
+            ),
+          ),
         ],
       ),
     );

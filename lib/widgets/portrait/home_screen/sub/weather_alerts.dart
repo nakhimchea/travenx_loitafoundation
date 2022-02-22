@@ -42,18 +42,20 @@ class WeatherAlerts extends StatelessWidget {
                   )
             : SizedBox.shrink(),
         const SizedBox(height: 25.0),
-        Center(
-          child: Text(
-            'ថ្ងៃនេះព្រះអាទិត្យលិចនៅទីតាំងនេះ ម៉ោង $sunset។\nហើយរះថ្ងៃស្អែក នៅម៉ោង $sunrise។',
-            textAlign: TextAlign.center,
-            textScaleFactor: textScaleFactor,
-            style: Theme.of(context)
-                .textTheme
-                .bodyText1!
-                .copyWith(color: Theme.of(context).iconTheme.color),
-          ),
-        ),
-        const SizedBox(height: 15.0),
+        this.sunset != ''
+            ? Center(
+                child: Text(
+                  'ថ្ងៃនេះព្រះអាទិត្យលិចនៅទីតាំងនេះ ម៉ោង $sunset។\nហើយរះថ្ងៃស្អែក នៅម៉ោង $sunrise។',
+                  textAlign: TextAlign.center,
+                  textScaleFactor: textScaleFactor,
+                  style: Theme.of(context)
+                      .textTheme
+                      .bodyText1!
+                      .copyWith(color: Theme.of(context).iconTheme.color),
+                ),
+              )
+            : SizedBox.shrink(),
+        SizedBox(height: this.sunset != '' ? 15.0 : 0.0),
       ],
     );
   }

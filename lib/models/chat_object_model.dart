@@ -1,11 +1,11 @@
-class MessageObject {
+class ChatObject {
   final String imageUrl;
   final String title;
   final String latestMessage;
   final DateTime dateTime;
   final bool read;
 
-  MessageObject({
+  ChatObject({
     required this.imageUrl,
     required this.title,
     required this.latestMessage,
@@ -14,76 +14,76 @@ class MessageObject {
   });
 }
 
-final List<MessageObject> messageList = [
-  MessageObject(
+final List<ChatObject> messageList = [
+  ChatObject(
     imageUrl: 'assets/images/travenx_180.png',
     title: 'ឈ្មោះកន្លែង',
     latestMessage: 'Text Over Flow testing if working',
     dateTime: DateTime.now(),
   ),
-  MessageObject(
+  ChatObject(
     imageUrl: 'assets/images/travenx_180.png',
     title: 'ឈ្មោះកន្លែង',
     latestMessage: '',
     dateTime: DateTime.fromMillisecondsSinceEpoch(1312908481000),
   ),
-  MessageObject(
+  ChatObject(
     imageUrl: 'assets/images/travenx_180.png',
     title: 'ឈ្មោះកន្លែង',
     latestMessage: 'ផ្ញើរសារជាសម្លេង',
     dateTime: DateTime.now(),
     read: false,
   ),
-  MessageObject(
+  ChatObject(
     imageUrl: 'assets/images/travenx_180.png',
     title: 'ឈ្មោះកន្លែង',
     latestMessage: 'នៅមានបង',
     dateTime: DateTime.fromMillisecondsSinceEpoch(1312908481000),
   ),
-  MessageObject(
+  ChatObject(
     imageUrl: 'assets/images/travenx_180.png',
     title: 'ឈ្មោះកន្លែង',
     latestMessage: 'មានអត់បងឯង',
     dateTime: DateTime.now(),
   ),
-  MessageObject(
+  ChatObject(
     imageUrl: 'assets/images/travenx_180.png',
     title: 'ឈ្មោះកន្លែង',
     latestMessage: 'អ្នកបានផ្ញើរសារជាសម្លេងទៅ',
     dateTime: DateTime.fromMillisecondsSinceEpoch(1312908481000),
   ),
-  MessageObject(
+  ChatObject(
     imageUrl: 'assets/images/travenx_180.png',
     title: 'ឈ្មោះកន្លែង',
     latestMessage: 'Text Over Flow testing if working',
     dateTime: DateTime.now(),
   ),
-  MessageObject(
+  ChatObject(
     imageUrl: 'assets/images/travenx_180.png',
     title: 'ឈ្មោះកន្លែង',
     latestMessage: '',
     dateTime: DateTime.fromMillisecondsSinceEpoch(1312908481000),
   ),
-  MessageObject(
+  ChatObject(
     imageUrl: 'assets/images/travenx_180.png',
     title: 'ឈ្មោះកន្លែង',
     latestMessage: 'ផ្ញើរសារជាសម្លេង',
     dateTime: DateTime.now(),
     read: false,
   ),
-  MessageObject(
+  ChatObject(
     imageUrl: 'assets/images/travenx_180.png',
     title: 'ឈ្មោះកន្លែង',
     latestMessage: 'នៅមានបង',
     dateTime: DateTime.fromMillisecondsSinceEpoch(1312908481000),
   ),
-  MessageObject(
+  ChatObject(
     imageUrl: 'assets/images/travenx_180.png',
     title: 'ឈ្មោះកន្លែង',
     latestMessage: 'មានអត់បងឯង',
     dateTime: DateTime.now(),
   ),
-  MessageObject(
+  ChatObject(
     imageUrl: 'assets/images/travenx_180.png',
     title: 'ឈ្មោះកន្លែង',
     latestMessage: 'អ្នកបានផ្ញើរសារជាសម្លេងទៅ',

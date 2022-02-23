@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
@@ -7,6 +8,7 @@ import 'package:travenx_loitafoundation/helpers/weather_forecast_extractor.dart'
 import 'package:travenx_loitafoundation/icons/icons.dart';
 import 'package:travenx_loitafoundation/models/home_screen_models.dart';
 import 'package:travenx_loitafoundation/models/weather_forecast_model.dart';
+import 'package:travenx_loitafoundation/screens/portrait/chat_screen/chat.dart';
 import 'package:travenx_loitafoundation/services/internet_service.dart';
 import 'package:travenx_loitafoundation/widgets/portrait/home_screen/sub/custom_floating_action_button.dart';
 import 'package:travenx_loitafoundation/widgets/portrait/home_screen/sub/post_detail_widgets.dart';
@@ -72,9 +74,21 @@ class _PostDetailState extends State<PostDetail> {
           children: [
             GestureDetector(
               onTap: () {
-                selectedIndex = 1;
-                Navigator.popUntil(context, (route) => route.isFirst);
-                //TODO: Add another push to direct client chat
+                //TODO: Add chat to user after they logged in
+                if (FirebaseAuth.instance.currentUser != null)
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (_) => Chat(
+                        postTitle: widget.post.title,
+                        postImageUrl: widget.post.imageUrls.first,
+                      ),
+                    ),
+                  );
+                else {
+                  selectedIndex = 1;
+                  Navigator.popUntil(context, (route) => route.isFirst);
+                }
               },
               child: CircleAvatar(
                 radius: MediaQuery.of(context).size.height / 20 -

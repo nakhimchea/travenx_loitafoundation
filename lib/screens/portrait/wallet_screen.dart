@@ -2,6 +2,20 @@ import 'package:flutter/material.dart';
 import 'package:travenx_loitafoundation/config/configs.dart';
 
 class WalletScreen extends StatefulWidget {
+  final bool isLoggedIn;
+  final String displayName;
+  final String phoneNumber;
+  final String profileUrl;
+  final void Function() loggedInCallback;
+  const WalletScreen({
+    Key? key,
+    required this.isLoggedIn,
+    required this.displayName,
+    required this.phoneNumber,
+    required this.profileUrl,
+    required this.loggedInCallback,
+  }) : super(key: key);
+
   @override
   _WalletScreenState createState() => _WalletScreenState();
 }
@@ -9,112 +23,150 @@ class WalletScreen extends StatefulWidget {
 class _WalletScreenState extends State<WalletScreen> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: LayoutBuilder(
-        builder: (context, constraints) => Stack(
-          children: [
-            Image.asset(
-              'assets/images/profile_screen/scaffold_background.png',
-              height: constraints.maxHeight,
-              width: constraints.maxWidth,
-              fit: BoxFit.cover,
-            ),
-            CustomScrollView(
-              slivers: [
-                SliverToBoxAdapter(
-                  child: Container(
-                    height: constraints.maxWidth,
-                    padding: EdgeInsets.all(constraints.maxWidth / 8),
+    if (widget.isLoggedIn == true && widget.phoneNumber != '')
+      return Scaffold(
+        body: LayoutBuilder(
+          builder: (context, constraints) => Stack(
+            children: [
+              Image.asset(
+                'assets/images/profile_screen/scaffold_background.png',
+                height: constraints.maxHeight,
+                width: constraints.maxWidth,
+                fit: BoxFit.cover,
+              ),
+              CustomScrollView(
+                slivers: [
+                  SliverToBoxAdapter(
                     child: Container(
+                      height: constraints.maxWidth,
                       padding: EdgeInsets.all(constraints.maxWidth / 8),
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.black26,
-                            offset: Offset(3, 3),
-                            blurRadius: 15.0,
-                          ),
-                        ],
-                        color: Theme.of(context).scaffoldBackgroundColor,
-                      ),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          Text(
-                            'Total balance',
-                            style: TextStyle(fontSize: 16),
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            crossAxisAlignment: CrossAxisAlignment.end,
-                            children: [
-                              Text(
-                                '\$ 0.00',
-                                style: TextStyle(
-                                  color:
-                                      Theme.of(context).primaryIconTheme.color,
-                                  fontSize: 44.0,
-                                  fontFamily: 'Poppins',
-                                  fontWeight: FontWeight.w700,
-                                ),
-                              ),
-                            ],
-                          ),
-                          Container(
-                            alignment: Alignment.center,
-                            height: 40,
-                            width: 120,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(15),
-                              color: Colors.green.shade100,
+                      child: Container(
+                        padding: EdgeInsets.all(constraints.maxWidth / 8),
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.black26,
+                              offset: Offset(3, 3),
+                              blurRadius: 15.0,
                             ),
-                            child: Row(
+                          ],
+                          color: Theme.of(context).scaffoldBackgroundColor,
+                        ),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            Text(
+                              'Total balance',
+                              style: TextStyle(fontSize: 16),
+                            ),
+                            Row(
                               mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.end,
                               children: [
-                                Icon(
-                                  Icons.volunteer_activism_outlined,
-                                  size: 15,
-                                  color: Theme.of(context).primaryColor,
-                                ),
-                                SizedBox(width: 5),
                                 Text(
-                                  'Receive',
+                                  '\$ 0.00',
                                   style: TextStyle(
-                                    fontSize: 15,
-                                    color: Theme.of(context).primaryColor,
+                                    color: Theme.of(context)
+                                        .primaryIconTheme
+                                        .color,
+                                    fontSize: 44.0,
+                                    fontFamily: 'Poppins',
+                                    fontWeight: FontWeight.w700,
                                   ),
                                 ),
                               ],
                             ),
-                          ),
+                            Container(
+                              alignment: Alignment.center,
+                              height: 40,
+                              width: 120,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(15),
+                                color: Colors.green.shade100,
+                              ),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Icon(
+                                    Icons.volunteer_activism_outlined,
+                                    size: 15,
+                                    color: Theme.of(context).primaryColor,
+                                  ),
+                                  SizedBox(width: 5),
+                                  Text(
+                                    'Receive',
+                                    style: TextStyle(
+                                      fontSize: 15,
+                                      color: Theme.of(context).primaryColor,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                  SliverPadding(
+                    padding: EdgeInsets.symmetric(horizontal: kHPadding),
+                    sliver: SliverToBoxAdapter(
+                      child: Column(
+                        children: [
+                          _HistoryCard(),
+                          _HistoryCard(),
+                          _HistoryCard(),
+                          _HistoryCard(),
+                          _HistoryCard(),
+                          _HistoryCard(),
+                          const SizedBox(height: 15.0),
                         ],
                       ),
                     ),
                   ),
+                ],
+              ),
+            ],
+          ),
+        ),
+      );
+    else
+      return Scaffold(
+        body: Stack(
+          children: [
+            Container(
+              height: MediaQuery.of(context).size.height,
+              width: MediaQuery.of(context).size.width,
+              decoration: BoxDecoration(
+                image: DecorationImage(
+                  image: AssetImage(
+                    'assets/images/profile_screen/scaffold_background.png',
+                  ),
+                  fit: BoxFit.cover,
                 ),
-                SliverPadding(
-                  padding: EdgeInsets.symmetric(horizontal: kHPadding),
-                  sliver: SliverToBoxAdapter(
-                    child: Column(
-                      children: [
-                        _HistoryCard(),
-                        _HistoryCard(),
-                        _HistoryCard(),
-                        _HistoryCard(),
-                        _HistoryCard(),
-                        _HistoryCard(),
-                        const SizedBox(height: 15.0),
-                      ],
+              ),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Center(
+                    child: Text('Screen is logged.'),
+                  ),
+                  TextButton(
+                    onPressed: () {
+                      selectedIndex = 3;
+                      if (widget.isLoggedIn != false) widget.loggedInCallback();
+                    },
+                    child: Center(
+                      child: Text('Login Now'),
                     ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ],
         ),
-      ),
-    );
+      );
   }
 }
 

@@ -1,9 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:travenx_loitafoundation/config/configs.dart'
-    show kHPadding, kVPadding, textScaleFactor;
+    show kHPadding, kVPadding, textScaleFactor, selectedIndex;
 import 'package:travenx_loitafoundation/models/message_object_model.dart';
 
 class ChatScreen extends StatefulWidget {
+  final bool isLoggedIn;
+  final String displayName;
+  final String phoneNumber;
+  final String profileUrl;
+  final void Function() loggedInCallback;
+  const ChatScreen({
+    Key? key,
+    required this.isLoggedIn,
+    required this.displayName,
+    required this.phoneNumber,
+    required this.profileUrl,
+    required this.loggedInCallback,
+  }) : super(key: key);
+
   @override
   _ChatScreenState createState() => _ChatScreenState();
 }
@@ -27,98 +41,135 @@ class _ChatScreenState extends State<ChatScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: CustomScrollView(
-        slivers: [
-          SliverAppBar(
-            pinned: true,
-            backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-            title: Text(
-              'សារ',
-              textScaleFactor: textScaleFactor,
-              style: Theme.of(context).textTheme.headline1,
+    if (widget.isLoggedIn == true && widget.phoneNumber != '')
+      return Scaffold(
+        body: CustomScrollView(
+          slivers: [
+            SliverAppBar(
+              pinned: true,
+              backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+              title: Text(
+                'សារ',
+                textScaleFactor: textScaleFactor,
+                style: Theme.of(context).textTheme.headline1,
+              ),
+              centerTitle: false,
+              floating: true,
+              actions: [
+                Padding(
+                  padding: const EdgeInsets.only(right: kHPadding - 5),
+                  child: PopupMenuButton<int>(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(15.0),
+                    ),
+                    padding: EdgeInsets.zero,
+                    icon: CircleAvatar(
+                      radius: 20.2,
+                      backgroundColor: Colors.black26,
+                      child: CircleAvatar(
+                        radius: 20.0,
+                        backgroundColor:
+                            Theme.of(context).colorScheme.brightness ==
+                                    Brightness.light
+                                ? Colors.white
+                                : Color(0x1AFFFFFF),
+                        child: Icon(
+                          Icons.more_horiz,
+                          color: Theme.of(context).primaryIconTheme.color,
+                          size: 28.0,
+                        ),
+                      ),
+                    ),
+                    color: Theme.of(context).bottomAppBarColor,
+                    itemBuilder: (context) => [
+                      PopupMenuItem<int>(
+                        value: 0,
+                        child: PopUpListTile(
+                          iconData: Icons.logout,
+                          title: 'សន្មត់ថាបានអានទាំងអស់',
+                        ),
+                      ),
+                      PopupMenuDivider(),
+                      PopupMenuItem<int>(
+                        value: 1,
+                        child: PopUpListTile(
+                          iconData: Icons.logout,
+                          title: 'សារដែលបានខ្ចប់',
+                        ),
+                      ),
+                      PopupMenuDivider(),
+                      PopupMenuItem<int>(
+                        value: 2,
+                        child: PopUpListTile(
+                          iconData: Icons.logout,
+                          title: 'រាយការណ៍បញ្ហា',
+                        ),
+                      ),
+                    ],
+                    onSelected: (value) => _selectedItem(context, value),
+                  ),
+                ),
+              ],
             ),
-            centerTitle: false,
-            floating: true,
-            actions: [
-              Padding(
-                padding: const EdgeInsets.only(right: kHPadding - 5),
-                child: PopupMenuButton<int>(
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(15.0),
-                  ),
-                  padding: EdgeInsets.zero,
-                  icon: CircleAvatar(
-                    radius: 20.2,
-                    backgroundColor: Colors.black26,
-                    child: CircleAvatar(
-                      radius: 20.0,
-                      backgroundColor:
-                          Theme.of(context).colorScheme.brightness ==
-                                  Brightness.light
-                              ? Colors.white
-                              : Color(0x1AFFFFFF),
-                      child: Icon(
-                        Icons.more_horiz,
-                        color: Theme.of(context).primaryIconTheme.color,
-                        size: 28.0,
+            SliverPadding(
+              padding: EdgeInsets.symmetric(
+                horizontal: kHPadding,
+                vertical: kVPadding,
+              ),
+              sliver: SliverList(
+                delegate: SliverChildBuilderDelegate(
+                  (BuildContext context, int index) {
+                    return Container(
+                      height: MediaQuery.of(context).size.height / 9,
+                      padding: EdgeInsets.symmetric(vertical: 4.0),
+                      child: _BuildChatItem(
+                        message: messageList.elementAt(index),
                       ),
-                    ),
-                  ),
-                  color: Theme.of(context).bottomAppBarColor,
-                  itemBuilder: (context) => [
-                    PopupMenuItem<int>(
-                      value: 0,
-                      child: PopUpListTile(
-                        iconData: Icons.logout,
-                        title: 'សន្មត់ថាបានអានទាំងអស់',
-                      ),
-                    ),
-                    PopupMenuDivider(),
-                    PopupMenuItem<int>(
-                      value: 1,
-                      child: PopUpListTile(
-                        iconData: Icons.logout,
-                        title: 'សារដែលបានខ្ចប់',
-                      ),
-                    ),
-                    PopupMenuDivider(),
-                    PopupMenuItem<int>(
-                      value: 2,
-                      child: PopUpListTile(
-                        iconData: Icons.logout,
-                        title: 'រាយការណ៍បញ្ហា',
-                      ),
-                    ),
-                  ],
-                  onSelected: (value) => _selectedItem(context, value),
+                    );
+                  },
+                  childCount: messageList.length,
                 ),
               ),
-            ],
-          ),
-          SliverPadding(
-            padding: EdgeInsets.symmetric(
-              horizontal: kHPadding,
-              vertical: kVPadding,
             ),
-            sliver: SliverList(
-              delegate: SliverChildBuilderDelegate(
-                (BuildContext context, int index) {
-                  return Container(
-                    height: MediaQuery.of(context).size.height / 9,
-                    padding: EdgeInsets.symmetric(vertical: 4.0),
-                    child: _BuildChatItem(
-                      message: messageList.elementAt(index),
+          ],
+        ),
+      );
+    else
+      return Scaffold(
+        body: Stack(
+          children: [
+            Container(
+              height: MediaQuery.of(context).size.height,
+              width: MediaQuery.of(context).size.width,
+              decoration: BoxDecoration(
+                image: DecorationImage(
+                  image: AssetImage(
+                    'assets/images/profile_screen/scaffold_background.png',
+                  ),
+                  fit: BoxFit.cover,
+                ),
+              ),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Center(
+                    child: Text('Screen is logged.'),
+                  ),
+                  TextButton(
+                    onPressed: () {
+                      selectedIndex = 3;
+                      if (widget.isLoggedIn != false) widget.loggedInCallback();
+                    },
+                    child: Center(
+                      child: Text('Login Now'),
                     ),
-                  );
-                },
-                childCount: messageList.length,
+                  ),
+                ],
               ),
             ),
-          ),
-        ],
-      ),
-    );
+          ],
+        ),
+      );
   }
 }
 

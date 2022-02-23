@@ -44,8 +44,18 @@ class _PortraitBodyState extends State<PortraitBody> {
   Widget build(BuildContext context) {
     setState(() => _screens = [
           HomeScreen(),
-          ChatScreen(),
-          WalletScreen(),
+          ChatScreen(
+              isLoggedIn: widget.isLoggedIn,
+              displayName: widget.displayName,
+              phoneNumber: widget.phoneNumber,
+              profileUrl: widget.profileUrl,
+              loggedInCallback: widget.loggedInCallback),
+          WalletScreen(
+              isLoggedIn: widget.isLoggedIn,
+              displayName: widget.displayName,
+              phoneNumber: widget.phoneNumber,
+              profileUrl: widget.profileUrl,
+              loggedInCallback: widget.loggedInCallback),
           ProfileScreen(
               isLoggedIn: widget.isLoggedIn,
               displayName: widget.displayName,

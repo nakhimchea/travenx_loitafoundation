@@ -3,6 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 class FirestoreService {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
+  // HomeScreen
   Future<DocumentSnapshot<Map<String, dynamic>>> getProfileData(
     String atUserId,
   ) async =>
@@ -257,4 +258,41 @@ class FirestoreService {
           .catchError((e) {
         print('Cannot get icon menu data: ${e.toString()}');
       });
+
+  //ChatScreen
+  Future<void> addChatMessage(
+    String atUserId,
+    String atClientId,
+    String atPostId,
+    String senderName,
+    String senderProfileUrl,
+    String? senderMessage,
+  ) async {
+    await _firestore
+        .collection('chat_screen')
+        .doc(atUserId)
+        .collection(atPostId)
+        .add({
+      'senderName': senderName,
+      'senderProfileUrl': senderProfileUrl,
+      'senderMessage': senderMessage != null ? senderMessage : '',
+    }).catchError((e) {
+      print('Cannot add user message: ${e.toString()}');
+    });
+    await _firestore
+        .collection('chat_screen')
+        .doc(atClientId)
+        .collection(atPostId)
+        .doc('fromUserId')
+        .collection(atUserId)
+        .add({
+      'senderName': senderName,
+      'senderProfileUrl': senderProfileUrl,
+      'senderMessage': senderMessage != null ? senderMessage : '',
+    }).catchError((e) {
+      print('Cannot add client message: ${e.toString()}');
+    });
+  }
+
+  //TODO: Add retrieve data test and check logic for Client vs User
 }

@@ -1,17 +1,31 @@
 import 'dart:ui';
 
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:travenx_loitafoundation/config/configs.dart'
-    show kHPadding, textScaleFactor;
+    show kHPadding, kVPadding, textScaleFactor;
+import 'package:travenx_loitafoundation/services/firestore_service.dart';
 
 class Chat extends StatefulWidget {
   final String postTitle;
   final String postImageUrl;
+  final String userId;
+  final String clientId;
+  final String postId;
+  final String clientDisplayName;
+  final String clientPhoneNumber;
+  final String clientProfileUrl;
   const Chat({
     Key? key,
     required this.postTitle,
     required this.postImageUrl,
+    required this.userId,
+    required this.clientId,
+    required this.postId,
+    required this.clientDisplayName,
+    required this.clientPhoneNumber,
+    required this.clientProfileUrl,
   }) : super(key: key);
 
   @override
@@ -82,7 +96,11 @@ class _ChatState extends State<Chat> {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             MessageStreamer(),
-            MessageSender(),
+            MessageSender(
+              userId: widget.userId,
+              clientId: widget.clientId,
+              postId: widget.postId,
+            ),
           ],
         ),
       ),
@@ -192,21 +210,36 @@ class MessageBubble extends StatelessWidget {
   }
 }
 
-class MessageSender extends StatelessWidget {
-  const MessageSender({Key? key}) : super(key: key);
+class MessageSender extends StatefulWidget {
+  final String userId;
+  final String clientId;
+  final String postId;
+
+  const MessageSender({
+    Key? key,
+    required this.userId,
+    required this.clientId,
+    required this.postId,
+  }) : super(key: key);
+
+  @override
+  _MessageSenderState createState() => _MessageSenderState();
+}
+
+class _MessageSenderState extends State<MessageSender> {
+  final TextEditingController _sendingMessageController =
+      TextEditingController();
+  final FirestoreService _firestoreService = FirestoreService();
+
+  String _message = '';
+  bool _sendTapped = false;
 
   @override
   Widget build(BuildContext context) {
-    final TextEditingController _sendingMessageController =
-        TextEditingController();
-
-    String _message = '';
-
     return Container(
-      decoration: BoxDecoration(
-        border: Border(
-          top: BorderSide(color: Colors.lightBlueAccent, width: 2.0),
-        ),
+      padding: const EdgeInsets.symmetric(
+        horizontal: kHPadding,
+        vertical: kVPadding,
       ),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
@@ -214,41 +247,81 @@ class MessageSender extends StatelessWidget {
           Expanded(
             child: TextField(
               controller: _sendingMessageController,
-              onChanged: (text) {
-                _message = text;
-              },
+              onChanged: (text) => setState(() => _message = text),
+              style: Theme.of(context)
+                  .textTheme
+                  .bodyText1!
+                  .copyWith(color: Theme.of(context).iconTheme.color),
+              autocorrect: false,
+              enableSuggestions: false,
+              cursorHeight: Theme.of(context).textTheme.bodyText1!.fontSize,
               decoration: InputDecoration(
-                hintText: 'Enter a value',
+                hintText: 'Aa',
+                hintStyle: Theme.of(context).textTheme.bodyText1,
+                fillColor: Theme.of(context).scaffoldBackgroundColor,
                 contentPadding:
-                    EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0),
+                    const EdgeInsets.symmetric(horizontal: kHPadding),
                 border: OutlineInputBorder(
-                  borderRadius: BorderRadius.all(Radius.circular(32.0)),
+                  borderRadius: BorderRadius.all(Radius.circular(30.0)),
+                ),
+                disabledBorder: OutlineInputBorder(
+                  borderSide: BorderSide(
+                      color: Theme.of(context).primaryIconTheme.color!,
+                      width: 1.0),
+                  borderRadius: BorderRadius.all(Radius.circular(30.0)),
                 ),
                 enabledBorder: OutlineInputBorder(
-                  borderSide: BorderSide(color: Colors.blueAccent, width: 1.0),
-                  borderRadius: BorderRadius.all(Radius.circular(32.0)),
+                  borderSide: BorderSide(
+                      color: Theme.of(context).primaryIconTheme.color!,
+                      width: 1.0),
+                  borderRadius: BorderRadius.all(Radius.circular(30.0)),
                 ),
                 focusedBorder: OutlineInputBorder(
-                  borderSide: BorderSide(color: Colors.blueAccent, width: 2.0),
-                  borderRadius: BorderRadius.all(Radius.circular(32.0)),
+                  borderSide: BorderSide(
+                      color: Theme.of(context).primaryColor, width: 1.0),
+                  borderRadius: BorderRadius.all(Radius.circular(30.0)),
                 ),
               ),
             ),
           ),
-          TextButton(
-            onPressed: () {
-              _sendingMessageController.clear();
-              //TODO: Add message to FireStore
-            },
-            child: Text(
-              'Send',
-              style: TextStyle(
-                color: Colors.lightBlueAccent,
-                fontWeight: FontWeight.bold,
-                fontSize: 18.0,
-              ),
-            ),
-          ),
+          SizedBox(width: _message != '' ? kHPadding : 0.0),
+          _message != ''
+              ? GestureDetector(
+                  onLongPress: () => setState(() => _sendTapped = true),
+                  onLongPressEnd: (_) => setState(() => _sendTapped = false),
+                  onTap: () async {
+                    setState(() => _sendTapped = true);
+                    _sendingMessageController.clear();
+                    if (_message != '')
+                      await _firestoreService
+                          .getProfileData(widget.userId)
+                          .then((DocumentSnapshot<Map<String, dynamic>>
+                                  documentSnapshot) async =>
+                              await _firestoreService.addChatMessage(
+                                widget.userId,
+                                widget.clientId,
+                                widget.postId,
+                                documentSnapshot.get('displayName'),
+                                documentSnapshot.get('profileUrl'),
+                                _message,
+                              ))
+                          .catchError((e) {
+                        print('Cannot send a message: ${e.toString()}');
+                      });
+                    setState(() {
+                      _message = '';
+                      _sendTapped = false;
+                    });
+                  },
+                  child: Icon(
+                    Icons.send_rounded,
+                    size: 32.0,
+                    color: _sendTapped
+                        ? Theme.of(context).primaryIconTheme.color
+                        : Theme.of(context).primaryColor,
+                  ),
+                )
+              : SizedBox.shrink(),
         ],
       ),
     );

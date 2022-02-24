@@ -23,6 +23,11 @@ class PostDetail extends StatefulWidget {
 
 class _PostDetailState extends State<PostDetail> {
   ModelWeatherForecast? _weatherForecast;
+  bool get _isSelfPost {
+    return FirebaseAuth.instance.currentUser != null
+        ? FirebaseAuth.instance.currentUser!.uid == widget.post.clientId
+        : false;
+  }
 
   void getWeatherForecast() async {
     final FlutterSecureStorage _secureStorage = FlutterSecureStorage(
@@ -61,94 +66,117 @@ class _PostDetailState extends State<PostDetail> {
           ),
         ],
       ),
-      bottomNavigationBar: Container(
-        height: MediaQuery.of(context).size.height / 10,
-        padding: const EdgeInsets.only(
-          left: kHPadding,
-          right: kHPadding,
-          top: kVPadding,
-          bottom: kVPadding + 16.0,
-        ),
-        color: Theme.of(context).bottomAppBarColor,
-        child: Row(
-          children: [
-            GestureDetector(
-              onTap: () {
-                //TODO: Add chat to user after they logged in
-                if (FirebaseAuth.instance.currentUser != null)
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (_) => Chat(
-                        postTitle: widget.post.title,
-                        postImageUrl: widget.post.imageUrls.first,
+      bottomNavigationBar: _isSelfPost
+          ? Container(
+              height: MediaQuery.of(context).size.height / 10,
+              padding: const EdgeInsets.only(
+                left: kHPadding,
+                right: kHPadding,
+                top: kVPadding,
+                bottom: kVPadding + 16.0,
+              ),
+              color: Theme.of(context).bottomAppBarColor,
+              child: Center(
+                child: Text('កន្លែងនេះជារបស់អ្នក!'),
+              ),
+            )
+          : Container(
+              height: MediaQuery.of(context).size.height / 10,
+              padding: const EdgeInsets.only(
+                left: kHPadding,
+                right: kHPadding,
+                top: kVPadding,
+                bottom: kVPadding + 16.0,
+              ),
+              color: Theme.of(context).bottomAppBarColor,
+              child: Row(
+                children: [
+                  GestureDetector(
+                    onTap: () {
+                      final User? _user = FirebaseAuth.instance.currentUser;
+                      if (_user != null)
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (_) => Chat(
+                              postTitle: widget.post.title,
+                              postImageUrl: widget.post.imageUrls.first,
+                              userId: _user.uid,
+                              clientId: widget.post.clientId,
+                              postId: widget.post.postId,
+                              clientDisplayName: widget.post.clientDisplayName,
+                              clientPhoneNumber: widget.post.clientPhoneNumber,
+                              clientProfileUrl: widget.post.clientProfileUrl,
+                            ),
+                          ),
+                        );
+                      else {
+                        selectedIndex = 1;
+                        Navigator.popUntil(context, (route) => route.isFirst);
+                      }
+                    },
+                    child: CircleAvatar(
+                      radius: MediaQuery.of(context).size.height / 20 -
+                          kVPadding -
+                          16.0 / 2,
+                      backgroundColor: Theme.of(context).hintColor,
+                      child: CircleAvatar(
+                        radius: MediaQuery.of(context).size.height / 20 -
+                            kVPadding -
+                            10,
+                        backgroundColor: Theme.of(context).bottomAppBarColor,
+                        child: Icon(
+                          CustomFilledIcons.message,
+                          size: 24.0,
+                          color: Theme.of(context).hintColor,
+                        ),
                       ),
                     ),
-                  );
-                else {
-                  selectedIndex = 1;
-                  Navigator.popUntil(context, (route) => route.isFirst);
-                }
-              },
-              child: CircleAvatar(
-                radius: MediaQuery.of(context).size.height / 20 -
-                    kVPadding -
-                    16.0 / 2,
-                backgroundColor: Theme.of(context).hintColor,
-                child: CircleAvatar(
-                  radius:
-                      MediaQuery.of(context).size.height / 20 - kVPadding - 10,
-                  backgroundColor: Theme.of(context).bottomAppBarColor,
-                  child: Icon(
-                    CustomFilledIcons.message,
-                    size: 24.0,
-                    color: Theme.of(context).hintColor,
                   ),
-                ),
+                  const SizedBox(width: kVPadding),
+                  CircleAvatar(
+                    radius: MediaQuery.of(context).size.height / 20 -
+                        kVPadding -
+                        16.0 / 2,
+                    backgroundColor: Theme.of(context).primaryColor,
+                    child: CircleAvatar(
+                      radius: MediaQuery.of(context).size.height / 20 -
+                          kVPadding -
+                          10,
+                      backgroundColor: Theme.of(context).bottomAppBarColor,
+                      child: Icon(
+                        Icons.call_rounded,
+                        size: 24.0,
+                        color: Theme.of(context).primaryColor,
+                      ),
+                    ),
+                  ),
+                  const SizedBox(width: kVPadding),
+                  Expanded(
+                    child: Container(
+                      height: MediaQuery.of(context).size.height / 10 -
+                          2 * kVPadding -
+                          16.0,
+                      alignment: Alignment.center,
+                      decoration: BoxDecoration(
+                        color: Theme.of(context).primaryColor,
+                        borderRadius: BorderRadius.circular(15.0),
+                      ),
+                      child: Text(
+                        'ផលិតផល និង សេវាកម្ម',
+                        textScaleFactor: textScaleFactor,
+                        style: Theme.of(context)
+                            .textTheme
+                            .headline3!
+                            .copyWith(color: Colors.white),
+                        overflow:
+                            kIsWeb ? TextOverflow.clip : TextOverflow.ellipsis,
+                      ),
+                    ),
+                  ),
+                ],
               ),
             ),
-            const SizedBox(width: kVPadding),
-            CircleAvatar(
-              radius: MediaQuery.of(context).size.height / 20 -
-                  kVPadding -
-                  16.0 / 2,
-              backgroundColor: Theme.of(context).primaryColor,
-              child: CircleAvatar(
-                radius:
-                    MediaQuery.of(context).size.height / 20 - kVPadding - 10,
-                backgroundColor: Theme.of(context).bottomAppBarColor,
-                child: Icon(
-                  Icons.call_rounded,
-                  size: 24.0,
-                  color: Theme.of(context).primaryColor,
-                ),
-              ),
-            ),
-            const SizedBox(width: kVPadding),
-            Expanded(
-              child: Container(
-                height: MediaQuery.of(context).size.height / 10 -
-                    2 * kVPadding -
-                    16.0,
-                alignment: Alignment.center,
-                decoration: BoxDecoration(
-                  color: Theme.of(context).primaryColor,
-                  borderRadius: BorderRadius.circular(15.0),
-                ),
-                child: Text(
-                  'ផលិតផល និង សេវាកម្ម',
-                  textScaleFactor: textScaleFactor,
-                  style: Theme.of(context)
-                      .textTheme
-                      .headline3!
-                      .copyWith(color: Colors.white),
-                  overflow: kIsWeb ? TextOverflow.clip : TextOverflow.ellipsis,
-                ),
-              ),
-            ),
-          ],
-        ),
-      ),
       body: CustomScrollView(
         physics: BouncingScrollPhysics(),
         slivers: [

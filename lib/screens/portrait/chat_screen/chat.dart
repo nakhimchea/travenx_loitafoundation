@@ -38,7 +38,7 @@ class _ChatState extends State<Chat> {
 
   void _getCurrentUserProfile() async {
     final FirestoreService _firestoreService = FirestoreService();
-    try{
+    try {
       await _firestoreService
           .getProfileData(widget.userId)
           .then((DocumentSnapshot<Map<String, dynamic>> documentSnapshot) {
@@ -47,7 +47,7 @@ class _ChatState extends State<Chat> {
           _currentUserProfileUrl = documentSnapshot.get('profileUrl');
         });
       });
-    }catch(e){
+    } catch (e) {
       print('Cannot get current user data: ${e.toString()}');
     }
   }

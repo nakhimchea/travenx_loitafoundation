@@ -34,6 +34,7 @@ class FirestoreService {
         'profileUrl': profileUrl,
         'backgroundUrl': backgroundUrl,
         'postIds': [],
+        'chats': [],
       }).catchError((e) {
         print('Cannot upload profile data: ${e.toString()}');
       });
@@ -60,7 +61,7 @@ class FirestoreService {
     dynamic postId,
   ) async {
     List<dynamic> _postIds = await _readPostIds(atUserId);
-    _postIds.add(postId);
+    if (!_postIds.toString().contains(postId.toString())) _postIds.add(postId);
 
     await _firestore.collection('profile_screen').doc(atUserId).set(
       {'postIds': _postIds},
@@ -260,6 +261,27 @@ class FirestoreService {
       });
 
   //ChatScreen
+  Future<List<dynamic>> _readChats(
+    String atUserId,
+  ) async =>
+      await getProfileData(atUserId).then((documentSnapshot) =>
+          documentSnapshot.exists ? documentSnapshot.get('chats') : []);
+
+  Future<void> addChat2Profile(
+    String atUserId,
+    dynamic chatMap,
+  ) async {
+    List<dynamic> _chats = await _readChats(atUserId);
+    if (!_chats.toString().contains(chatMap.toString())) _chats.add(chatMap);
+
+    await _firestore.collection('profile_screen').doc(atUserId).set(
+      {'chats': _chats},
+      SetOptions(merge: true),
+    ).catchError((e) {
+      print('Cannot add a chat to UserProfile: $e');
+    });
+  }
+
   Future<void> addChatMessage(
     String atUserId,
     String atClientId,
@@ -272,6 +294,8 @@ class FirestoreService {
         .collection('chat_screen')
         .doc(atUserId)
         .collection(atPostId)
+        .doc('withUserId')
+        .collection(atClientId)
         .add({
       'senderName': senderName,
       'senderProfileUrl': senderProfileUrl,
@@ -283,7 +307,7 @@ class FirestoreService {
         .collection('chat_screen')
         .doc(atClientId)
         .collection(atPostId)
-        .doc('fromUserId')
+        .doc('withUserId')
         .collection(atUserId)
         .add({
       'senderName': senderName,
@@ -294,5 +318,15 @@ class FirestoreService {
     });
   }
 
-  //TODO: Add retrieve data test and check logic for Client vs User
+//QuerySnapshot<Map<String, dynamic>>
+  Future<void> getChatList(
+    String atId,
+  ) async {
+    await _firestore
+        .collection('chat_screen')
+        .doc(atId)
+        .collection('fromPostId')
+        .get()
+        .then((querySnapshot) => print(querySnapshot.docs.first.id));
+  }
 }

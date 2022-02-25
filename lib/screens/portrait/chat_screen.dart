@@ -132,7 +132,8 @@ class _ChatScreenState extends State<ChatScreen> {
             builder: loadingBuilder,
           ),
           onRefresh: () async {
-            //TODO: get chat list
+            // _firestoreService
+            //     .getChatList(FirebaseAuth.instance.currentUser!.uid);
             if (mounted) setState(() => _isRefreshable = false);
             _refreshController.refreshCompleted();
           },

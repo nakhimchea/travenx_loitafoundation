@@ -33,6 +33,27 @@ class Chat extends StatefulWidget {
 }
 
 class _ChatState extends State<Chat> {
+  String? _currentUserDisplayName;
+  String? _currentUserProfileUrl;
+
+  void _getCurrentUserProfile() async {
+    final FirestoreService _firestoreService = FirestoreService();
+    await _firestoreService
+        .getProfileData(widget.userId)
+        .then((DocumentSnapshot<Map<String, dynamic>> documentSnapshot) {
+      setState(() {
+        _currentUserDisplayName = documentSnapshot.get('displayName');
+        _currentUserProfileUrl = documentSnapshot.get('profileUrl');
+      });
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _getCurrentUserProfile();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -96,11 +117,15 @@ class _ChatState extends State<Chat> {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             MessageStreamer(),
-            MessageSender(
-              userId: widget.userId,
-              clientId: widget.clientId,
-              postId: widget.postId,
-            ),
+            _currentUserDisplayName != null
+                ? MessageSender(
+                    userId: widget.userId,
+                    clientId: widget.clientId,
+                    postId: widget.postId,
+                    currentUserDisplayName: _currentUserDisplayName!,
+                    currentUserProfileUrl: _currentUserProfileUrl!,
+                  )
+                : SizedBox.shrink(), //TODO: Tell Them cannot get current User
           ],
         ),
       ),
@@ -214,12 +239,16 @@ class MessageSender extends StatefulWidget {
   final String userId;
   final String clientId;
   final String postId;
+  final String currentUserDisplayName;
+  final String currentUserProfileUrl;
 
   const MessageSender({
     Key? key,
     required this.userId,
     required this.clientId,
     required this.postId,
+    required this.currentUserDisplayName,
+    required this.currentUserProfileUrl,
   }) : super(key: key);
 
   @override
@@ -294,17 +323,14 @@ class _MessageSenderState extends State<MessageSender> {
                     _sendingMessageController.clear();
                     if (_message != '')
                       await _firestoreService
-                          .getProfileData(widget.userId)
-                          .then((DocumentSnapshot<Map<String, dynamic>>
-                                  documentSnapshot) async =>
-                              await _firestoreService.addChatMessage(
-                                widget.userId,
-                                widget.clientId,
-                                widget.postId,
-                                documentSnapshot.get('displayName'),
-                                documentSnapshot.get('profileUrl'),
-                                _message,
-                              ))
+                          .addChatMessage(
+                        widget.userId,
+                        widget.clientId,
+                        widget.postId,
+                        widget.currentUserDisplayName,
+                        widget.currentUserProfileUrl,
+                        _message,
+                      )
                           .catchError((e) {
                         print('Cannot send a message: ${e.toString()}');
                       });

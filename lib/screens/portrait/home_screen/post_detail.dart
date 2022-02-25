@@ -9,6 +9,7 @@ import 'package:travenx_loitafoundation/icons/icons.dart';
 import 'package:travenx_loitafoundation/models/home_screen_models.dart';
 import 'package:travenx_loitafoundation/models/weather_forecast_model.dart';
 import 'package:travenx_loitafoundation/screens/portrait/chat_screen/chat.dart';
+import 'package:travenx_loitafoundation/services/firestore_service.dart';
 import 'package:travenx_loitafoundation/services/internet_service.dart';
 import 'package:travenx_loitafoundation/widgets/portrait/home_screen/sub/custom_floating_action_button.dart';
 import 'package:travenx_loitafoundation/widgets/portrait/home_screen/sub/post_detail_widgets.dart';
@@ -92,9 +93,39 @@ class _PostDetailState extends State<PostDetail> {
               child: Row(
                 children: [
                   GestureDetector(
-                    onTap: () {
+                    onTap: () async {
                       final User? _user = FirebaseAuth.instance.currentUser;
-                      if (_user != null)
+                      final FirestoreService _firestoreService =
+                          FirestoreService();
+
+                      if (_user != null) {
+                        try {
+                          //TODO: Design this loading screen more fancy
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (_) => Scaffold(
+                                body: Center(
+                                  child: CircularProgressIndicator.adaptive(),
+                                ),
+                              ),
+                            ),
+                          );
+                          await _firestoreService.addChat2Profile(_user.uid, {
+                            'postId': widget.post.postId,
+                            'withUserId': widget.post.clientId,
+                          });
+                          await _firestoreService
+                              .addChat2Profile(widget.post.clientId, {
+                            'postId': widget.post.postId,
+                            'withUserId': _user.uid,
+                          });
+                          Navigator.pop(context);
+                        } catch (e) {
+                          print(
+                              'Cannot add chat to user or client: ${e.toString()}');
+                        }
+
                         Navigator.push(
                           context,
                           MaterialPageRoute(
@@ -110,7 +141,7 @@ class _PostDetailState extends State<PostDetail> {
                             ),
                           ),
                         );
-                      else {
+                      } else {
                         selectedIndex = 1;
                         Navigator.popUntil(context, (route) => route.isFirst);
                       }

@@ -99,33 +99,6 @@ class _PostDetailState extends State<PostDetail> {
                           FirestoreService();
 
                       if (_user != null) {
-                        try {
-                          //TODO: Design this loading screen more fancy
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (_) => Scaffold(
-                                body: Center(
-                                  child: CircularProgressIndicator.adaptive(),
-                                ),
-                              ),
-                            ),
-                          );
-                          await _firestoreService.addChat2Profile(_user.uid, {
-                            'postId': widget.post.postId,
-                            'withUserId': widget.post.clientId,
-                          });
-                          await _firestoreService
-                              .addChat2Profile(widget.post.clientId, {
-                            'postId': widget.post.postId,
-                            'withUserId': _user.uid,
-                          });
-                          Navigator.pop(context);
-                        } catch (e) {
-                          print(
-                              'Cannot add chat to user or client: ${e.toString()}');
-                        }
-
                         Navigator.push(
                           context,
                           MaterialPageRoute(
@@ -141,6 +114,9 @@ class _PostDetailState extends State<PostDetail> {
                             ),
                           ),
                         );
+
+                        await _firestoreService.addChat2Profile(_user.uid,
+                            widget.post.postId, widget.post.clientId);
                       } else {
                         selectedIndex = 1;
                         Navigator.popUntil(context, (route) => route.isFirst);

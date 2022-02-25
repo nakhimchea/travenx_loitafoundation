@@ -38,14 +38,18 @@ class _ChatState extends State<Chat> {
 
   void _getCurrentUserProfile() async {
     final FirestoreService _firestoreService = FirestoreService();
-    await _firestoreService
-        .getProfileData(widget.userId)
-        .then((DocumentSnapshot<Map<String, dynamic>> documentSnapshot) {
-      setState(() {
-        _currentUserDisplayName = documentSnapshot.get('displayName');
-        _currentUserProfileUrl = documentSnapshot.get('profileUrl');
+    try{
+      await _firestoreService
+          .getProfileData(widget.userId)
+          .then((DocumentSnapshot<Map<String, dynamic>> documentSnapshot) {
+        setState(() {
+          _currentUserDisplayName = documentSnapshot.get('displayName');
+          _currentUserProfileUrl = documentSnapshot.get('profileUrl');
+        });
       });
-    });
+    }catch(e){
+      print('Cannot get current user data: ${e.toString()}');
+    }
   }
 
   @override
@@ -117,7 +121,7 @@ class _ChatState extends State<Chat> {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             MessageStreamer(),
-            _currentUserDisplayName != null
+            _currentUserDisplayName != null && _currentUserProfileUrl != null
                 ? MessageSender(
                     userId: widget.userId,
                     clientId: widget.clientId,
@@ -125,7 +129,7 @@ class _ChatState extends State<Chat> {
                     currentUserDisplayName: _currentUserDisplayName!,
                     currentUserProfileUrl: _currentUserProfileUrl!,
                   )
-                : SizedBox.shrink(), //TODO: Tell Them cannot get current User
+                : SizedBox.shrink(), // Cannot chat if currentUser is null
           ],
         ),
       ),

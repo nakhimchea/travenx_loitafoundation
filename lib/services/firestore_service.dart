@@ -60,7 +60,9 @@ class FirestoreService {
     String atUserId,
     dynamic postId,
   ) async {
-    List<dynamic> _postIds = await _readPostIds(atUserId);
+    List<dynamic> _postIds = await _readPostIds(atUserId).catchError((e) {
+      print('Cannot read my postIds: ${e.toString()}');
+    });
     if (!_postIds.toString().contains(postId.toString())) _postIds.add(postId);
 
     await _firestore.collection('profile_screen').doc(atUserId).set(
@@ -268,17 +270,38 @@ class FirestoreService {
           documentSnapshot.exists ? documentSnapshot.get('chats') : []);
 
   Future<void> addChat2Profile(
-    String atUserId,
-    dynamic chatMap,
+    String userId,
+    String postId,
+    String clientId,
   ) async {
-    List<dynamic> _chats = await _readChats(atUserId);
-    if (!_chats.toString().contains(chatMap.toString())) _chats.add(chatMap);
+    final List<dynamic> _userChats = await _readChats(userId).catchError((e) {
+      print('Cannot read previous user chats: ${e.toString()}');
+    });
+    final List<dynamic> _clientChats =
+        await _readChats(clientId).catchError((e) {
+      print('Cannot read previous client chats: ${e.toString()}');
+    });
 
-    await _firestore.collection('profile_screen').doc(atUserId).set(
-      {'chats': _chats},
+    if (!_userChats
+        .toString()
+        .contains({'postId': postId, 'withUserId': clientId}.toString()))
+      _userChats.add({'postId': postId, 'withUserId': clientId});
+    if (!_clientChats
+        .toString()
+        .contains({'postId': postId, 'withUserId': userId}.toString()))
+      _clientChats.add({'postId': postId, 'withUserId': userId});
+
+    await _firestore.collection('profile_screen').doc(userId).set(
+      {'chats': _userChats},
       SetOptions(merge: true),
     ).catchError((e) {
       print('Cannot add a chat to UserProfile: $e');
+    });
+    await _firestore.collection('profile_screen').doc(clientId).set(
+      {'chats': _clientChats},
+      SetOptions(merge: true),
+    ).catchError((e) {
+      print('Cannot add a chat to ClientProfile: $e');
     });
   }
 

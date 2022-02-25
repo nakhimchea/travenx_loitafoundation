@@ -311,8 +311,10 @@ class FirestoreService {
     String atPostId,
     String senderName,
     String senderProfileUrl,
-    String? senderMessage,
+    String? message,
+    String? attachmentUrl,
   ) async {
+    final String _dateTime = DateTime.now().millisecondsSinceEpoch.toString();
     await _firestore
         .collection('chat_screen')
         .doc(atUserId)
@@ -322,7 +324,9 @@ class FirestoreService {
         .add({
       'senderName': senderName,
       'senderProfileUrl': senderProfileUrl,
-      'senderMessage': senderMessage != null ? senderMessage : '',
+      'message': message != null ? message : '',
+      'attachmentUrl': attachmentUrl != null ? attachmentUrl : '',
+      'dateTime': _dateTime,
     }).catchError((e) {
       print('Cannot add user message: ${e.toString()}');
     });
@@ -335,7 +339,9 @@ class FirestoreService {
         .add({
       'senderName': senderName,
       'senderProfileUrl': senderProfileUrl,
-      'senderMessage': senderMessage != null ? senderMessage : '',
+      'message': message != null ? message : '',
+      'attachmentUrl': attachmentUrl != null ? attachmentUrl : '',
+      'dateTime': _dateTime,
     }).catchError((e) {
       print('Cannot add client message: ${e.toString()}');
     });

@@ -265,6 +265,7 @@ class _MessageSenderState extends State<MessageSender> {
   final FirestoreService _firestoreService = FirestoreService();
 
   String _message = '';
+  String _attachmentUrl = '';
   bool _sendTapped = false;
 
   @override
@@ -334,12 +335,14 @@ class _MessageSenderState extends State<MessageSender> {
                         widget.currentUserDisplayName,
                         widget.currentUserProfileUrl,
                         _message,
+                        _attachmentUrl,
                       )
                           .catchError((e) {
                         print('Cannot send a message: ${e.toString()}');
                       });
                     setState(() {
                       _message = '';
+                      _attachmentUrl = '';
                       _sendTapped = false;
                     });
                   },

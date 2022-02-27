@@ -108,9 +108,6 @@ class _PostDetailState extends State<PostDetail> {
                               userId: _user.uid,
                               clientId: widget.post.clientId,
                               postId: widget.post.postId,
-                              clientDisplayName: widget.post.clientDisplayName,
-                              clientPhoneNumber: widget.post.clientPhoneNumber,
-                              clientProfileUrl: widget.post.clientProfileUrl,
                             ),
                           ),
                         );

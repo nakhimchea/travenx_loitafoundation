@@ -60,6 +60,9 @@ class _ChatScreenState extends State<ChatScreen> {
             padding: EdgeInsets.symmetric(vertical: 4.0),
             child: _BuildChatItem(
               chat: chatList.elementAt(index),
+              userId: _user!.uid,
+              withUserId: _chatWithUserIds.elementAt(index),
+              postId: _chatPostIds.elementAt(index),
             ),
           );
         },
@@ -343,8 +346,17 @@ class PopUpListTile extends StatelessWidget {
 
 class _BuildChatItem extends StatelessWidget {
   final ChatObject chat;
+  final String userId;
+  final String withUserId;
+  final String postId;
 
-  const _BuildChatItem({Key? key, required this.chat}) : super(key: key);
+  const _BuildChatItem(
+      {Key? key,
+        required this.chat,
+        required this.userId,
+        required this.withUserId,
+        required this.postId,
+      }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

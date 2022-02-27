@@ -13,9 +13,6 @@ class Chat extends StatefulWidget {
   final String userId;
   final String clientId;
   final String postId;
-  final String clientDisplayName;
-  final String clientPhoneNumber;
-  final String clientProfileUrl;
   const Chat({
     Key? key,
     required this.postTitle,
@@ -23,9 +20,6 @@ class Chat extends StatefulWidget {
     required this.userId,
     required this.clientId,
     required this.postId,
-    required this.clientDisplayName,
-    required this.clientPhoneNumber,
-    required this.clientProfileUrl,
   }) : super(key: key);
 
   @override

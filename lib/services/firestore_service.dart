@@ -347,15 +347,35 @@ class FirestoreService {
     });
   }
 
-//QuerySnapshot<Map<String, dynamic>>
-  Future<void> getChatList(
-    String atId,
-  ) async {
-    await _firestore
-        .collection('chat_screen')
-        .doc(atId)
-        .collection('fromPostId')
-        .get()
-        .then((querySnapshot) => print(querySnapshot.docs.first.id));
-  }
+  Future<QuerySnapshot<Map<String, dynamic>>> getChat(
+    String atUserId,
+    String atPostId,
+    String withUserId,
+  ) async =>
+      await _firestore
+          .collection('chat_screen')
+          .doc(atUserId)
+          .collection(atPostId)
+          .doc('withUserId')
+          .collection(withUserId)
+          .orderBy('dateTime', descending: true)
+          .limit(1)
+          .get()
+          .catchError((e) {
+        print(
+            'Cannot get a message from chat with $withUserId: ${e.toString()}');
+      });
+
+  Future<DocumentSnapshot<Map<String, dynamic>>> getPostData(
+    String atPostId,
+  ) async =>
+      await _firestore
+          .collection('home_screen')
+          .doc('icon_menus')
+          .collection('តំបន់ទាំងអស់')
+          .doc(atPostId)
+          .get()
+          .catchError((e) {
+        print('Cannot get post data $atPostId: ${e.toString()}');
+      });
 }

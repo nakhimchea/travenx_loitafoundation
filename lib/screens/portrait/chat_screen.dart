@@ -1,9 +1,13 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
+import 'dart:ui';
+
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:travenx_loitafoundation/config/configs.dart'
     show kHPadding, kVPadding, textScaleFactor, selectedIndex;
+import 'package:travenx_loitafoundation/helpers/chat_translator.dart';
 import 'package:travenx_loitafoundation/models/chat_object_model.dart';
 import 'package:travenx_loitafoundation/services/firestore_service.dart';
 
@@ -30,12 +34,16 @@ class _ChatScreenState extends State<ChatScreen> {
   final RefreshController _refreshController =
       RefreshController(initialRefresh: true);
   final FirestoreService _firestoreService = FirestoreService();
+  final User? _user = FirebaseAuth.instance.currentUser;
+
+  List<String> _chatPostIds = [];
+  List<String> _chatWithUserIds = [];
+  List<dynamic> _selfPostIds = [];
 
   bool _isRefreshable = true;
   bool _isLoadable = true;
 
   List<ChatObject> chatList = [];
-  DocumentSnapshot? _lastDoc;
 
   Widget _buildList() {
     return Padding(
@@ -51,7 +59,7 @@ class _ChatScreenState extends State<ChatScreen> {
             height: MediaQuery.of(context).size.height / 9,
             padding: EdgeInsets.symmetric(vertical: 4.0),
             child: _BuildChatItem(
-              message: chatList.elementAt(index),
+              chat: chatList.elementAt(index),
             ),
           );
         },
@@ -132,13 +140,51 @@ class _ChatScreenState extends State<ChatScreen> {
             builder: loadingBuilder,
           ),
           onRefresh: () async {
-            // _firestoreService
-            //     .getChatList(FirebaseAuth.instance.currentUser!.uid);
+            await _firestoreService
+                .getProfileData(_user!.uid)
+                .then((documentSnapshot) {
+              if (documentSnapshot.exists) {
+                final List<dynamic> _userChats = documentSnapshot.get('chats');
+                _userChats.forEach((chat) {
+                  _chatPostIds.add(chat['postId'].toString());
+                  _chatWithUserIds.add(chat['withUserId'].toString());
+                });
+                _selfPostIds = documentSnapshot.get('postIds');
+              }
+            }).catchError((e) {
+              print('Cannot get user profile data: ${e.toString()}');
+            });
+
+            if (_user != null) {
+              List<Map<String, dynamic>> chats = [];
+
+              final List<String> chatPostIds = _chatPostIds.reversed.toList();
+              final List<String> chatWithUserIds =
+                  _chatWithUserIds.reversed.toList();
+              assert(chatPostIds.length == chatWithUserIds.length);
+              for (int index = 0; index < _chatPostIds.length; index++) {
+                if (index < 8) {
+                  chats.add(await _firestoreService
+                      .getChat(
+                        _user!.uid,
+                        chatPostIds.elementAt(index),
+                        chatWithUserIds.elementAt(index),
+                      )
+                      .then((snapshot) => snapshot.docs.isNotEmpty
+                          ? snapshot.docs.single.data()
+                          : {}.cast<String, dynamic>()));
+                }
+              }
+              chatList = await chatTranslator(
+                  chatPostIds, chatWithUserIds, _selfPostIds, chats);
+            }
             if (mounted) setState(() => _isRefreshable = false);
             _refreshController.refreshCompleted();
           },
           onLoading: () async {
             //TODO: get more chat to list
+            // if index starts from 8 x retrieve times > chatPostIds.length
+            // return data, otherwise return false isLoadable
             if (mounted) setState(() {});
             _refreshController.loadComplete();
           },
@@ -296,9 +342,9 @@ class PopUpListTile extends StatelessWidget {
 }
 
 class _BuildChatItem extends StatelessWidget {
-  final ChatObject message;
+  final ChatObject chat;
 
-  const _BuildChatItem({Key? key, required this.message}) : super(key: key);
+  const _BuildChatItem({Key? key, required this.chat}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -319,14 +365,32 @@ class _BuildChatItem extends StatelessWidget {
         ),
         child: ListTile(
           dense: true,
-          leading: CircleAvatar(
-            radius: 20.0,
-            backgroundImage: AssetImage(message.imageUrl),
+          leading: ClipOval(
+            child: chat.imageUrl.split('/').first == 'assets'
+                ? Image(
+                    image: AssetImage(chat.imageUrl),
+                    fit: BoxFit.cover,
+                  )
+                : CachedNetworkImage(
+                    imageUrl: chat.imageUrl,
+                    fit: BoxFit.cover,
+                    placeholder: (context, _) => ImageFiltered(
+                      imageFilter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
+                      child: Image.asset(
+                        'assets/images/travenx_180.png',
+                        fit: BoxFit.cover,
+                      ),
+                    ),
+                    errorWidget: (context, _, __) => Image.asset(
+                      'assets/images/travenx_180.png',
+                      fit: BoxFit.cover,
+                    ),
+                  ),
           ),
           title: Padding(
             padding: EdgeInsets.only(bottom: 9.0),
             child: Text(
-              message.title,
+              chat.title,
               textScaleFactor: textScaleFactor,
               style: Theme.of(context).textTheme.headline3,
               overflow: TextOverflow.ellipsis,
@@ -336,9 +400,9 @@ class _BuildChatItem extends StatelessWidget {
             children: [
               Flexible(
                 child: Text(
-                  message.latestMessage,
+                  chat.latestMessage,
                   textScaleFactor: textScaleFactor,
-                  style: message.read
+                  style: chat.read
                       ? Theme.of(context).textTheme.bodyText1
                       : Theme.of(context)
                           .textTheme
@@ -347,22 +411,22 @@ class _BuildChatItem extends StatelessWidget {
                   overflow: TextOverflow.ellipsis,
                 ),
               ),
-              message.latestMessage == ''
+              chat.latestMessage == ''
                   ? SizedBox.shrink()
                   : SizedBox(width: 20.0),
               Text(
-                '${message.dateTime.hour.toString()}:'
-                '${message.dateTime.minute.toString()} '
-                '${message.dateTime.day.toString()}-'
-                '${message.dateTime.month.toString()}-'
-                '${message.dateTime.year.toString()}',
+                '${chat.dateTime.hour.toString()}:'
+                '${chat.dateTime.minute.toString()} '
+                '${chat.dateTime.day.toString()}-'
+                '${chat.dateTime.month.toString()}-'
+                '${chat.dateTime.year.toString()}',
                 textScaleFactor: textScaleFactor,
                 style: Theme.of(context).textTheme.bodyText1,
                 overflow: TextOverflow.ellipsis,
               ),
             ],
           ),
-          trailing: message.read
+          trailing: chat.read
               ? SizedBox.shrink()
               : CircleAvatar(
                   radius: 7.0,

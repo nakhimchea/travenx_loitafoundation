@@ -64,9 +64,14 @@ class _ChatState extends State<Chat> {
       appBar: AppBar(
         brightness: Theme.of(context).colorScheme.brightness,
         backgroundColor: Theme.of(context).bottomAppBarColor,
-        leading: IconButton(
-          onPressed: () => Navigator.pop(context),
-          icon: Icon(
+        leading: InkWell(
+          onTap: () => Navigator.pop(context),
+          highlightColor: Colors.transparent,
+          hoverColor:
+              Theme.of(context).scaffoldBackgroundColor.withOpacity(0.5),
+          splashColor:
+              Theme.of(context).scaffoldBackgroundColor.withOpacity(0.5),
+          child: Icon(
             Icons.arrow_back_ios_new,
             color: Theme.of(context).iconTheme.color,
             size: 18.0,

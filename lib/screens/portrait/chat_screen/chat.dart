@@ -7,18 +7,20 @@ import 'package:travenx_loitafoundation/config/configs.dart'
     show kHPadding, kVPadding, textScaleFactor;
 import 'package:travenx_loitafoundation/services/firestore_service.dart';
 
+final FirestoreService _firestoreService = FirestoreService();
+
 class Chat extends StatefulWidget {
   final String postTitle;
   final String postImageUrl;
   final String userId;
-  final String clientId;
+  final String withUserId;
   final String postId;
   const Chat({
     Key? key,
     required this.postTitle,
     required this.postImageUrl,
     required this.userId,
-    required this.clientId,
+    required this.withUserId,
     required this.postId,
   }) : super(key: key);
 
@@ -31,7 +33,6 @@ class _ChatState extends State<Chat> {
   String? _currentUserProfileUrl;
 
   void _getCurrentUserProfile() async {
-    final FirestoreService _firestoreService = FirestoreService();
     try {
       await _firestoreService
           .getProfileData(widget.userId)
@@ -119,11 +120,15 @@ class _ChatState extends State<Chat> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            MessageStreamer(),
+            MessageStreamer(
+              atUserId: widget.userId,
+              atPostId: widget.postId,
+              withUserId: widget.withUserId,
+            ),
             _currentUserDisplayName != null && _currentUserProfileUrl != null
                 ? MessageSender(
                     userId: widget.userId,
-                    clientId: widget.clientId,
+                    withUserId: widget.withUserId,
                     postId: widget.postId,
                     currentUserDisplayName: _currentUserDisplayName!,
                     currentUserProfileUrl: _currentUserProfileUrl!,
@@ -137,22 +142,37 @@ class _ChatState extends State<Chat> {
 }
 
 class MessageStreamer extends StatelessWidget {
-  const MessageStreamer({Key? key}) : super(key: key);
+  final String atUserId;
+  final String atPostId;
+  final String withUserId;
+  const MessageStreamer({
+    Key? key,
+    required this.atUserId,
+    required this.atPostId,
+    required this.withUserId,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Container();
-    //StreamBuilder<QuerySnapshot>(
-    //       stream: _firestore.collection('messages').snapshots(),
-    //       builder: (context, snapshot) {
-    //         if (!snapshot.hasData) {
-    //           return Center(
-    //             child: CircularProgressIndicator(
-    //               backgroundColor: Colors.lightBlueAccent,
-    //             ),
-    //           );
-    //         }
-    //         final messages = snapshot.data.documents.reversed;
+    print(atUserId + '/' + atPostId + '/' + withUserId);
+    return StreamBuilder(
+        stream: _firestoreService.getMessages(atUserId, atPostId, withUserId),
+        builder: (BuildContext context,
+            AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>> snapshot) {
+          if (!snapshot.hasData) {
+            return Center(
+              child: CircularProgressIndicator.adaptive(),
+            );
+          } else {
+            final _messages = snapshot.data!.docs.reversed;
+            List<MessageBubble> _messageBubbles = [];
+            _messages.forEach((element) => print(element.data()));
+          }
+
+          return Center(
+            child: CircularProgressIndicator.adaptive(),
+          );
+        });
     //         List<MessageBubble> messageBubbles = [];
     //         for (var message in messages) {
     //           final messageText = message.data['text'];
@@ -240,7 +260,7 @@ class MessageBubble extends StatelessWidget {
 
 class MessageSender extends StatefulWidget {
   final String userId;
-  final String clientId;
+  final String withUserId;
   final String postId;
   final String currentUserDisplayName;
   final String currentUserProfileUrl;
@@ -248,7 +268,7 @@ class MessageSender extends StatefulWidget {
   const MessageSender({
     Key? key,
     required this.userId,
-    required this.clientId,
+    required this.withUserId,
     required this.postId,
     required this.currentUserDisplayName,
     required this.currentUserProfileUrl,
@@ -261,7 +281,6 @@ class MessageSender extends StatefulWidget {
 class _MessageSenderState extends State<MessageSender> {
   final TextEditingController _sendingMessageController =
       TextEditingController();
-  final FirestoreService _firestoreService = FirestoreService();
 
   String _message = '';
   String _attachmentUrl = '';
@@ -329,7 +348,7 @@ class _MessageSenderState extends State<MessageSender> {
                       await _firestoreService
                           .addChatMessage(
                         widget.userId,
-                        widget.clientId,
+                        widget.withUserId,
                         widget.postId,
                         widget.currentUserDisplayName,
                         widget.currentUserProfileUrl,

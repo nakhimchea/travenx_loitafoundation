@@ -24,10 +24,9 @@ class PostDetail extends StatefulWidget {
 
 class _PostDetailState extends State<PostDetail> {
   ModelWeatherForecast? _weatherForecast;
+  final User? _user = FirebaseAuth.instance.currentUser;
   bool get _isSelfPost {
-    return FirebaseAuth.instance.currentUser != null
-        ? FirebaseAuth.instance.currentUser!.uid == widget.post.clientId
-        : false;
+    return _user != null ? _user!.uid == widget.post.clientId : false;
   }
 
   void getWeatherForecast() async {
@@ -94,10 +93,6 @@ class _PostDetailState extends State<PostDetail> {
                 children: [
                   GestureDetector(
                     onTap: () async {
-                      final User? _user = FirebaseAuth.instance.currentUser;
-                      final FirestoreService _firestoreService =
-                          FirestoreService();
-
                       if (_user != null) {
                         Navigator.push(
                           context,
@@ -105,14 +100,14 @@ class _PostDetailState extends State<PostDetail> {
                             builder: (_) => Chat(
                               postTitle: widget.post.title,
                               postImageUrl: widget.post.imageUrls.first,
-                              userId: _user.uid,
+                              userId: _user!.uid,
                               withUserId: widget.post.clientId,
                               postId: widget.post.postId,
                             ),
                           ),
                         );
 
-                        await _firestoreService.addChat2Profile(_user.uid,
+                        await FirestoreService().addChat2Profile(_user!.uid,
                             widget.post.postId, widget.post.clientId);
                       } else {
                         selectedIndex = 1;

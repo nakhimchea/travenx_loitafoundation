@@ -4,14 +4,12 @@ import 'package:travenx_loitafoundation/config/configs.dart';
 class WalletScreen extends StatefulWidget {
   final bool isLoggedIn;
   final String displayName;
-  final String phoneNumber;
   final String profileUrl;
   final void Function() loggedInCallback;
   const WalletScreen({
     Key? key,
     required this.isLoggedIn,
     required this.displayName,
-    required this.phoneNumber,
     required this.profileUrl,
     required this.loggedInCallback,
   }) : super(key: key);
@@ -23,7 +21,7 @@ class WalletScreen extends StatefulWidget {
 class _WalletScreenState extends State<WalletScreen> {
   @override
   Widget build(BuildContext context) {
-    if (widget.isLoggedIn == true && widget.phoneNumber != '')
+    if (widget.isLoggedIn == true && widget.displayName != '')
       return Scaffold(
         body: LayoutBuilder(
           builder: (context, constraints) => Stack(

@@ -47,13 +47,11 @@ class _PortraitBodyState extends State<PortraitBody> {
           ChatScreen(
               isLoggedIn: widget.isLoggedIn,
               displayName: widget.displayName,
-              phoneNumber: widget.phoneNumber,
               profileUrl: widget.profileUrl,
               loggedInCallback: widget.loggedInCallback),
           WalletScreen(
               isLoggedIn: widget.isLoggedIn,
               displayName: widget.displayName,
-              phoneNumber: widget.phoneNumber,
               profileUrl: widget.profileUrl,
               loggedInCallback: widget.loggedInCallback),
           ProfileScreen(

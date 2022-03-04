@@ -94,40 +94,56 @@ class _PostDetailState extends State<PostDetail> {
                   GestureDetector(
                     onTap: () async {
                       if (_user != null) {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (_) => Chat(
-                              postTitle: widget.post.title,
-                              postImageUrl: widget.post.imageUrls.first,
-                              userId: _user!.uid,
-                              withUserId: widget.post.clientId,
-                              postId: widget.post.postId,
-                            ),
-                          ),
-                        );
-
                         final FirestoreService _firestoreService =
                             FirestoreService();
-                        String? userDisplayName, userProfileUrl;
+                        String? userDisplayName;
+                        String? userPhoneNumber;
+                        String? userProfileUrl;
                         await _firestoreService
                             .getProfileData(_user!.uid)
                             .then((snapshot) {
                           userDisplayName =
                               snapshot.get('displayName').toString();
+                          userPhoneNumber =
+                              snapshot.get('phoneNumber').toString();
                           userProfileUrl =
                               snapshot.get('profileUrl').toString();
                         });
-                        if (userDisplayName != null && userProfileUrl != null)
+
+                        if (userDisplayName != null &&
+                            userPhoneNumber != null &&
+                            userProfileUrl != null) {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (_) => Chat(
+                                  postTitle: widget.post.title,
+                                  postImageUrl: widget.post.imageUrls.first,
+                                  userId: _user!.uid,
+                                  userDisplayName: userDisplayName!,
+                                  userProfileUrl: userProfileUrl!,
+                                  postId: widget.post.postId,
+                                  withUserId: widget.post.clientId,
+                                  withDisplayName:
+                                      widget.post.clientDisplayName,
+                                  withPhoneNumber:
+                                      widget.post.clientPhoneNumber,
+                                  withProfileUrl: widget.post.clientProfileUrl),
+                            ),
+                          );
+
                           await _firestoreService.addChat2Profile(
                             _user!.uid,
                             userDisplayName!,
+                            userPhoneNumber!,
                             userProfileUrl!,
                             widget.post.postId,
                             widget.post.clientId,
                             widget.post.clientDisplayName,
+                            widget.post.clientPhoneNumber,
                             widget.post.clientProfileUrl,
                           );
+                        }
                       } else {
                         selectedIndex = 1;
                         Navigator.popUntil(context, (route) => route.isFirst);

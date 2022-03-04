@@ -16,14 +16,12 @@ final FirestoreService _firestoreService = FirestoreService();
 class ChatScreen extends StatefulWidget {
   final bool isLoggedIn;
   final String displayName;
-  final String phoneNumber;
   final String profileUrl;
   final void Function() loggedInCallback;
   const ChatScreen({
     Key? key,
     required this.isLoggedIn,
     required this.displayName,
-    required this.phoneNumber,
     required this.profileUrl,
     required this.loggedInCallback,
   }) : super(key: key);
@@ -41,8 +39,9 @@ class _ChatScreenState extends State<ChatScreen> {
   List<String> _chatPostsImageUrl = [];
   List<String> _chatPostsTitle = [];
   List<String> _chatWithUserIds = [];
-  List<String> _chatWithDisplayName = [];
-  List<String> _chatWithProfileUrl = [];
+  List<String> _chatWithDisplayNames = [];
+  List<String> _chatWithPhoneNumbers = [];
+  List<String> _chatWithProfileUrls = [];
   List<dynamic> _selfPostIds = [];
 
   bool _isRefreshable = true;
@@ -63,21 +62,21 @@ class _ChatScreenState extends State<ChatScreen> {
       ),
       child: ListView.builder(
         physics: BouncingScrollPhysics(),
-        itemCount: _chatPostsImageUrl.length,
+        itemCount: _chatPostsTitle.length,
         itemBuilder: (BuildContext context, int index) {
           return Container(
             height: MediaQuery.of(context).size.height / 9,
             padding: EdgeInsets.symmetric(vertical: 4.0),
             child: _BuildChatItem(
-              currentUserDisplayName: widget.displayName,
-              currentUserPhoneNumber: widget.phoneNumber,
-              currentUserProfileUrl: widget.profileUrl,
-              postId: buildChatPostIds.elementAt(index),
               postImageUrl: _chatPostsImageUrl.elementAt(index),
               postTitle: _chatPostsTitle.elementAt(index),
+              currentUserDisplayName: widget.displayName,
+              currentUserProfileUrl: widget.profileUrl,
+              postId: buildChatPostIds.elementAt(index),
               withUserId: _chatWithUserIds.elementAt(index),
-              withDisplayName: _chatWithDisplayName.elementAt(index),
-              withProfileUrl: _chatWithProfileUrl.elementAt(index),
+              withDisplayName: _chatWithDisplayNames.elementAt(index),
+              withPhoneNumber: _chatWithPhoneNumbers.elementAt(index),
+              withProfileUrl: _chatWithProfileUrls.elementAt(index),
               selfPostIds: _selfPostIds.toString(),
             ),
           );
@@ -136,8 +135,9 @@ class _ChatScreenState extends State<ChatScreen> {
         _chatPostsImageUrl = [];
         _chatPostsTitle = [];
         _chatWithUserIds = [];
-        _chatWithDisplayName = [];
-        _chatWithProfileUrl = [];
+        _chatWithDisplayNames = [];
+        _chatWithPhoneNumbers = [];
+        _chatWithProfileUrls = [];
         _selfPostIds = [];
         _isRefreshable = true;
         _isLoadable = true;
@@ -151,7 +151,7 @@ class _ChatScreenState extends State<ChatScreen> {
     final User? _user = FirebaseAuth.instance.currentUser;
     if (_user != null) if (_user.uid != _savedUser) refreshChatScreen(_user);
 
-    if (widget.isLoggedIn == true && widget.phoneNumber != '') {
+    if (widget.isLoggedIn == true && widget.displayName != '') {
       return Scaffold(
         appBar: AppBar(
           brightness: Theme.of(context).colorScheme.brightness,
@@ -188,8 +188,9 @@ class _ChatScreenState extends State<ChatScreen> {
                 for (dynamic chat in _reversedChats) {
                   _chatPostIds.add(chat['postId'].toString());
                   _chatWithUserIds.add(chat['withUserId'].toString());
-                  _chatWithDisplayName.add(chat['withDisplayName'].toString());
-                  _chatWithProfileUrl.add(chat['withProfileUrl'].toString());
+                  _chatWithDisplayNames.add(chat['withDisplayName'].toString());
+                  _chatWithPhoneNumbers.add(chat['withPhoneNumber'].toString());
+                  _chatWithProfileUrls.add(chat['withProfileUrl'].toString());
                 }
                 _selfPostIds = documentSnapshot.get('postIds');
               }
@@ -388,27 +389,27 @@ class PopUpListTile extends StatelessWidget {
 }
 
 class _BuildChatItem extends StatelessWidget {
-  final String currentUserDisplayName;
-  final String currentUserPhoneNumber;
-  final String currentUserProfileUrl;
-  final String postId;
   final String postImageUrl;
   final String postTitle;
+  final String currentUserDisplayName;
+  final String currentUserProfileUrl;
+  final String postId;
   final String withUserId;
   final String withDisplayName;
+  final String withPhoneNumber;
   final String withProfileUrl;
   final String selfPostIds;
 
   const _BuildChatItem({
     Key? key,
-    required this.currentUserDisplayName,
-    required this.currentUserPhoneNumber,
-    required this.currentUserProfileUrl,
-    required this.postId,
     required this.postImageUrl,
     required this.postTitle,
+    required this.currentUserDisplayName,
+    required this.currentUserProfileUrl,
+    required this.postId,
     required this.withUserId,
     required this.withDisplayName,
+    required this.withPhoneNumber,
     required this.withProfileUrl,
     required this.selfPostIds,
   }) : super(key: key);
@@ -427,11 +428,16 @@ class _BuildChatItem extends StatelessWidget {
         context,
         MaterialPageRoute(
           builder: (context) => Chat(
-              postTitle: chatTitle,
-              postImageUrl: chatImageUrl,
+              postTitle: postTitle,
+              postImageUrl: postImageUrl,
               userId: _user!.uid,
+              userDisplayName: currentUserDisplayName,
+              userProfileUrl: currentUserProfileUrl,
+              postId: postId,
               withUserId: withUserId,
-              postId: postId),
+              withDisplayName: withDisplayName,
+              withPhoneNumber: withPhoneNumber,
+              withProfileUrl: withProfileUrl),
         ),
       ),
       child: Container(

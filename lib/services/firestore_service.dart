@@ -272,10 +272,12 @@ class FirestoreService {
   Future<void> addChat2Profile(
     String userId,
     String userDisplayName,
+    String userPhoneNumber,
     String userProfileUrl,
     String postId,
     String clientId,
     String clientDisplayName,
+    String clientPhoneNumber,
     String clientProfileUrl,
   ) async {
     final List<dynamic> _userChats = await _readChats(userId).catchError((e) {
@@ -290,24 +292,28 @@ class FirestoreService {
           'postId': postId,
           'withUserId': clientId,
           'withDisplayName': clientDisplayName,
+          'withPhoneNumber': clientPhoneNumber,
           'withProfileUrl': clientProfileUrl,
         }.toString()))
       _userChats.add({
         'postId': postId,
         'withUserId': clientId,
         'withDisplayName': clientDisplayName,
+        'withPhoneNumber': clientPhoneNumber,
         'withProfileUrl': clientProfileUrl,
       });
     if (!_clientChats.toString().contains({
           'postId': postId,
           'withUserId': userId,
           'withDisplayName': userDisplayName,
+          'withPhoneNumber': userPhoneNumber,
           'withProfileUrl': userProfileUrl,
         }.toString()))
       _clientChats.add({
         'postId': postId,
         'withUserId': userId,
         'withDisplayName': userDisplayName,
+        'withPhoneNumber': userPhoneNumber,
         'withProfileUrl': userProfileUrl,
       });
 

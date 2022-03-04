@@ -13,15 +13,25 @@ class Chat extends StatefulWidget {
   final String postTitle;
   final String postImageUrl;
   final String userId;
-  final String withUserId;
+  final String userDisplayName;
+  final String userProfileUrl;
   final String postId;
+  final String withUserId;
+  final String withDisplayName;
+  final String withPhoneNumber;
+  final String withProfileUrl;
   const Chat({
     Key? key,
     required this.postTitle,
     required this.postImageUrl,
     required this.userId,
-    required this.withUserId,
+    required this.userDisplayName,
+    required this.userProfileUrl,
     required this.postId,
+    required this.withUserId,
+    required this.withDisplayName,
+    required this.withPhoneNumber,
+    required this.withProfileUrl,
   }) : super(key: key);
 
   @override
@@ -29,30 +39,6 @@ class Chat extends StatefulWidget {
 }
 
 class _ChatState extends State<Chat> {
-  String? _currentUserDisplayName;
-  String? _currentUserProfileUrl;
-
-  void _getCurrentUserProfile() async {
-    try {
-      await _firestoreService
-          .getProfileData(widget.userId)
-          .then((DocumentSnapshot<Map<String, dynamic>> documentSnapshot) {
-        setState(() {
-          _currentUserDisplayName = documentSnapshot.get('displayName');
-          _currentUserProfileUrl = documentSnapshot.get('profileUrl');
-        });
-      });
-    } catch (e) {
-      print('Cannot get current user data: ${e.toString()}');
-    }
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    _getCurrentUserProfile();
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -121,19 +107,21 @@ class _ChatState extends State<Chat> {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             MessageStreamer(
-              atUserId: widget.userId,
-              atPostId: widget.postId,
+              userId: widget.userId,
+              userDisplayName: widget.userDisplayName,
+              userProfileUrl: widget.userProfileUrl,
+              postId: widget.postId,
               withUserId: widget.withUserId,
+              withDisplayName: widget.withDisplayName,
+              withProfileUrl: widget.withProfileUrl,
             ),
-            _currentUserDisplayName != null && _currentUserProfileUrl != null
-                ? MessageSender(
-                    userId: widget.userId,
-                    withUserId: widget.withUserId,
-                    postId: widget.postId,
-                    currentUserDisplayName: _currentUserDisplayName!,
-                    currentUserProfileUrl: _currentUserProfileUrl!,
-                  )
-                : SizedBox.shrink(), // Cannot chat if currentUser is null
+            MessageSender(
+              userId: widget.userId,
+              withUserId: widget.withUserId,
+              postId: widget.postId,
+              currentUserDisplayName: widget.userDisplayName,
+              currentUserProfileUrl: widget.userProfileUrl,
+            ), // Cannot chat if currentUser is null
           ],
         ),
       ),
@@ -142,35 +130,40 @@ class _ChatState extends State<Chat> {
 }
 
 class MessageStreamer extends StatelessWidget {
-  final String atUserId;
-  final String atPostId;
+  final String userId;
+  final String userDisplayName;
+  final String userProfileUrl;
+  final String postId;
   final String withUserId;
+  final String withDisplayName;
+  final String withProfileUrl;
   const MessageStreamer({
     Key? key,
-    required this.atUserId,
-    required this.atPostId,
+    required this.userId,
+    required this.userDisplayName,
+    required this.userProfileUrl,
+    required this.postId,
     required this.withUserId,
+    required this.withDisplayName,
+    required this.withProfileUrl,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    print(atUserId + '/' + atPostId + '/' + withUserId);
     return StreamBuilder(
-        stream: _firestoreService.getMessages(atUserId, atPostId, withUserId),
+        stream: _firestoreService.getMessages(userId, postId, withUserId),
         builder: (BuildContext context,
             AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>> snapshot) {
-          if (!snapshot.hasData) {
-            return Center(
-              child: CircularProgressIndicator.adaptive(),
-            );
-          } else {
-            final _messages = snapshot.data!.docs.reversed;
-            List<MessageBubble> _messageBubbles = [];
-            _messages.forEach((element) => print(element.data()));
-          }
+          if (!snapshot.hasData)
+            return Center(child: CircularProgressIndicator.adaptive());
 
-          return Center(
-            child: CircularProgressIndicator.adaptive(),
+          final _messages = snapshot.data!.docs.reversed;
+          List<MessageBubble> _messageBubbles = [];
+
+          return Expanded(
+            child: Center(
+              child: CircularProgressIndicator.adaptive(),
+            ),
           );
         });
     //         List<MessageBubble> messageBubbles = [];

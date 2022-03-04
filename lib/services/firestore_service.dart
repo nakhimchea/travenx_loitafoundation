@@ -271,8 +271,12 @@ class FirestoreService {
 
   Future<void> addChat2Profile(
     String userId,
+    String userDisplayName,
+    String userProfileUrl,
     String postId,
     String clientId,
+    String clientDisplayName,
+    String clientProfileUrl,
   ) async {
     final List<dynamic> _userChats = await _readChats(userId).catchError((e) {
       print('Cannot read previous user chats: ${e.toString()}');
@@ -282,14 +286,30 @@ class FirestoreService {
       print('Cannot read previous client chats: ${e.toString()}');
     });
 
-    if (!_userChats
-        .toString()
-        .contains({'postId': postId, 'withUserId': clientId}.toString()))
-      _userChats.add({'postId': postId, 'withUserId': clientId});
-    if (!_clientChats
-        .toString()
-        .contains({'postId': postId, 'withUserId': userId}.toString()))
-      _clientChats.add({'postId': postId, 'withUserId': userId});
+    if (!_userChats.toString().contains({
+          'postId': postId,
+          'withUserId': clientId,
+          'withDisplayName': clientDisplayName,
+          'withProfileUrl': clientProfileUrl,
+        }.toString()))
+      _userChats.add({
+        'postId': postId,
+        'withUserId': clientId,
+        'withDisplayName': clientDisplayName,
+        'withProfileUrl': clientProfileUrl,
+      });
+    if (!_clientChats.toString().contains({
+          'postId': postId,
+          'withUserId': userId,
+          'withDisplayName': userDisplayName,
+          'withProfileUrl': userProfileUrl,
+        }.toString()))
+      _clientChats.add({
+        'postId': postId,
+        'withUserId': userId,
+        'withDisplayName': userDisplayName,
+        'withProfileUrl': userProfileUrl,
+      });
 
     await _firestore.collection('profile_screen').doc(userId).set(
       {'chats': _userChats},
@@ -347,24 +367,21 @@ class FirestoreService {
     });
   }
 
-  Future<QuerySnapshot<Map<String, dynamic>>> getChat(
+  Stream<QuerySnapshot<Map<String, dynamic>>> getMessages(
     String atUserId,
     String atPostId,
-    String withUserId,
-  ) async =>
-      await _firestore
+    String withUserId, {
+    int messageQuantity = 8,
+  }) =>
+      _firestore
           .collection('chat_screen')
           .doc(atUserId)
           .collection(atPostId)
           .doc('withUserId')
           .collection(withUserId)
           .orderBy('dateTime', descending: true)
-          .limit(1)
-          .get()
-          .catchError((e) {
-        print(
-            'Cannot get a message from chat with $withUserId: ${e.toString()}');
-      });
+          .limit(messageQuantity)
+          .snapshots();
 
   Future<DocumentSnapshot<Map<String, dynamic>>> getPostData(
     String atPostId,

@@ -1,15 +1,17 @@
 import 'dart:ui';
 
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:travenx_loitafoundation/config/configs.dart'
     show kHPadding, kVPadding, textScaleFactor, selectedIndex;
-import 'package:travenx_loitafoundation/helpers/chat_translator.dart';
-import 'package:travenx_loitafoundation/models/chat_object_model.dart';
+import 'package:travenx_loitafoundation/screens/portrait/chat_screen/chat.dart';
 import 'package:travenx_loitafoundation/services/firestore_service.dart';
+
+final FirestoreService _firestoreService = FirestoreService();
 
 class ChatScreen extends StatefulWidget {
   final bool isLoggedIn;
@@ -31,19 +33,27 @@ class ChatScreen extends StatefulWidget {
 }
 
 class _ChatScreenState extends State<ChatScreen> {
-  final RefreshController _refreshController =
+  static int chatLoadSize = 2;
+  RefreshController _refreshController =
       RefreshController(initialRefresh: true);
-  final FirestoreService _firestoreService = FirestoreService();
-  final User? _user = FirebaseAuth.instance.currentUser;
 
   List<String> _chatPostIds = [];
+  List<String> _chatPostsImageUrl = [];
+  List<String> _chatPostsTitle = [];
   List<String> _chatWithUserIds = [];
+  List<String> _chatWithDisplayName = [];
+  List<String> _chatWithProfileUrl = [];
   List<dynamic> _selfPostIds = [];
 
   bool _isRefreshable = true;
   bool _isLoadable = true;
+  int loadingTimes = 1;
 
-  List<ChatObject> chatList = [];
+  List<String> buildChatPostIds = [];
+
+  String _savedUser = FirebaseAuth.instance.currentUser != null
+      ? FirebaseAuth.instance.currentUser!.uid
+      : '';
 
   Widget _buildList() {
     return Padding(
@@ -53,16 +63,22 @@ class _ChatScreenState extends State<ChatScreen> {
       ),
       child: ListView.builder(
         physics: BouncingScrollPhysics(),
-        itemCount: chatList.length,
+        itemCount: _chatPostsImageUrl.length,
         itemBuilder: (BuildContext context, int index) {
           return Container(
             height: MediaQuery.of(context).size.height / 9,
             padding: EdgeInsets.symmetric(vertical: 4.0),
             child: _BuildChatItem(
-              chat: chatList.elementAt(index),
-              userId: _user!.uid,
+              currentUserDisplayName: widget.displayName,
+              currentUserPhoneNumber: widget.phoneNumber,
+              currentUserProfileUrl: widget.profileUrl,
+              postId: buildChatPostIds.elementAt(index),
+              postImageUrl: _chatPostsImageUrl.elementAt(index),
+              postTitle: _chatPostsTitle.elementAt(index),
               withUserId: _chatWithUserIds.elementAt(index),
-              postId: _chatPostIds.elementAt(index),
+              withDisplayName: _chatWithDisplayName.elementAt(index),
+              withProfileUrl: _chatWithProfileUrl.elementAt(index),
+              selfPostIds: _selfPostIds.toString(),
             ),
           );
         },
@@ -76,7 +92,7 @@ class _ChatScreenState extends State<ChatScreen> {
     if (mode == LoadStatus.idle)
       _footer = Center(
         child: Icon(
-          Icons.keyboard_arrow_left_outlined,
+          Icons.keyboard_arrow_up_outlined,
           size: 22,
           color: Theme.of(context).primaryColor,
         ),
@@ -115,13 +131,32 @@ class _ChatScreenState extends State<ChatScreen> {
     return _footer;
   }
 
+  void refreshChatScreen(User currentUser) => setState(() {
+        _chatPostIds = [];
+        _chatPostsImageUrl = [];
+        _chatPostsTitle = [];
+        _chatWithUserIds = [];
+        _chatWithDisplayName = [];
+        _chatWithProfileUrl = [];
+        _selfPostIds = [];
+        _isRefreshable = true;
+        _isLoadable = true;
+        loadingTimes = 1;
+        buildChatPostIds = [];
+        _savedUser = currentUser.uid;
+      });
+
   @override
   Widget build(BuildContext context) {
-    if (widget.isLoggedIn == true && widget.phoneNumber != '')
+    final User? _user = FirebaseAuth.instance.currentUser;
+    if (_user != null) if (_user.uid != _savedUser) refreshChatScreen(_user);
+
+    if (widget.isLoggedIn == true && widget.phoneNumber != '') {
       return Scaffold(
         appBar: AppBar(
           brightness: Theme.of(context).colorScheme.brightness,
           elevation: 0.5,
+          shadowColor: Theme.of(context).disabledColor,
           backgroundColor: Theme.of(context).scaffoldBackgroundColor,
           title: Text(
             'សារ',
@@ -148,52 +183,60 @@ class _ChatScreenState extends State<ChatScreen> {
                 .then((documentSnapshot) {
               if (documentSnapshot.exists) {
                 final List<dynamic> _userChats = documentSnapshot.get('chats');
-                _userChats.forEach((chat) {
+                final List<dynamic> _reversedChats =
+                    _userChats.reversed.toList();
+                for (dynamic chat in _reversedChats) {
                   _chatPostIds.add(chat['postId'].toString());
                   _chatWithUserIds.add(chat['withUserId'].toString());
-                });
+                  _chatWithDisplayName.add(chat['withDisplayName'].toString());
+                  _chatWithProfileUrl.add(chat['withProfileUrl'].toString());
+                }
                 _selfPostIds = documentSnapshot.get('postIds');
               }
             }).catchError((e) {
               print('Cannot get user profile data: ${e.toString()}');
             });
 
-            if (_user != null) {
-              List<Map<String, dynamic>> chats = [];
-
-              final List<String> chatPostIds = _chatPostIds.reversed.toList();
-              final List<String> chatWithUserIds =
-                  _chatWithUserIds.reversed.toList();
-              assert(chatPostIds.length == chatWithUserIds.length);
-              for (int index = 0; index < _chatPostIds.length; index++) {
-                if (index < 8) {
-                  chats.add(await _firestoreService
-                      .getChat(
-                        _user!.uid,
-                        chatPostIds.elementAt(index),
-                        chatWithUserIds.elementAt(index),
-                      )
-                      .then((snapshot) => snapshot.docs.isNotEmpty
-                          ? snapshot.docs.single.data()
-                          : {}.cast<String, dynamic>()));
-                }
+            assert(_chatPostIds.length == _chatWithUserIds.length);
+            for (int index = 0; index < _chatPostIds.length; index++)
+              if (index < chatLoadSize) {
+                buildChatPostIds.add(_chatPostIds.elementAt(index));
+                await _firestoreService
+                    .getPostData(_chatPostIds.elementAt(index))
+                    .then((snapshot) {
+                  _chatPostsImageUrl
+                      .add(snapshot.get('imageUrls')[0].toString());
+                  _chatPostsTitle.add(snapshot.get('title').toString());
+                });
               }
-              chatList = await chatTranslator(
-                  chatPostIds, chatWithUserIds, _selfPostIds, chats);
-            }
+
             if (mounted) setState(() => _isRefreshable = false);
             _refreshController.refreshCompleted();
           },
           onLoading: () async {
-            //TODO: get more chat to list
-            // if index starts from 8 x retrieve times > chatPostIds.length
-            // return data, otherwise return false isLoadable
+            if (loadingTimes * chatLoadSize < _chatPostIds.length) {
+              setState(() => loadingTimes++);
+              for (int index = (loadingTimes - 1) * chatLoadSize;
+                  index < _chatPostIds.length;
+                  index++)
+                if (index < loadingTimes * chatLoadSize) {
+                  buildChatPostIds.add(_chatPostIds.elementAt(index));
+                  await _firestoreService
+                      .getPostData(_chatPostIds.elementAt(index))
+                      .then((snapshot) {
+                    _chatPostsImageUrl
+                        .add(snapshot.get('imageUrls')[0].toString());
+                    _chatPostsTitle.add(snapshot.get('title').toString());
+                  });
+                }
+            } else
+              setState(() => _isLoadable = false);
             if (mounted) setState(() {});
             _refreshController.loadComplete();
           },
         ),
       );
-    else
+    } else
       return Scaffold(
         body: Stack(
           children: [
@@ -345,105 +388,139 @@ class PopUpListTile extends StatelessWidget {
 }
 
 class _BuildChatItem extends StatelessWidget {
-  final ChatObject chat;
-  final String userId;
-  final String withUserId;
+  final String currentUserDisplayName;
+  final String currentUserPhoneNumber;
+  final String currentUserProfileUrl;
   final String postId;
+  final String postImageUrl;
+  final String postTitle;
+  final String withUserId;
+  final String withDisplayName;
+  final String withProfileUrl;
+  final String selfPostIds;
 
-  const _BuildChatItem(
-      {Key? key,
-        required this.chat,
-        required this.userId,
-        required this.withUserId,
-        required this.postId,
-      }) : super(key: key);
+  const _BuildChatItem({
+    Key? key,
+    required this.currentUserDisplayName,
+    required this.currentUserPhoneNumber,
+    required this.currentUserProfileUrl,
+    required this.postId,
+    required this.postImageUrl,
+    required this.postTitle,
+    required this.withUserId,
+    required this.withDisplayName,
+    required this.withProfileUrl,
+    required this.selfPostIds,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    final User? _user = FirebaseAuth.instance.currentUser;
+
+    final String chatImageUrl =
+        selfPostIds.contains(postId) ? withProfileUrl : postImageUrl;
+    final String chatTitle =
+        selfPostIds.contains(postId) ? withDisplayName : postTitle;
+
     return GestureDetector(
-      onTap: () {},
-      //TODO: Route User to Chat screen
-      //     () => Navigator.push(
-      //   context,
-      //   MaterialPageRoute(
-      //     builder: (context) => ChatRoomSubscreen(message: message),
-      //   ),
-      // ),
+      onTap: () => Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => Chat(
+              postTitle: chatTitle,
+              postImageUrl: chatImageUrl,
+              userId: _user!.uid,
+              withUserId: withUserId,
+              postId: postId),
+        ),
+      ),
       child: Container(
         alignment: Alignment.center,
         decoration: BoxDecoration(
           color: Theme.of(context).bottomAppBarColor,
           borderRadius: BorderRadius.circular(15.0),
         ),
-        child: ListTile(
-          dense: true,
-          leading: ClipOval(
-            child: chat.imageUrl.split('/').first == 'assets'
-                ? Image(
-                    image: AssetImage(chat.imageUrl),
-                    fit: BoxFit.cover,
-                  )
-                : CachedNetworkImage(
-                    imageUrl: chat.imageUrl,
-                    fit: BoxFit.cover,
-                    placeholder: (context, _) => ImageFiltered(
-                      imageFilter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
-                      child: Image.asset(
-                        'assets/images/travenx_180.png',
+        child: StreamBuilder(
+          stream: _firestoreService.getMessages(_user!.uid, postId, withUserId,
+              messageQuantity: 1),
+          builder: (BuildContext context,
+              AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>> snapshot) {
+            if (!snapshot.hasData)
+              return Center(child: CircularProgressIndicator.adaptive());
+
+            final String chatMessage =
+                snapshot.data!.docs.single.get('message').toString();
+            final DateTime chatDateTime = DateTime.fromMillisecondsSinceEpoch(
+                int.parse(snapshot.data!.docs.single.get('dateTime')));
+            return ListTile(
+              dense: true,
+              leading: ClipOval(
+                child: chatImageUrl.split('/').first == 'assets'
+                    ? Image(
+                        image: AssetImage(chatImageUrl),
                         fit: BoxFit.cover,
+                      )
+                    : CachedNetworkImage(
+                        imageUrl: chatImageUrl,
+                        fit: BoxFit.cover,
+                        placeholder: (context, _) => ImageFiltered(
+                          imageFilter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
+                          child: Image.asset(
+                            'assets/images/travenx_180.png',
+                            fit: BoxFit.cover,
+                          ),
+                        ),
+                        errorWidget: (context, _, __) => Image.asset(
+                          'assets/images/travenx_180.png',
+                          fit: BoxFit.cover,
+                        ),
                       ),
-                    ),
-                    errorWidget: (context, _, __) => Image.asset(
-                      'assets/images/travenx_180.png',
-                      fit: BoxFit.cover,
-                    ),
-                  ),
-          ),
-          title: Padding(
-            padding: EdgeInsets.only(bottom: 9.0),
-            child: Text(
-              chat.title,
-              textScaleFactor: textScaleFactor,
-              style: Theme.of(context).textTheme.headline3,
-              overflow: TextOverflow.ellipsis,
-            ),
-          ),
-          subtitle: Row(
-            children: [
-              Flexible(
+              ),
+              title: Padding(
+                padding: EdgeInsets.only(bottom: 9.0),
                 child: Text(
-                  chat.latestMessage,
+                  chatTitle,
                   textScaleFactor: textScaleFactor,
-                  style: chat.read
-                      ? Theme.of(context).textTheme.bodyText1
-                      : Theme.of(context)
-                          .textTheme
-                          .bodyText1!
-                          .copyWith(color: Theme.of(context).primaryColor),
+                  style: Theme.of(context).textTheme.headline3,
                   overflow: TextOverflow.ellipsis,
                 ),
               ),
-              chat.latestMessage == ''
-                  ? SizedBox.shrink()
-                  : SizedBox(width: 20.0),
-              Text(
-                '${chat.dateTime.hour.toString()}:'
-                '${chat.dateTime.minute.toString()} '
-                '${chat.dateTime.day.toString()}-'
-                '${chat.dateTime.month.toString()}-'
-                '${chat.dateTime.year.toString()}',
-                textScaleFactor: textScaleFactor,
-                style: Theme.of(context).textTheme.bodyText1,
-                overflow: TextOverflow.ellipsis,
+              subtitle: Row(
+                children: [
+                  Flexible(
+                    child: Text(
+                      chatMessage,
+                      textScaleFactor: textScaleFactor,
+                      style: true //TODO
+                          ? Theme.of(context).textTheme.bodyText1
+                          : Theme.of(context)
+                              .textTheme
+                              .bodyText1!
+                              .copyWith(color: Theme.of(context).primaryColor),
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                  ),
+                  chatMessage == '' ? SizedBox.shrink() : SizedBox(width: 20.0),
+                  Text(
+                    '${chatDateTime.hour.toString()}:'
+                    '${chatDateTime.minute.toString()} '
+                    '${chatDateTime.day.toString()}-'
+                    '${chatDateTime.month.toString()}-'
+                    '${chatDateTime.year.toString()}',
+                    textScaleFactor: textScaleFactor,
+                    style: Theme.of(context).textTheme.bodyText1,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                ],
               ),
-            ],
-          ),
-          trailing: chat.read
-              ? SizedBox.shrink()
-              : CircleAvatar(
-                  radius: 7.0,
-                  backgroundColor: Theme.of(context).primaryColor,
-                ),
+              trailing: true //TODO
+                  ? SizedBox.shrink()
+                  : CircleAvatar(
+                      radius: 7.0,
+                      backgroundColor: Theme.of(context).primaryColor,
+                    ),
+            );
+          },
         ),
       ),
     );

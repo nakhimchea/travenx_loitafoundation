@@ -107,8 +107,27 @@ class _PostDetailState extends State<PostDetail> {
                           ),
                         );
 
-                        await FirestoreService().addChat2Profile(_user!.uid,
-                            widget.post.postId, widget.post.clientId);
+                        final FirestoreService _firestoreService =
+                            FirestoreService();
+                        String? userDisplayName, userProfileUrl;
+                        await _firestoreService
+                            .getProfileData(_user!.uid)
+                            .then((snapshot) {
+                          userDisplayName =
+                              snapshot.get('displayName').toString();
+                          userProfileUrl =
+                              snapshot.get('profileUrl').toString();
+                        });
+                        if (userDisplayName != null && userProfileUrl != null)
+                          await _firestoreService.addChat2Profile(
+                            _user!.uid,
+                            userDisplayName!,
+                            userProfileUrl!,
+                            widget.post.postId,
+                            widget.post.clientId,
+                            widget.post.clientDisplayName,
+                            widget.post.clientProfileUrl,
+                          );
                       } else {
                         selectedIndex = 1;
                         Navigator.popUntil(context, (route) => route.isFirst);

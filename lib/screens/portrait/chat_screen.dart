@@ -64,21 +64,17 @@ class _ChatScreenState extends State<ChatScreen> {
         physics: BouncingScrollPhysics(),
         itemCount: _chatPostsTitle.length,
         itemBuilder: (BuildContext context, int index) {
-          return Container(
-            height: MediaQuery.of(context).size.height / 9,
-            padding: EdgeInsets.symmetric(vertical: 4.0),
-            child: _BuildChatItem(
-              postImageUrl: _chatPostsImageUrl.elementAt(index),
-              postTitle: _chatPostsTitle.elementAt(index),
-              currentUserDisplayName: widget.displayName,
-              currentUserProfileUrl: widget.profileUrl,
-              postId: buildChatPostIds.elementAt(index),
-              withUserId: _chatWithUserIds.elementAt(index),
-              withDisplayName: _chatWithDisplayNames.elementAt(index),
-              withPhoneNumber: _chatWithPhoneNumbers.elementAt(index),
-              withProfileUrl: _chatWithProfileUrls.elementAt(index),
-              selfPostIds: _selfPostIds.toString(),
-            ),
+          return _BuildChatItem(
+            postImageUrl: _chatPostsImageUrl.elementAt(index),
+            postTitle: _chatPostsTitle.elementAt(index),
+            currentUserDisplayName: widget.displayName,
+            currentUserProfileUrl: widget.profileUrl,
+            postId: buildChatPostIds.elementAt(index),
+            withUserId: _chatWithUserIds.elementAt(index),
+            withDisplayName: _chatWithDisplayNames.elementAt(index),
+            withPhoneNumber: _chatWithPhoneNumbers.elementAt(index),
+            withProfileUrl: _chatWithProfileUrls.elementAt(index),
+            selfPostIds: _selfPostIds.toString(),
           );
         },
       ),
@@ -440,94 +436,111 @@ class _BuildChatItem extends StatelessWidget {
               withProfileUrl: withProfileUrl),
         ),
       ),
-      child: Container(
-        alignment: Alignment.center,
-        decoration: BoxDecoration(
-          color: Theme.of(context).bottomAppBarColor,
-          borderRadius: BorderRadius.circular(15.0),
-        ),
-        child: StreamBuilder(
-          stream: _firestoreService.getMessages(_user!.uid, postId, withUserId,
-              messageQuantity: 1),
-          builder: (BuildContext context,
-              AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>> snapshot) {
-            if (!snapshot.hasData)
-              return Center(child: CircularProgressIndicator.adaptive());
+      child: StreamBuilder(
+        stream: _firestoreService.getMessages(_user!.uid, postId, withUserId,
+            messageQuantity: 1),
+        builder: (BuildContext context,
+            AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>> snapshot) {
+          if (!snapshot.hasData)
+            return Container(
+              height: MediaQuery.of(context).size.height / 9,
+              padding: const EdgeInsets.symmetric(vertical: 4.0),
+              child: Container(
+                alignment: Alignment.center,
+                decoration: BoxDecoration(
+                  color: Theme.of(context).bottomAppBarColor,
+                  borderRadius: BorderRadius.circular(15.0),
+                ),
+                child: Center(child: CircularProgressIndicator.adaptive()),
+              ),
+            );
+          else if (snapshot.data!.docs.isEmpty) return SizedBox.shrink();
 
-            final String chatMessage =
-                snapshot.data!.docs.single.get('message').toString();
-            final DateTime chatDateTime = DateTime.fromMillisecondsSinceEpoch(
-                int.parse(snapshot.data!.docs.single.get('dateTime')));
-            return ListTile(
-              dense: true,
-              leading: ClipOval(
-                child: chatImageUrl.split('/').first == 'assets'
-                    ? Image(
-                        image: AssetImage(chatImageUrl),
-                        fit: BoxFit.cover,
-                      )
-                    : CachedNetworkImage(
-                        imageUrl: chatImageUrl,
-                        fit: BoxFit.cover,
-                        placeholder: (context, _) => ImageFiltered(
-                          imageFilter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
-                          child: Image.asset(
+          final String chatMessage =
+              snapshot.data!.docs.single.get('message').toString();
+          final DateTime chatDateTime = DateTime.fromMillisecondsSinceEpoch(
+              int.parse(snapshot.data!.docs.single.get('dateTime')));
+          return Container(
+            height: MediaQuery.of(context).size.height / 9,
+            padding: const EdgeInsets.symmetric(vertical: 4.0),
+            child: Container(
+              alignment: Alignment.center,
+              decoration: BoxDecoration(
+                color: Theme.of(context).bottomAppBarColor,
+                borderRadius: BorderRadius.circular(15.0),
+              ),
+              child: ListTile(
+                dense: true,
+                leading: ClipOval(
+                  child: chatImageUrl.split('/').first == 'assets'
+                      ? Image(
+                          image: AssetImage(chatImageUrl),
+                          fit: BoxFit.cover,
+                        )
+                      : CachedNetworkImage(
+                          imageUrl: chatImageUrl,
+                          fit: BoxFit.cover,
+                          placeholder: (context, _) => ImageFiltered(
+                            imageFilter:
+                                ImageFilter.blur(sigmaX: 10, sigmaY: 10),
+                            child: Image.asset(
+                              'assets/images/travenx_180.png',
+                              fit: BoxFit.cover,
+                            ),
+                          ),
+                          errorWidget: (context, _, __) => Image.asset(
                             'assets/images/travenx_180.png',
                             fit: BoxFit.cover,
                           ),
                         ),
-                        errorWidget: (context, _, __) => Image.asset(
-                          'assets/images/travenx_180.png',
-                          fit: BoxFit.cover,
-                        ),
-                      ),
-              ),
-              title: Padding(
-                padding: EdgeInsets.only(bottom: 9.0),
-                child: Text(
-                  chatTitle,
-                  textScaleFactor: textScaleFactor,
-                  style: Theme.of(context).textTheme.headline3,
-                  overflow: TextOverflow.ellipsis,
                 ),
-              ),
-              subtitle: Row(
-                children: [
-                  Flexible(
-                    child: Text(
-                      chatMessage,
-                      textScaleFactor: textScaleFactor,
-                      style: true //TODO
-                          ? Theme.of(context).textTheme.bodyText1
-                          : Theme.of(context)
-                              .textTheme
-                              .bodyText1!
-                              .copyWith(color: Theme.of(context).primaryColor),
-                      overflow: TextOverflow.ellipsis,
-                    ),
-                  ),
-                  chatMessage == '' ? SizedBox.shrink() : SizedBox(width: 20.0),
-                  Text(
-                    '${chatDateTime.hour.toString()}:'
-                    '${chatDateTime.minute.toString()} '
-                    '${chatDateTime.day.toString()}-'
-                    '${chatDateTime.month.toString()}-'
-                    '${chatDateTime.year.toString()}',
+                title: Padding(
+                  padding: EdgeInsets.only(bottom: 9.0),
+                  child: Text(
+                    chatTitle,
                     textScaleFactor: textScaleFactor,
-                    style: Theme.of(context).textTheme.bodyText1,
+                    style: Theme.of(context).textTheme.headline3,
                     overflow: TextOverflow.ellipsis,
                   ),
-                ],
-              ),
-              trailing: true //TODO
-                  ? SizedBox.shrink()
-                  : CircleAvatar(
-                      radius: 7.0,
-                      backgroundColor: Theme.of(context).primaryColor,
+                ),
+                subtitle: Row(
+                  children: [
+                    Flexible(
+                      child: Text(
+                        chatMessage,
+                        textScaleFactor: textScaleFactor,
+                        style: true //TODO
+                            ? Theme.of(context).textTheme.bodyText1
+                            : Theme.of(context).textTheme.bodyText1!.copyWith(
+                                color: Theme.of(context).primaryColor),
+                        overflow: TextOverflow.ellipsis,
+                      ),
                     ),
-            );
-          },
-        ),
+                    chatMessage == ''
+                        ? SizedBox.shrink()
+                        : SizedBox(width: 20.0),
+                    Text(
+                      '${chatDateTime.hour.toString()}:'
+                      '${chatDateTime.minute.toString()} '
+                      '${chatDateTime.day.toString()}-'
+                      '${chatDateTime.month.toString()}-'
+                      '${chatDateTime.year.toString()}',
+                      textScaleFactor: textScaleFactor,
+                      style: Theme.of(context).textTheme.bodyText1,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                  ],
+                ),
+                trailing: true //TODO
+                    ? SizedBox.shrink()
+                    : CircleAvatar(
+                        radius: 7.0,
+                        backgroundColor: Theme.of(context).primaryColor,
+                      ),
+              ),
+            ),
+          );
+        },
       ),
     );
   }

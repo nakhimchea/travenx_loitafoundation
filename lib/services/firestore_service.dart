@@ -289,32 +289,32 @@ class FirestoreService {
     });
 
     if (!_userChats.toString().contains({
-          'postId': postId,
-          'withUserId': clientId,
-          'withDisplayName': clientDisplayName,
           'withPhoneNumber': clientPhoneNumber,
+          'postId': postId,
+          'withDisplayName': clientDisplayName,
           'withProfileUrl': clientProfileUrl,
+          'withUserId': clientId,
         }.toString()))
       _userChats.add({
-        'postId': postId,
-        'withUserId': clientId,
-        'withDisplayName': clientDisplayName,
         'withPhoneNumber': clientPhoneNumber,
+        'postId': postId,
+        'withDisplayName': clientDisplayName,
         'withProfileUrl': clientProfileUrl,
+        'withUserId': clientId,
       });
     if (!_clientChats.toString().contains({
-          'postId': postId,
-          'withUserId': userId,
-          'withDisplayName': userDisplayName,
           'withPhoneNumber': userPhoneNumber,
+          'postId': postId,
+          'withDisplayName': userDisplayName,
           'withProfileUrl': userProfileUrl,
+          'withUserId': userId,
         }.toString()))
       _clientChats.add({
-        'postId': postId,
-        'withUserId': userId,
-        'withDisplayName': userDisplayName,
         'withPhoneNumber': userPhoneNumber,
+        'postId': postId,
+        'withDisplayName': userDisplayName,
         'withProfileUrl': userProfileUrl,
+        'withUserId': userId,
       });
 
     await _firestore.collection('profile_screen').doc(userId).set(

@@ -377,17 +377,26 @@ class FirestoreService {
     String atUserId,
     String atPostId,
     String withUserId, {
-    int messageQuantity = 8,
+    int? messageQuantity,
   }) =>
-      _firestore
-          .collection('chat_screen')
-          .doc(atUserId)
-          .collection(atPostId)
-          .doc('withUserId')
-          .collection(withUserId)
-          .orderBy('dateTime', descending: true)
-          .limit(messageQuantity)
-          .snapshots();
+      messageQuantity != null
+          ? _firestore
+              .collection('chat_screen')
+              .doc(atUserId)
+              .collection(atPostId)
+              .doc('withUserId')
+              .collection(withUserId)
+              .orderBy('dateTime', descending: true)
+              .limit(messageQuantity)
+              .snapshots()
+          : _firestore
+              .collection('chat_screen')
+              .doc(atUserId)
+              .collection(atPostId)
+              .doc('withUserId')
+              .collection(withUserId)
+              .orderBy('dateTime', descending: true)
+              .snapshots();
 
   Future<DocumentSnapshot<Map<String, dynamic>>> getPostData(
     String atPostId,

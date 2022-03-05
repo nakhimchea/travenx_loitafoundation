@@ -157,51 +157,52 @@ class MessageStreamer extends StatelessWidget {
           if (!snapshot.hasData)
             return Center(child: CircularProgressIndicator.adaptive());
 
-          final _messages = snapshot.data!.docs.reversed;
+          final _messages = snapshot.data!.docs;
           List<MessageBubble> _messageBubbles = [];
+          for (var _message in _messages) {
+            final senderName = _message.get('senderName');
+            final senderProfileUrl = _message.get('senderProfileUrl');
+            final message = _message.get('message');
+            final attachmentUrl = _message.get('attachmentUrl');
+            final dateTime = DateTime.fromMillisecondsSinceEpoch(
+                int.parse(_message.get('dateTime').toString()));
+
+            _messageBubbles.add(MessageBubble(
+                senderName: senderName,
+                senderProfileUrl: senderProfileUrl,
+                message: message,
+                attachmentUrl: attachmentUrl,
+                dateTime: dateTime,
+                isMe: senderName == userDisplayName));
+          }
 
           return Expanded(
-            child: Center(
-              child: CircularProgressIndicator.adaptive(),
+            child: ListView(
+              physics: BouncingScrollPhysics(),
+              reverse: true,
+              padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 20.0),
+              children: _messageBubbles,
             ),
           );
         });
-    //         List<MessageBubble> messageBubbles = [];
-    //         for (var message in messages) {
-    //           final messageText = message.data['text'];
-    //           final messageSender = message.data['sender'];
-    //
-    //           final currentUser = loggedInUser.email;
-    //
-    //           final messageBubble = MessageBubble(
-    //             sender: messageSender,
-    //             text: messageText,
-    //             isMe: currentUser == messageSender,
-    //           );
-    //
-    //           messageBubbles.add(messageBubble);
-    //         }
-    //         return Expanded(
-    //           child: ListView(
-    //             reverse: true,
-    //             padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 20.0),
-    //             children: messageBubbles,
-    //           ),
-    //         );
-    //       },
-    //     )
   }
 }
 
 class MessageBubble extends StatelessWidget {
-  final String sender;
-  final String text;
+  final String senderName;
+  final String senderProfileUrl;
+  final String message;
+  final String attachmentUrl;
+  final DateTime dateTime;
   final bool isMe;
 
   const MessageBubble({
     Key? key,
-    required this.sender,
-    required this.text,
+    required this.senderName,
+    required this.senderProfileUrl,
+    required this.message,
+    required this.attachmentUrl,
+    required this.dateTime,
     required this.isMe,
   }) : super(key: key);
 
@@ -214,7 +215,7 @@ class MessageBubble extends StatelessWidget {
             isMe ? CrossAxisAlignment.end : CrossAxisAlignment.start,
         children: <Widget>[
           Text(
-            sender,
+            senderName,
             style: TextStyle(
               fontSize: 12.0,
               color: Colors.black54,
@@ -237,7 +238,7 @@ class MessageBubble extends StatelessWidget {
             child: Padding(
               padding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0),
               child: Text(
-                text,
+                message,
                 style: TextStyle(
                   color: isMe ? Colors.white : Colors.black54,
                   fontSize: 15.0,

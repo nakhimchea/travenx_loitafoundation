@@ -151,7 +151,6 @@ class _ChatScreenState extends State<ChatScreen> {
     if (widget.isLoggedIn == true && widget.displayName != '') {
       return Scaffold(
         appBar: AppBar(
-          brightness: Theme.of(context).colorScheme.brightness,
           elevation: 0.5,
           shadowColor: Theme.of(context).disabledColor,
           backgroundColor: Theme.of(context).scaffoldBackgroundColor,

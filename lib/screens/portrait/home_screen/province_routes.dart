@@ -42,7 +42,6 @@ class _ProvinceRoutesState extends State<ProvinceRoutes> {
         slivers: [
           SliverAppBar(
             pinned: true,
-            brightness: Theme.of(context).colorScheme.brightness,
             backgroundColor: Theme.of(context).bottomAppBarColor,
             leading: IconButton(
               onPressed: () => Navigator.pop(context),

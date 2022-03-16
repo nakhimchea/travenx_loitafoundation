@@ -19,8 +19,8 @@ Future<void> main() async {
       projectId: "travenx",
       storageBucket: "travenx.appspot.com",
       messagingSenderId: "757818286951",
-      appId: "1:757818286951:web:190a57f5758f8047b905c2",
-      measurementId: "G-49E7VYY6B6",
+      appId: "1:757818286951:web:d119de9781b96542b905c2",
+      measurementId: "G-4CHGQ6GHEX",
     ));
     // FacebookAuth.instance.webInitialize(
     //   appId: "307510611301408",

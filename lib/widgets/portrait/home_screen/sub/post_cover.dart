@@ -66,6 +66,7 @@ class _PostCoverState extends State<PostCover> {
               itemCount: widget.imageUrls.length,
             ),
             onNotification: (notification) {
+              // ignore: unnecessary_type_check
               if (notification is ScrollUpdateNotification) {
                 setState(() {
                   _imagesIndex = ((imagesController.position.pixels -

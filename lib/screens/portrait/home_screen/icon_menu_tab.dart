@@ -7,7 +7,6 @@ import 'package:travenx_loitafoundation/config/configs.dart'
 import 'package:travenx_loitafoundation/helpers/post_translator.dart';
 import 'package:travenx_loitafoundation/icons/icons.dart';
 import 'package:travenx_loitafoundation/models/home_screen_models.dart';
-import 'package:travenx_loitafoundation/models/icon_menu_model.dart';
 import 'package:travenx_loitafoundation/services/firestore_service.dart';
 import 'package:travenx_loitafoundation/widgets/portrait/card_tile_item.dart';
 
@@ -26,7 +25,6 @@ class _IconMenuTabState extends State<IconMenuTab> {
       initialIndex: widget.initIndex,
       child: Scaffold(
         appBar: AppBar(
-          brightness: Theme.of(context).colorScheme.brightness,
           elevation: 0.7,
           backgroundColor: Theme.of(context).bottomAppBarColor,
           leading: IconButton(

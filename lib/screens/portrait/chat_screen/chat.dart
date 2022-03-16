@@ -43,7 +43,6 @@ class _ChatState extends State<Chat> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        brightness: Theme.of(context).colorScheme.brightness,
         backgroundColor: Theme.of(context).bottomAppBarColor,
         leading: InkWell(
           onTap: () => Navigator.pop(context),

@@ -26,12 +26,12 @@ class _WalletScreenState extends State<WalletScreen> {
         body: LayoutBuilder(
           builder: (context, constraints) => Stack(
             children: [
-              Image.asset(
-                'assets/images/profile_screen/scaffold_background.png',
-                height: constraints.maxHeight,
-                width: constraints.maxWidth,
-                fit: BoxFit.cover,
-              ),
+              // Image.asset(
+              //   'assets/images/profile_screen/scaffold_background.png',
+              //   height: constraints.maxHeight,
+              //   width: constraints.maxWidth,
+              //   fit: BoxFit.cover,
+              // ),
               CustomScrollView(
                 slivers: [
                   SliverToBoxAdapter(
@@ -63,7 +63,7 @@ class _WalletScreenState extends State<WalletScreen> {
                               crossAxisAlignment: CrossAxisAlignment.end,
                               children: [
                                 Text(
-                                  '\$ 0.00',
+                                  '\$ 0.10',
                                   style: TextStyle(
                                     color: Theme.of(context)
                                         .primaryIconTheme

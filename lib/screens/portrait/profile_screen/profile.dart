@@ -2,8 +2,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import 'package:travenx_loitafoundation/config/constant.dart';
-import 'package:travenx_loitafoundation/config/variable.dart';
+import 'package:travenx_loitafoundation/config/configs.dart'
+    show kHPadding, kVPadding, textScaleFactor;
 import 'package:travenx_loitafoundation/icons/icons.dart';
 import 'package:travenx_loitafoundation/widgets/portrait/profile_screen/profile_category.dart';
 import 'package:travenx_loitafoundation/widgets/portrait/profile_screen/short_profile.dart';
@@ -45,8 +45,70 @@ class _ProfileState extends State<Profile> {
           ),
           SliverPadding(
             padding: EdgeInsets.symmetric(
+              horizontal: MediaQuery.of(context).size.width / 5,
+              vertical: kVPadding / 2,
+            ),
+            sliver: SliverToBoxAdapter(
+              child: GestureDetector(
+                onTap: () {},
+                child: Container(
+                  margin: EdgeInsets.symmetric(vertical: 4.0),
+                  padding: EdgeInsets.symmetric(vertical: 15.0),
+                  decoration: BoxDecoration(
+                    color: Theme.of(context).primaryColor,
+                    borderRadius: BorderRadius.circular(30.0),
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Icon(
+                        CustomOutlinedIcons.new_icon,
+                        color: Colors.white,
+                        size: 20.0,
+                      ),
+                      SizedBox(width: kHPadding),
+                      Text(
+                        'បង្ហោះទីតាំង ឬអាជីវកម្ម',
+                        textScaleFactor: textScaleFactor,
+                        style: Theme.of(context)
+                            .textTheme
+                            .bodyText1!
+                            .copyWith(color: Colors.white),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+          ),
+          SliverPadding(
+            padding: const EdgeInsets.symmetric(
               horizontal: kHPadding,
-              vertical: kVPadding,
+              vertical: kVPadding / 2,
+            ),
+            sliver: SliverToBoxAdapter(
+              child: ProfileCategory(
+                icon: Icon(
+                  CustomOutlinedIcons.menu,
+                  color: Theme.of(context).primaryColor,
+                  size: 20.0,
+                ),
+                title: 'ទីតាំង ឬអាជីវកម្មបានបង្ហោះ',
+                trailing: [
+                  Icon(
+                    Icons.arrow_forward_ios_sharp,
+                    color: Theme.of(context).primaryIconTheme.color,
+                    size: 14.0,
+                  ),
+                ],
+                onTap: () {},
+              ),
+            ),
+          ),
+          SliverPadding(
+            padding: const EdgeInsets.symmetric(
+              horizontal: kHPadding,
+              vertical: kVPadding / 2,
             ),
             sliver: SliverToBoxAdapter(
               child: Column(
@@ -96,24 +158,7 @@ class _ProfileState extends State<Profile> {
                       )
                     ],
                   ),
-                  SizedBox(height: 20.0),
-                  ProfileCategory(
-                    icon: Icon(
-                      CustomOutlinedIcons.location,
-                      color: Theme.of(context).hintColor,
-                      size: 20.0,
-                    ),
-                    title: 'ចុះឈ្មោះទីតាំង ឬអាជីវកម្ម',
-                    textColor: Theme.of(context).hintColor,
-                    trailing: [
-                      Icon(
-                        Icons.arrow_forward_ios_sharp,
-                        color: Theme.of(context).primaryIconTheme.color,
-                        size: 14.0,
-                      )
-                    ],
-                  ),
-                  SizedBox(height: 20.0),
+                  SizedBox(height: 15.0),
                   ProfileCategory(
                     icon: Icon(
                       CustomOutlinedIcons.setting,
@@ -184,7 +229,7 @@ class _ProfileState extends State<Profile> {
                       )
                     ],
                   ),
-                  SizedBox(height: 20.0),
+                  SizedBox(height: 15.0),
                   ProfileCategory(
                     icon: Icon(
                       CustomFilledIcons.star,
@@ -203,7 +248,7 @@ class _ProfileState extends State<Profile> {
                     title: 'ចែករំលែកកម្មវិធី',
                     trailing: [],
                   ),
-                  SizedBox(height: 20.0),
+                  SizedBox(height: 15.0),
                   ProfileCategory(
                     icon: Icon(
                       CustomOutlinedIcons.logout,
@@ -225,7 +270,7 @@ class _ProfileState extends State<Profile> {
                       }
                     },
                   ),
-                  SizedBox(height: 20.0),
+                  SizedBox(height: 15.0),
                   Text(
                     'កម្មវិធីជំនាន់ទី ១.០',
                     textScaleFactor: textScaleFactor,

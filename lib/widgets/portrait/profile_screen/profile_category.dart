@@ -25,7 +25,7 @@ class ProfileCategory extends StatelessWidget {
       onTap: onTap,
       child: Container(
         margin: EdgeInsets.symmetric(vertical: 4.0),
-        padding: EdgeInsets.symmetric(horizontal: kHPadding, vertical: 20.0),
+        padding: EdgeInsets.symmetric(horizontal: kHPadding, vertical: 15.0),
         alignment: Alignment.centerLeft,
         decoration: BoxDecoration(
           color: Theme.of(context).bottomAppBarColor,
@@ -39,14 +39,11 @@ class ProfileCategory extends StatelessWidget {
             Text(
               title,
               textScaleFactor: textScaleFactor,
-              style: TextStyle(
-                color: textColor != null
-                    ? textColor
-                    : Theme.of(context).iconTheme.color,
-                fontSize: 14.0,
-                fontFamily: 'Nokora',
-                fontWeight: FontWeight.w400,
-              ),
+              style: Theme.of(context).textTheme.bodyText1!.copyWith(
+                    color: textColor != null
+                        ? textColor
+                        : Theme.of(context).iconTheme.color,
+                  ),
               overflow: kIsWeb ? TextOverflow.clip : TextOverflow.ellipsis,
             ),
             Expanded(

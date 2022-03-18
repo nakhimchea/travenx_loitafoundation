@@ -50,6 +50,9 @@ class _ProvinceRoutesState extends State<ProvinceRoutes> {
                 color: Theme.of(context).iconTheme.color,
                 size: 18.0,
               ),
+              highlightColor: Colors.transparent,
+              hoverColor: Colors.transparent,
+              splashColor: Colors.transparent,
             ),
             title: Text(
               'ខេត្ត/ក្រុងទាំងអស់',
@@ -69,6 +72,9 @@ class _ProvinceRoutesState extends State<ProvinceRoutes> {
                   size: 28.0,
                   color: Theme.of(context).iconTheme.color,
                 ),
+                highlightColor: Colors.transparent,
+                hoverColor: Colors.transparent,
+                splashColor: Colors.transparent,
               ),
             ],
           ),
@@ -209,11 +215,24 @@ class ProvinceRoute extends StatelessWidget {
       floatingActionButton: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          CustomFloatingActionButton(onTap: () => Navigator.pop(context)),
-          CustomFloatingActionButton(
-            onTap: () => print('Search'), //TODO: Search Navigation
-            iconData: CustomOutlinedIcons.search,
-            iconSize: 24.0,
+          Padding(
+            padding: const EdgeInsets.symmetric(
+              horizontal: kVPadding + kHPadding,
+              vertical: kVPadding,
+            ),
+            child:
+                CustomFloatingActionButton(onTap: () => Navigator.pop(context)),
+          ),
+          Padding(
+            padding: const EdgeInsets.symmetric(
+              horizontal: kVPadding + kHPadding,
+              vertical: kVPadding,
+            ),
+            child: CustomFloatingActionButton(
+              onTap: () => print('Search'), //TODO: Search Navigation
+              iconData: CustomOutlinedIcons.search,
+              iconSize: 24.0,
+            ),
           ),
         ],
       ),

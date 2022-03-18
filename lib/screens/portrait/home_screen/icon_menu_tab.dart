@@ -34,7 +34,9 @@ class _IconMenuTabState extends State<IconMenuTab> {
               color: Theme.of(context).iconTheme.color,
               size: 18.0,
             ),
+            highlightColor: Colors.transparent,
             hoverColor: Colors.transparent,
+            splashColor: Colors.transparent,
           ),
           title: Text(
             'តំបន់នីមួយៗ',
@@ -49,7 +51,9 @@ class _IconMenuTabState extends State<IconMenuTab> {
               //   context,
               //   MaterialPageRoute(builder: (_) => SearchSubscreen()),
               // ),
+              highlightColor: Colors.transparent,
               hoverColor: Colors.transparent,
+              splashColor: Colors.transparent,
               icon: Icon(
                 CustomOutlinedIcons.search,
                 size: 28.0,

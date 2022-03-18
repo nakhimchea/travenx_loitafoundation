@@ -5,6 +5,7 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:travenx_loitafoundation/config/configs.dart'
     show kHPadding, kVPadding, textScaleFactor;
 import 'package:travenx_loitafoundation/icons/icons.dart';
+import 'package:travenx_loitafoundation/screens/portrait/profile_screen/user_posts.dart';
 import 'package:travenx_loitafoundation/widgets/portrait/profile_screen/profile_category.dart';
 import 'package:travenx_loitafoundation/widgets/portrait/profile_screen/short_profile.dart';
 
@@ -101,7 +102,10 @@ class _ProfileState extends State<Profile> {
                     size: 14.0,
                   ),
                 ],
-                onTap: () {},
+                onTap: () => Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (_) => UserPosts()),
+                ),
               ),
             ),
           ),

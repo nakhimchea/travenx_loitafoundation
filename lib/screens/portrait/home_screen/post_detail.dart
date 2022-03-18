@@ -56,13 +56,26 @@ class _PostDetailState extends State<PostDetail> {
       floatingActionButton: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          CustomFloatingActionButton(onTap: () => Navigator.pop(context)),
-          CustomFloatingActionButton(
-            onTap: () => print('Save Button Clicked ... '),
-            //ToDo: change function when button save is clicked
-            iconData: CustomFilledIcons.bookmark,
-            iconColor: Theme.of(context).primaryColor,
-            iconSize: 24.0,
+          Padding(
+            padding: const EdgeInsets.symmetric(
+              horizontal: kVPadding + kHPadding,
+              vertical: kVPadding,
+            ),
+            child:
+                CustomFloatingActionButton(onTap: () => Navigator.pop(context)),
+          ),
+          Padding(
+            padding: const EdgeInsets.symmetric(
+              horizontal: kVPadding + kHPadding,
+              vertical: kVPadding,
+            ),
+            child: CustomFloatingActionButton(
+              onTap: () => print('Save Button Clicked ... '),
+              //ToDo: change function when button save is clicked
+              iconData: CustomFilledIcons.bookmark,
+              iconColor: Theme.of(context).primaryColor,
+              iconSize: 24.0,
+            ),
           ),
         ],
       ),

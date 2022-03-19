@@ -2,7 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:travenx_loitafoundation/models/post_object_model.dart';
 
 List<PostObject> postTranslator(
-    List<QueryDocumentSnapshot<Map<String, dynamic>>> posts) {
+    List<DocumentSnapshot<Map<String, dynamic>>> posts) {
   List<PostObject> _postObjects = [];
 
   for (var post in posts) {

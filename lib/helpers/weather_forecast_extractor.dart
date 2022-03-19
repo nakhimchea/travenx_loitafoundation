@@ -132,7 +132,9 @@ String _timeTranslator(DateTime dateTime) {
       : dateTime.hour.toString();
   String _translatedString = dateTime.minute == 0
       ? _hour
-      : _hour + ':' + dateTime.minute.toString() + 'នាទី';
+      : dateTime.minute < 10
+          ? _hour + ':0' + dateTime.minute.toString() + 'នាទី'
+          : _hour + ':' + dateTime.minute.toString() + 'នាទី';
   if (dateTime.hour >= 3 && dateTime.hour < 6)
     return _translatedString + ' ព្រលឹម';
   else if (dateTime.hour >= 6 && dateTime.hour < 12)

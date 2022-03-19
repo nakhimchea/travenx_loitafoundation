@@ -31,6 +31,8 @@ class Profile extends StatefulWidget {
 }
 
 class _ProfileState extends State<Profile> {
+  final User? _user = FirebaseAuth.instance.currentUser;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -51,7 +53,12 @@ class _ProfileState extends State<Profile> {
             ),
             sliver: SliverToBoxAdapter(
               child: GestureDetector(
-                onTap: () {},
+                onTap: () => _user != null
+                    ? Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (_) => UserPosts()),
+                      )
+                    : widget.loggedInCallback(),
                 child: Container(
                   margin: EdgeInsets.symmetric(vertical: 4.0),
                   padding: EdgeInsets.symmetric(vertical: 15.0),
@@ -102,10 +109,12 @@ class _ProfileState extends State<Profile> {
                     size: 14.0,
                   ),
                 ],
-                onTap: () => Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (_) => UserPosts()),
-                ),
+                onTap: () => _user != null
+                    ? Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (_) => UserPosts()),
+                      )
+                    : widget.loggedInCallback(),
               ),
             ),
           ),

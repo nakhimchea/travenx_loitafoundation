@@ -1,4 +1,4 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:travenx_loitafoundation/config/configs.dart'
@@ -21,15 +21,13 @@ class _UserPostsState extends State<UserPosts> {
   final FirestoreService _firestoreService = FirestoreService();
 
   List<PostObject> postList = [];
-  DocumentSnapshot? _lastDoc; //TODO
 
   double _spacing = 10.0;
   bool _isLoading = true;
 
   void getData() async {
     postList = postTranslator(await _firestoreService
-        .getProvinceData('ភ្នំពេញ', _lastDoc)
-        .then((snapshot) => snapshot.docs));
+        .getUserPosts(FirebaseAuth.instance.currentUser!.uid));
     setState(() => _isLoading = false);
   }
 
@@ -80,7 +78,27 @@ class _UserPostsState extends State<UserPosts> {
         padding: const EdgeInsets.symmetric(horizontal: kHPadding),
         child: _isLoading
             ? Center(child: CircularProgressIndicator.adaptive())
-            : _buildPostList(),
+            : postList.length == 0
+                ? Center(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Icon(
+                          CustomOutlinedIcons.warning,
+                          size: 24.0,
+                          color: Theme.of(context).primaryIconTheme.color,
+                        ),
+                        const SizedBox(height: 10),
+                        Text(
+                          'មិនមានទិន្នន័យអំពីទីតាំង ឬអាជិវកម្មរបស់អ្នក។',
+                          style: Theme.of(context).textTheme.bodyText1,
+                        ),
+                        SizedBox(
+                            height: MediaQuery.of(context).size.height / 10),
+                      ],
+                    ),
+                  )
+                : _buildPostList(),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
       floatingActionButton: CustomFloatingActionButton(

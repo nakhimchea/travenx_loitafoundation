@@ -506,7 +506,7 @@ class _BuildChatItem extends StatelessWidget {
                 ),
                 subtitle: Row(
                   children: [
-                    Flexible(
+                    Expanded(
                       child: Text(
                         chatMessage,
                         textScaleFactor: textScaleFactor,
@@ -522,11 +522,11 @@ class _BuildChatItem extends StatelessWidget {
                         ? SizedBox.shrink()
                         : SizedBox(width: 20.0),
                     Text(
-                      '${chatDateTime.hour.toString()}:'
-                      '${chatDateTime.minute.toString()} '
-                      '${chatDateTime.day.toString()}-'
-                      '${chatDateTime.month.toString()}-'
-                      '${chatDateTime.year.toString()}',
+                      '${chatDateTime.hour.toString()}:' +
+                          '${chatDateTime.minute < 10 ? '0' + chatDateTime.minute.toString() : chatDateTime.minute.toString()} ' +
+                          '${chatDateTime.day.toString()}/' +
+                          '${chatDateTime.month.toString()}/' +
+                          '${chatDateTime.year.toString()}',
                       textScaleFactor: textScaleFactor,
                       style: Theme.of(context).textTheme.bodyText1,
                       overflow:
@@ -534,7 +534,7 @@ class _BuildChatItem extends StatelessWidget {
                     ),
                   ],
                 ),
-                trailing: true //TODO
+                trailing: false //TODO
                     ? SizedBox.shrink()
                     : CircleAvatar(
                         radius: 7.0,

@@ -410,4 +410,17 @@ class FirestoreService {
           .catchError((e) {
         print('Cannot get post data $atPostId: ${e.toString()}');
       });
+
+  // ProfileScreen
+  Future<List<DocumentSnapshot<Map<String, dynamic>>>> getUserPosts(
+    String atUserId,
+  ) async {
+    List<DocumentSnapshot<Map<String, dynamic>>> posts = [];
+
+    List<dynamic> _postIds = await _readPostIds(atUserId).catchError((e) {
+      print('Cannot read my postIds: ${e.toString()}');
+    });
+    for (var _postId in _postIds) posts.add(await getPostData(_postId));
+    return posts;
+  }
 }

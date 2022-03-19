@@ -373,6 +373,11 @@ class FirestoreService {
     });
   }
 
+  Stream<DocumentSnapshot<Map<String, dynamic>>> streamProfile(
+    String atUserId,
+  ) =>
+      _firestore.collection('profile_screen').doc(atUserId).snapshots();
+
   Stream<QuerySnapshot<Map<String, dynamic>>> getMessages(
     String atUserId,
     String atPostId,

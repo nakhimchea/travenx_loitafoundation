@@ -9,6 +9,7 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:travenx_loitafoundation/config/configs.dart'
     show kHPadding, kVPadding, textScaleFactor, selectedIndex;
+import 'package:travenx_loitafoundation/icons/icons.dart';
 import 'package:travenx_loitafoundation/screens/portrait/chat_screen/chat.dart';
 import 'package:travenx_loitafoundation/services/firestore_service.dart';
 
@@ -162,76 +163,99 @@ class _ChatScreenState extends State<ChatScreen> {
           centerTitle: false,
           actions: [ActionOptions()],
         ),
-        body: SmartRefresher(
-          controller: _refreshController,
-          physics: BouncingScrollPhysics(),
-          enablePullDown: _isRefreshable,
-          enablePullUp: _isLoadable,
-          child: _buildList(),
-          header: CustomHeader(builder: (_, __) => SizedBox.shrink()),
-          footer: CustomFooter(
-            loadStyle: LoadStyle.ShowWhenLoading,
-            builder: loadingBuilder,
-          ),
-          onRefresh: () async {
-            await _firestoreService
-                .getProfileData(_user!.uid)
-                .then((documentSnapshot) {
-              if (documentSnapshot.exists) {
-                final List<dynamic> _userChats = documentSnapshot.get('chats');
-                final List<dynamic> _reversedChats =
-                    _userChats.reversed.toList();
-                for (dynamic chat in _reversedChats) {
-                  _chatPostIds.add(chat['postId'].toString());
-                  _chatWithUserIds.add(chat['withUserId'].toString());
-                  _chatWithDisplayNames.add(chat['withDisplayName'].toString());
-                  _chatWithPhoneNumbers.add(chat['withPhoneNumber'].toString());
-                  _chatWithProfileUrls.add(chat['withProfileUrl'].toString());
-                }
-                _selfPostIds = documentSnapshot.get('postIds');
-              }
-            }).catchError((e) {
-              print('Cannot get user profile data: ${e.toString()}');
-            });
-
-            assert(_chatPostIds.length == _chatWithUserIds.length);
-            for (int index = 0; index < _chatPostIds.length; index++)
-              if (index < chatLoadSize) {
-                buildChatPostIds.add(_chatPostIds.elementAt(index));
-                await _firestoreService
-                    .getPostData(_chatPostIds.elementAt(index))
-                    .then((snapshot) {
-                  _chatPostsImageUrl
-                      .add(snapshot.get('imageUrls')[0].toString());
-                  _chatPostsTitle.add(snapshot.get('title').toString());
-                });
-              }
-
-            if (mounted) setState(() => _isRefreshable = false);
-            _refreshController.refreshCompleted();
-          },
-          onLoading: () async {
-            if (loadingTimes * chatLoadSize < _chatPostIds.length) {
-              setState(() => loadingTimes++);
-              for (int index = (loadingTimes - 1) * chatLoadSize;
-                  index < _chatPostIds.length;
-                  index++)
-                if (index < loadingTimes * chatLoadSize) {
-                  buildChatPostIds.add(_chatPostIds.elementAt(index));
+        body: _chatPostsTitle.length == 0
+            ? Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Icon(
+                      CustomOutlinedIcons.warning,
+                      size: 24.0,
+                      color: Theme.of(context).primaryIconTheme.color,
+                    ),
+                    const SizedBox(height: 10),
+                    Text(
+                      'មិនមានទិន្នន័យសារ។',
+                      style: Theme.of(context).textTheme.bodyText1,
+                    ),
+                    SizedBox(height: MediaQuery.of(context).size.height / 10),
+                  ],
+                ),
+              )
+            : SmartRefresher(
+                controller: _refreshController,
+                physics: BouncingScrollPhysics(),
+                enablePullDown: _isRefreshable,
+                enablePullUp: _isLoadable,
+                child: _buildList(),
+                header: CustomHeader(builder: (_, __) => SizedBox.shrink()),
+                footer: CustomFooter(
+                  loadStyle: LoadStyle.ShowWhenLoading,
+                  builder: loadingBuilder,
+                ),
+                onRefresh: () async {
                   await _firestoreService
-                      .getPostData(_chatPostIds.elementAt(index))
-                      .then((snapshot) {
-                    _chatPostsImageUrl
-                        .add(snapshot.get('imageUrls')[0].toString());
-                    _chatPostsTitle.add(snapshot.get('title').toString());
+                      .getProfileData(_user!.uid)
+                      .then((documentSnapshot) {
+                    if (documentSnapshot.exists) {
+                      final List<dynamic> _userChats =
+                          documentSnapshot.get('chats');
+                      final List<dynamic> _reversedChats =
+                          _userChats.reversed.toList();
+                      for (dynamic chat in _reversedChats) {
+                        _chatPostIds.add(chat['postId'].toString());
+                        _chatWithUserIds.add(chat['withUserId'].toString());
+                        _chatWithDisplayNames
+                            .add(chat['withDisplayName'].toString());
+                        _chatWithPhoneNumbers
+                            .add(chat['withPhoneNumber'].toString());
+                        _chatWithProfileUrls
+                            .add(chat['withProfileUrl'].toString());
+                      }
+                      _selfPostIds = documentSnapshot.get('postIds');
+                    }
+                  }).catchError((e) {
+                    print('Cannot get user profile data: ${e.toString()}');
                   });
-                }
-            } else
-              setState(() => _isLoadable = false);
-            if (mounted) setState(() {});
-            _refreshController.loadComplete();
-          },
-        ),
+
+                  assert(_chatPostIds.length == _chatWithUserIds.length);
+                  for (int index = 0; index < _chatPostIds.length; index++)
+                    if (index < chatLoadSize) {
+                      buildChatPostIds.add(_chatPostIds.elementAt(index));
+                      await _firestoreService
+                          .getPostData(_chatPostIds.elementAt(index))
+                          .then((snapshot) {
+                        _chatPostsImageUrl
+                            .add(snapshot.get('imageUrls')[0].toString());
+                        _chatPostsTitle.add(snapshot.get('title').toString());
+                      });
+                    }
+
+                  if (mounted) setState(() => _isRefreshable = false);
+                  _refreshController.refreshCompleted();
+                },
+                onLoading: () async {
+                  if (loadingTimes * chatLoadSize < _chatPostIds.length) {
+                    setState(() => loadingTimes++);
+                    for (int index = (loadingTimes - 1) * chatLoadSize;
+                        index < _chatPostIds.length;
+                        index++)
+                      if (index < loadingTimes * chatLoadSize) {
+                        buildChatPostIds.add(_chatPostIds.elementAt(index));
+                        await _firestoreService
+                            .getPostData(_chatPostIds.elementAt(index))
+                            .then((snapshot) {
+                          _chatPostsImageUrl
+                              .add(snapshot.get('imageUrls')[0].toString());
+                          _chatPostsTitle.add(snapshot.get('title').toString());
+                        });
+                      }
+                  } else
+                    setState(() => _isLoadable = false);
+                  if (mounted) setState(() {});
+                  _refreshController.loadComplete();
+                },
+              ),
       );
     } else
       return Scaffold(

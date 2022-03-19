@@ -13,12 +13,12 @@ if (flutterRoot == null) {
 
 def flutterVersionCode = localProperties.getProperty('flutter.versionCode')
 if (flutterVersionCode == null) {
-    flutterVersionCode = '1'
+    flutterVersionCode = '20220316'
 }
 
 def flutterVersionName = localProperties.getProperty('flutter.versionName')
 if (flutterVersionName == null) {
-    flutterVersionName = '1.0'
+    flutterVersionName = '1.0.0'
 }
 
 apply plugin: 'com.android.application'
@@ -26,13 +26,12 @@ apply from: "$flutterRoot/packages/flutter_tools/gradle/flutter.gradle"
 apply plugin: 'com.google.gms.google-services'
 
 android {
-    compileSdkVersion 32
-    buildToolsVersion '32.0.0'
+    compileSdkVersion flutter.compileSdkVersion
 
     defaultConfig {
         applicationId "com.travenx.crossplatform.travenx_loitafoundation"
         minSdkVersion 21
-        targetSdkVersion 32
+        targetSdkVersion flutter.targetSdkVersion
         multiDexEnabled true
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName

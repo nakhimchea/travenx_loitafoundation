@@ -349,18 +349,18 @@ PODS:
   - BoringSSL-GRPC/Implementation (0.0.7):
     - BoringSSL-GRPC/Interface (= 0.0.7)
   - BoringSSL-GRPC/Interface (0.0.7)
-  - cloud_firestore (3.1.8):
+  - cloud_firestore (3.1.10):
     - Firebase/Firestore (= 8.11.0)
     - firebase_core
     - Flutter
-  - FBAEMKit (12.2.1):
-    - FBSDKCoreKit_Basics (= 12.2.1)
-  - FBSDKCoreKit (12.2.1):
-    - FBAEMKit (= 12.2.1)
-    - FBSDKCoreKit_Basics (= 12.2.1)
-  - FBSDKCoreKit_Basics (12.2.1)
-  - FBSDKLoginKit (12.2.1):
-    - FBSDKCoreKit (= 12.2.1)
+  - FBAEMKit (13.0.0):
+    - FBSDKCoreKit_Basics (= 13.0.0)
+  - FBSDKCoreKit (13.0.0):
+    - FBAEMKit (= 13.0.0)
+    - FBSDKCoreKit_Basics (= 13.0.0)
+  - FBSDKCoreKit_Basics (13.0.0)
+  - FBSDKLoginKit (13.0.0):
+    - FBSDKCoreKit (= 13.0.0)
   - Firebase/Auth (8.11.0):
     - Firebase/CoreOnly
     - FirebaseAuth (~> 8.11.0)
@@ -369,11 +369,11 @@ PODS:
   - Firebase/Firestore (8.11.0):
     - Firebase/CoreOnly
     - FirebaseFirestore (~> 8.11.0)
-  - firebase_auth (3.3.7):
+  - firebase_auth (3.3.11):
     - Firebase/Auth (= 8.11.0)
     - firebase_core
     - Flutter
-  - firebase_core (1.12.0):
+  - firebase_core (1.13.1):
     - Firebase/CoreOnly (= 8.11.0)
     - Flutter
   - FirebaseAuth (8.11.0):
@@ -385,7 +385,7 @@ PODS:
     - FirebaseCoreDiagnostics (~> 8.0)
     - GoogleUtilities/Environment (~> 7.7)
     - GoogleUtilities/Logger (~> 7.7)
-  - FirebaseCoreDiagnostics (8.12.0):
+  - FirebaseCoreDiagnostics (8.13.0):
     - GoogleDataTransport (~> 9.1)
     - GoogleUtilities/Environment (~> 7.7)
     - GoogleUtilities/Logger (~> 7.7)
@@ -404,9 +404,9 @@ PODS:
     - leveldb-library (~> 1.22)
     - nanopb (~> 2.30908.0)
   - Flutter (1.0.0)
-  - flutter_facebook_auth (3.5.3):
-    - FBSDKCoreKit (~> 12.2.1)
-    - FBSDKLoginKit (~> 12.2.1)
+  - flutter_facebook_auth (4.1.2):
+    - FBSDKCoreKit (~> 13.0.0)
+    - FBSDKLoginKit (~> 13.0.0)
     - Flutter
   - flutter_secure_storage (3.3.1):
     - Flutter
@@ -546,24 +546,24 @@ SPEC CHECKSUMS:
   abseil: 6c8eb7892aefa08d929b39f9bb108e5367e3228f
   AppAuth: 31bcec809a638d7bd2f86ea8a52bd45f6e81e7c7
   BoringSSL-GRPC: 8edf627ee524575e2f8d19d56f068b448eea3879
-  cloud_firestore: 8bd22e19f6ccf3a0d1976ea298e0ce37c9ad5839
-  FBAEMKit: 4cea610d0bc1680572f2aad7b25db7a2f2690d82
-  FBSDKCoreKit: 5b1992fe65802ca26be7e68bc4fac5f59fa39908
-  FBSDKCoreKit_Basics: a6a92ca628e05f86f458a4721574c5ddfb058ba3
-  FBSDKLoginKit: 7467b7f988ca4fdf48f12a839bcfce4264752429
+  cloud_firestore: c6c42fe62809b7417aa3c45a6ef0c2812f7fb0d6
+  FBAEMKit: 11a0bcdc7a88e26ed764bcf56372afc6cbbbdcd9
+  FBSDKCoreKit: 00e1e751257e1005304fa29cb683d2dfe008f41a
+  FBSDKCoreKit_Basics: 96ec2ddb67a032e54f0754ea3d59db6f84f42389
+  FBSDKLoginKit: 66ff4ddf372d9c3fc360e65ae048a47a482c29b9
   Firebase: 44dd9724c84df18b486639e874f31436eaa9a20c
-  firebase_auth: 20bf788012988ef04ce608fada5b8d8cd1069302
-  firebase_core: 443bccfd6aa6b42f07be365b500773dc69db2d87
+  firebase_auth: bdfbd5b10da1db6d5eb6ae7dbda5d81365b9cc9d
+  firebase_core: 08f6a85f62060111de5e98d6a214810d11365de9
   FirebaseAuth: d96d73aba85d192d7a7aa0b86dd6d7f8ec170b4b
   FirebaseCore: 2f4f85b453cc8fea4bb2b37e370007d2bcafe3f0
-  FirebaseCoreDiagnostics: 3b40dfadef5b90433a60ae01f01e90fe87aa76aa
+  FirebaseCoreDiagnostics: c2836d254a8f0bbb4121ff18f2c2ea39d118fd08
   FirebaseFirestore: 3b2e4b532c68809b3df5f8d39d28b3398ffc196b
   Flutter: 50d75fe2f02b26cc09d224853bb45737f8b3214a
-  flutter_facebook_auth: dbc47556cbdc61ced50e14473bd32461386a1425
+  flutter_facebook_auth: c0a8473f857cf44b0a27bfe752facf1d5fedd863
   flutter_secure_storage: 7953c38a04c3fdbb00571bcd87d8e3b5ceb9daec
   FMDB: 2ce00b547f966261cd18927a3ddb07cb6f3db82a
   geolocator_apple: cc556e6844d508c95df1e87e3ea6fa4e58c50401
-  google_sign_in: de494e5e993986afae63e22a32441e30c35c9823
+  google_sign_in: f669f45933dad48cd218dc3e189726bced3d19f4
   GoogleDataTransport: 629c20a4d363167143f30ea78320d5a7eb8bd940
   GoogleSignIn: 7137d297ddc022a7e0aa4619c86d72c909fa7213
   GoogleUtilities: e0913149f6b0625b553d70dae12b49fc62914fd1

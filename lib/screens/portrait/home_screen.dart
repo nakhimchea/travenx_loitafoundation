@@ -28,6 +28,7 @@ class _HomeScreenState extends State<HomeScreen>
   Widget build(BuildContext context) {
     return Scaffold(
       body: CustomScrollView(
+        primary: false,
         slivers: [
           SliverAppBar(
             pinned: true,

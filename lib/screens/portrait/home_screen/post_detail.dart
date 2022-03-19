@@ -225,6 +225,7 @@ class _PostDetailState extends State<PostDetail> {
               ),
             ),
       body: CustomScrollView(
+        primary: false,
         physics: BouncingScrollPhysics(),
         slivers: [
           SliverPadding(

@@ -33,6 +33,7 @@ class _WalletScreenState extends State<WalletScreen> {
               //   fit: BoxFit.cover,
               // ),
               CustomScrollView(
+                primary: false,
                 slivers: [
                   SliverToBoxAdapter(
                     child: Container(

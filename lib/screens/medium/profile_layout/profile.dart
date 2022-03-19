@@ -33,6 +33,7 @@ class _ProfileState extends State<Profile> {
     return Scaffold(
       body: LayoutBuilder(
         builder: (context, constraints) => CustomScrollView(
+          primary: false,
           slivers: [
             SliverToBoxAdapter(
               child: ShortProfile(

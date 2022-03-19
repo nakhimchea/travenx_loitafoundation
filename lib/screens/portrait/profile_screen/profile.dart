@@ -37,6 +37,7 @@ class _ProfileState extends State<Profile> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: CustomScrollView(
+        primary: false,
         slivers: [
           SliverToBoxAdapter(
             child: ShortProfile(

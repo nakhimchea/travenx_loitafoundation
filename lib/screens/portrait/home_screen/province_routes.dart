@@ -39,6 +39,7 @@ class _ProvinceRoutesState extends State<ProvinceRoutes> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: CustomScrollView(
+        primary: false,
         slivers: [
           SliverAppBar(
             pinned: true,

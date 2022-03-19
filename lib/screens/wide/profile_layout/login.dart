@@ -50,6 +50,7 @@ class _LoginState extends State<Login> {
             ),
           ),
           CustomScrollView(
+            primary: false,
             slivers: [
               SliverAppBar(
                 toolbarHeight: 100,

@@ -51,6 +51,7 @@ class _LoginState extends State<Login> {
           ),
           CustomScrollView(
             primary: false,
+            physics: BouncingScrollPhysics(),
             slivers: [
               SliverAppBar(
                 toolbarHeight: 100,

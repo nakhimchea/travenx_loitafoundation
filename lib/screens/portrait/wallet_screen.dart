@@ -34,6 +34,7 @@ class _WalletScreenState extends State<WalletScreen> {
               // ),
               CustomScrollView(
                 primary: false,
+                physics: BouncingScrollPhysics(),
                 slivers: [
                   SliverToBoxAdapter(
                     child: Container(

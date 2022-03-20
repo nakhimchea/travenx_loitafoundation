@@ -21,6 +21,8 @@ class AnnouncementCard extends StatelessWidget {
           border: Border.all(color: Color(0xFFFA8231)),
         ),
         child: SingleChildScrollView(
+          primary: false,
+          physics: BouncingScrollPhysics(),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.start,

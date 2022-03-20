@@ -38,6 +38,7 @@ class _ProfileState extends State<Profile> {
     return Scaffold(
       body: CustomScrollView(
         primary: false,
+        physics: BouncingScrollPhysics(),
         slivers: [
           SliverToBoxAdapter(
             child: ShortProfile(

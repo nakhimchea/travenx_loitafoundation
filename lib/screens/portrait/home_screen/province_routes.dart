@@ -40,6 +40,7 @@ class _ProvinceRoutesState extends State<ProvinceRoutes> {
     return Scaffold(
       body: CustomScrollView(
         primary: false,
+        physics: BouncingScrollPhysics(),
         slivers: [
           SliverAppBar(
             pinned: true,

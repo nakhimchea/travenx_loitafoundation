@@ -29,6 +29,7 @@ class _HomeScreenState extends State<HomeScreen>
     return Scaffold(
       body: CustomScrollView(
         primary: false,
+        physics: BouncingScrollPhysics(),
         slivers: [
           SliverAppBar(
             pinned: true,

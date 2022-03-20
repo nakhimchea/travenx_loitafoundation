@@ -34,6 +34,7 @@ class _ProfileState extends State<Profile> {
       body: LayoutBuilder(
         builder: (context, constraints) => CustomScrollView(
           primary: false,
+          physics: BouncingScrollPhysics(),
           slivers: [
             SliverToBoxAdapter(
               child: ShortProfile(

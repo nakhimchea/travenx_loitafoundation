@@ -172,7 +172,8 @@ class MessageStreamer extends StatelessWidget {
                 message: message,
                 attachmentUrl: attachmentUrl,
                 dateTime: dateTime,
-                isMe: senderName == userDisplayName));
+                isMe: senderName ==
+                    userDisplayName)); //TODO: problem both names same
           }
 
           return Expanded(

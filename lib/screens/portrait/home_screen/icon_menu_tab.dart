@@ -110,6 +110,7 @@ class _BuildIconMenuListState extends State<_BuildIconMenuList> {
 
   Widget _buildList() {
     return ListView.builder(
+      physics: BouncingScrollPhysics(),
       padding: const EdgeInsets.only(
         left: kHPadding,
         right: kHPadding,

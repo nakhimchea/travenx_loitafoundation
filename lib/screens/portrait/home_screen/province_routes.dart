@@ -287,6 +287,7 @@ class _ProvinceListState extends State<_ProvinceList> {
   Widget _buildList() {
     return postList.length != 0
         ? ListView.builder(
+            physics: BouncingScrollPhysics(),
             itemBuilder: (BuildContext context, int index) {
               if (index == 0)
                 return Column(

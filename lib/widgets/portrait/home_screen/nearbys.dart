@@ -145,6 +145,7 @@ class _NearbysState extends State<Nearbys> {
                     height: 40,
                     color: Theme.of(context).disabledColor,
                     child: ListView(
+                      physics: BouncingScrollPhysics(),
                       scrollDirection: Axis.horizontal,
                       children: [
                         const SizedBox(width: kHPadding),
@@ -206,6 +207,7 @@ class _NearbysState extends State<Nearbys> {
                       height: 40,
                       color: Theme.of(context).disabledColor,
                       child: ListView(
+                        physics: BouncingScrollPhysics(),
                         scrollDirection: Axis.horizontal,
                         children: [
                           const SizedBox(width: kHPadding),

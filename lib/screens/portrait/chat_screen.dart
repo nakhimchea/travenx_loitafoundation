@@ -47,8 +47,9 @@ class _ChatScreenState extends State<ChatScreen> {
   List<dynamic> _selfPostIds = [];
 
   bool _isRefreshable = true;
-  bool _isLoadable = true;
   int loadingTimes = 1;
+  int? chatCount;
+  int addTimes = 0;
 
   List<String> buildChatPostIds = [];
 
@@ -57,6 +58,9 @@ class _ChatScreenState extends State<ChatScreen> {
       : '';
 
   Widget _buildList() {
+    if (buildChatPostIds.length != _chatPostsTitle.length ||
+        buildChatPostIds.length != _chatPostsImageUrl.length)
+      return SizedBox.shrink();
     return Padding(
       padding: EdgeInsets.symmetric(
         horizontal: kHPadding,
@@ -138,8 +142,9 @@ class _ChatScreenState extends State<ChatScreen> {
         _chatWithProfileUrls = [];
         _selfPostIds = [];
         _isRefreshable = true;
-        _isLoadable = true;
         loadingTimes = 1;
+        chatCount = null;
+        addTimes = 0;
         buildChatPostIds = [];
         _savedUser = currentUser.uid;
       });
@@ -163,8 +168,14 @@ class _ChatScreenState extends State<ChatScreen> {
           centerTitle: false,
           actions: [ActionOptions()],
         ),
-        body: _chatPostsTitle.length == 0
-            ? Center(
+        body: StreamBuilder(
+          stream: _firestoreService.streamProfile(_user!.uid),
+          builder: (BuildContext context,
+              AsyncSnapshot<DocumentSnapshot<Map<String, dynamic>>> snapshot) {
+            if (!snapshot.hasData)
+              return Center(child: CircularProgressIndicator.adaptive());
+            if (!snapshot.data!.exists)
+              return Center(
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
@@ -181,46 +192,97 @@ class _ChatScreenState extends State<ChatScreen> {
                     SizedBox(height: MediaQuery.of(context).size.height / 10),
                   ],
                 ),
-              )
-            : SmartRefresher(
-                controller: _refreshController,
-                physics: BouncingScrollPhysics(),
-                enablePullDown: _isRefreshable,
-                enablePullUp: _isLoadable,
-                child: _buildList(),
-                header: CustomHeader(builder: (_, __) => SizedBox.shrink()),
-                footer: CustomFooter(
-                  loadStyle: LoadStyle.ShowWhenLoading,
-                  builder: loadingBuilder,
-                ),
-                onRefresh: () async {
-                  await _firestoreService
-                      .getProfileData(_user!.uid)
-                      .then((documentSnapshot) {
-                    if (documentSnapshot.exists) {
-                      final List<dynamic> _userChats =
-                          documentSnapshot.get('chats');
-                      final List<dynamic> _reversedChats =
-                          _userChats.reversed.toList();
-                      for (dynamic chat in _reversedChats) {
-                        _chatPostIds.add(chat['postId'].toString());
-                        _chatWithUserIds.add(chat['withUserId'].toString());
-                        _chatWithDisplayNames
-                            .add(chat['withDisplayName'].toString());
-                        _chatWithPhoneNumbers
-                            .add(chat['withPhoneNumber'].toString());
-                        _chatWithProfileUrls
-                            .add(chat['withProfileUrl'].toString());
-                      }
-                      _selfPostIds = documentSnapshot.get('postIds');
-                    }
-                  }).catchError((e) {
-                    print('Cannot get user profile data: ${e.toString()}');
-                  });
+              );
 
-                  assert(_chatPostIds.length == _chatWithUserIds.length);
-                  for (int index = 0; index < _chatPostIds.length; index++)
-                    if (index < chatLoadSize) {
+            final List<dynamic> _chats = snapshot.data!.get('chats');
+            final List<Map<String, dynamic>> _reversedChats =
+                _chats.cast<Map<String, dynamic>>().reversed.toList();
+            _chatPostIds =
+                _reversedChats.map<String>((chat) => chat['postId']).toList();
+            _chatWithUserIds = _reversedChats
+                .map<String>((chat) => chat['withUserId'])
+                .toList();
+            _chatWithDisplayNames = _reversedChats
+                .map<String>((chat) => chat['withDisplayName'])
+                .toList();
+            _chatWithPhoneNumbers = _reversedChats
+                .map<String>((chat) => chat['withPhoneNumber'])
+                .toList();
+            _chatWithProfileUrls = _reversedChats
+                .map<String>((chat) => chat['withProfileUrl'])
+                .toList();
+            _selfPostIds = snapshot.data!.get('postIds');
+            if (chatCount != null) {
+              if (chatCount != _chats.length) {
+                buildChatPostIds.insert(0, _chatPostIds.first);
+                _firestoreService
+                    .getPostData(_chatPostIds.first)
+                    .then((snapshot) {
+                  _chatPostsImageUrl.insert(
+                      0, snapshot.get('imageUrls')[0].toString());
+                  _chatPostsTitle.insert(0, snapshot.get('title').toString());
+                  setState(() => addTimes++);
+                });
+              }
+            }
+            chatCount = _chats.length;
+
+            return SmartRefresher(
+              controller: _refreshController,
+              physics: BouncingScrollPhysics(),
+              enablePullDown: _isRefreshable,
+              enablePullUp: true,
+              child: _chatPostIds.length == 0
+                  ? Center(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Icon(
+                            CustomOutlinedIcons.warning,
+                            size: 24.0,
+                            color: Theme.of(context).primaryIconTheme.color,
+                          ),
+                          const SizedBox(height: 10),
+                          Text(
+                            'មិនមានទិន្នន័យសារ។',
+                            style: Theme.of(context).textTheme.bodyText1,
+                          ),
+                          SizedBox(
+                              height: MediaQuery.of(context).size.height / 10),
+                        ],
+                      ),
+                    )
+                  : _buildList(),
+              header: CustomHeader(builder: (_, __) => SizedBox.shrink()),
+              footer: CustomFooter(
+                loadStyle: LoadStyle.ShowWhenLoading,
+                builder: loadingBuilder,
+              ),
+              onRefresh: () async {
+                assert(_chatPostIds.length == _chatWithUserIds.length);
+                for (int index = 0; index < _chatPostIds.length; index++)
+                  if (index < chatLoadSize) {
+                    buildChatPostIds.add(_chatPostIds.elementAt(index));
+                    await _firestoreService
+                        .getPostData(_chatPostIds.elementAt(index))
+                        .then((snapshot) {
+                      _chatPostsImageUrl
+                          .add(snapshot.get('imageUrls')[0].toString());
+                      _chatPostsTitle.add(snapshot.get('title').toString());
+                    });
+                  }
+
+                if (mounted) setState(() => _isRefreshable = false);
+                _refreshController.refreshCompleted();
+              },
+              onLoading: () async {
+                if (loadingTimes * chatLoadSize + addTimes <
+                    _chatPostIds.length) {
+                  setState(() => loadingTimes++);
+                  for (int index = (loadingTimes - 1) * chatLoadSize + addTimes;
+                      index < _chatPostIds.length;
+                      index++)
+                    if (index < loadingTimes * chatLoadSize + addTimes) {
                       buildChatPostIds.add(_chatPostIds.elementAt(index));
                       await _firestoreService
                           .getPostData(_chatPostIds.elementAt(index))
@@ -230,32 +292,13 @@ class _ChatScreenState extends State<ChatScreen> {
                         _chatPostsTitle.add(snapshot.get('title').toString());
                       });
                     }
-
-                  if (mounted) setState(() => _isRefreshable = false);
-                  _refreshController.refreshCompleted();
-                },
-                onLoading: () async {
-                  if (loadingTimes * chatLoadSize < _chatPostIds.length) {
-                    setState(() => loadingTimes++);
-                    for (int index = (loadingTimes - 1) * chatLoadSize;
-                        index < _chatPostIds.length;
-                        index++)
-                      if (index < loadingTimes * chatLoadSize) {
-                        buildChatPostIds.add(_chatPostIds.elementAt(index));
-                        await _firestoreService
-                            .getPostData(_chatPostIds.elementAt(index))
-                            .then((snapshot) {
-                          _chatPostsImageUrl
-                              .add(snapshot.get('imageUrls')[0].toString());
-                          _chatPostsTitle.add(snapshot.get('title').toString());
-                        });
-                      }
-                  } else
-                    setState(() => _isLoadable = false);
-                  if (mounted) setState(() {});
-                  _refreshController.loadComplete();
-                },
-              ),
+                }
+                if (mounted) setState(() {});
+                _refreshController.loadComplete();
+              },
+            );
+          },
+        ),
       );
     } else
       return Scaffold(
@@ -475,7 +518,7 @@ class _BuildChatItem extends StatelessWidget {
                   color: Theme.of(context).bottomAppBarColor,
                   borderRadius: BorderRadius.circular(15.0),
                 ),
-                child: Center(child: CircularProgressIndicator.adaptive()),
+                child: SizedBox.shrink(),
               ),
             );
           else if (snapshot.data!.docs.isEmpty) return SizedBox.shrink();

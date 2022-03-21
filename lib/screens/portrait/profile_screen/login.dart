@@ -132,7 +132,7 @@ class CustomAppBar extends StatelessWidget {
                 style: Theme.of(context)
                     .textTheme
                     .headline3!
-                    .copyWith(color: Theme.of(context).bottomAppBarColor)),
+                    .copyWith(color: Colors.white)),
           ),
         )
       ],
@@ -178,7 +178,7 @@ class LoginAppBar extends StatelessWidget {
                   style: Theme.of(context)
                       .textTheme
                       .headline3!
-                      .copyWith(color: Theme.of(context).bottomAppBarColor)),
+                      .copyWith(color: Colors.white)),
             ),
           ),
         ],

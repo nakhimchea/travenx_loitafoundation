@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:travenx_loitafoundation/config/configs.dart';
 
 class WalletScreen extends StatefulWidget {
@@ -21,17 +22,22 @@ class WalletScreen extends StatefulWidget {
 class _WalletScreenState extends State<WalletScreen> {
   @override
   Widget build(BuildContext context) {
+    if (widget.isLoggedIn == true)
+      return Scaffold(
+        body: Center(
+          child: SvgPicture.asset(
+            'assets/images/home_screen/sub/boating.svg',
+            width: MediaQuery.of(context).size.width,
+            height: MediaQuery.of(context).size.width / 2,
+            fit: BoxFit.cover,
+          ),
+        ),
+      );
     if (widget.isLoggedIn == true && widget.displayName != '')
       return Scaffold(
         body: LayoutBuilder(
           builder: (context, constraints) => Stack(
             children: [
-              // Image.asset(
-              //   'assets/images/profile_screen/scaffold_background.png',
-              //   height: constraints.maxHeight,
-              //   width: constraints.maxWidth,
-              //   fit: BoxFit.cover,
-              // ),
               CustomScrollView(
                 primary: false,
                 physics: BouncingScrollPhysics(),
@@ -152,15 +158,25 @@ class _WalletScreenState extends State<WalletScreen> {
                   Center(
                     child: Text('Screen is logged.'),
                   ),
-                  TextButton(
-                    onPressed: () {
+                  GestureDetector(
+                    onTap: () {
                       selectedIndex = 3;
                       if (widget.isLoggedIn != false) widget.loggedInCallback();
                     },
                     child: Center(
-                      child: Text('Login Now'),
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Text(
+                          'Login Now',
+                          style: Theme.of(context)
+                              .textTheme
+                              .bodyText1!
+                              .copyWith(color: Theme.of(context).primaryColor),
+                        ),
+                      ),
                     ),
                   ),
+                  SizedBox(height: MediaQuery.of(context).size.height / 10),
                 ],
               ),
             ),

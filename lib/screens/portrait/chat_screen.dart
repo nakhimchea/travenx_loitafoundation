@@ -324,15 +324,25 @@ class _ChatScreenState extends State<ChatScreen> {
                   Center(
                     child: Text('Screen is logged.'),
                   ),
-                  TextButton(
-                    onPressed: () {
+                  GestureDetector(
+                    onTap: () {
                       selectedIndex = 3;
                       if (widget.isLoggedIn != false) widget.loggedInCallback();
                     },
                     child: Center(
-                      child: Text('Login Now'),
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Text(
+                          'Login Now',
+                          style: Theme.of(context)
+                              .textTheme
+                              .bodyText1!
+                              .copyWith(color: Theme.of(context).primaryColor),
+                        ),
+                      ),
                     ),
                   ),
+                  SizedBox(height: MediaQuery.of(context).size.height / 10),
                 ],
               ),
             ),

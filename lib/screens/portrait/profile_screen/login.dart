@@ -112,11 +112,11 @@ class CustomAppBar extends StatelessWidget {
               style: Theme.of(context)
                   .textTheme
                   .headline6!
-                  .copyWith(color: Colors.white)),
+                  .copyWith(color: Theme.of(context).bottomAppBarColor)),
         ),
         Container(
           margin: EdgeInsets.only(
-              top: MediaQuery.of(context).size.height / 9,
+              top: MediaQuery.of(context).size.height / 10,
               right: MediaQuery.of(context).size.width / 20),
           child: TextButton(
             onPressed: () async {
@@ -132,7 +132,7 @@ class CustomAppBar extends StatelessWidget {
                 style: Theme.of(context)
                     .textTheme
                     .headline3!
-                    .copyWith(color: Colors.white)),
+                    .copyWith(color: Theme.of(context).bottomAppBarColor)),
           ),
         )
       ],
@@ -161,7 +161,7 @@ class LoginAppBar extends StatelessWidget {
               style: Theme.of(context)
                   .textTheme
                   .headline2!
-                  .copyWith(color: Colors.white)),
+                  .copyWith(color: Theme.of(context).bottomAppBarColor)),
           Padding(
             padding: EdgeInsets.only(top: 20.0, right: 20.0),
             child: TextButton(
@@ -178,7 +178,7 @@ class LoginAppBar extends StatelessWidget {
                   style: Theme.of(context)
                       .textTheme
                       .headline3!
-                      .copyWith(color: Colors.white)),
+                      .copyWith(color: Theme.of(context).bottomAppBarColor)),
             ),
           ),
         ],

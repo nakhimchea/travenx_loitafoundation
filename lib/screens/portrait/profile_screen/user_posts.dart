@@ -64,13 +64,13 @@ class _UserPostsState extends State<UserPosts> {
         ),
         actions: [
           IconButton(
-            onPressed: () {}, //TODO: Push user to Edit Screen
+            onPressed: () {}, //TODO: Stack user to Delete Icon
             padding: const EdgeInsets.symmetric(horizontal: kHPadding),
             highlightColor: Colors.transparent,
             hoverColor: Colors.transparent,
             splashColor: Colors.transparent,
             icon: Icon(
-              CustomFilledIcons.new_icon,
+              CustomOutlinedIcons.trash,
               size: 24.0,
               color: Theme.of(context).primaryColor,
             ),

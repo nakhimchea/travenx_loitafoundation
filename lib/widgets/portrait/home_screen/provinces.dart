@@ -64,8 +64,8 @@ class _ProvinceCard extends StatelessWidget {
           children: <Widget>[
             ClipRRect(
               borderRadius: BorderRadius.circular(15.0),
-              child: Image(
-                image: AssetImage(modelProvince.imageUrl),
+              child: Image.asset(
+                modelProvince.imageUrl,
                 height: MediaQuery.of(context).size.height / 8,
                 width:
                     (MediaQuery.of(context).size.width - (kHPadding * 2) - 10) /

@@ -35,11 +35,10 @@ class _PostCoverState extends State<PostCover> {
                     borderRadius: BorderRadius.circular(15.0),
                     child: widget.imageUrls.elementAt(index).split('/').first ==
                             'assets'
-                        ? Image(
+                        ? Image.asset(
+                            widget.imageUrls.elementAt(index),
                             width: MediaQuery.of(context).size.width -
                                 2 * kHPadding,
-                            image:
-                                AssetImage(widget.imageUrls.elementAt(index)),
                             fit: BoxFit.cover,
                           )
                         : CachedNetworkImage(

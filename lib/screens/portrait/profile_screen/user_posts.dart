@@ -1,3 +1,6 @@
+import 'dart:ui';
+
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
@@ -250,10 +253,26 @@ class _PostCard extends StatelessWidget {
                 topLeft: Radius.circular(15.0),
                 topRight: Radius.circular(15.0),
               ),
-              child: Image(
-                image: AssetImage(post.imageUrls.elementAt(0)),
-                fit: BoxFit.cover,
-              ),
+              child: post.imageUrls.elementAt(0).split('/').first == 'assets'
+                  ? Image.asset(
+                      post.imageUrls.elementAt(0),
+                      fit: BoxFit.cover,
+                    )
+                  : CachedNetworkImage(
+                      imageUrl: post.imageUrls.elementAt(0),
+                      fit: BoxFit.cover,
+                      placeholder: (context, _) => ImageFiltered(
+                        imageFilter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
+                        child: Image.asset(
+                          'assets/images/travenx_180.png',
+                          fit: BoxFit.cover,
+                        ),
+                      ),
+                      errorWidget: (context, _, __) => Image.asset(
+                        'assets/images/travenx.png',
+                        fit: BoxFit.cover,
+                      ),
+                    ),
             ),
           ),
           Container(

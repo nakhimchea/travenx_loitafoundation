@@ -162,10 +162,10 @@ class _PromotionCard extends StatelessWidget {
             ClipRRect(
               borderRadius: BorderRadius.circular(15.0),
               child: post.imageUrls.elementAt(0).split('/').first == 'assets'
-                  ? Image(
+                  ? Image.asset(
+                      post.imageUrls.elementAt(0),
                       height: double.infinity,
                       width: MediaQuery.of(context).size.width / 2,
-                      image: AssetImage(post.imageUrls.elementAt(0)),
                       fit: BoxFit.cover,
                     )
                   : CachedNetworkImage(

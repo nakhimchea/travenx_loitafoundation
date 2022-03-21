@@ -50,7 +50,11 @@ class LoginCardButton extends StatelessWidget {
                 ),
                 child: Row(
                   children: [
-                    Image.asset(leadingUrl, width: 25.0, height: 25.0),
+                    Image.asset(
+                      leadingUrl,
+                      width: 25.0,
+                      height: 25.0,
+                    ),
                     SizedBox(width: 30.0),
                     Flexible(
                       child: Text(

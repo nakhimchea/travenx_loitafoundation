@@ -547,8 +547,8 @@ class _BuildChatItem extends StatelessWidget {
                       dense: true,
                       leading: ClipOval(
                         child: chatImageUrl.split('/').first == 'assets'
-                            ? Image(
-                                image: AssetImage(chatImageUrl),
+                            ? Image.asset(
+                                chatImageUrl,
                                 fit: BoxFit.cover,
                               )
                             : CachedNetworkImage(

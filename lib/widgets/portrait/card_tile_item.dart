@@ -41,8 +41,8 @@ class CardTileItem extends StatelessWidget {
                   bottomLeft: Radius.circular(15.0),
                 ),
                 child: post.imageUrls.elementAt(0).split('/').first == 'assets'
-                    ? Image(
-                        image: AssetImage(post.imageUrls.elementAt(0)),
+                    ? Image.asset(
+                        post.imageUrls.elementAt(0),
                         fit: BoxFit.cover,
                       )
                     : CachedNetworkImage(

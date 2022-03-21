@@ -34,17 +34,19 @@ class ShortProfile extends StatelessWidget {
               ClipPath(
                 clipper: ProfileClipper(),
                 child: backgroundUrl == ''
-                    ? Image(
+                    ? Image.asset(
+                        _anonymous.imageBackgroundUrl,
                         height: constraints.maxWidth * 9 / 16,
                         width: double.infinity,
-                        image: AssetImage(_anonymous.imageBackgroundUrl),
-                        fit: BoxFit.cover)
+                        fit: BoxFit.cover,
+                      )
                     : backgroundUrl.split('/').first == 'assets'
-                        ? Image(
+                        ? Image.asset(
+                            backgroundUrl,
                             height: constraints.maxWidth * 9 / 16,
                             width: double.infinity,
-                            image: AssetImage(backgroundUrl),
-                            fit: BoxFit.cover)
+                            fit: BoxFit.cover,
+                          )
                         : CachedNetworkImage(
                             height: constraints.maxWidth * 9 / 16,
                             width: double.infinity,
@@ -68,17 +70,19 @@ class ShortProfile extends StatelessWidget {
                 bottom: 0.0,
                 child: ClipOval(
                   child: profileUrl == ''
-                      ? Image(
+                      ? Image.asset(
+                          _anonymous.imageProfileUrl,
                           height: profilePictureDiameter,
                           width: profilePictureDiameter,
-                          image: AssetImage(_anonymous.imageProfileUrl),
-                          fit: BoxFit.contain)
+                          fit: BoxFit.contain,
+                        )
                       : profileUrl.split('/').first == 'assets'
-                          ? Image(
+                          ? Image.asset(
+                              profileUrl,
                               height: profilePictureDiameter,
                               width: profilePictureDiameter,
-                              image: AssetImage(profileUrl),
-                              fit: BoxFit.contain)
+                              fit: BoxFit.contain,
+                            )
                           : CachedNetworkImage(
                               height: profilePictureDiameter,
                               width: profilePictureDiameter,

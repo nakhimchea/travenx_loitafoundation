@@ -75,8 +75,8 @@ class _ChatState extends State<Chat> {
                   ),
                   child: ClipOval(
                     child: widget.postImageUrl.split('/').first == 'assets'
-                        ? Image(
-                            image: AssetImage(widget.postImageUrl),
+                        ? Image.asset(
+                            widget.postImageUrl,
                             fit: BoxFit.cover,
                           )
                         : CachedNetworkImage(

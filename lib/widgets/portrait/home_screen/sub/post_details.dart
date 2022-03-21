@@ -41,13 +41,11 @@ class PostDetails extends StatelessWidget {
         const SizedBox(height: 20.0),
         ClipRRect(
           borderRadius: BorderRadius.circular(15.0),
-          child: Image(
+          child: Image.asset(
+            'assets/images/travenx.png',
             height: MediaQuery.of(context).size.height / 5.125,
             width: MediaQuery.of(context).size.width - 2 * kHPadding,
             fit: BoxFit.cover,
-            image: AssetImage(
-              'assets/images/travenx.png',
-            ),
           ),
         ),
         const SizedBox(height: 10.0),

@@ -146,8 +146,8 @@ class _ProvincesItem extends StatelessWidget {
                   topLeft: Radius.circular(15.0),
                   bottomLeft: Radius.circular(15.0),
                 ),
-                child: Image(
-                  image: AssetImage(modelProvince.imageUrl),
+                child: Image.asset(
+                  modelProvince.imageUrl,
                   fit: BoxFit.cover,
                 ),
               ),
@@ -454,8 +454,8 @@ class _ProvinceCover extends StatelessWidget {
       children: [
         ClipRRect(
           borderRadius: BorderRadius.circular(15.0),
-          child: Image(
-            image: AssetImage(modelProvince.imageUrl),
+          child: Image.asset(
+            modelProvince.imageUrl,
             height: MediaQuery.of(context).size.width - 2 * kHPadding,
             width: MediaQuery.of(context).size.width - 2 * kHPadding,
             fit: BoxFit.cover,

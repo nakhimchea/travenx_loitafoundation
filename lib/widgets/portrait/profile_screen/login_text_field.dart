@@ -10,6 +10,7 @@ class LoginTextField extends StatefulWidget {
   final String hintText;
   final void Function(String) onChangedCallback;
   final bool isCodeSent;
+  final bool? pinCodeEnabled;
   final void Function() isCodeSentCallback;
   final void Function(String)? smsCodeIdSentCallback;
   final String phoneNumber;
@@ -21,6 +22,7 @@ class LoginTextField extends StatefulWidget {
     required this.hintText,
     required this.onChangedCallback,
     required this.isCodeSent,
+    this.pinCodeEnabled,
     required this.isCodeSentCallback,
     this.smsCodeIdSentCallback,
     this.phoneNumber = '',
@@ -107,8 +109,14 @@ class _LoginTextFieldState extends State<LoginTextField> {
                                   fontFamily: 'Nokora',
                                 ),
                                 cursorHeight: 16.0,
-                                enabled: !widget.isCodeSent,
-                                autofocus: !widget.isCodeSent,
+                                enabled: widget.pinCodeEnabled != null
+                                    ? !widget.isCodeSent &&
+                                        widget.pinCodeEnabled!
+                                    : !widget.isCodeSent,
+                                autofocus: widget.pinCodeEnabled != null
+                                    ? !widget.isCodeSent &&
+                                        widget.pinCodeEnabled!
+                                    : !widget.isCodeSent,
                                 onChanged: widget.onChangedCallback,
                                 decoration: InputDecoration(
                                   hintText: widget.hintText,

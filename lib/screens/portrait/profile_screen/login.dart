@@ -348,6 +348,7 @@ class _PhoneLoginState extends State<PhoneLogin> {
   }
 
   bool _isCodeSent = false;
+  bool _pinCodeEnabled = true;
 
   void _toggleShowLogin() => setState(() => _showLogin = !_showLogin);
 
@@ -359,8 +360,29 @@ class _PhoneLoginState extends State<PhoneLogin> {
     if (mounted) setState(() => _smsCodeId = text);
   }
 
+  void _isLoggingIn() async {
+    if (_isCodeSent) setState(() => _isLoading = true);
+    await AuthService()
+        .signInWithPhoneNumber(
+          context,
+          _smsCodeId,
+          _otpNumber,
+          widget.successfulLoggedInCallback,
+          widget.setProfileCallback,
+          widget.fbGgAuthCredential,
+        )
+        .whenComplete(() => setState(() {
+              _isLoading = false;
+              _pinCodeEnabled = true;
+            }));
+  }
+
   void _getOtpNumber(String text) {
     if (mounted) setState(() => _otpNumber = text.trim());
+    if (_otpNumber.length >= 6) {
+      setState(() => _pinCodeEnabled = false);
+      _isLoggingIn();
+    }
   }
 
   @override
@@ -391,6 +413,7 @@ class _PhoneLoginState extends State<PhoneLogin> {
               hintText: '******',
               onChangedCallback: _getOtpNumber,
               isCodeSent: !_isCodeSent,
+              pinCodeEnabled: _pinCodeEnabled,
               isCodeSentCallback: _toggleCodeSent,
               smsCodeIdSentCallback: _getSmsCodeId,
               phoneNumber: _phoneNumber,
@@ -403,20 +426,7 @@ class _PhoneLoginState extends State<PhoneLogin> {
                     ? GradientButton(
                         title: 'ចូល',
                         isCodeSent: _isCodeSent,
-                        onPressed: () async {
-                          if (_isCodeSent) setState(() => _isLoading = true);
-                          await AuthService()
-                              .signInWithPhoneNumber(
-                                context,
-                                _smsCodeId,
-                                _otpNumber,
-                                widget.successfulLoggedInCallback,
-                                widget.setProfileCallback,
-                                widget.fbGgAuthCredential,
-                              )
-                              .whenComplete(
-                                  () => setState(() => _isLoading = false));
-                        },
+                        onPressed: _isLoggingIn,
                       )
                     : SizedBox(height: MediaQuery.of(context).size.height / 16),
           ],

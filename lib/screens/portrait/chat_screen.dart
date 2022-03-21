@@ -594,6 +594,7 @@ class _BuildChatItem extends StatelessWidget {
                           Expanded(
                             child: Text(
                               chatMessage,
+                              maxLines: 2,
                               textScaleFactor: textScaleFactor,
                               style: snapshot.data!.docs.single
                                           .get('senderUid') ==

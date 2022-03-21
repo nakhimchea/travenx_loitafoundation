@@ -256,6 +256,7 @@ class FirestoreService {
           .collection('home_screen')
           .doc('tab_lists')
           .collection(tab)
+          .orderBy('postId', descending: true)
           .limit(5)
           .get()
           .catchError((e) {

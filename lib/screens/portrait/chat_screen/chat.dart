@@ -150,41 +150,43 @@ class MessageStreamer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return StreamBuilder(
-        stream: _firestoreService.getMessages(userId, postId, withUserId),
-        builder: (BuildContext context,
-            AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>> snapshot) {
-          if (!snapshot.hasData)
-            return Center(child: CircularProgressIndicator.adaptive());
+      stream: _firestoreService.getMessages(userId, postId, withUserId),
+      builder: (BuildContext context,
+          AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>> snapshot) {
+        if (!snapshot.hasData)
+          return Center(child: CircularProgressIndicator.adaptive());
 
-          final _messages = snapshot.data!.docs;
-          List<MessageBubble> _messageBubbles = [];
-          for (var _message in _messages) {
-            final senderName = _message.get('senderName');
-            final senderProfileUrl = _message.get('senderProfileUrl');
-            final message = _message.get('message');
-            final attachmentUrl = _message.get('attachmentUrl');
-            final dateTime = DateTime.fromMillisecondsSinceEpoch(
-                int.parse(_message.get('dateTime').toString()));
+        final _messages = snapshot.data!.docs;
+        List<MessageBubble> _messageBubbles = [];
+        for (var _message in _messages) {
+          final senderUid = _message.get('senderUid');
+          final senderName = _message.get('senderName');
+          final senderProfileUrl = _message.get('senderProfileUrl');
+          final message = _message.get('message');
+          final attachmentUrl = _message.get('attachmentUrl');
+          final dateTime = DateTime.fromMillisecondsSinceEpoch(
+              int.parse(_message.get('dateTime').toString()));
 
-            _messageBubbles.add(MessageBubble(
-                senderName: senderName,
-                senderProfileUrl: senderProfileUrl,
-                message: message,
-                attachmentUrl: attachmentUrl,
-                dateTime: dateTime,
-                isMe: senderName ==
-                    userDisplayName)); //TODO: problem both names same
-          }
+          _messageBubbles.add(MessageBubble(
+            senderName: senderName,
+            senderProfileUrl: senderProfileUrl,
+            message: message,
+            attachmentUrl: attachmentUrl,
+            dateTime: dateTime,
+            isMe: senderUid == userId,
+          ));
+        }
 
-          return Expanded(
-            child: ListView(
-              physics: BouncingScrollPhysics(),
-              reverse: true,
-              padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 20.0),
-              children: _messageBubbles,
-            ),
-          );
-        });
+        return Expanded(
+          child: ListView(
+            physics: BouncingScrollPhysics(),
+            reverse: true,
+            padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 20.0),
+            children: _messageBubbles,
+          ),
+        );
+      },
+    );
   }
 }
 

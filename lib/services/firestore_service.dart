@@ -349,6 +349,7 @@ class FirestoreService {
         .doc('withUserId')
         .collection(atClientId)
         .add({
+      'senderUid': atUserId,
       'senderName': senderName,
       'senderProfileUrl': senderProfileUrl,
       'message': message != null ? message : '',
@@ -364,6 +365,7 @@ class FirestoreService {
         .doc('withUserId')
         .collection(atUserId)
         .add({
+      'senderUid': atUserId,
       'senderName': senderName,
       'senderProfileUrl': senderProfileUrl,
       'message': message != null ? message : '',

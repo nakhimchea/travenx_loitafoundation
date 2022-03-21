@@ -585,7 +585,9 @@ class _BuildChatItem extends StatelessWidget {
                             child: Text(
                               chatMessage,
                               textScaleFactor: textScaleFactor,
-                              style: true //TODO
+                              style: snapshot.data!.docs.single
+                                          .get('senderUid') ==
+                                      _user.uid
                                   ? Theme.of(context).textTheme.bodyText1
                                   : Theme.of(context)
                                       .textTheme
@@ -615,7 +617,8 @@ class _BuildChatItem extends StatelessWidget {
                           ),
                         ],
                       ),
-                      trailing: false //TODO
+                      trailing: snapshot.data!.docs.single.get('senderUid') ==
+                              _user.uid
                           ? SizedBox.shrink()
                           : CircleAvatar(
                               radius: 7.0,

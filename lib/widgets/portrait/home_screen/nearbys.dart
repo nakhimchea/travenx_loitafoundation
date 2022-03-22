@@ -108,6 +108,7 @@ class _NearbysState extends State<Nearbys> {
   }
 
   String cityName = '';
+  bool hasNoData = false;
 
   void _setLocationCity() async {
     final FlutterSecureStorage _secureStorage = FlutterSecureStorage(
@@ -259,47 +260,71 @@ class _NearbysState extends State<Nearbys> {
                 child: CircularProgressIndicator.adaptive())
             : Container(
                 height: MediaQuery.of(context).size.height / 3.75 + 10,
-                child: SmartRefresher(
-                  controller: _refreshController,
-                  physics: BouncingScrollPhysics(),
-                  enablePullDown: _isRefreshable,
-                  enablePullUp: _isLoadable,
-                  child: _buildList(),
-                  header: CustomHeader(builder: (_, __) => SizedBox.shrink()),
-                  footer: CustomFooter(
-                    loadStyle: LoadStyle.ShowWhenLoading,
-                    builder: loadingBuilder,
-                  ),
-                  onRefresh: () async {
-                    postList = postTranslator(await _firestoreService
-                        .getProvinceData(
-                            cityName == 'denied' ? 'ភ្នំពេញ' : cityName,
-                            _lastDoc)
-                        .then((snapshot) {
-                      setState(() => snapshot.docs.isNotEmpty
-                          ? _lastDoc = snapshot.docs.last
-                          : _isLoadable = false);
-                      return snapshot.docs;
-                    }));
-                    if (mounted) setState(() => _isRefreshable = false);
-                    _refreshController.refreshCompleted();
-                  },
-                  onLoading: () async {
-                    postList = List.from(postList)
-                      ..addAll(postTranslator(await _firestoreService
-                          .getProvinceData(
-                              cityName == 'denied' ? 'ភ្នំពេញ' : cityName,
-                              _lastDoc)
-                          .then((snapshot) {
-                        setState(() => snapshot.docs.isNotEmpty
-                            ? _lastDoc = snapshot.docs.last
-                            : _isLoadable = false);
-                        return snapshot.docs;
-                      })));
-                    if (mounted) setState(() {});
-                    _refreshController.loadComplete();
-                  },
-                ),
+                child: hasNoData
+                    ? Center(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Icon(
+                              CustomOutlinedIcons.warning,
+                              size: 24.0,
+                              color: Theme.of(context).primaryIconTheme.color,
+                            ),
+                            const SizedBox(height: 10),
+                            Text(
+                              'មិនមានទិន្នន័យអំពីទីតាំងក្បែរៗ។',
+                              style: Theme.of(context).textTheme.bodyText1,
+                            ),
+                            SizedBox(
+                                height:
+                                    MediaQuery.of(context).size.height / 20),
+                          ],
+                        ),
+                      )
+                    : SmartRefresher(
+                        controller: _refreshController,
+                        physics: BouncingScrollPhysics(),
+                        enablePullDown: _isRefreshable,
+                        enablePullUp: _isLoadable,
+                        child: _buildList(),
+                        header:
+                            CustomHeader(builder: (_, __) => SizedBox.shrink()),
+                        footer: CustomFooter(
+                          loadStyle: LoadStyle.ShowWhenLoading,
+                          builder: loadingBuilder,
+                        ),
+                        onRefresh: () async {
+                          postList = postTranslator(await _firestoreService
+                              .getProvinceData(
+                                  cityName == 'denied' ? 'ភ្នំពេញ' : cityName,
+                                  _lastDoc)
+                              .then((snapshot) {
+                            setState(() => snapshot.docs.isNotEmpty
+                                ? _lastDoc = snapshot.docs.last
+                                : _isLoadable = false);
+                            return snapshot.docs;
+                          }));
+                          if (postList.length == 0)
+                            setState(() => hasNoData = true);
+                          if (mounted) setState(() => _isRefreshable = false);
+                          _refreshController.refreshCompleted();
+                        },
+                        onLoading: () async {
+                          postList = List.from(postList)
+                            ..addAll(postTranslator(await _firestoreService
+                                .getProvinceData(
+                                    cityName == 'denied' ? 'ភ្នំពេញ' : cityName,
+                                    _lastDoc)
+                                .then((snapshot) {
+                              setState(() => snapshot.docs.isNotEmpty
+                                  ? _lastDoc = snapshot.docs.last
+                                  : _isLoadable = false);
+                              return snapshot.docs;
+                            })));
+                          if (mounted) setState(() {});
+                          _refreshController.loadComplete();
+                        },
+                      ),
               ),
       ],
     );

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:travenx_loitafoundation/config/configs.dart';
 
@@ -24,6 +25,10 @@ class _WalletScreenState extends State<WalletScreen> {
   Widget build(BuildContext context) {
     if (widget.isLoggedIn == true)
       return Scaffold(
+        appBar: AppBar(
+          elevation: 0,
+          backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+        ),
         body: Center(
           child: SvgPicture.asset(
             'assets/images/home_screen/sub/boating.svg',
@@ -33,7 +38,11 @@ class _WalletScreenState extends State<WalletScreen> {
           ),
         ),
       );
-    if (widget.isLoggedIn == true && widget.displayName != '')
+    else if (widget.isLoggedIn == true && widget.displayName != '') {
+      SystemChrome.setSystemUIOverlayStyle(
+          Theme.of(context).colorScheme.brightness == Brightness.dark
+              ? SystemUiOverlayStyle.light
+              : SystemUiOverlayStyle.dark);
       return Scaffold(
         body: LayoutBuilder(
           builder: (context, constraints) => Stack(
@@ -137,7 +146,11 @@ class _WalletScreenState extends State<WalletScreen> {
           ),
         ),
       );
-    else
+    } else {
+      SystemChrome.setSystemUIOverlayStyle(
+          Theme.of(context).colorScheme.brightness == Brightness.dark
+              ? SystemUiOverlayStyle.dark
+              : SystemUiOverlayStyle.light);
       return Scaffold(
         body: Stack(
           children: [
@@ -183,6 +196,7 @@ class _WalletScreenState extends State<WalletScreen> {
           ],
         ),
       );
+    }
   }
 }
 

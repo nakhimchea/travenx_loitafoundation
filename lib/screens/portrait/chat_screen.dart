@@ -5,6 +5,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:travenx_loitafoundation/config/configs.dart'
@@ -154,7 +155,7 @@ class _ChatScreenState extends State<ChatScreen> {
     final User? _user = FirebaseAuth.instance.currentUser;
     if (_user != null) if (_user.uid != _savedUser) refreshChatScreen(_user);
 
-    if (widget.isLoggedIn == true && widget.displayName != '') {
+    if (widget.isLoggedIn == true && widget.displayName != '')
       return Scaffold(
         appBar: AppBar(
           elevation: 0.5,
@@ -303,7 +304,11 @@ class _ChatScreenState extends State<ChatScreen> {
           },
         ),
       );
-    } else
+    else {
+      SystemChrome.setSystemUIOverlayStyle(
+          Theme.of(context).colorScheme.brightness == Brightness.dark
+              ? SystemUiOverlayStyle.dark
+              : SystemUiOverlayStyle.light);
       return Scaffold(
         body: Stack(
           children: [
@@ -349,6 +354,7 @@ class _ChatScreenState extends State<ChatScreen> {
           ],
         ),
       );
+    }
   }
 }
 

@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:travenx_loitafoundation/config/variable.dart';
 import 'package:travenx_loitafoundation/services/authentication_service.dart';
@@ -36,6 +37,10 @@ class _LoginState extends State<Login> {
 
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setSystemUIOverlayStyle(
+        Theme.of(context).colorScheme.brightness == Brightness.dark
+            ? SystemUiOverlayStyle.dark
+            : SystemUiOverlayStyle.light);
     return LayoutBuilder(
       builder: (context, constraints) => Stack(
         children: [

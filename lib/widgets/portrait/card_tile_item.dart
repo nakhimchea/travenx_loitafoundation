@@ -29,7 +29,8 @@ class CardTileItem extends StatelessWidget {
         ),
       ),
       child: Padding(
-        padding: EdgeInsets.symmetric(vertical: vPadding / 2),
+        padding:
+            EdgeInsets.symmetric(horizontal: kHPadding, vertical: vPadding / 2),
         child: Row(
           children: [
             Container(

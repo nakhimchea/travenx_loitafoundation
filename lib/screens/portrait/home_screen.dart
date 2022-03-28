@@ -83,19 +83,14 @@ class _HomeScreenState extends State<HomeScreen>
           SliverToBoxAdapter(
             child: Nearbys(),
           ),
-          SliverPadding(
-            padding: EdgeInsets.symmetric(horizontal: kHPadding),
-            sliver: SliverPersistentHeader(
-              pinned: true,
-              delegate: PersistentHeader(
-                tabBar: CustomTabBar(tabController: _tabController),
-              ),
+          SliverPersistentHeader(
+            pinned: true,
+            delegate: PersistentHeader(
+              tabBar: CustomTabBar(tabController: _tabController),
             ),
           ),
           SliverPadding(
             padding: const EdgeInsets.only(
-              left: kHPadding,
-              right: kHPadding,
               bottom: kVPadding,
             ),
             sliver: SliverToBoxAdapter(
@@ -117,6 +112,7 @@ class PersistentHeader extends SliverPersistentHeaderDelegate {
   Widget build(
       BuildContext context, double shrinkOffset, bool overlapsContent) {
     return Container(
+      padding: const EdgeInsets.symmetric(horizontal: kHPadding),
       width: MediaQuery.of(context).size.width - 2 * kHPadding,
       height: 55.0,
       color: Theme.of(context).scaffoldBackgroundColor,

@@ -244,8 +244,10 @@ class _LoginMethodsState extends State<LoginMethods> {
               const SizedBox(height: 80),
               Text('ចូលតាមគណនី',
                   textScaleFactor: textScaleFactor,
-                  style: Theme.of(context).textTheme.headline2!.copyWith(
-                      color: Colors.white)),
+                  style: Theme.of(context)
+                      .textTheme
+                      .headline2!
+                      .copyWith(color: Colors.white)),
               const SizedBox(height: 30.0),
               LoginCardButton(
                 leadingUrl: 'assets/icons/profile_screen/phone_logo.png',

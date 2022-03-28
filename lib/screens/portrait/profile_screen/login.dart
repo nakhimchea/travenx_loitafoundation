@@ -48,6 +48,12 @@ class _LoginState extends State<Login> {
                 image: AssetImage(
                   'assets/images/profile_screen/login_background.png',
                 ),
+                colorFilter: ColorFilter.mode(
+                  Theme.of(context).colorScheme.brightness == Brightness.light
+                      ? Colors.black26
+                      : Colors.black45,
+                  BlendMode.srcOver,
+                ),
                 fit: BoxFit.cover,
               ),
             ),
@@ -81,9 +87,7 @@ class _LoginState extends State<Login> {
                         ),
                 ),
                 PolicyAgreement(),
-                !_isPhoneLogin
-                    ? SignUpRequest(isPhoneLoginCallback: hasPhoneLogin)
-                    : SignInRequest(isPhoneLoginCallback: hasLoginMethods),
+                const SizedBox(height: 50),
               ],
             ),
           ),
@@ -134,10 +138,11 @@ class CustomAppBar extends StatelessWidget {
                 overlayColor:
                     MaterialStateProperty.all<Color>(Colors.transparent)),
             child: Text('រំលង',
-                style: Theme.of(context)
-                    .textTheme
-                    .headline3!
-                    .copyWith(color: Theme.of(context).bottomAppBarColor)),
+                style: Theme.of(context).textTheme.headline3!.copyWith(
+                    color: Theme.of(context).colorScheme.brightness ==
+                            Brightness.light
+                        ? Colors.white
+                        : Colors.white60)),
           ),
         )
       ],
@@ -157,7 +162,7 @@ class LoginAppBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: MediaQuery.of(context).size.height / 6.9,
+      height: MediaQuery.of(context).size.height / 6.5,
       alignment: Alignment.bottomCenter,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -185,10 +190,11 @@ class LoginAppBar extends StatelessWidget {
                   overlayColor:
                       MaterialStateProperty.all<Color>(Colors.transparent)),
               child: Text('រំលង',
-                  style: Theme.of(context)
-                      .textTheme
-                      .headline3!
-                      .copyWith(color: Theme.of(context).bottomAppBarColor)),
+                  style: Theme.of(context).textTheme.headline3!.copyWith(
+                      color: Theme.of(context).colorScheme.brightness ==
+                              Brightness.light
+                          ? Colors.white
+                          : Colors.white60)),
             ),
           ),
         ],
@@ -226,16 +232,24 @@ class _LoginMethodsState extends State<LoginMethods> {
         ? Loading()
         : Column(
             children: [
+              ClipRRect(
+                borderRadius: BorderRadius.circular(20),
+                child: Image.asset(
+                  'assets/images/home_screen/kep.jpg',
+                  height: 140,
+                  width: 140,
+                  fit: BoxFit.cover,
+                ),
+              ),
+              const SizedBox(height: 80),
               Text('ចូលតាមគណនី',
                   textScaleFactor: textScaleFactor,
-                  style: Theme.of(context)
-                      .textTheme
-                      .headline2!
-                      .copyWith(color: Theme.of(context).bottomAppBarColor)),
+                  style: Theme.of(context).textTheme.headline2!.copyWith(
+                      color: Colors.white)),
               const SizedBox(height: 30.0),
               LoginCardButton(
                 leadingUrl: 'assets/icons/profile_screen/phone_logo.png',
-                title: 'ចូលតាមគណនី លេខទូរសព្ទ',
+                title: 'ភ្ជាប់តាមគណនី លេខទូរសព្ទ',
                 titleColor: Theme.of(context).primaryColor,
                 onTap: widget.isPhoneLoginCallback,
               ),
@@ -248,18 +262,17 @@ class _LoginMethodsState extends State<LoginMethods> {
                     Container(
                       height: 2.0,
                       width: (MediaQuery.of(context).size.width - (30 * 4)) / 2,
-                      color: Theme.of(context).bottomAppBarColor,
+                      color: Colors.white60,
                     ),
                     Text(
                       'ឬ',
                       style: Theme.of(context).textTheme.headline4!.copyWith(
-                          color: Theme.of(context).bottomAppBarColor,
-                          fontWeight: FontWeight.w400),
+                          color: Colors.white60, fontWeight: FontWeight.w400),
                     ),
                     Container(
                       height: 2.0,
                       width: (MediaQuery.of(context).size.width - (30 * 4)) / 2,
-                      color: Theme.of(context).bottomAppBarColor,
+                      color: Colors.white60,
                     ),
                   ],
                 ),
@@ -267,7 +280,7 @@ class _LoginMethodsState extends State<LoginMethods> {
               const SizedBox(height: 25.0),
               LoginCardButton(
                   leadingUrl: 'assets/icons/profile_screen/facebook_logo.png',
-                  title: 'ចូលតាមគណនី ហ្វេសប៊ុក',
+                  title: 'ភ្ជាប់តាមគណនី ហ្វេសប៊ុក',
                   onTap: () async {
                     setState(() => _isLoading = true);
                     await AuthService()
@@ -282,7 +295,7 @@ class _LoginMethodsState extends State<LoginMethods> {
               const SizedBox(height: 15.0),
               LoginCardButton(
                 leadingUrl: 'assets/icons/profile_screen/google_logo.png',
-                title: 'ចូលតាមគណនី ',
+                title: 'ភ្ជាប់តាមគណនី ',
                 trailing: 'Google',
                 onTap: () async {
                   setState(() => _isLoading = true);
@@ -435,7 +448,7 @@ class _PhoneLoginState extends State<PhoneLogin> {
               isCodeSentCallback: _toggleCodeSent,
               showLoginCallback: _toggleShowLogin,
             ),
-            SizedBox(height: MediaQuery.of(context).size.height / 34),
+            const SizedBox(height: 15),
             LoginTextField(
               logoUrl: 'assets/icons/profile_screen/one_time_password_logo.png',
               hintText: 'បញ្ចូលលេខកូដ',
@@ -447,7 +460,7 @@ class _PhoneLoginState extends State<PhoneLogin> {
               phoneNumber: _phoneNumber,
               showLoginCallback: _toggleShowLogin,
             ),
-            SizedBox(height: MediaQuery.of(context).size.height / 17),
+            const SizedBox(height: 30),
             _isLoading
                 ? Loading()
                 : _showLogin
@@ -472,73 +485,21 @@ class PolicyAgreement extends StatelessWidget {
       child: Column(
         children: [
           Text('តាមរយ:ការប្រើកម្មវិធីនេះ អ្នកយល់ព្រមទទួលយក',
-              style: Theme.of(context)
-                  .textTheme
-                  .button!
-                  .copyWith(color: Theme.of(context).bottomAppBarColor)),
+              style: Theme.of(context).textTheme.button!.copyWith(
+                  color: Theme.of(context).colorScheme.brightness ==
+                          Brightness.light
+                      ? Colors.white
+                      : Colors.white60)),
           SizedBox(height: 3),
           Text('លក្ខខណ្ឌ និងគោលនយោបាយឯកជនភាព',
               style: Theme.of(context).textTheme.button!.copyWith(
-                  color: Theme.of(context).bottomAppBarColor,
+                  color: Theme.of(context).colorScheme.brightness ==
+                          Brightness.light
+                      ? Colors.white
+                      : Colors.white60,
                   fontWeight: FontWeight.w700)),
         ],
       ),
-    );
-  }
-}
-
-class SignInRequest extends StatelessWidget {
-  final void Function() isPhoneLoginCallback;
-  const SignInRequest({
-    Key? key,
-    required this.isPhoneLoginCallback,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        Text('មានគណនីរួច? ',
-            style: Theme.of(context).textTheme.headline4!.copyWith(
-                color: Theme.of(context).bottomAppBarColor,
-                height: 3.0,
-                fontWeight: FontWeight.w400)),
-        GestureDetector(
-          onTap: isPhoneLoginCallback,
-          child: Text('ចូលតាមគណនីផ្សេងទៀត',
-              style: Theme.of(context).textTheme.headline4!.copyWith(
-                  color: Theme.of(context).bottomAppBarColor, height: 3.0)),
-        ),
-      ],
-    );
-  }
-}
-
-class SignUpRequest extends StatelessWidget {
-  final void Function() isPhoneLoginCallback;
-  const SignUpRequest({
-    Key? key,
-    required this.isPhoneLoginCallback,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        Text('ត្រូវការគណនី? ',
-            style: Theme.of(context).textTheme.headline4!.copyWith(
-                color: Theme.of(context).bottomAppBarColor,
-                height: 3.0,
-                fontWeight: FontWeight.w400)),
-        GestureDetector(
-          onTap: isPhoneLoginCallback,
-          child: Text('ចុះឈ្មោះឥឡូវនេះ',
-              style: Theme.of(context).textTheme.headline4!.copyWith(
-                  color: Theme.of(context).bottomAppBarColor, height: 3.0)),
-        ),
-      ],
     );
   }
 }

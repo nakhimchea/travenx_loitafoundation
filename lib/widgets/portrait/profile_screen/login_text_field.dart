@@ -69,13 +69,11 @@ class _LoginTextFieldState extends State<LoginTextField> {
                   height: (MediaQuery.of(context).size.height / 16)
                       .ceil()
                       .toDouble(),
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(15.0),
-                    child: Image.asset(
-                      'assets/images/profile_screen/card_background.png',
-                      width: MediaQuery.of(context).size.width - 60,
-                      fit: BoxFit.cover,
-                    ),
+                  decoration: BoxDecoration(
+                    color: widget.isCodeSent
+                        ? Theme.of(context).bottomAppBarColor
+                        : Theme.of(context).primaryColor,
+                    borderRadius: BorderRadius.circular(30.0),
                   ),
                 ),
                 Container(
@@ -84,7 +82,7 @@ class _LoginTextFieldState extends State<LoginTextField> {
                       .toDouble(),
                   decoration: BoxDecoration(
                     color: Theme.of(context).bottomAppBarColor,
-                    borderRadius: BorderRadius.circular(14.0),
+                    borderRadius: BorderRadius.circular(28.0),
                   ),
                   child: Row(
                     children: [
@@ -164,7 +162,7 @@ class _LoginTextFieldState extends State<LoginTextField> {
                                                   .textTheme
                                                   .subtitle1!
                                                   .copyWith(
-                                                      fontSize: 16.0,
+                                                      fontSize: 14.0,
                                                       fontFamily: 'Nokora')),
                                         ),
                                       ),
@@ -178,7 +176,7 @@ class _LoginTextFieldState extends State<LoginTextField> {
                                                 .copyWith(
                                                     color: Theme.of(context)
                                                         .disabledColor,
-                                                    fontSize: 16.0,
+                                                    fontSize: 14.0,
                                                     fontFamily: 'Nokora')),
                                       ),
                                     ],

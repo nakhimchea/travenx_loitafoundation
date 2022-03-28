@@ -13,8 +13,8 @@ class Loading extends StatelessWidget {
       children: <Widget>[
         SpinKitFadingCircle(
             color: color != null ? color : Theme.of(context).cardColor,
-            size: 50.0),
-        SizedBox(height: 15.0),
+            size: 38.0),
+        const SizedBox(height: 13.0),
         AnimatedTextKit(
           animatedTexts: [
             WavyAnimatedText(

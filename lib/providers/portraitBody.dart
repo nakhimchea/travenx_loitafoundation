@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:travenx_loitafoundation/config/variable.dart';
 import 'package:travenx_loitafoundation/icons/icons.dart';
+import 'package:travenx_loitafoundation/providers/custom_nav_bar.dart';
 import 'package:travenx_loitafoundation/screens/portrait/screens.dart';
-
-import 'custom_nav_bar.dart';
 
 class PortraitBody extends StatefulWidget {
   final bool isLoggedIn;
@@ -72,8 +71,9 @@ class _PortraitBodyState extends State<PortraitBody> {
           index: selectedIndex,
           children: _screens,
         ),
-        bottomNavigationBar: Padding(
+        bottomNavigationBar: Container(
           padding: const EdgeInsets.only(bottom: 16.0),
+          color: Theme.of(context).bottomAppBarColor,
           child: CustomNavBar(
             icons: _icons,
             selectedIndex: selectedIndex,

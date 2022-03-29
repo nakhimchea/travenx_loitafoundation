@@ -75,8 +75,7 @@ class _LoginState extends State<Login> {
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
                 Container(
-                  margin: EdgeInsets.only(
-                      bottom: MediaQuery.of(context).size.height / 15),
+                  margin: EdgeInsets.only(bottom: 25.0),
                   child: !_isPhoneLogin
                       ? LoginMethods(
                           isPhoneLogin: _isPhoneLogin,
@@ -92,7 +91,7 @@ class _LoginState extends State<Login> {
                         ),
                 ),
                 PolicyAgreement(),
-                const SizedBox(height: 50),
+                const SizedBox(height: 25.0),
               ],
             ),
           ),
@@ -246,7 +245,7 @@ class _LoginMethodsState extends State<LoginMethods> {
                   fit: BoxFit.cover,
                 ),
               ),
-              const SizedBox(height: 120),
+              const SizedBox(height: 100),
               LoginCardButton(
                 leadingUrl: 'assets/icons/profile_screen/phone_logo.png',
                 leadingUrlLight:

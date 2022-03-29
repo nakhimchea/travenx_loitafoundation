@@ -4,6 +4,7 @@ import 'package:travenx_loitafoundation/config/variable.dart';
 
 class LoginCardButton extends StatelessWidget {
   final String leadingUrl;
+  final String? leadingUrlLight;
   final String title;
   final String trailing;
   final Color? titleColor;
@@ -12,6 +13,7 @@ class LoginCardButton extends StatelessWidget {
   const LoginCardButton({
     Key? key,
     required this.leadingUrl,
+    this.leadingUrlLight,
     required this.title,
     this.trailing = '',
     this.titleColor,
@@ -27,7 +29,10 @@ class LoginCardButton extends StatelessWidget {
         child: Container(
           height: (MediaQuery.of(context).size.height / 16).ceil().toDouble(),
           decoration: BoxDecoration(
-            color: Theme.of(context).bottomAppBarColor,
+            color: titleColor != null &&
+                    Theme.of(context).colorScheme.brightness == Brightness.light
+                ? Theme.of(context).primaryColor
+                : Theme.of(context).bottomAppBarColor,
             borderRadius: BorderRadius.circular(15.0),
           ),
           child: Padding(
@@ -37,7 +42,13 @@ class LoginCardButton extends StatelessWidget {
             child: Row(
               children: [
                 Image.asset(
-                  leadingUrl,
+                  titleColor != null &&
+                          Theme.of(context).colorScheme.brightness ==
+                              Brightness.light
+                      ? leadingUrlLight != null
+                          ? leadingUrlLight!
+                          : 'assets/icons/profile_screen/phone_logo_light.png'
+                      : leadingUrl,
                   width: 25.0,
                   height: 25.0,
                 ),
@@ -48,13 +59,16 @@ class LoginCardButton extends StatelessWidget {
                     textScaleFactor: textScaleFactor,
                     style: Theme.of(context).textTheme.headline4!.copyWith(
                         color: titleColor != null
-                            ? titleColor
+                            ? Theme.of(context).colorScheme.brightness ==
+                                    Brightness.light
+                                ? Colors.white
+                                : titleColor
                             : Theme.of(context).textTheme.headline4!.color,
                         fontSize: 15.0,
                         fontWeight: titleColor != null &&
                                 Theme.of(context).colorScheme.brightness ==
                                     Brightness.dark
-                            ? FontWeight.w600
+                            ? FontWeight.w500
                             : FontWeight.w400),
                     overflow:
                         kIsWeb ? TextOverflow.clip : TextOverflow.ellipsis,

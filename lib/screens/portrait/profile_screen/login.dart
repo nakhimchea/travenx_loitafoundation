@@ -246,16 +246,11 @@ class _LoginMethodsState extends State<LoginMethods> {
                   fit: BoxFit.cover,
                 ),
               ),
-              const SizedBox(height: 80),
-              Text('ចូលតាមគណនី',
-                  textScaleFactor: textScaleFactor,
-                  style: Theme.of(context)
-                      .textTheme
-                      .headline2!
-                      .copyWith(color: Colors.white)),
-              const SizedBox(height: 30.0),
+              const SizedBox(height: 120),
               LoginCardButton(
                 leadingUrl: 'assets/icons/profile_screen/phone_logo.png',
+                leadingUrlLight:
+                    'assets/icons/profile_screen/phone_logo_light.png',
                 title: 'ភ្ជាប់តាមគណនី លេខទូរសព្ទ',
                 titleColor: Theme.of(context).primaryColor,
                 onTap: widget.isPhoneLoginCallback,

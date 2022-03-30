@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:travenx_loitafoundation/config/configs.dart'
-    show kHPadding, kVPadding, textScaleFactor, kCardTileVPadding;
+    show kVPadding, textScaleFactor, kCardTileVPadding;
 import 'package:travenx_loitafoundation/helpers/post_translator.dart';
 import 'package:travenx_loitafoundation/icons/icons.dart';
 import 'package:travenx_loitafoundation/models/home_screen_models.dart';
@@ -112,8 +112,6 @@ class _BuildIconMenuListState extends State<_BuildIconMenuList> {
     return ListView.builder(
       physics: BouncingScrollPhysics(),
       padding: const EdgeInsets.only(
-        left: kHPadding,
-        right: kHPadding,
         top: kVPadding + 2.0,
         bottom: kVPadding + 6.0,
       ),

@@ -238,12 +238,9 @@ class ProvinceRoute extends StatelessWidget {
           ),
         ],
       ),
-      body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: kHPadding),
-        child: _ProvinceList(
-          modelProvince: modelProvince,
-          vPadding: kCardTileVPadding,
-        ),
+      body: _ProvinceList(
+        modelProvince: modelProvince,
+        vPadding: kCardTileVPadding,
       ),
     );
   }
@@ -296,6 +293,8 @@ class _ProvinceListState extends State<_ProvinceList> {
                   children: [
                     Padding(
                       padding: const EdgeInsets.only(
+                        left: kHPadding,
+                        right: kHPadding,
                         top: kIsWeb
                             ? 5.0
                             : 44.0, //TODO: This according to devices
@@ -306,7 +305,8 @@ class _ProvinceListState extends State<_ProvinceList> {
                           totalPosts: postCounter == null ? '0' : postCounter!),
                     ),
                     Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 6.0),
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: kHPadding, vertical: 6.0),
                       child: Text(
                         'ទីតាំងទាំងអស់',
                         textScaleFactor: textScaleFactor,

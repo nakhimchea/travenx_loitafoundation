@@ -1,27 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:travenx_loitafoundation/screens/medium/profile_layout/profile_layout.dart';
 
 class ChatScreen extends StatefulWidget {
-  final bool isLoggedIn;
-  final String displayName;
-  final String phoneNumber;
-  final String profileUrl;
-  final String backgroundUrl;
-  final void Function() cleanProfileCallback;
-  final void Function() loggedInCallback;
-  final void Function() getProfileCallback;
-  const ChatScreen({
-    Key? key,
-    required this.isLoggedIn,
-    required this.displayName,
-    required this.phoneNumber,
-    required this.profileUrl,
-    required this.backgroundUrl,
-    required this.cleanProfileCallback,
-    required this.loggedInCallback,
-    required this.getProfileCallback,
-  }) : super(key: key);
-
   @override
   _ChatScreenState createState() => _ChatScreenState();
 }
@@ -35,16 +14,7 @@ class _ChatScreenState extends State<ChatScreen> {
         children: [
           Expanded(
             flex: 2,
-            child: ProfileLayout(
-              isLoggedIn: widget.isLoggedIn,
-              displayName: widget.displayName,
-              phoneNumber: widget.phoneNumber,
-              profileUrl: widget.profileUrl,
-              backgroundUrl: widget.backgroundUrl,
-              cleanProfileCallback: widget.cleanProfileCallback,
-              loggedInCallback: widget.loggedInCallback,
-              getProfileCallback: widget.getProfileCallback,
-            ),
+            child: Container(),
           ),
           Expanded(
             flex: 3,

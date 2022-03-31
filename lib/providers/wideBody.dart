@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:travenx_loitafoundation/config/variable.dart';
 import 'package:travenx_loitafoundation/icons/icons.dart';
+import 'package:travenx_loitafoundation/providers/custom_nav_bar.dart';
 import 'package:travenx_loitafoundation/screens/wide/screens.dart';
-
-import 'custom_nav_bar.dart';
 
 class WideBody extends StatefulWidget {
   final bool isLoggedIn;
@@ -37,30 +36,16 @@ class _WideBodyState extends State<WideBody> {
     'ទំព័រដើម': [CustomOutlinedIcons.home, CustomFilledIcons.home],
     'សារ': [CustomOutlinedIcons.message, CustomFilledIcons.message],
     'កាបូប': [CustomOutlinedIcons.wallet, CustomFilledIcons.wallet],
+    'គណនី': [CustomOutlinedIcons.user, CustomFilledIcons.user],
   };
 
   @override
   Widget build(BuildContext context) {
     setState(() => _screens = [
-          HomeScreen(
-              isLoggedIn: widget.isLoggedIn,
-              displayName: widget.displayName,
-              phoneNumber: widget.phoneNumber,
-              profileUrl: widget.profileUrl,
-              backgroundUrl: widget.backgroundUrl,
-              cleanProfileCallback: widget.cleanProfileCallback,
-              loggedInCallback: widget.loggedInCallback,
-              getProfileCallback: widget.getProfileCallback),
-          ChatScreen(
-              isLoggedIn: widget.isLoggedIn,
-              displayName: widget.displayName,
-              phoneNumber: widget.phoneNumber,
-              profileUrl: widget.profileUrl,
-              backgroundUrl: widget.backgroundUrl,
-              cleanProfileCallback: widget.cleanProfileCallback,
-              loggedInCallback: widget.loggedInCallback,
-              getProfileCallback: widget.getProfileCallback),
-          WalletScreen(
+          HomeScreen(),
+          ChatScreen(),
+          WalletScreen(),
+          ProfileScreen(
               isLoggedIn: widget.isLoggedIn,
               displayName: widget.displayName,
               phoneNumber: widget.phoneNumber,
@@ -75,13 +60,17 @@ class _WideBodyState extends State<WideBody> {
       child: Scaffold(
         backgroundColor: Theme.of(context).bottomAppBarColor,
         body: IndexedStack(
-          index: selectedIndex >= 3 ? 0 : selectedIndex,
+          index: selectedIndex,
           children: _screens,
         ),
-        bottomNavigationBar: CustomNavBar(
-          icons: _icons,
-          selectedIndex: selectedIndex >= 3 ? 0 : selectedIndex,
-          onTap: (index) => setState(() => selectedIndex = index),
+        bottomNavigationBar: Container(
+          padding: const EdgeInsets.only(bottom: 16.0),
+          color: Theme.of(context).bottomAppBarColor,
+          child: CustomNavBar(
+            icons: _icons,
+            selectedIndex: selectedIndex,
+            onTap: (index) => setState(() => selectedIndex = index),
+          ),
         ),
       ),
     );

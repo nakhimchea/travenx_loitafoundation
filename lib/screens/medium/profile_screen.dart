@@ -28,6 +28,24 @@ class ProfileScreen extends StatefulWidget {
 class _ProfileScreenState extends State<ProfileScreen> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold();
+    return Scaffold(
+      backgroundColor: Colors.yellowAccent,
+      body: Row(
+        children: [
+          Expanded(
+            flex: 2,
+            child: Container(
+              color: Colors.yellowAccent.shade200,
+            ),
+          ),
+          Expanded(
+            flex: 5,
+            child: Container(
+              color: Colors.yellowAccent.shade700,
+            ),
+          ),
+        ],
+      ),
+    );
   }
 }

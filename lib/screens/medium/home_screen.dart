@@ -13,13 +13,15 @@ class _HomeScreenState extends State<HomeScreen> {
       body: Row(
         children: [
           Expanded(
-            flex: 2,
-            child: Container(),
+            flex: 1,
+            child: Container(
+              color: Colors.orangeAccent.shade200,
+            ),
           ),
           Expanded(
-            flex: 3,
+            flex: 2,
             child: Container(
-              height: double.infinity,
+              color: Colors.orangeAccent.shade700,
             ),
           ),
         ],

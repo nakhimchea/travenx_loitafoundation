@@ -1,3 +1,6 @@
+import 'dart:io' show Platform;
+
+import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:travenx_loitafoundation/config/variable.dart';
 import 'package:travenx_loitafoundation/icons/icons.dart';
@@ -58,13 +61,14 @@ class _WideBodyState extends State<WideBody> {
     return DefaultTabController(
       length: _icons.length,
       child: Scaffold(
-        backgroundColor: Theme.of(context).bottomAppBarColor,
         body: IndexedStack(
           index: selectedIndex,
           children: _screens,
         ),
         bottomNavigationBar: Container(
-          padding: const EdgeInsets.only(bottom: 16.0),
+          padding: !kIsWeb && Platform.isIOS
+              ? const EdgeInsets.only(bottom: 10.0)
+              : EdgeInsets.zero,
           color: Theme.of(context).bottomAppBarColor,
           child: CustomNavBar(
             icons: _icons,

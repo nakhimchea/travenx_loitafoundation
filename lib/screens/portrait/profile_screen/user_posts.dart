@@ -10,6 +10,7 @@ import 'package:travenx_loitafoundation/helpers/post_translator.dart';
 import 'package:travenx_loitafoundation/icons/icons.dart';
 import 'package:travenx_loitafoundation/models/home_screen_models.dart';
 import 'package:travenx_loitafoundation/screens/portrait/home_screen/post_detail.dart';
+import 'package:travenx_loitafoundation/screens/portrait/profile_screen/add_post.dart';
 import 'package:travenx_loitafoundation/services/firestore_service.dart';
 import 'package:travenx_loitafoundation/widgets/portrait/home_screen/sub/custom_floating_action_button.dart';
 
@@ -105,7 +106,10 @@ class _UserPostsState extends State<UserPosts> {
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
       floatingActionButton: CustomFloatingActionButton(
-        onTap: () {}, //TODO: Push user to Add Post
+        onTap: () {
+          Navigator.pop(context);
+          Navigator.push(context, MaterialPageRoute(builder: (_) => AddPost()));
+        },
         iconData: Icons.add,
         iconColor: Colors.white,
         iconSize: 28.0,

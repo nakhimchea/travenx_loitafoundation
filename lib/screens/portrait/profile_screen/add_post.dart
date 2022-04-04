@@ -1,3 +1,6 @@
+import 'dart:io' show Platform;
+
+import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:travenx_loitafoundation/config/configs.dart'
     show kHPadding, textScaleFactor;
@@ -58,7 +61,9 @@ class _AddPostState extends State<AddPost> {
           ),
         ],
       ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+      floatingActionButtonLocation: !kIsWeb && Platform.isIOS
+          ? FloatingActionButtonLocation.centerDocked
+          : FloatingActionButtonLocation.miniCenterFloat,
       floatingActionButton: Padding(
         padding: const EdgeInsets.symmetric(horizontal: kHPadding),
         child: Row(

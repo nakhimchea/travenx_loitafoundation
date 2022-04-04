@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:travenx_loitafoundation/config/configs.dart'
-    show kHPadding, kVPadding, textScaleFactor;
+    show kHPadding, kVPadding, textScaleFactor, selectedIndex;
 import 'package:travenx_loitafoundation/icons/icons.dart';
 import 'package:travenx_loitafoundation/screens/portrait/profile_screen/add_post.dart';
 import 'package:travenx_loitafoundation/screens/portrait/profile_screen/user_posts.dart';
@@ -283,6 +283,7 @@ class _ProfileState extends State<Profile> {
                         await FlutterSecureStorage().delete(key: 'isAnonymous');
                         widget.cleanProfileCallback();
                         widget.loggedInCallback();
+                        selectedIndex = 0;
                       } catch (_) {
                         print('Cannot Sign User out');
                       }

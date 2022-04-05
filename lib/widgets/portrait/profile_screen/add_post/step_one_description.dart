@@ -23,7 +23,7 @@ class StepOneDescription extends StatelessWidget {
             textScaleFactor: textScaleFactor,
             style: Theme.of(context).textTheme.headline3,
           ),
-          const SizedBox(height: kVPadding),
+          const SizedBox(height: kHPadding),
           Text(
             '    លោកអ្នកត្រូវតែនៅទីតាំង ឬអាជីវកម្ម ដើម្បីបង្ហោះផ្សាយពាណិជ្ជកម្មនេះបាន។'
             ' លោកអ្នកត្រូវទទួលស្គាល់ថាពួកយើងចាប់យកទីតាំងដែលលោកអ្នកកំពុងស្ថិតនៅ'

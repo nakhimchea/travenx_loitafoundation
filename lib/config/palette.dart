@@ -22,7 +22,7 @@ class Palette {
 
 class LightPalette {
   static const Color scaffold = Color(0xFFF6F8FA);
-  static const Color disableColor = Color(0xFFEBECF0);
+  static const Color disableColor = Color(0xFFDADADA);
 
   static const Color bottomNavBar = Colors.white;
 

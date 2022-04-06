@@ -8,6 +8,7 @@ class CustomInputBox extends StatelessWidget {
   final TextInputType inputType;
   final bool autofocus;
   final void Function(String) textCallback;
+  final int minimumLines;
   const CustomInputBox({
     Key? key,
     required this.label,
@@ -15,6 +16,7 @@ class CustomInputBox extends StatelessWidget {
     this.inputType = TextInputType.text,
     this.autofocus = false,
     required this.textCallback,
+    this.minimumLines = 1,
   }) : super(key: key);
 
   @override
@@ -34,6 +36,9 @@ class CustomInputBox extends StatelessWidget {
           style: Theme.of(context).textTheme.button!.copyWith(
               color: Theme.of(context).iconTheme.color,
               fontSize: 14 * textScaleFactor),
+          minLines: minimumLines,
+          maxLines: 24,
+          textAlign: TextAlign.justify,
           cursorColor: Theme.of(context).primaryColor,
           cursorHeight: 14 * textScaleFactor,
           autofocus: autofocus,
@@ -44,7 +49,10 @@ class CustomInputBox extends StatelessWidget {
           decoration: InputDecoration(
             filled: true,
             fillColor: Theme.of(context).primaryColor.withOpacity(0.1),
-            contentPadding: const EdgeInsets.symmetric(horizontal: 12.0),
+            contentPadding: const EdgeInsets.symmetric(
+              horizontal: 12.0,
+              vertical: 12.0,
+            ),
             hintText: hintText,
             hintStyle: Theme.of(context)
                 .textTheme

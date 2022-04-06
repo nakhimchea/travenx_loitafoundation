@@ -25,6 +25,9 @@ class _AddPostState extends State<AddPost> {
   double _price = 0;
   List<ActivityType> _activities = [];
   List<File> _images = [];
+  String _details = '';
+  List<TextEditingController> _policies = [TextEditingController()];
+  String _announcement = '';
 
   void _toggleCheckedBox() =>
       setState(() => _agreementChecked = !_agreementChecked);
@@ -40,6 +43,16 @@ class _AddPostState extends State<AddPost> {
 
   void _imagePicker(File file, {bool isRemoved = false}) =>
       setState(() => !isRemoved ? _images.add(file) : _images.remove(file));
+
+  void _changeDetails(String details) => setState(() => _details = details);
+
+  void _changePolicyControllers({bool isRemoved = false, int index = 0}) =>
+      setState(() => !isRemoved
+          ? _policies.add(TextEditingController())
+          : _policies.removeAt(index));
+
+  void _changeAnnouncement(String announcement) =>
+      setState(() => _announcement = announcement);
 
   @override
   Widget build(BuildContext context) {
@@ -131,19 +144,22 @@ class _AddPostState extends State<AddPost> {
       ),
       body: CustomScrollView(
         physics: BouncingScrollPhysics(),
-        slivers: _contentDecision(currentStep),
+        slivers: _contentDecision(),
       ),
     );
   }
 
-  List<Widget> _contentDecision(int step) {
-    if (step == 0)
+  List<Widget> _contentDecision() {
+    if (currentStep == 0)
       return [
-        SliverPadding(
-          padding: const EdgeInsets.symmetric(horizontal: kHPadding),
-          sliver: SliverToBoxAdapter(
-            child: Steps(currentStep: currentStep),
-          ),
+        SliverAppBar(
+          pinned: true,
+          automaticallyImplyLeading: false,
+          elevation: 1,
+          actions: [],
+          title: Steps(currentStep: currentStep),
+          toolbarHeight: 56 + kHPadding,
+          backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         ),
         SliverToBoxAdapter(child: const SizedBox(height: kHPadding)),
         SliverPadding(
@@ -172,13 +188,16 @@ class _AddPostState extends State<AddPost> {
           ),
         ),
       ];
-    else if (step == 1)
+    else if (currentStep == 1)
       return [
-        SliverPadding(
-          padding: const EdgeInsets.symmetric(horizontal: kHPadding),
-          sliver: SliverToBoxAdapter(
-            child: Steps(currentStep: currentStep),
-          ),
+        SliverAppBar(
+          pinned: true,
+          automaticallyImplyLeading: false,
+          elevation: 1,
+          actions: [],
+          title: Steps(currentStep: currentStep),
+          toolbarHeight: 56 + kHPadding,
+          backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         ),
         SliverToBoxAdapter(child: const SizedBox(height: kHPadding)),
         SliverPadding(
@@ -226,6 +245,59 @@ class _AddPostState extends State<AddPost> {
               images: _images,
               imagePickerCallback: _imagePicker,
             ),
+          ),
+        ),
+        SliverToBoxAdapter(child: const SizedBox(height: 100)),
+      ];
+    else if (currentStep == 2)
+      return [
+        SliverAppBar(
+          pinned: true,
+          automaticallyImplyLeading: false,
+          elevation: 1,
+          actions: [],
+          title: Steps(currentStep: currentStep),
+          toolbarHeight: 56 + kHPadding,
+          backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+        ),
+        SliverToBoxAdapter(child: const SizedBox(height: kHPadding)),
+        SliverToBoxAdapter(
+          child: BusinessTime(),
+        ),
+        SliverToBoxAdapter(
+          child: CustomDivider(
+            color: Theme.of(context).primaryColor.withOpacity(0.2),
+            dashWidth: 6,
+            dashHeight: 1,
+          ),
+        ),
+        SliverToBoxAdapter(
+          child: StepThreeFields(
+            policyControllers: _policies,
+            detailsCallback: _changeDetails,
+            policiesCallback: _changePolicyControllers,
+            announcementCallback: _changeAnnouncement,
+          ),
+        ),
+        SliverToBoxAdapter(child: const SizedBox(height: 100)),
+      ];
+    else if (currentStep == 3)
+      return [
+        SliverAppBar(
+          pinned: true,
+          automaticallyImplyLeading: false,
+          elevation: 1,
+          leading: null,
+          actions: [],
+          title: Steps(currentStep: currentStep),
+          toolbarHeight: 56 + kHPadding,
+          backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+        ),
+        SliverToBoxAdapter(child: const SizedBox(height: kHPadding)),
+        SliverToBoxAdapter(
+          child: Container(
+            height: 50,
+            color: Theme.of(context).bottomAppBarColor,
           ),
         ),
       ];

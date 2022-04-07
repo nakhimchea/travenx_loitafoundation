@@ -289,13 +289,12 @@ class FirestoreService {
       print('Cannot read previous client chats: ${e.toString()}');
     });
 
-    if (!_userChats.toString().contains({
-          'withPhoneNumber': clientPhoneNumber,
-          'postId': postId,
-          'withDisplayName': clientDisplayName,
-          'withProfileUrl': clientProfileUrl,
-          'withUserId': clientId,
-        }.toString()))
+    bool _isExisted = false;
+    for (Map<String, dynamic> userChat in _userChats)
+      if (userChat['withUserId'].toString().contains(clientId) &&
+          userChat['postId'].toString().contains(postId)) _isExisted = true;
+
+    if (!_isExisted) {
       _userChats.add({
         'withPhoneNumber': clientPhoneNumber,
         'postId': postId,
@@ -303,13 +302,6 @@ class FirestoreService {
         'withProfileUrl': clientProfileUrl,
         'withUserId': clientId,
       });
-    if (!_clientChats.toString().contains({
-          'withPhoneNumber': userPhoneNumber,
-          'postId': postId,
-          'withDisplayName': userDisplayName,
-          'withProfileUrl': userProfileUrl,
-          'withUserId': userId,
-        }.toString()))
       _clientChats.add({
         'withPhoneNumber': userPhoneNumber,
         'postId': postId,
@@ -317,6 +309,7 @@ class FirestoreService {
         'withProfileUrl': userProfileUrl,
         'withUserId': userId,
       });
+    }
 
     await _firestore.collection('profile_screen').doc(userId).set(
       {'chats': _userChats},

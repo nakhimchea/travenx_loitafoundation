@@ -1,4 +1,4 @@
-import 'dart:io' show Platform, File;
+import 'dart:io' show Platform;
 
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
@@ -24,7 +24,7 @@ class _AddPostState extends State<AddPost> {
   String _title = '';
   double _price = 0;
   List<ActivityType> _activities = [];
-  List<File> _images = [];
+  List<String> _imagesPath = [];
   String _details = '';
   List<TextEditingController> _policies = [TextEditingController()];
   String _announcement = '';
@@ -41,8 +41,8 @@ class _AddPostState extends State<AddPost> {
           ? _activities.add(activityType)
           : _activities.remove(activityType));
 
-  void _imagePicker(File file, {bool isRemoved = false}) =>
-      setState(() => !isRemoved ? _images.add(file) : _images.remove(file));
+  void _imagePicker(String filePath, {bool isRemoved = false}) => setState(() =>
+      !isRemoved ? _imagesPath.add(filePath) : _imagesPath.remove(filePath));
 
   void _changeDetails(String details) => setState(() => _details = details);
 
@@ -242,7 +242,7 @@ class _AddPostState extends State<AddPost> {
           padding: const EdgeInsets.symmetric(horizontal: kHPadding),
           sliver: SliverToBoxAdapter(
             child: PostImagePicker(
-              images: _images,
+              imagesPath: _imagesPath,
               imagePickerCallback: _imagePicker,
             ),
           ),

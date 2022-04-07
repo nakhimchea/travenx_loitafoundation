@@ -69,14 +69,14 @@
 	<string>កម្មវិធីនេះត្រូវការប្រើប្រាស់កាមេរ៉ា
     ដើម្បីដំណើរការអោយបានរលូន។
     សូមចុច៖ "OK"</string>
-	<key>NSPhotoLibraryUsageDescription</key>
-	<string>កម្មវិធីនេះត្រូវការប្រើប្រាស់រូបភាព
-	ដើម្បីដំណើរការអោយបានរលូន។
-	សូមចុច៖ "Allow Access to All Photos"</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>កម្មវិធីនេះត្រូវការប្រើសេវាប្រាប់ទិសតំបន់
     ដើម្បីដំណើរការអោយបានរលូន។
     សូមចុច៖ "Allow While Using App"</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>កម្មវិធីនេះត្រូវការប្រើប្រាស់រូបភាព
+	ដើម្បីដំណើរការអោយបានរលូន។
+	សូមចុច៖ "Allow Access to All Photos"</string>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>UIMainStoryboardFile</key>
@@ -84,8 +84,8 @@
 	<key>UISupportedInterfaceOrientations</key>
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>
-		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
+		<string>UIInterfaceOrientationLandscapeLeft</string>
 	</array>
 	<key>UISupportedInterfaceOrientations~ipad</key>
 	<array>

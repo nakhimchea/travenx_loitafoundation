@@ -1,16 +1,16 @@
-import 'dart:io' show File;
-
+import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:travenx_loitafoundation/config/configs.dart'
     show kHPadding, textScaleFactor;
 import 'package:travenx_loitafoundation/icons/icons.dart';
+import 'package:travenx_loitafoundation/services/image_picker_service.dart';
 
 class PostImagePicker extends StatelessWidget {
-  final List<File> images;
-  final void Function(File, {bool isRemoved}) imagePickerCallback;
+  final List<String> imagesPath;
+  final void Function(String filePath, {bool isRemoved}) imagePickerCallback;
   const PostImagePicker({
     Key? key,
-    required this.images,
+    required this.imagesPath,
     required this.imagePickerCallback,
   }) : super(key: key);
 
@@ -48,21 +48,50 @@ class PostImagePicker extends StatelessWidget {
 
   List<Widget> _buildPicker(BuildContext context, double imageSize) {
     return List.generate(
-      8,
+      imagesPath.length + 1,
       (index) {
-        return Container(
-          width: imageSize,
-          height: imageSize,
-          decoration: BoxDecoration(
-            color: Theme.of(context).primaryColor.withOpacity(0.1),
-            borderRadius: BorderRadius.circular(15.0),
-          ),
-          child: Icon(
-            CustomOutlinedIcons.add,
-            size: imageSize / 2,
-            color: Theme.of(context).disabledColor,
-          ),
-        );
+        if (index == imagesPath.length)
+          return GestureDetector(
+            onTap: () async {
+              ImagePickerService imagePickerService = ImagePickerService();
+              await imagePickerService.addImage(imagePickerCallback);
+            },
+            child: Container(
+              width: imageSize,
+              height: imageSize,
+              decoration: BoxDecoration(
+                color: Theme.of(context).primaryColor.withOpacity(0.1),
+                borderRadius: BorderRadius.circular(15.0),
+              ),
+              child: Icon(
+                CustomOutlinedIcons.add,
+                size: imageSize / 2,
+                color: Theme.of(context).disabledColor,
+              ),
+            ),
+          );
+        else {
+          return Container(
+            width: imageSize,
+            height: imageSize,
+            decoration: BoxDecoration(
+              color: Theme.of(context).primaryColor.withOpacity(0.1),
+              borderRadius: BorderRadius.circular(15.0),
+            ),
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(15.0),
+              child: kIsWeb
+                  ? Image.network(
+                      imagesPath.elementAt(index),
+                      fit: BoxFit.cover,
+                    )
+                  : Image.asset(
+                      imagesPath.elementAt(index),
+                      fit: BoxFit.cover,
+                    ),
+            ),
+          );
+        }
       },
     );
   }

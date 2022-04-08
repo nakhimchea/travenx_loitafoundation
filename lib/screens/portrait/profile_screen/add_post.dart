@@ -19,6 +19,9 @@ class AddPost extends StatefulWidget {
 }
 
 class _AddPostState extends State<AddPost> {
+  bool timeOpenEnabled = false;
+  bool timeCloseEnabled = false;
+
   int currentStep = 0;
   bool _agreementChecked = false;
   String _title = '';
@@ -28,6 +31,10 @@ class _AddPostState extends State<AddPost> {
   String _details = '';
   List<TextEditingController> _policies = [TextEditingController()];
   String _announcement = '';
+
+  void _toggleTimeOpen() => setState(() => timeOpenEnabled = !timeOpenEnabled);
+  void _toggleTimeClose() =>
+      setState(() => timeCloseEnabled = !timeCloseEnabled);
 
   void _toggleCheckedBox() =>
       setState(() => _agreementChecked = !_agreementChecked);
@@ -262,7 +269,12 @@ class _AddPostState extends State<AddPost> {
         ),
         SliverToBoxAdapter(child: const SizedBox(height: kHPadding)),
         SliverToBoxAdapter(
-          child: BusinessTime(),
+          child: BusinessTime(
+            openEnabled: timeOpenEnabled,
+            openEnabledCallback: _toggleTimeOpen,
+            closeEnabled: timeCloseEnabled,
+            closeEnabledCallback: _toggleTimeClose,
+          ),
         ),
         SliverToBoxAdapter(
           child: CustomDivider(

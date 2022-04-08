@@ -16,7 +16,7 @@ class AuthService {
       {required String contentCode, String? phoneNumber, int duration = 5}) {
     return SnackBar(
         backgroundColor: Colors.transparent,
-        padding: const EdgeInsets.symmetric(horizontal: 15.0),
+        padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 15.0),
         elevation: 0.0,
         content: CustomSnackBarContent(
           contentCode: contentCode,

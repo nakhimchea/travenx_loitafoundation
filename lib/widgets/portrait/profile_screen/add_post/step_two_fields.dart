@@ -32,7 +32,6 @@ class StepTwoFields extends StatelessWidget {
           CustomInputBox(
             label: 'ចំណងជើង',
             hintText: 'ហាងកាហ្វេ និងនំខេក',
-            autofocus: true,
             textCallback: titleCallback,
           ),
           const SizedBox(height: kHPadding),

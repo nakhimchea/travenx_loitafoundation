@@ -1,3 +1,5 @@
+import 'dart:io' show Platform, File;
+
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:travenx_loitafoundation/config/configs.dart'
@@ -52,10 +54,8 @@ class PostImagePicker extends StatelessWidget {
       (index) {
         if (index == imagesPath.length)
           return GestureDetector(
-            onTap: () async {
-              ImagePickerService imagePickerService = ImagePickerService();
-              await imagePickerService.addImage(imagePickerCallback);
-            },
+            onTap: () async =>
+                await ImagePickerService().addImage(imagePickerCallback),
             child: Container(
               width: imageSize,
               height: imageSize,
@@ -71,25 +71,64 @@ class PostImagePicker extends StatelessWidget {
             ),
           );
         else {
-          return Container(
-            width: imageSize,
-            height: imageSize,
-            decoration: BoxDecoration(
-              color: Theme.of(context).primaryColor.withOpacity(0.1),
-              borderRadius: BorderRadius.circular(15.0),
-            ),
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(15.0),
-              child: kIsWeb
-                  ? Image.network(
-                      imagesPath.elementAt(index),
-                      fit: BoxFit.cover,
-                    )
-                  : Image.asset(
-                      imagesPath.elementAt(index),
-                      fit: BoxFit.cover,
+          return Stack(
+            children: [
+              Container(
+                padding: const EdgeInsets.all(1.0),
+                width: imageSize,
+                height: imageSize,
+                decoration: BoxDecoration(
+                  color: Theme.of(context).primaryColor.withOpacity(0.1),
+                  borderRadius: BorderRadius.circular(15.0),
+                ),
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(15.0),
+                  child: kIsWeb
+                      ? Image.network(
+                          imagesPath.elementAt(index),
+                          fit: BoxFit.cover,
+                        )
+                      : Platform.isIOS
+                          ? Image.asset(
+                              imagesPath.elementAt(index),
+                              fit: BoxFit.cover,
+                            )
+                          : Image.file(
+                              File(imagesPath.elementAt(index)),
+                              fit: BoxFit.cover,
+                            ),
+                ),
+              ),
+              Positioned(
+                top: -2,
+                right: -2,
+                child: GestureDetector(
+                  onTap: () => imagePickerCallback(
+                    imagesPath.elementAt(index),
+                    isRemoved: true,
+                  ),
+                  child: Container(
+                    height:
+                        (MediaQuery.of(context).size.width - (4 * kHPadding)) /
+                            18,
+                    width:
+                        (MediaQuery.of(context).size.width - (4 * kHPadding)) /
+                            18,
+                    decoration: BoxDecoration(
+                      color: Theme.of(context).bottomAppBarColor,
+                      borderRadius: BorderRadius.circular(4.0),
                     ),
-            ),
+                    child: Icon(
+                      CustomOutlinedIcons.delete,
+                      size: (MediaQuery.of(context).size.width -
+                              (4 * kHPadding)) /
+                          18,
+                      color: Theme.of(context).errorColor.withOpacity(0.5),
+                    ),
+                  ),
+                ),
+              ),
+            ],
           );
         }
       },

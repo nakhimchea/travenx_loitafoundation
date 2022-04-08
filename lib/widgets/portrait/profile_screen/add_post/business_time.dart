@@ -51,10 +51,8 @@ class BusinessTime extends StatelessWidget {
                   showDialog(
                     context: context,
                     builder: (context) => CustomDialog(
-                      openHour: openHour,
-                      openHourCallback: openHourCallback,
-                      closeHour: closeHour,
-                      closeHourCallback: closeHourCallback,
+                      hour: openHour,
+                      hourCallback: openHourCallback,
                     ),
                   );
                 },
@@ -116,6 +114,14 @@ class BusinessTime extends StatelessWidget {
               GestureDetector(
                 onTap: () {
                   closeEnabledCallback();
+                  showDialog(
+                    context: context,
+                    builder: (context) => CustomDialog(
+                      isOpenHour: false,
+                      hour: closeHour,
+                      hourCallback: closeHourCallback,
+                    ),
+                  );
                 },
                 child: Stack(
                   children: [
@@ -180,19 +186,24 @@ class BusinessTime extends StatelessWidget {
   }
 }
 
-class CustomDialog extends StatelessWidget {
-  final DateTime openHour;
-  final void Function(DateTime) openHourCallback;
-  final DateTime closeHour;
-  final void Function(DateTime) closeHourCallback;
+class CustomDialog extends StatefulWidget {
+  final bool isOpenHour;
+  final DateTime hour;
+  final void Function(DateTime) hourCallback;
   const CustomDialog({
     Key? key,
-    required this.openHour,
-    required this.openHourCallback,
-    required this.closeHour,
-    required this.closeHourCallback,
+    this.isOpenHour = true,
+    required this.hour,
+    required this.hourCallback,
   }) : super(key: key);
 
+  @override
+  State<CustomDialog> createState() => _CustomDialogState();
+}
+
+class _CustomDialogState extends State<CustomDialog> {
+  bool _resetHold = false;
+  bool _doneHold = false;
   @override
   Widget build(BuildContext context) {
     return Dialog(
@@ -219,9 +230,9 @@ class CustomDialog extends StatelessWidget {
               ),
               child: CupertinoDatePicker(
                 mode: CupertinoDatePickerMode.time,
-                initialDateTime: openHour,
+                initialDateTime: widget.hour,
                 minuteInterval: 5,
-                onDateTimeChanged: openHourCallback,
+                onDateTimeChanged: widget.hourCallback,
               ),
             ),
           ),
@@ -236,40 +247,52 @@ class CustomDialog extends StatelessWidget {
             children: [
               GestureDetector(
                 onTap: () {
-                  openHourCallback(DateTime(DateTime.now().year,
-                      DateTime.now().month, DateTime.now().day, 8));
+                  widget.isOpenHour
+                      ? widget.hourCallback(DateTime(DateTime.now().year,
+                          DateTime.now().month, DateTime.now().day, 8))
+                      : widget.hourCallback(DateTime(DateTime.now().year,
+                          DateTime.now().month, DateTime.now().day, 21));
                   Navigator.pop(context);
-                  showDialog(
-                    context: context,
-                    builder: (_) => CustomDialog(
-                      openHour: openHour,
-                      openHourCallback: openHourCallback,
-                      closeHour: closeHour,
-                      closeHourCallback: closeHourCallback,
-                    ),
-                  );
                 },
+                onLongPress: () => setState(() => _resetHold = true),
+                onLongPressEnd: (_) => setState(() => _resetHold = false),
                 child: Padding(
                   padding: const EdgeInsets.only(left: 30.0, bottom: kVPadding),
                   child: Text(
                     'Reset',
                     style: Theme.of(context).textTheme.headline3!.copyWith(
-                        color: Theme.of(context).primaryColor,
+                        color: _resetHold
+                            ? widget.isOpenHour
+                                ? Theme.of(context)
+                                    .primaryColor
+                                    .withOpacity(0.4)
+                                : Theme.of(context).errorColor.withOpacity(0.4)
+                            : widget.isOpenHour
+                                ? Theme.of(context).primaryColor
+                                : Theme.of(context).errorColor,
                         fontWeight: FontWeight.w400),
                   ),
                 ),
               ),
               GestureDetector(
                 onTap: () => Navigator.pop(context),
+                onLongPress: () => setState(() => _doneHold = true),
+                onLongPressEnd: (_) => setState(() => _doneHold = false),
                 child: Padding(
                   padding:
                       const EdgeInsets.only(right: 30.0, bottom: kVPadding),
                   child: Text(
                     'Done',
-                    style: Theme.of(context)
-                        .textTheme
-                        .headline3!
-                        .copyWith(color: Theme.of(context).primaryColor),
+                    style: Theme.of(context).textTheme.headline3!.copyWith(
+                        color: _doneHold
+                            ? widget.isOpenHour
+                                ? Theme.of(context)
+                                    .primaryColor
+                                    .withOpacity(0.4)
+                                : Theme.of(context).errorColor.withOpacity(0.4)
+                            : widget.isOpenHour
+                                ? Theme.of(context).primaryColor
+                                : Theme.of(context).errorColor),
                   ),
                 ),
               ),

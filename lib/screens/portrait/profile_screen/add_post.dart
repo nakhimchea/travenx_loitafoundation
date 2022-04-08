@@ -36,9 +36,8 @@ class _AddPostState extends State<AddPost> {
   List<TextEditingController> _policies = [TextEditingController()];
   String _announcement = '';
 
-  void _toggleTimeOpen() => setState(() => timeOpenEnabled = !timeOpenEnabled);
-  void _toggleTimeClose() =>
-      setState(() => timeCloseEnabled = !timeCloseEnabled);
+  void _toggleTimeOpen() => setState(() => timeOpenEnabled = true);
+  void _toggleTimeClose() => setState(() => timeCloseEnabled = true);
 
   void _toggleCheckedBox() =>
       setState(() => _agreementChecked = !_agreementChecked);

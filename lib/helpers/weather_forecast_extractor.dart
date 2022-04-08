@@ -1,5 +1,6 @@
-import 'dart:convert';
+import 'dart:convert' show jsonDecode;
 
+import 'package:travenx_loitafoundation/helpers/time_translator.dart';
 import 'package:travenx_loitafoundation/models/weather_forecast_model.dart';
 
 ModelWeatherForecast weatherForecastExtractor({required String data}) {
@@ -30,7 +31,7 @@ ModelWeatherForecast weatherForecastExtractor({required String data}) {
             '/' +
             _conditionTranslator(_knowledge.first.split('/').last) +
             '/' +
-            _timeTranslator(DateTime.fromMillisecondsSinceEpoch(
+            timeTranslator(DateTime.fromMillisecondsSinceEpoch(
                 int.parse(_knowledge.first.split('/').first) * 1000)));
         for (int index = 1; index < _knowledge.length; index++) {
           final _timeframe = DateTime.fromMillisecondsSinceEpoch(
@@ -44,7 +45,7 @@ ModelWeatherForecast weatherForecastExtractor({required String data}) {
                 _conditionTranslator(
                     _knowledge.elementAt(index).split('/').last) +
                 '/' +
-                _timeTranslator(DateTime.fromMillisecondsSinceEpoch(
+                timeTranslator(DateTime.fromMillisecondsSinceEpoch(
                     int.parse(_knowledge.elementAt(index).split('/').first) *
                         1000)));
           }
@@ -56,8 +57,8 @@ ModelWeatherForecast weatherForecastExtractor({required String data}) {
       final DateTime _set = DateTime.fromMillisecondsSinceEpoch(
           int.parse(jsonDecode(data)['city']['sunset'].toString()) * 1000);
 
-      _sunrise = _timeTranslator(_rise);
-      _sunset = _timeTranslator(_set);
+      _sunrise = timeTranslator(_rise);
+      _sunset = timeTranslator(_set);
       _temperature = (double.parse(
               jsonDecode(data)['list'][0]['main']['feels_like'].toString()))
           .toInt();
@@ -124,25 +125,4 @@ String _dateTranslator(DateTime dateTime) {
     return 'ខានស្អែក';
   else
     return 'ទី${dateTime.day}';
-}
-
-String _timeTranslator(DateTime dateTime) {
-  final String _hour = dateTime.hour > 12
-      ? (dateTime.hour - 12).toString()
-      : dateTime.hour.toString();
-  String _translatedString = dateTime.minute == 0
-      ? _hour
-      : dateTime.minute < 10
-          ? _hour + ':0' + dateTime.minute.toString() + 'នាទី'
-          : _hour + ':' + dateTime.minute.toString() + 'នាទី';
-  if (dateTime.hour >= 3 && dateTime.hour < 6)
-    return _translatedString + ' ព្រលឹម';
-  else if (dateTime.hour >= 6 && dateTime.hour < 12)
-    return _translatedString + ' ព្រឹក';
-  else if (dateTime.hour >= 12 && dateTime.hour < 16)
-    return _translatedString + ' ថ្ងៃ';
-  else if (dateTime.hour >= 16 && dateTime.hour < 19)
-    return _translatedString + ' ល្ងាច';
-  else
-    return _translatedString + ' យប់';
 }

@@ -1,18 +1,28 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:travenx_loitafoundation/config/configs.dart'
     show kHPadding, kVPadding, textScaleFactor;
+import 'package:travenx_loitafoundation/helpers/time_translator.dart';
 
 class BusinessTime extends StatelessWidget {
   final bool openEnabled;
   final void Function() openEnabledCallback;
   final bool closeEnabled;
   final void Function() closeEnabledCallback;
+  final DateTime openHour;
+  final void Function(DateTime) openHourCallback;
+  final DateTime closeHour;
+  final void Function(DateTime) closeHourCallback;
   const BusinessTime({
     Key? key,
     required this.openEnabled,
     required this.openEnabledCallback,
     required this.closeEnabled,
     required this.closeEnabledCallback,
+    required this.openHour,
+    required this.openHourCallback,
+    required this.closeHour,
+    required this.closeHourCallback,
   }) : super(key: key);
 
   @override
@@ -38,6 +48,15 @@ class BusinessTime extends StatelessWidget {
               GestureDetector(
                 onTap: () {
                   openEnabledCallback();
+                  showDialog(
+                    context: context,
+                    builder: (context) => CustomDialog(
+                      openHour: openHour,
+                      openHourCallback: openHourCallback,
+                      closeHour: closeHour,
+                      closeHourCallback: closeHourCallback,
+                    ),
+                  );
                 },
                 child: Stack(
                   children: [
@@ -65,7 +84,7 @@ class BusinessTime extends StatelessWidget {
                           borderRadius: BorderRadius.circular(5.0),
                         ),
                         child: Text(
-                          '5:00 AM',
+                          'ម៉ោង ' + timeTranslator(openHour),
                           style: Theme.of(context).textTheme.button!.copyWith(
                               color: openEnabled
                                   ? Theme.of(context).iconTheme.color
@@ -80,7 +99,7 @@ class BusinessTime extends StatelessWidget {
                         padding: const EdgeInsets.symmetric(horizontal: 3.0),
                         color: Theme.of(context).bottomAppBarColor,
                         child: Text(
-                          'ម៉ោងបើក',
+                          'បើកដំណើរការ',
                           textScaleFactor: textScaleFactor,
                           style: Theme.of(context).textTheme.button!.copyWith(
                               color: openEnabled
@@ -124,7 +143,7 @@ class BusinessTime extends StatelessWidget {
                           borderRadius: BorderRadius.circular(5.0),
                         ),
                         child: Text(
-                          '9:00 PM',
+                          'ម៉ោង ' + timeTranslator(closeHour),
                           style: Theme.of(context).textTheme.button!.copyWith(
                               color: closeEnabled
                                   ? Theme.of(context).iconTheme.color
@@ -139,7 +158,7 @@ class BusinessTime extends StatelessWidget {
                         padding: const EdgeInsets.symmetric(horizontal: 3.0),
                         color: Theme.of(context).bottomAppBarColor,
                         child: Text(
-                          'ម៉ោងបិទ',
+                          'ផ្អាកដំណើរការ',
                           textScaleFactor: textScaleFactor,
                           style: Theme.of(context).textTheme.button!.copyWith(
                               color: closeEnabled
@@ -151,6 +170,107 @@ class BusinessTime extends StatelessWidget {
                       ),
                     ),
                   ],
+                ),
+              ),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class CustomDialog extends StatelessWidget {
+  final DateTime openHour;
+  final void Function(DateTime) openHourCallback;
+  final DateTime closeHour;
+  final void Function(DateTime) closeHourCallback;
+  const CustomDialog({
+    Key? key,
+    required this.openHour,
+    required this.openHourCallback,
+    required this.closeHour,
+    required this.closeHourCallback,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Dialog(
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+      insetPadding: EdgeInsets.symmetric(
+          horizontal: (MediaQuery.of(context).size.width - 228) / 2),
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(15.0),
+      ),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          const SizedBox(height: kVPadding),
+          Container(
+            padding: const EdgeInsets.symmetric(vertical: kHPadding),
+            height: 160,
+            child: CupertinoTheme(
+              data: CupertinoThemeData(
+                textTheme: CupertinoTextThemeData(
+                    dateTimePickerTextStyle: Theme.of(context)
+                        .textTheme
+                        .headline2!
+                        .copyWith(fontWeight: FontWeight.w400)),
+              ),
+              child: CupertinoDatePicker(
+                mode: CupertinoDatePickerMode.time,
+                initialDateTime: openHour,
+                minuteInterval: 5,
+                onDateTimeChanged: openHourCallback,
+              ),
+            ),
+          ),
+          const SizedBox(height: kVPadding),
+          Divider(
+            color: Theme.of(context).primaryColor.withOpacity(0.8),
+            indent: 6.0,
+            endIndent: 6.0,
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              GestureDetector(
+                onTap: () {
+                  openHourCallback(DateTime(DateTime.now().year,
+                      DateTime.now().month, DateTime.now().day, 8));
+                  Navigator.pop(context);
+                  showDialog(
+                    context: context,
+                    builder: (_) => CustomDialog(
+                      openHour: openHour,
+                      openHourCallback: openHourCallback,
+                      closeHour: closeHour,
+                      closeHourCallback: closeHourCallback,
+                    ),
+                  );
+                },
+                child: Padding(
+                  padding: const EdgeInsets.only(left: 30.0, bottom: kVPadding),
+                  child: Text(
+                    'Reset',
+                    style: Theme.of(context).textTheme.headline3!.copyWith(
+                        color: Theme.of(context).primaryColor,
+                        fontWeight: FontWeight.w400),
+                  ),
+                ),
+              ),
+              GestureDetector(
+                onTap: () => Navigator.pop(context),
+                child: Padding(
+                  padding:
+                      const EdgeInsets.only(right: 30.0, bottom: kVPadding),
+                  child: Text(
+                    'Done',
+                    style: Theme.of(context)
+                        .textTheme
+                        .headline3!
+                        .copyWith(color: Theme.of(context).primaryColor),
+                  ),
                 ),
               ),
             ],

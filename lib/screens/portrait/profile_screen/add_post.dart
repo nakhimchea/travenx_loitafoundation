@@ -28,6 +28,10 @@ class _AddPostState extends State<AddPost> {
   double _price = 0;
   List<ActivityType> _activities = [];
   List<String> _imagesPath = [];
+  DateTime _openHour = DateTime(
+      DateTime.now().year, DateTime.now().month, DateTime.now().day, 8);
+  DateTime _closeHour = DateTime(
+      DateTime.now().year, DateTime.now().month, DateTime.now().day, 21);
   String _details = '';
   List<TextEditingController> _policies = [TextEditingController()];
   String _announcement = '';
@@ -50,6 +54,11 @@ class _AddPostState extends State<AddPost> {
 
   void _imagePicker(String filePath, {bool isRemoved = false}) => setState(() =>
       !isRemoved ? _imagesPath.add(filePath) : _imagesPath.remove(filePath));
+
+  void _changeOpenHour(DateTime dateTime) =>
+      setState(() => _openHour = dateTime);
+  void _changeCloseHour(DateTime dateTime) =>
+      setState(() => _closeHour = dateTime);
 
   void _changeDetails(String details) => setState(() => _details = details);
 
@@ -274,13 +283,25 @@ class _AddPostState extends State<AddPost> {
             openEnabledCallback: _toggleTimeOpen,
             closeEnabled: timeCloseEnabled,
             closeEnabledCallback: _toggleTimeClose,
+            openHour: _openHour,
+            openHourCallback: _changeOpenHour,
+            closeHour: _closeHour,
+            closeHourCallback: _changeCloseHour,
           ),
         ),
-        SliverToBoxAdapter(
-          child: CustomDivider(
-            color: Theme.of(context).primaryColor.withOpacity(0.2),
-            dashWidth: 6,
-            dashHeight: 1,
+        SliverPadding(
+          padding: EdgeInsets.symmetric(
+            horizontal:
+                Theme.of(context).colorScheme.brightness == Brightness.dark
+                    ? kHPadding
+                    : 0,
+          ),
+          sliver: SliverToBoxAdapter(
+            child: CustomDivider(
+              color: Theme.of(context).primaryColor.withOpacity(0.2),
+              dashWidth: 6,
+              dashHeight: 1,
+            ),
           ),
         ),
         SliverToBoxAdapter(
@@ -291,7 +312,6 @@ class _AddPostState extends State<AddPost> {
             announcementCallback: _changeAnnouncement,
           ),
         ),
-        SliverToBoxAdapter(child: const SizedBox(height: 100)),
       ];
     else if (currentStep == 3)
       return [

@@ -21,10 +21,7 @@ class StepThreeFields extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.all(kHPadding),
-      decoration: BoxDecoration(
-        color: Theme.of(context).bottomAppBarColor,
-        borderRadius: BorderRadius.vertical(bottom: Radius.circular(15.0)),
-      ),
+      color: Theme.of(context).bottomAppBarColor,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -59,6 +56,7 @@ class StepThreeFields extends StatelessWidget {
             textCallback: announcementCallback,
             minimumLines: 5,
           ),
+          const SizedBox(height: 80),
         ],
       ),
     );

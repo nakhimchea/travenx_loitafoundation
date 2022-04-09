@@ -289,10 +289,10 @@ class _CustomDialogState extends State<CustomDialog> {
                                 ? Theme.of(context)
                                     .primaryColor
                                     .withOpacity(0.4)
-                                : Theme.of(context).errorColor.withOpacity(0.4)
+                                : Theme.of(context).errorColor.withOpacity(0.3)
                             : widget.isOpenHour
                                 ? Theme.of(context).primaryColor
-                                : Theme.of(context).errorColor,
+                                : Theme.of(context).errorColor.withOpacity(0.7),
                         fontWeight: FontWeight.w400),
                   ),
                 ),
@@ -312,10 +312,12 @@ class _CustomDialogState extends State<CustomDialog> {
                                 ? Theme.of(context)
                                     .primaryColor
                                     .withOpacity(0.4)
-                                : Theme.of(context).errorColor.withOpacity(0.4)
+                                : Theme.of(context).errorColor.withOpacity(0.3)
                             : widget.isOpenHour
                                 ? Theme.of(context).primaryColor
-                                : Theme.of(context).errorColor),
+                                : Theme.of(context)
+                                    .errorColor
+                                    .withOpacity(0.7)),
                   ),
                 ),
               ),

@@ -6,9 +6,9 @@ import 'package:travenx_loitafoundation/helpers/time_translator.dart';
 
 class BusinessTime extends StatelessWidget {
   final bool openEnabled;
-  final void Function() openEnabledCallback;
+  final void Function({bool isDisabled}) openEnabledCallback;
   final bool closeEnabled;
-  final void Function() closeEnabledCallback;
+  final void Function({bool isDisabled}) closeEnabledCallback;
   final DateTime openHour;
   final void Function(DateTime) openHourCallback;
   final DateTime closeHour;
@@ -43,139 +43,162 @@ class BusinessTime extends StatelessWidget {
           ),
           const SizedBox(height: kHPadding),
           Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              GestureDetector(
-                onTap: () {
-                  openEnabledCallback();
-                  showDialog(
-                    context: context,
-                    builder: (context) => CustomDialog(
-                      hour: openHour,
-                      hourCallback: openHourCallback,
-                    ),
-                  );
-                },
-                child: Stack(
-                  children: [
-                    Container(
-                      margin: const EdgeInsets.only(top: kVPadding),
-                      padding: const EdgeInsets.all(1.0),
-                      decoration: BoxDecoration(
-                        color: !openEnabled
-                            ? Theme.of(context)
-                                .primaryIconTheme
-                                .color!
-                                .withOpacity(0.5)
-                            : Theme.of(context).primaryColor.withOpacity(0.4),
-                        borderRadius: BorderRadius.circular(6.0),
+              Expanded(
+                child: GestureDetector(
+                  onTap: () {
+                    openEnabledCallback();
+                    showDialog(
+                      context: context,
+                      builder: (context) => CustomDialog(
+                        hour: openHour,
+                        hourCallback: openHourCallback,
                       ),
-                      child: Container(
-                        padding:
-                            const EdgeInsets.symmetric(vertical: kHPadding),
-                        alignment: Alignment.center,
-                        width: MediaQuery.of(context).size.width / 2 -
-                            kHPadding -
-                            5,
+                    );
+                  },
+                  child: Stack(
+                    children: [
+                      Container(
+                        margin: const EdgeInsets.only(top: kVPadding),
+                        padding: const EdgeInsets.all(1.0),
                         decoration: BoxDecoration(
+                          color: !openEnabled
+                              ? Theme.of(context)
+                                  .primaryIconTheme
+                                  .color!
+                                  .withOpacity(0.5)
+                              : Theme.of(context).primaryColor.withOpacity(0.4),
+                          borderRadius: BorderRadius.circular(6.0),
+                        ),
+                        child: Container(
+                          padding:
+                              const EdgeInsets.symmetric(vertical: kHPadding),
+                          alignment: Alignment.center,
+                          decoration: BoxDecoration(
+                            color: Theme.of(context).bottomAppBarColor,
+                            borderRadius: BorderRadius.circular(5.0),
+                          ),
+                          child: Text(
+                            'ម៉ោង ' + timeTranslator(openHour),
+                            style: Theme.of(context).textTheme.button!.copyWith(
+                                color: openEnabled
+                                    ? Theme.of(context).iconTheme.color
+                                    : null,
+                                fontSize: 14 * textScaleFactor),
+                          ),
+                        ),
+                      ),
+                      Positioned(
+                        left: kHPadding,
+                        child: Container(
+                          padding: const EdgeInsets.symmetric(horizontal: 3.0),
                           color: Theme.of(context).bottomAppBarColor,
-                          borderRadius: BorderRadius.circular(5.0),
-                        ),
-                        child: Text(
-                          'ម៉ោង ' + timeTranslator(openHour),
-                          style: Theme.of(context).textTheme.button!.copyWith(
-                              color: openEnabled
-                                  ? Theme.of(context).iconTheme.color
-                                  : null,
-                              fontSize: 14 * textScaleFactor),
-                        ),
-                      ),
-                    ),
-                    Positioned(
-                      left: kHPadding,
-                      child: Container(
-                        padding: const EdgeInsets.symmetric(horizontal: 3.0),
-                        color: Theme.of(context).bottomAppBarColor,
-                        child: Text(
-                          'បើកដំណើរការ',
-                          textScaleFactor: textScaleFactor,
-                          style: Theme.of(context).textTheme.button!.copyWith(
-                              color: openEnabled
-                                  ? Theme.of(context)
-                                      .primaryColor
-                                      .withOpacity(0.8)
-                                  : null),
+                          child: Text(
+                            'បើកដំណើរការ',
+                            textScaleFactor: textScaleFactor,
+                            style: Theme.of(context).textTheme.button!.copyWith(
+                                color: openEnabled
+                                    ? Theme.of(context)
+                                        .primaryColor
+                                        .withOpacity(0.8)
+                                    : null),
+                          ),
                         ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
-              GestureDetector(
-                onTap: () {
-                  closeEnabledCallback();
-                  showDialog(
-                    context: context,
-                    builder: (context) => CustomDialog(
-                      isOpenHour: false,
-                      hour: closeHour,
-                      hourCallback: closeHourCallback,
-                    ),
-                  );
-                },
-                child: Stack(
-                  children: [
-                    Container(
-                      margin: const EdgeInsets.only(top: kVPadding),
-                      padding: const EdgeInsets.all(1.0),
-                      decoration: BoxDecoration(
-                        color: !closeEnabled
-                            ? Theme.of(context)
-                                .primaryIconTheme
-                                .color!
-                                .withOpacity(0.5)
-                            : Theme.of(context).errorColor.withOpacity(0.4),
-                        borderRadius: BorderRadius.circular(6.0),
+              const SizedBox(width: 10),
+              Expanded(
+                child: GestureDetector(
+                  onTap: () {
+                    closeEnabledCallback();
+                    showDialog(
+                      context: context,
+                      builder: (context) => CustomDialog(
+                        isOpenHour: false,
+                        hour: closeHour,
+                        hourCallback: closeHourCallback,
                       ),
-                      child: Container(
-                        padding:
-                            const EdgeInsets.symmetric(vertical: kHPadding),
-                        alignment: Alignment.center,
-                        width: MediaQuery.of(context).size.width / 2 -
-                            kHPadding -
-                            5,
+                    );
+                  },
+                  child: Stack(
+                    children: [
+                      Container(
+                        margin: const EdgeInsets.only(top: kVPadding),
+                        padding: const EdgeInsets.all(1.0),
                         decoration: BoxDecoration(
+                          color: !closeEnabled
+                              ? Theme.of(context)
+                                  .primaryIconTheme
+                                  .color!
+                                  .withOpacity(0.5)
+                              : Theme.of(context).errorColor.withOpacity(0.4),
+                          borderRadius: BorderRadius.circular(6.0),
+                        ),
+                        child: Container(
+                          padding:
+                              const EdgeInsets.symmetric(vertical: kHPadding),
+                          alignment: Alignment.center,
+                          decoration: BoxDecoration(
+                            color: Theme.of(context).bottomAppBarColor,
+                            borderRadius: BorderRadius.circular(5.0),
+                          ),
+                          child: Text(
+                            'ម៉ោង ' + timeTranslator(closeHour),
+                            style: Theme.of(context).textTheme.button!.copyWith(
+                                color: closeEnabled
+                                    ? Theme.of(context).iconTheme.color
+                                    : null,
+                                fontSize: 14 * textScaleFactor),
+                          ),
+                        ),
+                      ),
+                      Positioned(
+                        left: kHPadding,
+                        child: Container(
+                          padding: const EdgeInsets.symmetric(horizontal: 3.0),
                           color: Theme.of(context).bottomAppBarColor,
-                          borderRadius: BorderRadius.circular(5.0),
-                        ),
-                        child: Text(
-                          'ម៉ោង ' + timeTranslator(closeHour),
-                          style: Theme.of(context).textTheme.button!.copyWith(
-                              color: closeEnabled
-                                  ? Theme.of(context).iconTheme.color
-                                  : null,
-                              fontSize: 14 * textScaleFactor),
-                        ),
-                      ),
-                    ),
-                    Positioned(
-                      left: kHPadding,
-                      child: Container(
-                        padding: const EdgeInsets.symmetric(horizontal: 3.0),
-                        color: Theme.of(context).bottomAppBarColor,
-                        child: Text(
-                          'ផ្អាកដំណើរការ',
-                          textScaleFactor: textScaleFactor,
-                          style: Theme.of(context).textTheme.button!.copyWith(
-                              color: closeEnabled
-                                  ? Theme.of(context)
-                                      .errorColor
-                                      .withOpacity(0.8)
-                                  : null),
+                          child: Text(
+                            'ផ្អាកដំណើរការ',
+                            textScaleFactor: textScaleFactor,
+                            style: Theme.of(context).textTheme.button!.copyWith(
+                                color: closeEnabled
+                                    ? Theme.of(context)
+                                        .errorColor
+                                        .withOpacity(0.8)
+                                    : null),
+                          ),
                         ),
                       ),
+                    ],
+                  ),
+                ),
+              ),
+              Visibility(
+                visible: openEnabled || closeEnabled,
+                child: const SizedBox(width: 10),
+              ),
+              Visibility(
+                visible: openEnabled || closeEnabled,
+                child: Padding(
+                  padding: const EdgeInsets.only(top: 10.0),
+                  child: GestureDetector(
+                    onTap: () {
+                      openHourCallback(DateTime(DateTime.now().year,
+                          DateTime.now().month, DateTime.now().day, 8));
+                      closeHourCallback(DateTime(DateTime.now().year,
+                          DateTime.now().month, DateTime.now().day, 21));
+                      openEnabledCallback(isDisabled: true);
+                      closeEnabledCallback(isDisabled: true);
+                    },
+                    child: Icon(
+                      Icons.close,
+                      size: 22,
+                      color: Theme.of(context).primaryIconTheme.color,
                     ),
-                  ],
+                  ),
                 ),
               ),
             ],

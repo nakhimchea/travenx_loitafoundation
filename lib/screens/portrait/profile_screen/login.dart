@@ -239,7 +239,7 @@ class _LoginMethodsState extends State<LoginMethods> {
               ClipRRect(
                 borderRadius: BorderRadius.circular(20),
                 child: Image.asset(
-                  'assets/images/home_screen/kep.jpg',
+                  'assets/images/travenx.png',
                   height: 140,
                   width: 140,
                   fit: BoxFit.cover,
@@ -248,8 +248,6 @@ class _LoginMethodsState extends State<LoginMethods> {
               const SizedBox(height: 100),
               LoginCardButton(
                 leadingUrl: 'assets/icons/profile_screen/phone_logo.png',
-                leadingUrlLight:
-                    'assets/icons/profile_screen/phone_logo_light.png',
                 title: 'ភ្ជាប់តាមគណនី លេខទូរសព្ទ',
                 titleColor: Theme.of(context).primaryColor,
                 onTap: widget.isPhoneLoginCallback,
@@ -442,7 +440,7 @@ class _PhoneLoginState extends State<PhoneLogin> {
         Column(
           children: [
             LoginTextField(
-              logoUrl: 'assets/icons/profile_screen/phone_logo.png',
+              logoUrl: 'assets/icons/profile_screen/phone_logo_login.png',
               hintText: '012345678',
               onChangedCallback: _getPhoneNumber,
               isCodeSent: _isCodeSent,

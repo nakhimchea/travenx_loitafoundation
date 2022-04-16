@@ -1,10 +1,10 @@
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
-import 'package:travenx_loitafoundation/config/variable.dart';
+import 'package:travenx_loitafoundation/config/configs.dart'
+    show kHPadding, textScaleFactor;
 
 class LoginCardButton extends StatelessWidget {
   final String leadingUrl;
-  final String? leadingUrlLight;
   final String title;
   final String trailing;
   final Color? titleColor;
@@ -13,7 +13,6 @@ class LoginCardButton extends StatelessWidget {
   const LoginCardButton({
     Key? key,
     required this.leadingUrl,
-    this.leadingUrlLight,
     required this.title,
     this.trailing = '',
     this.titleColor,
@@ -29,62 +28,53 @@ class LoginCardButton extends StatelessWidget {
         child: Container(
           height: (MediaQuery.of(context).size.height / 16).ceil().toDouble(),
           decoration: BoxDecoration(
-            color: titleColor != null &&
-                    Theme.of(context).colorScheme.brightness == Brightness.light
-                ? Theme.of(context).primaryColor
+            color: titleColor != null
+                ? titleColor
                 : Theme.of(context).bottomAppBarColor,
             borderRadius: BorderRadius.circular(15.0),
           ),
-          child: Padding(
-            padding: EdgeInsets.symmetric(
-              horizontal: MediaQuery.of(context).size.width / 4 - 50,
-            ),
-            child: Row(
-              children: [
-                Image.asset(
-                  titleColor != null &&
-                          Theme.of(context).colorScheme.brightness ==
-                              Brightness.light
-                      ? leadingUrlLight != null
-                          ? leadingUrlLight!
-                          : 'assets/icons/profile_screen/phone_logo_light.png'
-                      : leadingUrl,
-                  width: 25.0,
-                  height: 25.0,
-                ),
-                SizedBox(width: 30.0),
-                Flexible(
-                  child: Text(
-                    title,
-                    textScaleFactor: textScaleFactor,
-                    style: Theme.of(context).textTheme.headline4!.copyWith(
-                        color: titleColor != null
-                            ? Theme.of(context).colorScheme.brightness ==
-                                    Brightness.light
-                                ? Colors.white
-                                : titleColor
-                            : Theme.of(context).textTheme.headline4!.color,
-                        fontSize: 15.0,
-                        fontWeight: titleColor != null &&
-                                Theme.of(context).colorScheme.brightness ==
-                                    Brightness.dark
-                            ? FontWeight.w500
-                            : FontWeight.w400),
-                    overflow:
-                        kIsWeb ? TextOverflow.clip : TextOverflow.ellipsis,
-                  ),
-                ),
-                Text(
-                  trailing,
-                  textScaleFactor: textScaleFactor,
-                  style: Theme.of(context).textTheme.headline4!.copyWith(
-                        fontSize: 15.0,
-                        fontFamily: 'Poppins',
-                        fontWeight: FontWeight.w500,
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              const SizedBox(width: kHPadding),
+              Image.asset(
+                leadingUrl,
+                width: titleColor != null ? 22.0 : 25.0,
+                height: titleColor != null ? 22.0 : 25.0,
+              ),
+              Expanded(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      title,
+                      textScaleFactor: textScaleFactor,
+                      style: Theme.of(context).textTheme.headline4!.copyWith(
+                          color: titleColor != null
+                              ? Colors.white
+                              : Theme.of(context).textTheme.headline4!.color,
+                          fontSize: 15.0,
+                          fontWeight: FontWeight.w400),
+                      overflow:
+                          kIsWeb ? TextOverflow.clip : TextOverflow.ellipsis,
+                    ),
+                    Align(
+                      alignment: Alignment(0, -0.06),
+                      child: Text(
+                        trailing != '' ? ' ' + trailing : '',
+                        textScaleFactor: textScaleFactor,
+                        style: Theme.of(context).textTheme.headline4!.copyWith(
+                              fontSize: 15.0,
+                              fontFamily: 'Poppins',
+                              fontWeight: FontWeight.w500,
+                            ),
                       ),
+                    ),
+                  ],
                 ),
-              ],
-            ),
+              ),
+              const SizedBox(width: 50),
+            ],
           ),
         ),
       ),

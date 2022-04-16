@@ -145,13 +145,29 @@ class _AddPostState extends State<AddPost> {
                     .copyWith(color: Colors.white),
                 onPressed: _agreementChecked
                     ? () {
-                        if (currentStep == 3) {
-                          //TODO: Take time to upload user's post to cloud
-                          Navigator.pop(context);
-                          Navigator.push(context,
-                              MaterialPageRoute(builder: (_) => UserPosts()));
-                        } else
-                          setState(() => currentStep++);
+                        switch (currentStep) {
+                          case 0:
+                            //TODO: Check location and Photo
+                            setState(() => currentStep++);
+                            break;
+                          case 1:
+                            //TODO: Check important information
+                            setState(() => currentStep++);
+                            break;
+                          case 2:
+                            setState(() => currentStep++);
+                            break;
+                          case 3:
+                            //TODO: Take time to upload user's post to cloud
+                            Navigator.pop(context);
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(builder: (_) => UserPosts()),
+                            );
+                            break;
+                          default:
+                            print('Out of steps');
+                        }
                       }
                     : null,
               ),

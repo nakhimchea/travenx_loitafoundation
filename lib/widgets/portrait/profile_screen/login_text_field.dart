@@ -77,8 +77,8 @@ class _LoginTextFieldState extends State<LoginTextField> {
                   ),
                 ),
                 Container(
-                  margin: EdgeInsets.all(2.0),
-                  height: ((MediaQuery.of(context).size.height / 16).ceil() - 4)
+                  margin: EdgeInsets.all(1.0),
+                  height: ((MediaQuery.of(context).size.height / 16).ceil() - 2)
                       .toDouble(),
                   decoration: BoxDecoration(
                     color: Theme.of(context).bottomAppBarColor,
@@ -90,11 +90,11 @@ class _LoginTextFieldState extends State<LoginTextField> {
                         padding: const EdgeInsets.only(left: 30.0),
                         child: Image.asset(
                           widget.logoUrl,
-                          width: 23.0,
-                          height: 23.0,
+                          width: 22.0,
+                          height: 22.0,
                         ),
                       ),
-                      SizedBox(width: 20.0),
+                      const SizedBox(width: 20.0),
                       Container(
                         width: MediaQuery.of(context).size.width - 167.0,
                         child: Row(
@@ -156,14 +156,16 @@ class _LoginTextFieldState extends State<LoginTextField> {
                                               Colors.transparent,
                                             ),
                                           ),
-                                          child: Text('ផ្ញើលេខកូដ',
-                                              textScaleFactor: textScaleFactor,
-                                              style: Theme.of(context)
-                                                  .textTheme
-                                                  .subtitle1!
-                                                  .copyWith(
-                                                      fontSize: 14.0,
-                                                      fontFamily: 'Nokora')),
+                                          child: Text(
+                                            'ផ្ញើលេខកូដ',
+                                            textScaleFactor: textScaleFactor,
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .subtitle1!
+                                                .copyWith(
+                                                    fontSize: 14.0,
+                                                    fontFamily: 'Nokora'),
+                                          ),
                                         ),
                                       ),
                                       Visibility(

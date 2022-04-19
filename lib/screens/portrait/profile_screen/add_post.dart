@@ -1,12 +1,19 @@
+import 'dart:convert' show jsonDecode;
 import 'dart:io' show Platform;
 
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:geolocator/geolocator.dart' show Geolocator;
 import 'package:travenx_loitafoundation/config/configs.dart'
     show kHPadding, textScaleFactor;
 import 'package:travenx_loitafoundation/helpers/activity_type.dart';
+import 'package:travenx_loitafoundation/helpers/city_name_translator.dart';
+import 'package:travenx_loitafoundation/helpers/country_name_translator.dart';
 import 'package:travenx_loitafoundation/icons/icons.dart';
 import 'package:travenx_loitafoundation/screens/portrait/profile_screen/user_posts.dart';
+import 'package:travenx_loitafoundation/services/geolocator_service.dart';
+import 'package:travenx_loitafoundation/services/internet_service.dart';
 import 'package:travenx_loitafoundation/widgets/custom_divider.dart';
 import 'package:travenx_loitafoundation/widgets/portrait/profile_screen/add_post/add_post.dart';
 import 'package:travenx_loitafoundation/widgets/portrait/profile_screen/stepper_navigation_button.dart';
@@ -24,6 +31,9 @@ class _AddPostState extends State<AddPost> {
 
   int currentStep = 0;
   bool _agreementChecked = false;
+  String _state = '';
+  String _country = '';
+  String _positionCoordination = '';
   String _title = '';
   double _price = 0;
   List<ActivityType> _activities = [];
@@ -70,6 +80,39 @@ class _AddPostState extends State<AddPost> {
 
   void _changeAnnouncement(String announcement) =>
       setState(() => _announcement = announcement);
+
+  void _setLocationCity() async {
+    final FlutterSecureStorage _secureStorage = FlutterSecureStorage(
+        iOptions:
+            IOSOptions(accessibility: IOSAccessibility.unlocked_this_device),
+        aOptions: AndroidOptions(encryptedSharedPreferences: true));
+    final String _owmReverseGeocodingUrl =
+        'http://api.openweathermap.org/geo/1.0/reverse?';
+    final String _coordination =
+        await GeolocatorService.getCurrentCoordination();
+    if (_coordination != '') {
+      final String _responseBody = await InternetService.httpGetResponseBody(
+          url:
+              '$_owmReverseGeocodingUrl$_coordination&appid=${await _secureStorage.read(key: 'owmKey')}');
+      final String _enStateName =
+          jsonDecode(_responseBody)[0]['state'].toString();
+      final String _enCountryName =
+          jsonDecode(_responseBody)[0]['country'].toString();
+
+      setState(() {
+        _state = cityNameTranslator(enCityName: _enStateName);
+        _country = countryNameTranslator(enCountryName: _enCountryName);
+        _positionCoordination = _coordination;
+      });
+    } else
+      setState(() => _state = 'denied');
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _setLocationCity();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -147,7 +190,6 @@ class _AddPostState extends State<AddPost> {
                     ? () {
                         switch (currentStep) {
                           case 0:
-                            //TODO: Check location and Photo
                             setState(() => currentStep++);
                             break;
                           case 1:
@@ -193,6 +235,104 @@ class _AddPostState extends State<AddPost> {
           title: Steps(currentStep: currentStep),
           toolbarHeight: 56 + kHPadding,
           backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+        ),
+        SliverToBoxAdapter(
+          child: _state == 'denied'
+              ? kIsWeb
+                  ? Container(
+                      height: 40,
+                      color: Theme.of(context).disabledColor,
+                      child: ListView(
+                        physics: BouncingScrollPhysics(),
+                        scrollDirection: Axis.horizontal,
+                        children: [
+                          const SizedBox(width: kHPadding),
+                          Center(
+                            child: Icon(
+                              CustomFilledIcons.location,
+                              color: Theme.of(context).primaryIconTheme.color,
+                              size: 16,
+                            ),
+                          ),
+                          const SizedBox(width: 5),
+                          Center(
+                            child: Text(
+                              'សេវាប្រាប់ទិសតំបន់ត្រូវបានបិទ។ ',
+                              style: Theme.of(context).textTheme.button,
+                            ),
+                          ),
+                          Center(
+                            child: Text(
+                              'ចុចលើនិមិត្តសញ្ញាទីតាំងខាងលើ ដើម្បីបើកឡើងវិញ!',
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .button!
+                                  .copyWith(color: Theme.of(context).hintColor),
+                            ),
+                          ),
+                          const SizedBox(width: kHPadding),
+                        ],
+                      ),
+                    )
+                  : TextButton(
+                      onPressed: () async {
+                        try {
+                          if (await GeolocatorService.openLocationSettings()) {
+                            if (await Geolocator.isLocationServiceEnabled()) {
+                              setState(() => _state = '');
+                              //Slowdown the postList state for Smart Refresher
+                              Future.delayed(Duration(milliseconds: 250))
+                                  .whenComplete(() => _setLocationCity());
+                            } else
+                              print('Location service is still disabled.');
+                          } else
+                            print('Failed to open Location settings.');
+                        } catch (e) {
+                          print('Unknown Error: $e');
+                        }
+                      },
+                      style: ButtonStyle(
+                        padding: MaterialStateProperty.all(EdgeInsets.zero),
+                      ),
+                      child: Container(
+                        height: 40,
+                        color: Theme.of(context).disabledColor,
+                        child: ListView(
+                          primary: false,
+                          physics: BouncingScrollPhysics(),
+                          scrollDirection: Axis.horizontal,
+                          children: [
+                            const SizedBox(width: kHPadding),
+                            Center(
+                              child: Icon(
+                                CustomFilledIcons.location,
+                                color: Theme.of(context).primaryIconTheme.color,
+                                size: 16,
+                              ),
+                            ),
+                            const SizedBox(width: 5),
+                            Center(
+                              child: Text(
+                                'សេវាប្រាប់ទិសតំបន់ត្រូវបានបិទ។ ',
+                                style: Theme.of(context).textTheme.button,
+                              ),
+                            ),
+                            Center(
+                              child: Text(
+                                'ចុចទីនេះដើម្បីបើកឡើងវិញ!',
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .button!
+                                    .copyWith(
+                                        color: Theme.of(context).hintColor),
+                              ),
+                            ),
+                            const SizedBox(width: kHPadding),
+                          ],
+                        ),
+                      ),
+                    )
+              : SizedBox.shrink(),
         ),
         SliverToBoxAdapter(child: const SizedBox(height: kHPadding)),
         SliverPadding(

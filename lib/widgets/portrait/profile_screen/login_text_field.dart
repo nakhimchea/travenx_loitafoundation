@@ -87,11 +87,14 @@ class _LoginTextFieldState extends State<LoginTextField> {
                   child: Row(
                     children: [
                       Container(
+                        width: 62.0,
                         padding: const EdgeInsets.only(left: 30.0),
                         child: Image.asset(
                           widget.logoUrl,
-                          width: 22.0,
-                          height: 22.0,
+                          width:
+                              widget.hintText == 'បញ្ចូលលេខកូដ' ? 36.0 : 22.0,
+                          height:
+                              widget.hintText == 'បញ្ចូលលេខកូដ' ? 36.0 : 22.0,
                         ),
                       ),
                       const SizedBox(width: 20.0),

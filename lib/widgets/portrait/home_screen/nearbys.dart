@@ -210,6 +210,7 @@ class _NearbysState extends State<Nearbys> {
                       height: 40,
                       color: Theme.of(context).disabledColor,
                       child: ListView(
+                        primary: false,
                         physics: BouncingScrollPhysics(),
                         scrollDirection: Axis.horizontal,
                         children: [

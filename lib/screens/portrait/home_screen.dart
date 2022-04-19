@@ -1,6 +1,10 @@
+import 'dart:async' show StreamSubscription;
+
 import 'package:flutter/material.dart';
+import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:travenx_loitafoundation/config/configs.dart'
     show kHPadding, kVPadding, textScaleFactor;
+import 'package:travenx_loitafoundation/icons/icons.dart';
 import 'package:travenx_loitafoundation/widgets/portrait/home_screen/widgets.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -11,93 +15,138 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen>
     with SingleTickerProviderStateMixin {
   late TabController _tabController;
+  late StreamSubscription subscription;
+  bool _hasInternet = false;
 
   @override
   void initState() {
     super.initState();
+    subscription = InternetConnectionChecker().onStatusChange.listen((status) =>
+        setState(
+            () => _hasInternet = status == InternetConnectionStatus.connected));
     _tabController = TabController(length: 5, vsync: this);
   }
 
   @override
   void dispose() {
     _tabController.dispose();
+    subscription.cancel();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: CustomScrollView(
-        primary: false,
-        physics: BouncingScrollPhysics(),
-        slivers: [
-          SliverAppBar(
-            pinned: true,
-            elevation: 0.7,
-            shadowColor: Theme.of(context).disabledColor,
-            backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-            title: Text(
-              'Travenx',
-              textScaleFactor: textScaleFactor,
-              style: Theme.of(context).textTheme.headline6,
-            ),
-            centerTitle: false,
-            floating: true,
-            actions: [
-              Padding(
-                padding: const EdgeInsets.only(right: kHPadding),
-                child: ChangeThemeButton(),
+      body: SafeArea(
+        left: false,
+        right: false,
+        bottom: false,
+        child: CustomScrollView(
+          primary: false,
+          physics: BouncingScrollPhysics(),
+          slivers: [
+            SliverToBoxAdapter(
+              child: Visibility(
+                visible: !_hasInternet,
+                child: Container(
+                  height: 40,
+                  color: Theme.of(context).errorColor.withOpacity(0.8),
+                  child: ListView(
+                    primary: false,
+                    physics: BouncingScrollPhysics(),
+                    scrollDirection: Axis.horizontal,
+                    children: [
+                      const SizedBox(width: kHPadding),
+                      Icon(
+                        CustomFilledIcons.warning,
+                        size: 16 * textScaleFactor,
+                        color: Colors.white,
+                      ),
+                      const SizedBox(width: 10),
+                      Center(
+                        child: Text(
+                          'អ៉ីនធឺណែត៖ មិនដំណើរការ។ សូមព្យាយាមម្តងទៀត!',
+                          textScaleFactor: textScaleFactor,
+                          style: Theme.of(context)
+                              .textTheme
+                              .button!
+                              .copyWith(color: Colors.white),
+                        ),
+                      ),
+                      const SizedBox(width: kHPadding),
+                    ],
+                  ),
+                ),
               ),
-            ],
-          ),
-          SliverToBoxAdapter(
-            child: SearchBar(),
-          ),
-          SliverPadding(
-            padding: const EdgeInsets.symmetric(
-              horizontal: kHPadding,
-              vertical: kVPadding + 6.0,
             ),
-            sliver: SliverToBoxAdapter(
-              child: IconsMenu(),
+            SliverAppBar(
+              pinned: true,
+              elevation: 0.7,
+              shadowColor: Theme.of(context).disabledColor,
+              backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+              title: Text(
+                'Travenx',
+                textScaleFactor: textScaleFactor,
+                style: Theme.of(context).textTheme.headline6,
+              ),
+              centerTitle: false,
+              floating: true,
+              actions: [
+                Padding(
+                  padding: const EdgeInsets.only(right: kHPadding),
+                  child: ChangeThemeButton(),
+                ),
+              ],
             ),
-          ),
-          SliverPadding(
-            padding: const EdgeInsets.only(
-              top: 6.0,
-              bottom: kVPadding,
+            SliverToBoxAdapter(
+              child: SearchBar(),
             ),
-            sliver: SliverToBoxAdapter(
-              child: Promotions(),
+            SliverPadding(
+              padding: const EdgeInsets.symmetric(
+                horizontal: kHPadding,
+                vertical: kVPadding + 6.0,
+              ),
+              sliver: SliverToBoxAdapter(
+                child: IconsMenu(),
+              ),
             ),
-          ),
-          SliverPadding(
-            padding: const EdgeInsets.symmetric(
-              horizontal: kHPadding,
-              vertical: kVPadding,
+            SliverPadding(
+              padding: const EdgeInsets.only(
+                top: 6.0,
+                bottom: kVPadding,
+              ),
+              sliver: SliverToBoxAdapter(
+                child: Promotions(),
+              ),
             ),
-            sliver: SliverToBoxAdapter(
-              child: Provinces(),
+            SliverPadding(
+              padding: const EdgeInsets.symmetric(
+                horizontal: kHPadding,
+                vertical: kVPadding,
+              ),
+              sliver: SliverToBoxAdapter(
+                child: Provinces(),
+              ),
             ),
-          ),
-          SliverToBoxAdapter(
-            child: Nearbys(),
-          ),
-          SliverPersistentHeader(
-            pinned: true,
-            delegate: PersistentHeader(
-              tabBar: CustomTabBar(tabController: _tabController),
+            SliverToBoxAdapter(
+              child: Nearbys(),
             ),
-          ),
-          SliverPadding(
-            padding: const EdgeInsets.only(
-              bottom: kVPadding,
+            SliverPersistentHeader(
+              pinned: true,
+              delegate: PersistentHeader(
+                tabBar: CustomTabBar(tabController: _tabController),
+              ),
             ),
-            sliver: SliverToBoxAdapter(
-              child: CustomTabBarList(tabController: _tabController),
+            SliverPadding(
+              padding: const EdgeInsets.only(
+                bottom: kVPadding,
+              ),
+              sliver: SliverToBoxAdapter(
+                child: CustomTabBarList(tabController: _tabController),
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:travenx_loitafoundation/config/variable.dart';
+import 'package:travenx_loitafoundation/config/variable.dart' show textScaleFactor;
 import 'package:travenx_loitafoundation/icons/icons.dart';
 
 class CustomSnackBarContent extends StatelessWidget {
@@ -16,7 +16,7 @@ class CustomSnackBarContent extends StatelessWidget {
     return Container(
       height: 45.0,
       decoration: BoxDecoration(
-          color: Theme.of(context).bottomAppBarColor,
+          color: Colors.white,
           borderRadius: BorderRadius.circular(6.0),
           boxShadow: [BoxShadow(color: Colors.black45, blurRadius: 3.0)]),
       child: Row(
@@ -46,7 +46,7 @@ class CustomSnackBarContent extends StatelessWidget {
                       contentCode == 'invalid_google_account'
                   ? CircleAvatar(
                       radius: (14 * textScaleFactor) / 2,
-                      backgroundColor: Theme.of(context).bottomAppBarColor,
+                      backgroundColor: Colors.white,
                       child: Icon(
                         CustomOutlinedIcons.close,
                         size: 10 * textScaleFactor,
@@ -58,9 +58,8 @@ class CustomSnackBarContent extends StatelessWidget {
                               contentCode == 'successful_login'
                           ? CustomFilledIcons.success
                           : CustomFilledIcons.warning,
-                      //Icons.info,
                       size: 16 * textScaleFactor,
-                      color: Theme.of(context).bottomAppBarColor,
+                      color: Colors.white,
                     ),
             ],
           ),

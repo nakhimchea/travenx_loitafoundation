@@ -16,7 +16,7 @@ class _HomeScreenState extends State<HomeScreen>
     with SingleTickerProviderStateMixin {
   late TabController _tabController;
   late StreamSubscription subscription;
-  bool _hasInternet = false;
+  bool _hasInternet = true;
 
   @override
   void initState() {

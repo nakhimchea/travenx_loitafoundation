@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:travenx_loitafoundation/config/variable.dart' show textScaleFactor;
+import 'package:travenx_loitafoundation/config/variable.dart'
+    show textScaleFactor;
 import 'package:travenx_loitafoundation/icons/icons.dart';
 
 class CustomSnackBarContent extends StatelessWidget {

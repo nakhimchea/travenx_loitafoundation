@@ -30,6 +30,7 @@ class _AddPostState extends State<AddPost> {
   bool timeCloseEnabled = false;
 
   int currentStep = 0;
+  bool _isStillDisabled = false;
   bool _agreementChecked = false;
   String _state = '';
   String _country = '';
@@ -51,8 +52,13 @@ class _AddPostState extends State<AddPost> {
   void _toggleTimeClose({bool isDisabled = false}) => setState(
       () => !isDisabled ? timeCloseEnabled = true : timeCloseEnabled = false);
 
-  void _toggleCheckedBox() =>
-      setState(() => _agreementChecked = !_agreementChecked);
+  void _toggleCheckedBox() {
+    _setLocationCity();
+    setState(() {
+      _isStillDisabled = false;
+      _agreementChecked = !_agreementChecked;
+    });
+  }
 
   void _changeTitle(String title) => setState(() => _title = title);
   void _changePrice(String price) =>
@@ -190,7 +196,13 @@ class _AddPostState extends State<AddPost> {
                     ? () {
                         switch (currentStep) {
                           case 0:
-                            setState(() => currentStep++);
+                            if (_state == 'denied')
+                              setState(() {
+                                _isStillDisabled = true;
+                                _agreementChecked = false;
+                              });
+                            else
+                              setState(() => currentStep++);
                             break;
                           case 1:
                             //TODO: Check important information
@@ -338,7 +350,7 @@ class _AddPostState extends State<AddPost> {
         SliverPadding(
           padding: const EdgeInsets.symmetric(horizontal: kHPadding),
           sliver: SliverToBoxAdapter(
-            child: StepOneDescription(),
+            child: StepOneDescription(isStillDisabled: _isStillDisabled),
           ),
         ),
         SliverPadding(
@@ -355,6 +367,7 @@ class _AddPostState extends State<AddPost> {
           padding: const EdgeInsets.symmetric(horizontal: kHPadding),
           sliver: SliverToBoxAdapter(
             child: StepOneCheckedBox(
+              isStillDisabled: _isStillDisabled,
               isChecked: _agreementChecked,
               isCheckedCallback: _toggleCheckedBox,
             ),

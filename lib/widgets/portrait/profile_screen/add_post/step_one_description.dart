@@ -3,8 +3,10 @@ import 'package:travenx_loitafoundation/config/configs.dart'
     show kHPadding, kVPadding, textScaleFactor;
 
 class StepOneDescription extends StatelessWidget {
+  final bool isStillDisabled;
   const StepOneDescription({
     Key? key,
+    required this.isStillDisabled,
   }) : super(key: key);
 
   @override
@@ -12,7 +14,9 @@ class StepOneDescription extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(kHPadding),
       decoration: BoxDecoration(
-        color: Theme.of(context).bottomAppBarColor,
+        color: isStillDisabled
+            ? Theme.of(context).highlightColor.withOpacity(0.1)
+            : Theme.of(context).bottomAppBarColor,
         borderRadius: BorderRadius.circular(15.0),
       ),
       child: Column(

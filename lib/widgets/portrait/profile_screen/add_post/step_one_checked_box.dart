@@ -3,10 +3,12 @@ import 'package:travenx_loitafoundation/config/configs.dart'
     show kHPadding, textScaleFactor;
 
 class StepOneCheckedBox extends StatelessWidget {
+  final bool isStillDisabled;
   final bool isChecked;
   final void Function() isCheckedCallback;
   const StepOneCheckedBox({
     Key? key,
+    required this.isStillDisabled,
     required this.isChecked,
     required this.isCheckedCallback,
   }) : super(key: key);
@@ -21,7 +23,9 @@ class StepOneCheckedBox extends StatelessWidget {
         bottom: kHPadding,
       ),
       decoration: BoxDecoration(
-        color: Theme.of(context).bottomAppBarColor,
+        color: isStillDisabled
+            ? Theme.of(context).highlightColor.withOpacity(0.1)
+            : Theme.of(context).bottomAppBarColor,
         borderRadius: BorderRadius.circular(15.0),
       ),
       child: GestureDetector(
@@ -44,7 +48,8 @@ class StepOneCheckedBox extends StatelessWidget {
                 'យល់ព្រមបើកសេវាប្រាប់ទិសតំបន់ និង ទទួលស្គាល់ថាលោកអ្នកបាននៅទីតាំង ឬអាជីវកម្មផ្ទាល់។',
                 textAlign: TextAlign.justify,
                 textScaleFactor: textScaleFactor,
-                style: Theme.of(context).textTheme.bodyText1,
+                style: Theme.of(context).textTheme.bodyText1!.copyWith(
+                    color: isChecked ? Theme.of(context).primaryColor : null),
               ),
             ),
           ],

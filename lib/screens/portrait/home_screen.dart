@@ -1,5 +1,6 @@
 import 'dart:async' show StreamSubscription;
 
+import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:travenx_loitafoundation/config/configs.dart'
@@ -20,9 +21,10 @@ class _HomeScreenState extends State<HomeScreen>
   @override
   void initState() {
     super.initState();
-    subscription = InternetConnectionChecker().onStatusChange.listen((status) =>
-        setState(
-            () => _hasInternet = status == InternetConnectionStatus.connected));
+    if (!kIsWeb)
+      subscription = InternetConnectionChecker().onStatusChange.listen(
+          (status) => setState(() =>
+              _hasInternet = status == InternetConnectionStatus.connected));
     _tabController = TabController(length: 5, vsync: this);
   }
 

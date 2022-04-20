@@ -151,8 +151,14 @@ class _AddPostState extends State<AddPost> {
                 overlayColor: MaterialStateProperty.all(Colors.transparent),
               ),
               onPressed: () {
-                //TODO: Remove input before continue
-                setState(() => currentStep++);
+                setState(() {
+                  timeOpenEnabled = false;
+                  timeCloseEnabled = false;
+                  _details = '';
+                  _policies = [TextEditingController()];
+                  _announcement = '';
+                  currentStep++;
+                });
               },
               child: Text(
                 'រំលង',
@@ -291,8 +297,6 @@ class _AddPostState extends State<AddPost> {
                         try {
                           if (await GeolocatorService.openLocationSettings()) {
                             if (await Geolocator.isLocationServiceEnabled()) {
-                              setState(() => _state = '');
-                              //Slowdown the postList state for Smart Refresher
                               Future.delayed(Duration(milliseconds: 250))
                                   .whenComplete(() => _setLocationCity());
                             } else

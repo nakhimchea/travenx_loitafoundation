@@ -8,10 +8,12 @@ import 'package:travenx_loitafoundation/icons/icons.dart';
 import 'package:travenx_loitafoundation/services/image_picker_service.dart';
 
 class PostImagePicker extends StatelessWidget {
+  final bool isImagePathHighlight;
   final List<String> imagesPath;
   final void Function(String filePath, {bool isRemoved}) imagePickerCallback;
   const PostImagePicker({
     Key? key,
+    required this.isImagePathHighlight,
     required this.imagesPath,
     required this.imagePickerCallback,
   }) : super(key: key);
@@ -25,7 +27,9 @@ class PostImagePicker extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(kHPadding),
       decoration: BoxDecoration(
-        color: Theme.of(context).bottomAppBarColor,
+        color: isImagePathHighlight
+            ? Theme.of(context).errorColor.withOpacity(0.1)
+            : Theme.of(context).bottomAppBarColor,
         borderRadius: BorderRadius.circular(15.0),
       ),
       child: Column(

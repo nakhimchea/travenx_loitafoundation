@@ -16,10 +16,7 @@ class ActivityPicker extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.all(kHPadding),
-      decoration: BoxDecoration(
-        color: Theme.of(context).bottomAppBarColor,
-        borderRadius: BorderRadius.circular(15.0),
-      ),
+      color: Theme.of(context).bottomAppBarColor,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -40,7 +37,6 @@ class ActivityPicker extends StatelessWidget {
                   activityPickerCallback(ActivityType.boating,
                       isRemoved: activities.contains(ActivityType.boating));
                 },
-                activityPickerCallback: activityPickerCallback,
               ),
               ActivityButton(
                 label: 'មុជទឹក',
@@ -49,7 +45,6 @@ class ActivityPicker extends StatelessWidget {
                   activityPickerCallback(ActivityType.diving,
                       isRemoved: activities.contains(ActivityType.diving));
                 },
-                activityPickerCallback: activityPickerCallback,
               ),
               ActivityButton(
                 label: 'ស្ទូចត្រី',
@@ -58,7 +53,6 @@ class ActivityPicker extends StatelessWidget {
                   activityPickerCallback(ActivityType.fishing,
                       isRemoved: activities.contains(ActivityType.fishing));
                 },
-                activityPickerCallback: activityPickerCallback,
               ),
               ActivityButton(
                 label: 'លំហែកាយ',
@@ -67,7 +61,6 @@ class ActivityPicker extends StatelessWidget {
                   activityPickerCallback(ActivityType.relaxing,
                       isRemoved: activities.contains(ActivityType.relaxing));
                 },
-                activityPickerCallback: activityPickerCallback,
               ),
               ActivityButton(
                 label: 'ហែលទឹក',
@@ -76,7 +69,6 @@ class ActivityPicker extends StatelessWidget {
                   activityPickerCallback(ActivityType.swimming,
                       isRemoved: activities.contains(ActivityType.swimming));
                 },
-                activityPickerCallback: activityPickerCallback,
               ),
             ],
           ),
@@ -90,13 +82,11 @@ class ActivityButton extends StatelessWidget {
   final String label;
   final bool state;
   final void Function()? onPressed;
-  final void Function(ActivityType, {bool isRemoved}) activityPickerCallback;
   const ActivityButton({
     Key? key,
     required this.label,
     required this.state,
     required this.onPressed,
-    required this.activityPickerCallback,
   }) : super(key: key);
 
   @override

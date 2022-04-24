@@ -6,15 +6,15 @@ import 'package:travenx_loitafoundation/widgets/portrait/profile_screen/add_post
 
 class StepThreeFields extends StatelessWidget {
   final List<TextEditingController> policyControllers;
-  final void Function(String) detailsCallback;
+  final TextEditingController detailsController;
   final void Function({bool isRemoved, int index}) policiesCallback;
-  final void Function(String) announcementCallback;
+  final TextEditingController announcementController;
   const StepThreeFields({
     Key? key,
     required this.policyControllers,
-    required this.detailsCallback,
+    required this.detailsController,
     required this.policiesCallback,
-    required this.announcementCallback,
+    required this.announcementController,
   }) : super(key: key);
 
   @override
@@ -31,7 +31,7 @@ class StepThreeFields extends StatelessWidget {
                 'ឧទាហរណ៍៖ ប្រាសាទអង្គរវត្ត ជាប្រាសាទពុទ្ធសាសនា នៅភាគពាយ័ព្យនៃប្រទេសកម្ពុជា។'
                 ' ប្រាសាទនេះគឺជាសម្បត្តិបេតិកភណ្ឌពិភពលោករបស់អង្គការយូណេស្កូ'
                 ' និងជាគោលដៅទេសចរណ៍ដ៏សំខាន់មួយដែលជានិមិត្តសញ្ញាជាតិ និងជាទីសក្ការៈនៃព្រះពុទ្ធសាសនាខ្មែរ។',
-            textCallback: detailsCallback,
+            textController: detailsController,
             minimumLines: 10,
           ),
           const SizedBox(height: kHPadding),
@@ -53,7 +53,7 @@ class StepThreeFields extends StatelessWidget {
                 'ឧទាហរណ៍៖ ប្រសិនបើលោកអ្នកមានបញ្ហាសុខភាព ឬមានជម្ងឺ ឬសង្ស័យថាមានការឆ្លងជម្ងឺ'
                 ' សូមប្រញាប់ទៅស្វែងរកការពិនិត្យពិគ្រោះនៅមន្ទីរពេទ្យរដ្ឋ ឬទំនាក់ទំនងតាមលេខទូរស័ព្ទ៖'
                 '\n០១២ ៨២៥ ៤២៤ ឬ ០១២ ៤៨៨ ៩៨១ ឬ ០១២ ៨៣៦ ៨៦៨',
-            textCallback: announcementCallback,
+            textController: announcementController,
             minimumLines: 5,
           ),
           const SizedBox(height: 80),

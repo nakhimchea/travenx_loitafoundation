@@ -4,12 +4,16 @@ import 'package:travenx_loitafoundation/config/configs.dart'
 import 'package:travenx_loitafoundation/widgets/portrait/profile_screen/add_post/custom_input_box.dart';
 
 class StepTwoFields extends StatelessWidget {
-  final void Function(String) titleCallback;
-  final void Function(String) priceCallback;
+  final bool isTitleHighlight;
+  final void Function() disableHighlight;
+  final TextEditingController titleController;
+  final TextEditingController priceController;
   const StepTwoFields({
     Key? key,
-    required this.titleCallback,
-    required this.priceCallback,
+    required this.isTitleHighlight,
+    required this.disableHighlight,
+    required this.titleController,
+    required this.priceController,
   }) : super(key: key);
 
   @override
@@ -30,15 +34,17 @@ class StepTwoFields extends StatelessWidget {
           ),
           const SizedBox(height: kHPadding),
           CustomInputBox(
+            isHighlight: isTitleHighlight,
             label: 'ចំណងជើង',
             hintText: 'ហាងកាហ្វេ និងនំខេក',
-            textCallback: titleCallback,
+            textController: titleController,
+            disableHighlight: disableHighlight,
           ),
           const SizedBox(height: kHPadding),
           CustomInputBox(
             label: 'តម្លៃ (\$)',
             hintText: '\$0.00 (Free ឬចូលដោយសេរី)',
-            textCallback: priceCallback,
+            textController: priceController,
             inputType: TextInputType.numberWithOptions(decimal: true),
           ),
         ],

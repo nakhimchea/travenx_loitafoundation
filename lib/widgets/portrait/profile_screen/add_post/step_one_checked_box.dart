@@ -3,12 +3,12 @@ import 'package:travenx_loitafoundation/config/configs.dart'
     show kHPadding, textScaleFactor;
 
 class StepOneCheckedBox extends StatelessWidget {
-  final bool isStillDisabled;
+  final bool isAgreementHighlight;
   final bool isChecked;
   final void Function() isCheckedCallback;
   const StepOneCheckedBox({
     Key? key,
-    required this.isStillDisabled,
+    required this.isAgreementHighlight,
     required this.isChecked,
     required this.isCheckedCallback,
   }) : super(key: key);
@@ -23,7 +23,7 @@ class StepOneCheckedBox extends StatelessWidget {
         bottom: kHPadding,
       ),
       decoration: BoxDecoration(
-        color: isStillDisabled
+        color: isAgreementHighlight
             ? Theme.of(context).highlightColor.withOpacity(0.1)
             : Theme.of(context).bottomAppBarColor,
         borderRadius: BorderRadius.circular(15.0),

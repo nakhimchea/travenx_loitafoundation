@@ -8,6 +8,7 @@ import 'package:geolocator/geolocator.dart' show Geolocator;
 import 'package:travenx_loitafoundation/config/configs.dart'
     show kHPadding, textScaleFactor;
 import 'package:travenx_loitafoundation/helpers/activity_type.dart';
+import 'package:travenx_loitafoundation/helpers/category_type.dart';
 import 'package:travenx_loitafoundation/helpers/city_name_translator.dart';
 import 'package:travenx_loitafoundation/helpers/country_name_translator.dart';
 import 'package:travenx_loitafoundation/icons/icons.dart';
@@ -16,6 +17,7 @@ import 'package:travenx_loitafoundation/services/geolocator_service.dart';
 import 'package:travenx_loitafoundation/services/internet_service.dart';
 import 'package:travenx_loitafoundation/widgets/custom_divider.dart';
 import 'package:travenx_loitafoundation/widgets/portrait/profile_screen/add_post/add_post.dart';
+import 'package:travenx_loitafoundation/widgets/portrait/profile_screen/add_post/category_selection.dart';
 import 'package:travenx_loitafoundation/widgets/portrait/profile_screen/stepper_navigation_button.dart';
 
 class AddPost extends StatefulWidget {
@@ -30,22 +32,26 @@ class _AddPostState extends State<AddPost> {
   bool timeCloseEnabled = false;
 
   int currentStep = 0;
-  bool _isStillDisabled = false;
+  bool _isAgreementHighlight = false;
   bool _agreementChecked = false;
   String _state = '';
   String _country = '';
   String _positionCoordination = '';
-  String _title = '';
-  double _price = 0;
-  List<ActivityType> _activities = [];
+  bool _isTitleHighlight = false;
+  TextEditingController _titleController = TextEditingController();
+  TextEditingController _priceController = TextEditingController();
+  bool _isCategoryHighlight = false;
+  List<CategoryType> _categories = [];
+  bool _isImagePathHighlight = false;
   List<String> _imagesPath = [];
   DateTime _openHour = DateTime(
       DateTime.now().year, DateTime.now().month, DateTime.now().day, 8);
   DateTime _closeHour = DateTime(
       DateTime.now().year, DateTime.now().month, DateTime.now().day, 21);
-  String _details = '';
+  List<ActivityType> _activities = [];
+  TextEditingController _detailsController = TextEditingController();
   List<TextEditingController> _policies = [TextEditingController()];
-  String _announcement = '';
+  TextEditingController _announcementController = TextEditingController();
 
   void _toggleTimeOpen({bool isDisabled = false}) => setState(
       () => !isDisabled ? timeOpenEnabled = true : timeOpenEnabled = false);
@@ -55,37 +61,42 @@ class _AddPostState extends State<AddPost> {
   void _toggleCheckedBox() {
     _setLocationCity();
     setState(() {
-      _isStillDisabled = false;
+      _isAgreementHighlight = false;
       _agreementChecked = !_agreementChecked;
     });
   }
 
-  void _changeTitle(String title) => setState(() => _title = title);
-  void _changePrice(String price) =>
-      setState(() => _price = double.parse(price));
+  void _disableHighlight() => setState(() => _isTitleHighlight = false);
 
-  void _activityPicker(ActivityType activityType, {bool isRemoved = false}) =>
-      setState(() => !isRemoved
-          ? _activities.add(activityType)
-          : _activities.remove(activityType));
+  void _categoryPicker(CategoryType categoryType, {bool isRemoved = false}) =>
+      setState(() {
+        _isCategoryHighlight = false;
+        !isRemoved
+            ? _categories.length >= 3
+                ? _categories.clear()
+                : _categories.add(categoryType)
+            : _categories.remove(categoryType);
+      });
 
-  void _imagePicker(String filePath, {bool isRemoved = false}) => setState(() =>
-      !isRemoved ? _imagesPath.add(filePath) : _imagesPath.remove(filePath));
+  void _imagePicker(String filePath, {bool isRemoved = false}) => setState(() {
+        _isImagePathHighlight = false;
+        !isRemoved ? _imagesPath.add(filePath) : _imagesPath.remove(filePath);
+      });
 
   void _changeOpenHour(DateTime dateTime) =>
       setState(() => _openHour = dateTime);
   void _changeCloseHour(DateTime dateTime) =>
       setState(() => _closeHour = dateTime);
 
-  void _changeDetails(String details) => setState(() => _details = details);
+  void _activityPicker(ActivityType activityType, {bool isRemoved = false}) =>
+      setState(() => !isRemoved
+          ? _activities.add(activityType)
+          : _activities.remove(activityType));
 
   void _changePolicyControllers({bool isRemoved = false, int index = 0}) =>
       setState(() => !isRemoved
           ? _policies.add(TextEditingController())
           : _policies.removeAt(index));
-
-  void _changeAnnouncement(String announcement) =>
-      setState(() => _announcement = announcement);
 
   void _setLocationCity() async {
     final FlutterSecureStorage _secureStorage = FlutterSecureStorage(
@@ -154,9 +165,10 @@ class _AddPostState extends State<AddPost> {
                 setState(() {
                   timeOpenEnabled = false;
                   timeCloseEnabled = false;
-                  _details = '';
+                  _activities = [];
+                  _detailsController = TextEditingController();
                   _policies = [TextEditingController()];
-                  _announcement = '';
+                  _announcementController = TextEditingController();
                   currentStep++;
                 });
               },
@@ -204,15 +216,24 @@ class _AddPostState extends State<AddPost> {
                           case 0:
                             if (_state == 'denied')
                               setState(() {
-                                _isStillDisabled = true;
+                                _isAgreementHighlight = true;
                                 _agreementChecked = false;
                               });
                             else
                               setState(() => currentStep++);
                             break;
                           case 1:
-                            //TODO: Check important information
-                            setState(() => currentStep++);
+                            if (_titleController.text.trim() == '')
+                              setState(() => _isTitleHighlight = true);
+                            if (_categories.length < 1)
+                              setState(() => _isCategoryHighlight = true);
+                            if (_imagesPath.length < 1)
+                              setState(() => _isImagePathHighlight = true);
+
+                            if (_titleController.text.trim() != '' &&
+                                _categories.length >= 1 &&
+                                _imagesPath.length >= 1)
+                              setState(() => currentStep++);
                             break;
                           case 2:
                             setState(() => currentStep++);
@@ -354,7 +375,9 @@ class _AddPostState extends State<AddPost> {
         SliverPadding(
           padding: const EdgeInsets.symmetric(horizontal: kHPadding),
           sliver: SliverToBoxAdapter(
-            child: StepOneDescription(isStillDisabled: _isStillDisabled),
+            child: StepOneDescription(
+              isAgreementHighlight: _isAgreementHighlight,
+            ),
           ),
         ),
         SliverPadding(
@@ -371,7 +394,7 @@ class _AddPostState extends State<AddPost> {
           padding: const EdgeInsets.symmetric(horizontal: kHPadding),
           sliver: SliverToBoxAdapter(
             child: StepOneCheckedBox(
-              isStillDisabled: _isStillDisabled,
+              isAgreementHighlight: _isAgreementHighlight,
               isChecked: _agreementChecked,
               isCheckedCallback: _toggleCheckedBox,
             ),
@@ -394,8 +417,10 @@ class _AddPostState extends State<AddPost> {
           padding: const EdgeInsets.symmetric(horizontal: kHPadding),
           sliver: SliverToBoxAdapter(
             child: StepTwoFields(
-              titleCallback: _changeTitle,
-              priceCallback: _changePrice,
+              isTitleHighlight: _isTitleHighlight,
+              disableHighlight: _disableHighlight,
+              titleController: _titleController,
+              priceController: _priceController,
             ),
           ),
         ),
@@ -412,9 +437,10 @@ class _AddPostState extends State<AddPost> {
         SliverPadding(
           padding: const EdgeInsets.symmetric(horizontal: kHPadding),
           sliver: SliverToBoxAdapter(
-            child: ActivityPicker(
-              activities: _activities,
-              activityPickerCallback: _activityPicker,
+            child: CategorySelection(
+              isCategoryHighlight: _isCategoryHighlight,
+              categories: _categories,
+              categoryPickerCallback: _categoryPicker,
             ),
           ),
         ),
@@ -432,6 +458,7 @@ class _AddPostState extends State<AddPost> {
           padding: const EdgeInsets.symmetric(horizontal: kHPadding),
           sliver: SliverToBoxAdapter(
             child: PostImagePicker(
+              isImagePathHighlight: _isImagePathHighlight,
               imagesPath: _imagesPath,
               imagePickerCallback: _imagePicker,
             ),
@@ -479,11 +506,32 @@ class _AddPostState extends State<AddPost> {
           ),
         ),
         SliverToBoxAdapter(
+          child: ActivityPicker(
+            activities: _activities,
+            activityPickerCallback: _activityPicker,
+          ),
+        ),
+        SliverPadding(
+          padding: EdgeInsets.symmetric(
+            horizontal:
+                Theme.of(context).colorScheme.brightness == Brightness.dark
+                    ? kHPadding
+                    : 0,
+          ),
+          sliver: SliverToBoxAdapter(
+            child: CustomDivider(
+              color: Theme.of(context).primaryColor.withOpacity(0.2),
+              dashWidth: 6,
+              dashHeight: 1,
+            ),
+          ),
+        ),
+        SliverToBoxAdapter(
           child: StepThreeFields(
             policyControllers: _policies,
-            detailsCallback: _changeDetails,
+            detailsController: _detailsController,
             policiesCallback: _changePolicyControllers,
-            announcementCallback: _changeAnnouncement,
+            announcementController: _announcementController,
           ),
         ),
       ];

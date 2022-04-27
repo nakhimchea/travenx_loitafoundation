@@ -138,7 +138,7 @@ class _AddPostState extends State<AddPost> {
         _country = countryNameTranslator(enCountryName: _enCountryName);
         _positionCoordination = _coordination;
       });
-      if(_weatherForecast == null)_getWeatherForecast();
+      if (_weatherForecast == null) _getWeatherForecast();
     } else
       setState(() => _state = 'denied');
   }

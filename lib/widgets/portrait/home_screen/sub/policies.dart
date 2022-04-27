@@ -38,7 +38,10 @@ class Policies extends StatelessWidget {
             style: Theme.of(context).textTheme.headline3,
           ),
           const SizedBox(height: 10.0),
-          Column(children: _buildPolicies(context)),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: _buildPolicies(context),
+          ),
         ],
       ),
     );

@@ -3,15 +3,16 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:travenx_loitafoundation/config/configs.dart'
     show textScaleFactor, briefIconSize;
 import 'package:travenx_loitafoundation/models/icon_menu_model.dart';
-import 'package:travenx_loitafoundation/models/post_object_model.dart';
 
 class BriefDescriptionCard extends StatelessWidget {
-  final PostObject post;
+  final double ratings;
+  final int views;
   final int temperature;
 
   const BriefDescriptionCard({
     Key? key,
-    required this.post,
+    required this.ratings,
+    required this.views,
     required this.temperature,
   }) : super(key: key);
 
@@ -64,7 +65,7 @@ class BriefDescriptionCard extends StatelessWidget {
         children: [
           _CardRowItem(
             icon: _briefDescriptionIcons.elementAt(0).icon,
-            text: post.ratings.toStringAsFixed(1),
+            text: ratings.toStringAsFixed(1),
             subText: _briefDescriptionIcons.elementAt(0).label,
           ),
           _CardRowItem(
@@ -81,9 +82,9 @@ class BriefDescriptionCard extends StatelessWidget {
           ),
           _CardRowItem(
             icon: _briefDescriptionIcons.elementAt(3).icon,
-            text: (post.views > 1000)
-                ? '${(post.views / 1000).toStringAsFixed(1)}k'
-                : post.views.toStringAsFixed(0),
+            text: (views > 1000)
+                ? '${(views / 1000).toStringAsFixed(1)}k'
+                : views.toStringAsFixed(0),
             subText: _briefDescriptionIcons.elementAt(3).label,
           ),
         ],

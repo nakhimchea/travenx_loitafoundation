@@ -30,15 +30,15 @@ class Activities extends StatelessWidget {
             itemCount: activities.length,
             scrollDirection: Axis.horizontal,
             itemBuilder: (BuildContext context, int index) {
-              if (index == activities.length - 1)
+              if (index == 0)
                 return Padding(
-                  padding: EdgeInsets.only(right: kHPadding - _hPadding),
+                  padding: EdgeInsets.only(left: kHPadding),
                   child: _ActivityCard(
                       activity: activities[index], hPadding: _hPadding),
                 );
-              else if (index == 0)
+              else if (index == activities.length - 1)
                 return Padding(
-                  padding: EdgeInsets.only(left: kHPadding),
+                  padding: EdgeInsets.only(right: kHPadding - _hPadding),
                   child: _ActivityCard(
                       activity: activities[index], hPadding: _hPadding),
                 );

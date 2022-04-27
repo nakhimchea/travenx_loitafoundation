@@ -284,7 +284,8 @@ class _PostDetailState extends State<PostDetail> {
             ),
             sliver: SliverToBoxAdapter(
               child: BriefDescriptionCard(
-                post: widget.post,
+                ratings: widget.post.ratings,
+                views: widget.post.views,
                 temperature: _weatherForecast == null
                     ? 30
                     : _weatherForecast!.temperature,

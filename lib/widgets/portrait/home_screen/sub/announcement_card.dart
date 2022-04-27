@@ -45,7 +45,9 @@ class AnnouncementCard extends StatelessWidget {
                   text: '    ',
                   children: [
                     TextSpan(
-                      text: this.announcement.substring(0, 200),
+                      text: this.announcement.length < 200
+                          ? this.announcement
+                          : this.announcement.substring(0, 200),
                       style: Theme.of(context)
                           .textTheme
                           .headline4!

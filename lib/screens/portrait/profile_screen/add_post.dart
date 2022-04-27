@@ -6,17 +6,23 @@ import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:geolocator/geolocator.dart' show Geolocator;
 import 'package:travenx_loitafoundation/config/configs.dart'
-    show kHPadding, textScaleFactor;
+    show kHPadding, kVPadding, textScaleFactor;
 import 'package:travenx_loitafoundation/helpers/activity_type.dart';
 import 'package:travenx_loitafoundation/helpers/category_type.dart';
 import 'package:travenx_loitafoundation/helpers/city_name_translator.dart';
 import 'package:travenx_loitafoundation/helpers/country_name_translator.dart';
+import 'package:travenx_loitafoundation/helpers/time_translator.dart';
+import 'package:travenx_loitafoundation/helpers/weather_forecast_extractor.dart';
 import 'package:travenx_loitafoundation/icons/icons.dart';
+import 'package:travenx_loitafoundation/models/home_screen_models.dart';
+import 'package:travenx_loitafoundation/models/weather_forecast_model.dart';
 import 'package:travenx_loitafoundation/screens/portrait/profile_screen/user_posts.dart';
 import 'package:travenx_loitafoundation/services/geolocator_service.dart';
 import 'package:travenx_loitafoundation/services/internet_service.dart';
 import 'package:travenx_loitafoundation/widgets/custom_divider.dart';
+import 'package:travenx_loitafoundation/widgets/portrait/home_screen/sub/post_detail_widgets.dart';
 import 'package:travenx_loitafoundation/widgets/portrait/profile_screen/add_post/add_post.dart';
+import 'package:travenx_loitafoundation/widgets/portrait/profile_screen/add_post/add_post_cover.dart';
 import 'package:travenx_loitafoundation/widgets/portrait/profile_screen/add_post/category_selection.dart';
 import 'package:travenx_loitafoundation/widgets/portrait/profile_screen/stepper_navigation_button.dart';
 
@@ -38,19 +44,27 @@ class _AddPostState extends State<AddPost> {
   String _country = '';
   String _positionCoordination = '';
   bool _isTitleHighlight = false;
+  String _title = '';
   TextEditingController _titleController = TextEditingController();
+  double _price = 0;
   TextEditingController _priceController = TextEditingController();
   bool _isCategoryHighlight = false;
   List<CategoryType> _categories = [];
   bool _isImagePathHighlight = false;
   List<String> _imagesPath = [];
+  String _openHours = '';
   DateTime _openHour = DateTime(
       DateTime.now().year, DateTime.now().month, DateTime.now().day, 8);
   DateTime _closeHour = DateTime(
       DateTime.now().year, DateTime.now().month, DateTime.now().day, 21);
-  List<ActivityType> _activities = [];
+  ModelWeatherForecast? _weatherForecast;
+  List<Activity> _activities = [];
+  List<ActivityType> _activityTypes = [];
+  Details _details = Details(textDetail: '', mapImageUrl: '');
   TextEditingController _detailsController = TextEditingController();
-  List<TextEditingController> _policies = [TextEditingController()];
+  List<String> _policies = [];
+  List<TextEditingController> _policyControllers = [TextEditingController()];
+  String _announcement = '';
   TextEditingController _announcementController = TextEditingController();
 
   void _toggleTimeOpen({bool isDisabled = false}) => setState(
@@ -90,13 +104,13 @@ class _AddPostState extends State<AddPost> {
 
   void _activityPicker(ActivityType activityType, {bool isRemoved = false}) =>
       setState(() => !isRemoved
-          ? _activities.add(activityType)
-          : _activities.remove(activityType));
+          ? _activityTypes.add(activityType)
+          : _activityTypes.remove(activityType));
 
   void _changePolicyControllers({bool isRemoved = false, int index = 0}) =>
       setState(() => !isRemoved
-          ? _policies.add(TextEditingController())
-          : _policies.removeAt(index));
+          ? _policyControllers.add(TextEditingController())
+          : _policyControllers.removeAt(index));
 
   void _setLocationCity() async {
     final FlutterSecureStorage _secureStorage = FlutterSecureStorage(
@@ -123,6 +137,20 @@ class _AddPostState extends State<AddPost> {
       });
     } else
       setState(() => _state = 'denied');
+  }
+
+  void _getWeatherForecast() async {
+    final FlutterSecureStorage _secureStorage = FlutterSecureStorage(
+        iOptions:
+            IOSOptions(accessibility: IOSAccessibility.unlocked_this_device),
+        aOptions: AndroidOptions(encryptedSharedPreferences: true));
+    final String _owmWeatherForecastUrl =
+        'http://api.openweathermap.org/data/2.5/forecast?';
+    final String _responseBody = await InternetService.httpGetResponseBody(
+        url:
+            '$_owmWeatherForecastUrl$_positionCoordination&appid=${await _secureStorage.read(key: 'owmKey')}&units=metric');
+    setState(
+        () => _weatherForecast = weatherForecastExtractor(data: _responseBody));
   }
 
   @override
@@ -165,9 +193,9 @@ class _AddPostState extends State<AddPost> {
                 setState(() {
                   timeOpenEnabled = false;
                   timeCloseEnabled = false;
-                  _activities = [];
+                  _activityTypes = [];
                   _detailsController = TextEditingController();
-                  _policies = [TextEditingController()];
+                  _policyControllers = [TextEditingController()];
                   _announcementController = TextEditingController();
                   currentStep++;
                 });
@@ -219,8 +247,10 @@ class _AddPostState extends State<AddPost> {
                                 _isAgreementHighlight = true;
                                 _agreementChecked = false;
                               });
-                            else
+                            else {
+                              _getWeatherForecast();
                               setState(() => currentStep++);
+                            }
                             break;
                           case 1:
                             if (_titleController.text.trim() == '')
@@ -257,6 +287,7 @@ class _AddPostState extends State<AddPost> {
         ),
       ),
       body: CustomScrollView(
+        primary: false,
         physics: BouncingScrollPhysics(),
         slivers: _contentDecision(),
       ),
@@ -507,7 +538,7 @@ class _AddPostState extends State<AddPost> {
         ),
         SliverToBoxAdapter(
           child: ActivityPicker(
-            activities: _activities,
+            activities: _activityTypes,
             activityPickerCallback: _activityPicker,
           ),
         ),
@@ -528,19 +559,55 @@ class _AddPostState extends State<AddPost> {
         ),
         SliverToBoxAdapter(
           child: StepThreeFields(
-            policyControllers: _policies,
+            policyControllers: _policyControllers,
             detailsController: _detailsController,
             policiesCallback: _changePolicyControllers,
             announcementController: _announcementController,
           ),
         ),
       ];
-    else if (currentStep == 3)
+    else if (currentStep == 3) {
+      _title = _titleController.text.trim();
+      _price = double.parse(_priceController.text.trim() != ''
+          ? _priceController.text.trim()
+          : '0');
+      _openHours =
+          '${timeTranslator(_openHour)} - ${timeTranslator(_closeHour)}';
+      _announcement = _announcementController.text.trim();
+      _activities = [];
+      for (ActivityType activityType in _activityTypes) {
+        switch (activityType) {
+          case ActivityType.boating:
+            _activities.add(boating);
+            break;
+          case ActivityType.diving:
+            _activities.add(diving);
+            break;
+          case ActivityType.fishing:
+            _activities.add(fishing);
+            break;
+          case ActivityType.relaxing:
+            _activities.add(relaxing);
+            break;
+          case ActivityType.swimming:
+            _activities.add(swimming);
+            break;
+          default:
+            break;
+        }
+      }
+      _details = Details(
+          textDetail: _detailsController.text.trim(),
+          mapImageUrl: 'assets/images/travenx_180.png');
+      _policies = [];
+      for (TextEditingController policyController in _policyControllers)
+        if (policyController.text.trim() != '')
+          _policies.add(policyController.text.trim());
       return [
         SliverAppBar(
           pinned: true,
           automaticallyImplyLeading: false,
-          elevation: 1,
+          elevation: 0.5,
           leading: null,
           actions: [],
           title: Steps(currentStep: currentStep),
@@ -549,13 +616,96 @@ class _AddPostState extends State<AddPost> {
         ),
         SliverToBoxAdapter(child: const SizedBox(height: kHPadding)),
         SliverToBoxAdapter(
-          child: Container(
-            height: 50,
-            color: Theme.of(context).bottomAppBarColor,
+          child: AddPostCover(imageUrls: _imagesPath),
+        ),
+        SliverPadding(
+          padding: EdgeInsets.only(
+            left: kHPadding,
+            right: kHPadding,
+            top: 25.0,
+          ),
+          sliver: SliverToBoxAdapter(
+            child: PostHeader(
+              title: _title,
+              ratings: 5.0,
+              views: 999,
+              price: _price,
+              state: _state,
+              country: _country,
+              openHours: _openHours,
+            ),
           ),
         ),
+        _weatherForecast != null
+            ? SliverPadding(
+                padding: EdgeInsets.symmetric(horizontal: kHPadding),
+                sliver: SliverToBoxAdapter(
+                  child: WeatherAlerts(
+                    forecast: _weatherForecast!.forecast,
+                    sunrise: _weatherForecast!.sunrise,
+                    sunset: _weatherForecast!.sunset,
+                  ),
+                ),
+              )
+            : SliverToBoxAdapter(child: SizedBox.shrink()),
+        _announcement != ''
+            ? SliverPadding(
+                padding: EdgeInsets.symmetric(
+                  horizontal: kHPadding,
+                  vertical: kVPadding,
+                ),
+                sliver: SliverToBoxAdapter(
+                  child: AnnouncementCard(
+                    announcement: _announcement,
+                  ),
+                ),
+              )
+            : SliverToBoxAdapter(child: SizedBox.shrink()),
+        SliverPadding(
+          padding: EdgeInsets.symmetric(
+            horizontal: kHPadding,
+            vertical: kVPadding,
+          ),
+          sliver: SliverToBoxAdapter(
+            child: BriefDescriptionCard(
+              ratings: 5.0,
+              views: 999,
+              temperature: 30,
+            ),
+          ),
+        ),
+        _activities.isNotEmpty
+            ? SliverPadding(
+                padding: const EdgeInsets.symmetric(vertical: kVPadding),
+                sliver: SliverToBoxAdapter(
+                  child: Activities(activities: _activities),
+                ),
+              )
+            : SliverToBoxAdapter(child: SizedBox.shrink()),
+        _details.textDetail != ''
+            ? SliverPadding(
+                padding: EdgeInsets.symmetric(
+                  horizontal: kHPadding,
+                  vertical: kVPadding,
+                ),
+                sliver: SliverToBoxAdapter(
+                  child: PostDetails(
+                    details: Details(
+                      textDetail: _details.textDetail,
+                      mapImageUrl: _details.mapImageUrl,
+                    ),
+                  ),
+                ),
+              )
+            : SliverToBoxAdapter(child: SizedBox.shrink()),
+        _policies.isNotEmpty
+            ? SliverToBoxAdapter(
+                child: Policies(policies: _policies),
+              )
+            : SliverToBoxAdapter(child: SizedBox.shrink()),
+        SliverToBoxAdapter(child: SizedBox(height: 70)),
       ];
-    else
+    } else
       return [];
   }
 }

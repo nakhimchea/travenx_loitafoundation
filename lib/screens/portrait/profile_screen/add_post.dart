@@ -11,6 +11,7 @@ import 'package:travenx_loitafoundation/helpers/activity_type.dart';
 import 'package:travenx_loitafoundation/helpers/category_type.dart';
 import 'package:travenx_loitafoundation/helpers/city_name_translator.dart';
 import 'package:travenx_loitafoundation/helpers/country_name_translator.dart';
+import 'package:travenx_loitafoundation/helpers/post_uploader.dart';
 import 'package:travenx_loitafoundation/helpers/time_translator.dart';
 import 'package:travenx_loitafoundation/helpers/weather_forecast_extractor.dart';
 import 'package:travenx_loitafoundation/icons/icons.dart';
@@ -20,6 +21,7 @@ import 'package:travenx_loitafoundation/screens/portrait/profile_screen/user_pos
 import 'package:travenx_loitafoundation/services/geolocator_service.dart';
 import 'package:travenx_loitafoundation/services/internet_service.dart';
 import 'package:travenx_loitafoundation/widgets/custom_divider.dart';
+import 'package:travenx_loitafoundation/widgets/loading_dialog.dart';
 import 'package:travenx_loitafoundation/widgets/portrait/home_screen/sub/post_detail_widgets.dart';
 import 'package:travenx_loitafoundation/widgets/portrait/profile_screen/add_post/add_post.dart';
 import 'package:travenx_loitafoundation/widgets/portrait/profile_screen/add_post/add_post_cover.dart';
@@ -49,7 +51,8 @@ class _AddPostState extends State<AddPost> {
   double _price = 0;
   TextEditingController _priceController = TextEditingController();
   bool _isCategoryHighlight = false;
-  List<CategoryType> _categories = [];
+  List<String> _categories = [];
+  List<CategoryType> _categoryTypes = [];
   bool _isImagePathHighlight = false;
   List<String> _imagesPath = [];
   String _openHours = '';
@@ -86,10 +89,10 @@ class _AddPostState extends State<AddPost> {
       setState(() {
         _isCategoryHighlight = false;
         !isRemoved
-            ? _categories.length >= 3
-                ? _categories.clear()
-                : _categories.add(categoryType)
-            : _categories.remove(categoryType);
+            ? _categoryTypes.length >= 3
+                ? _categoryTypes.clear()
+                : _categoryTypes.add(categoryType)
+            : _categoryTypes.remove(categoryType);
       });
 
   void _imagePicker(String filePath, {bool isRemoved = false}) => setState(() {
@@ -135,6 +138,7 @@ class _AddPostState extends State<AddPost> {
         _country = countryNameTranslator(enCountryName: _enCountryName);
         _positionCoordination = _coordination;
       });
+      if(_weatherForecast == null)_getWeatherForecast();
     } else
       setState(() => _state = 'denied');
   }
@@ -239,7 +243,7 @@ class _AddPostState extends State<AddPost> {
                     .bodyText1!
                     .copyWith(color: Colors.white),
                 onPressed: _agreementChecked
-                    ? () {
+                    ? () async {
                         switch (currentStep) {
                           case 0:
                             if (_state == 'denied')
@@ -247,21 +251,19 @@ class _AddPostState extends State<AddPost> {
                                 _isAgreementHighlight = true;
                                 _agreementChecked = false;
                               });
-                            else {
-                              _getWeatherForecast();
+                            else
                               setState(() => currentStep++);
-                            }
                             break;
                           case 1:
                             if (_titleController.text.trim() == '')
                               setState(() => _isTitleHighlight = true);
-                            if (_categories.length < 1)
+                            if (_categoryTypes.length < 1)
                               setState(() => _isCategoryHighlight = true);
                             if (_imagesPath.length < 1)
                               setState(() => _isImagePathHighlight = true);
 
                             if (_titleController.text.trim() != '' &&
-                                _categories.length >= 1 &&
+                                _categoryTypes.length >= 1 &&
                                 _imagesPath.length >= 1)
                               setState(() => currentStep++);
                             break;
@@ -269,7 +271,27 @@ class _AddPostState extends State<AddPost> {
                             setState(() => currentStep++);
                             break;
                           case 3:
-                            //TODO: Take time to upload user's post to cloud
+                            final PostUploader _postUploader = PostUploader(
+                              categories: _categories,
+                              imagesPath: _imagesPath,
+                              title: _title,
+                              state: _state,
+                              country: _country,
+                              positionCoordination: _positionCoordination,
+                              price: _price,
+                              openHours: _openHours,
+                              announcement: _announcement,
+                              activities: _activities,
+                              details: _details,
+                              policies: _policies,
+                            );
+                            showDialog(
+                              barrierDismissible: false,
+                              context: context,
+                              builder: (context) => LoadingDialog(),
+                            );
+                            await _postUploader.pushPostObject();
+                            Navigator.pop(context);
                             Navigator.pop(context);
                             Navigator.push(
                               context,
@@ -470,7 +492,7 @@ class _AddPostState extends State<AddPost> {
           sliver: SliverToBoxAdapter(
             child: CategorySelection(
               isCategoryHighlight: _isCategoryHighlight,
-              categories: _categories,
+              categories: _categoryTypes,
               categoryPickerCallback: _categoryPicker,
             ),
           ),
@@ -571,11 +593,46 @@ class _AddPostState extends State<AddPost> {
       _price = double.parse(_priceController.text.trim() != ''
           ? _priceController.text.trim()
           : '0');
-      _openHours =
-          '${timeTranslator(_openHour)} - ${timeTranslator(_closeHour)}';
+      _categories = [];
+      for (CategoryType categoryType in _categoryTypes)
+        switch (categoryType) {
+          case CategoryType.camping:
+            _categories.add('បោះតង់');
+            break;
+          case CategoryType.sea:
+            _categories.add('សមុទ្រ');
+            break;
+          case CategoryType.temple:
+            _categories.add('ប្រាសាទ');
+            break;
+          case CategoryType.mountain:
+            _categories.add('ភ្នំ');
+            break;
+          case CategoryType.park:
+            _categories.add('ឧទ្យាន');
+            break;
+          case CategoryType.resort:
+            _categories.add('រមណីយដ្ឋាន');
+            break;
+          case CategoryType.zoo:
+            _categories.add('សួនសត្វ');
+            break;
+          case CategoryType.locations:
+            _categories.add('តំបន់ផ្សេងៗ');
+            break;
+          default:
+            break;
+        }
+      _openHours = timeOpenEnabled && timeCloseEnabled
+          ? '${timeTranslator(_openHour)} - ${timeTranslator(_closeHour)}'
+          : timeOpenEnabled
+              ? 'ចាប់ពីម៉ោង ${timeTranslator(_openHour)}'
+              : timeCloseEnabled
+                  ? 'ដល់ម៉ោង ${timeTranslator(_closeHour)}'
+                  : '';
       _announcement = _announcementController.text.trim();
       _activities = [];
-      for (ActivityType activityType in _activityTypes) {
+      for (ActivityType activityType in _activityTypes)
         switch (activityType) {
           case ActivityType.boating:
             _activities.add(boating);
@@ -595,7 +652,6 @@ class _AddPostState extends State<AddPost> {
           default:
             break;
         }
-      }
       _details = Details(
           textDetail: _detailsController.text.trim(),
           mapImageUrl: 'assets/images/travenx_180.png');

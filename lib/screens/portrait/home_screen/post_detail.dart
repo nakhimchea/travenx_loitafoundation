@@ -264,7 +264,7 @@ class _PostDetailState extends State<PostDetail> {
                   ),
                 )
               : SliverToBoxAdapter(child: SizedBox.shrink()),
-          widget.post.announcement != null
+          widget.post.announcement != null && widget.post.announcement != ''
               ? SliverPadding(
                   padding: EdgeInsets.symmetric(
                     horizontal: kHPadding,
@@ -300,7 +300,7 @@ class _PostDetailState extends State<PostDetail> {
                   ),
                 )
               : SliverToBoxAdapter(child: SizedBox.shrink()),
-          widget.post.details != null
+          widget.post.details != null && widget.post.details!.textDetail != ''
               ? SliverPadding(
                   padding: EdgeInsets.symmetric(
                     horizontal: kHPadding,
@@ -311,7 +311,7 @@ class _PostDetailState extends State<PostDetail> {
                   ),
                 )
               : SliverToBoxAdapter(child: SizedBox.shrink()),
-          widget.post.policies != null
+          widget.post.policies != null && widget.post.policies!.isNotEmpty
               ? SliverToBoxAdapter(
                   child: Policies(policies: widget.post.policies!),
                 )

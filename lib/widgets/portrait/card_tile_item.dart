@@ -81,6 +81,7 @@ class CardTileItem extends StatelessWidget {
                   vertical: 14.0,
                 ),
                 child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -129,19 +130,16 @@ class CardTileItem extends StatelessWidget {
                         ),
                       ],
                     ),
+                    const SizedBox(height: 5.0),
                     Expanded(
-                      child: Center(
-                        child: Text(
-                          (post.details != null)
-                              ? post.details!.textDetail
-                              : '',
-                          textScaleFactor: textScaleFactor,
-                          maxLines: 3,
-                          style: Theme.of(context).textTheme.bodyText2,
-                          overflow: kIsWeb
-                              ? TextOverflow.clip
-                              : TextOverflow.ellipsis,
-                        ),
+                      child: Text(
+                        (post.details != null) ? post.details!.textDetail : '',
+                        textAlign: TextAlign.justify,
+                        textScaleFactor: textScaleFactor,
+                        maxLines: 3,
+                        style: Theme.of(context).textTheme.bodyText2,
+                        overflow:
+                            kIsWeb ? TextOverflow.clip : TextOverflow.ellipsis,
                       ),
                     ),
                     Row(

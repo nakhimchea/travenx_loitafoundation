@@ -58,19 +58,19 @@ List<PostObject> postTranslator(
     if (post.get('activities') != null)
       for (var activity in post.get('activities')) {
         switch (activity.toString()) {
-          case 'boating':
+          case 'ជិះទូក':
             _activities.add(boating);
             break;
-          case 'diving':
+          case 'មើលផ្កាថ្ម':
             _activities.add(diving);
             break;
-          case 'fishing':
+          case 'ស្ទូចត្រី':
             _activities.add(fishing);
             break;
-          case 'relaxing':
+          case 'លំហែកាយ':
             _activities.add(relaxing);
             break;
-          case 'swimming':
+          case 'ហែលទឹក':
             _activities.add(swimming);
             break;
           default:

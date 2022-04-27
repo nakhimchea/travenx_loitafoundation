@@ -41,6 +41,8 @@ class _PostNearbysState extends State<PostNearbys> {
   double _hPadding = 10;
   bool _isRemovedOnce = false;
 
+  bool hasNoData = false;
+
   Widget _buildList() {
     if (!_isRemovedOnce)
       postList.removeWhere((post) {
@@ -119,7 +121,7 @@ class _PostNearbysState extends State<PostNearbys> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        postList.isEmpty
+        !hasNoData
             ? SizedBox.shrink()
             : Padding(
                 padding: const EdgeInsets.only(left: kHPadding),
@@ -129,11 +131,10 @@ class _PostNearbysState extends State<PostNearbys> {
                   style: Theme.of(context).textTheme.headline3,
                 ),
               ),
-        SizedBox(height: postList.isEmpty ? 0.0 : 10.0),
+        SizedBox(height: !hasNoData ? 0.0 : 10.0),
         Container(
-          height: postList.isEmpty
-              ? 0.0
-              : MediaQuery.of(context).size.height / 3.75 + 10,
+          height:
+              !hasNoData ? 0.0 : MediaQuery.of(context).size.height / 3.75 + 10,
           child: SmartRefresher(
             controller: _refreshController,
             physics: BouncingScrollPhysics(),
@@ -156,6 +157,7 @@ class _PostNearbysState extends State<PostNearbys> {
                     : _isLoadable = false);
                 return snapshot.docs;
               }));
+              if (postList.length == 0) setState(() => hasNoData = true);
               if (mounted) setState(() => _isRefreshable = false);
               _refreshController.refreshCompleted();
             },

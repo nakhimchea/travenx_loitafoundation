@@ -113,7 +113,7 @@ class PostHeader extends StatelessWidget {
           ],
         ),
         const SizedBox(height: 5.0),
-        this.openHours == null
+        this.openHours == null || this.openHours == ''
             ? SizedBox.shrink()
             : Row(
                 children: [

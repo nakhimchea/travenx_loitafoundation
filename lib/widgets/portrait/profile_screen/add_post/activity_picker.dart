@@ -29,7 +29,7 @@ class ActivityPicker extends StatelessWidget {
           const SizedBox(height: kHPadding),
           Wrap(
             alignment: WrapAlignment.spaceBetween,
-            spacing: 10,
+            spacing: 7,
             children: [
               ActivityButton(
                 label: 'ជិះទូក',

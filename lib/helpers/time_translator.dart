@@ -1,7 +1,9 @@
 String timeTranslator(DateTime dateTime) {
   final String _hour = dateTime.hour > 12
       ? (dateTime.hour - 12).toString()
-      : dateTime.hour.toString();
+      : dateTime.hour == 0
+          ? '12'
+          : dateTime.hour.toString();
   String _translatedString = dateTime.minute == 0
       ? _hour
       : dateTime.minute < 10

@@ -1,7 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:travenx_loitafoundation/models/post_object_model.dart';
 import 'package:travenx_loitafoundation/services/firestore_service.dart';
+import 'package:travenx_loitafoundation/services/storage_service.dart';
 
 class PostUploader {
   FirestoreService _firestoreService = FirestoreService();
@@ -14,7 +16,7 @@ class PostUploader {
   String _clientProfileUrl = '';
 
   List<String> _categories = [];
-  List<String> _imagesPath = [];
+  List<XFile> _imagesFile = [];
   String _title = '';
   String _state = '';
   String _country = '';
@@ -28,7 +30,7 @@ class PostUploader {
 
   PostUploader({
     required List<String> categories,
-    required List<String> imagesPath,
+    required List<XFile> imagesFile,
     required String title,
     required String state,
     required String country,
@@ -41,7 +43,7 @@ class PostUploader {
     required List<String> policies,
   }) {
     this._categories = categories;
-    this._imagesPath = imagesPath;
+    this._imagesFile = imagesFile;
     this._title = title;
     this._state = state;
     this._country = country;
@@ -55,8 +57,11 @@ class PostUploader {
   }
 
   Future<void> pushPostObject() async {
+    final StorageService _storageService = StorageService();
     //TODO: get promotion true false, tabBar menu List
     try {
+      final List<String> imageUrls = await _storageService.uploadPostImages(
+          ownerId: _currentUser!.uid, postId: _postId, imagesFile: _imagesFile);
       await _firestoreService
           .getProfileData(_currentUser!.uid)
           .then((DocumentSnapshot<Map<String, dynamic>> documentSnapshot) {
@@ -70,12 +75,7 @@ class PostUploader {
           'clientDisplayName': _clientDisplayName,
           'clientProfileUrl': _clientProfileUrl,
           'clientPhoneNumber': _clientPhoneNumber,
-          'imageUrls': [
-            //TODO: Get images to upload to Storage and get link to put here
-            'assets/images/travenx.png',
-            'assets/images/travenx.png',
-            'assets/images/travenx.png',
-          ],
+          'imageUrls': imageUrls,
           'title': _title,
           'state': _state,
           'country': _country,

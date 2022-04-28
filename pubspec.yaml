@@ -47,6 +47,9 @@ dependencies:
   # Firebase Cloud Firestore
   cloud_firestore: ^3.1.10
 
+  # Firebase Storage
+  firebase_storage: ^10.2.14
+
   #rFlutter Alert
   rflutter_alert: ^2.0.4
 

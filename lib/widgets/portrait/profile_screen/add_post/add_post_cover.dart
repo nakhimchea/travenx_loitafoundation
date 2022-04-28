@@ -2,12 +2,13 @@ import 'dart:io' show Platform, File;
 
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:travenx_loitafoundation/config/configs.dart'
     show kHPadding, textScaleFactor;
 
 class AddPostCover extends StatefulWidget {
-  final List<String> imageUrls;
-  const AddPostCover({Key? key, required this.imageUrls}) : super(key: key);
+  final List<XFile> imagesFile;
+  const AddPostCover({Key? key, required this.imagesFile}) : super(key: key);
 
   @override
   State<AddPostCover> createState() => _AddPostCoverState();
@@ -34,22 +35,25 @@ class _AddPostCoverState extends State<AddPostCover> {
                     borderRadius: BorderRadius.circular(15.0),
                     child: kIsWeb
                         ? Image.network(
-                            widget.imageUrls.elementAt(index),
+                            widget.imagesFile.elementAt(index).path,
                             fit: BoxFit.cover,
+                            filterQuality: FilterQuality.high,
                           )
                         : Platform.isIOS
                             ? Image.asset(
-                                widget.imageUrls.elementAt(index),
+                                widget.imagesFile.elementAt(index).path,
                                 fit: BoxFit.cover,
+                                filterQuality: FilterQuality.high,
                               )
                             : Image.file(
-                                File(widget.imageUrls.elementAt(index)),
+                                File(widget.imagesFile.elementAt(index).path),
                                 fit: BoxFit.cover,
+                                filterQuality: FilterQuality.high,
                               ),
                   ),
                 );
               },
-              itemCount: widget.imageUrls.length,
+              itemCount: widget.imagesFile.length,
             ),
             onNotification: (notification) {
               // ignore: unnecessary_type_check
@@ -84,7 +88,7 @@ class _AddPostCoverState extends State<AddPostCover> {
             ),
             child: Center(
               child: Text(
-                '${_imagesIndex + 1}/${widget.imageUrls.length}',
+                '${_imagesIndex + 1}/${widget.imagesFile.length}',
                 textScaleFactor: textScaleFactor,
                 textAlign: TextAlign.center,
                 style: Theme.of(context)

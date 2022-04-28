@@ -2,6 +2,7 @@ import 'dart:io' show Platform, File;
 
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:travenx_loitafoundation/config/configs.dart'
     show kHPadding, textScaleFactor;
 import 'package:travenx_loitafoundation/icons/icons.dart';
@@ -9,12 +10,12 @@ import 'package:travenx_loitafoundation/services/image_picker_service.dart';
 
 class PostImagePicker extends StatelessWidget {
   final bool isImagePathHighlight;
-  final List<String> imagesPath;
-  final void Function(String filePath, {bool isRemoved}) imagePickerCallback;
+  final List<XFile> imagesFile;
+  final void Function(XFile file, {bool isRemoved}) imagePickerCallback;
   const PostImagePicker({
     Key? key,
     required this.isImagePathHighlight,
-    required this.imagesPath,
+    required this.imagesFile,
     required this.imagePickerCallback,
   }) : super(key: key);
 
@@ -54,12 +55,12 @@ class PostImagePicker extends StatelessWidget {
 
   List<Widget> _buildPicker(BuildContext context, double imageSize) {
     return List.generate(
-      imagesPath.length + 1,
+      imagesFile.length + 1,
       (index) {
-        if (index == imagesPath.length)
+        if (index == imagesFile.length)
           return GestureDetector(
             onTap: () async =>
-                await ImagePickerService().addImage(imagePickerCallback),
+                await ImagePickerService.addImage(imagePickerCallback),
             child: Container(
               width: imageSize,
               height: imageSize,
@@ -89,16 +90,16 @@ class PostImagePicker extends StatelessWidget {
                   borderRadius: BorderRadius.circular(15.0),
                   child: kIsWeb
                       ? Image.network(
-                          imagesPath.elementAt(index),
+                          imagesFile.elementAt(index).path,
                           fit: BoxFit.cover,
                         )
                       : Platform.isIOS
                           ? Image.asset(
-                              imagesPath.elementAt(index),
+                              imagesFile.elementAt(index).path,
                               fit: BoxFit.cover,
                             )
                           : Image.file(
-                              File(imagesPath.elementAt(index)),
+                              File(imagesFile.elementAt(index).path),
                               fit: BoxFit.cover,
                             ),
                 ),
@@ -108,7 +109,7 @@ class PostImagePicker extends StatelessWidget {
                 right: -2,
                 child: GestureDetector(
                   onTap: () => imagePickerCallback(
-                    imagesPath.elementAt(index),
+                    imagesFile.elementAt(index),
                     isRemoved: true,
                   ),
                   child: Container(

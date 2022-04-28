@@ -5,6 +5,7 @@ import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:geolocator/geolocator.dart' show Geolocator;
+import 'package:image_picker/image_picker.dart';
 import 'package:travenx_loitafoundation/config/configs.dart'
     show kHPadding, kVPadding, textScaleFactor;
 import 'package:travenx_loitafoundation/helpers/activity_type.dart';
@@ -54,7 +55,7 @@ class _AddPostState extends State<AddPost> {
   List<String> _categories = [];
   List<CategoryType> _categoryTypes = [];
   bool _isImagePathHighlight = false;
-  List<String> _imagesPath = [];
+  List<XFile> _imagesFile = [];
   String _openHours = '';
   DateTime _openHour = DateTime(
       DateTime.now().year, DateTime.now().month, DateTime.now().day, 8);
@@ -95,9 +96,9 @@ class _AddPostState extends State<AddPost> {
             : _categoryTypes.remove(categoryType);
       });
 
-  void _imagePicker(String filePath, {bool isRemoved = false}) => setState(() {
+  void _imagePicker(XFile file, {bool isRemoved = false}) => setState(() {
         _isImagePathHighlight = false;
-        !isRemoved ? _imagesPath.add(filePath) : _imagesPath.remove(filePath);
+        !isRemoved ? _imagesFile.add(file) : _imagesFile.remove(file);
       });
 
   void _changeOpenHour(DateTime dateTime) =>
@@ -259,12 +260,12 @@ class _AddPostState extends State<AddPost> {
                               setState(() => _isTitleHighlight = true);
                             if (_categoryTypes.length < 1)
                               setState(() => _isCategoryHighlight = true);
-                            if (_imagesPath.length < 1)
+                            if (_imagesFile.length < 1)
                               setState(() => _isImagePathHighlight = true);
 
                             if (_titleController.text.trim() != '' &&
                                 _categoryTypes.length >= 1 &&
-                                _imagesPath.length >= 1)
+                                _imagesFile.length >= 1)
                               setState(() => currentStep++);
                             break;
                           case 2:
@@ -273,7 +274,7 @@ class _AddPostState extends State<AddPost> {
                           case 3:
                             final PostUploader _postUploader = PostUploader(
                               categories: _categories,
-                              imagesPath: _imagesPath,
+                              imagesFile: _imagesFile,
                               title: _title,
                               state: _state,
                               country: _country,
@@ -512,7 +513,7 @@ class _AddPostState extends State<AddPost> {
           sliver: SliverToBoxAdapter(
             child: PostImagePicker(
               isImagePathHighlight: _isImagePathHighlight,
-              imagesPath: _imagesPath,
+              imagesFile: _imagesFile,
               imagePickerCallback: _imagePicker,
             ),
           ),
@@ -672,7 +673,7 @@ class _AddPostState extends State<AddPost> {
         ),
         SliverToBoxAdapter(child: const SizedBox(height: kHPadding)),
         SliverToBoxAdapter(
-          child: AddPostCover(imageUrls: _imagesPath),
+          child: AddPostCover(imagesFile: _imagesFile),
         ),
         SliverPadding(
           padding: EdgeInsets.only(

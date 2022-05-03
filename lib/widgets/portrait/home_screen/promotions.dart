@@ -37,14 +37,14 @@ class _PromotionsState extends State<Promotions> {
       scrollDirection: Axis.horizontal,
       physics: BouncingScrollPhysics(),
       itemBuilder: (BuildContext context, int index) {
-        if (index == postList.length - 1)
-          return Padding(
-            padding: const EdgeInsets.only(right: 8.0),
-            child: _PromotionCard(post: postList[index]),
-          );
-        else if (index == 0)
+        if (index == 0)
           return Padding(
             padding: const EdgeInsets.only(left: kHPadding),
+            child: _PromotionCard(post: postList[index]),
+          );
+        else if (index == postList.length - 1)
+          return Padding(
+            padding: const EdgeInsets.only(right: 8.0),
             child: _PromotionCard(post: postList[index]),
           );
         else

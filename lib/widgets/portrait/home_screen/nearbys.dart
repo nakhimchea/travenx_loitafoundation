@@ -46,14 +46,14 @@ class _NearbysState extends State<Nearbys> {
       itemCount: postList.length,
       scrollDirection: Axis.horizontal,
       itemBuilder: (BuildContext context, int index) {
-        if (index == postList.length - 1)
-          return Padding(
-            padding: EdgeInsets.only(right: kHPadding - _hPadding),
-            child: _NearbyCard(post: postList[index], hPadding: _hPadding),
-          );
         if (index == 0)
           return Padding(
             padding: const EdgeInsets.only(left: kHPadding),
+            child: _NearbyCard(post: postList[index], hPadding: _hPadding),
+          );
+        else if (index == postList.length - 1)
+          return Padding(
+            padding: EdgeInsets.only(right: kHPadding - _hPadding),
             child: _NearbyCard(post: postList[index], hPadding: _hPadding),
           );
         else

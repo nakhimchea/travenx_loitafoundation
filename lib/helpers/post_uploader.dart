@@ -115,6 +115,8 @@ class PostUploader {
             .catchError((e) {
           print('Cannot get user ID: $e');
         });
+        //Create views and ratings for Post
+        await _firestoreService.setViews4Post(_postId);
       }).catchError((e) {
         print('Cannot get user IDD: $e');
       });

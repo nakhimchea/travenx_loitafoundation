@@ -263,6 +263,40 @@ class FirestoreService {
         print('Cannot get icon menu data: ${e.toString()}');
       });
 
+  Future<List<dynamic>> readViews(
+    String atPostId,
+  ) async =>
+      await _firestore
+          .collection('views')
+          .doc(atPostId)
+          .get()
+          .then((documentSnapshot) =>
+              documentSnapshot.exists ? documentSnapshot.get('viewers') : [])
+          .catchError((e) {
+        print('Cannot retrieve profile data: ${e.toString()}');
+      });
+
+  Future<void> setViews4Post(
+    String atPostId, [
+    String? viewerId,
+  ]) async {
+    List<dynamic> _viewerIds = [];
+    if (viewerId != null) {
+      _viewerIds = await readViews(atPostId).catchError((e) {
+        print('Cannot read viewers: ${e.toString()}');
+      });
+      if (!_viewerIds.toString().contains(viewerId)) _viewerIds.add(viewerId);
+    }
+
+    print(_viewerIds);
+    await _firestore.collection('views').doc(atPostId).set(
+      {'viewers': _viewerIds},
+      SetOptions(merge: true),
+    ).catchError((e) {
+      print('Cannot add Post ID to UserProfile: $e');
+    });
+  }
+
   //ChatScreen
   Future<List<dynamic>> _readChats(
     String atUserId,

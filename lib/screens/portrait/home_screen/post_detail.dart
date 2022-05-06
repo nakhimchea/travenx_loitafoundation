@@ -25,6 +25,7 @@ class PostDetail extends StatefulWidget {
 class _PostDetailState extends State<PostDetail> {
   ModelWeatherForecast? _weatherForecast;
   final User? _user = FirebaseAuth.instance.currentUser;
+  int _views = 0;
   bool get _isSelfPost {
     return _user != null ? _user!.uid == widget.post.clientId : false;
   }
@@ -43,9 +44,18 @@ class _PostDetailState extends State<PostDetail> {
         () => _weatherForecast = weatherForecastExtractor(data: _responseBody));
   }
 
+  void isViewed() async {
+    final FirestoreService _firestoreService = FirestoreService();
+    if (_user != null && !_isSelfPost)
+      await _firestoreService.setViews4Post(widget.post.postId, _user!.uid);
+    _views = await _firestoreService.readViews(widget.post.postId)
+    .then((viewers) => viewers.length);
+  }
+
   @override
   void initState() {
     super.initState();
+    isViewed();
     getWeatherForecast();
   }
 
@@ -244,7 +254,7 @@ class _PostDetailState extends State<PostDetail> {
               child: PostHeader(
                 title: widget.post.title,
                 ratings: widget.post.ratings,
-                views: widget.post.views,
+                views: _views,
                 price: widget.post.price,
                 state: widget.post.state,
                 country: widget.post.country,
@@ -285,7 +295,7 @@ class _PostDetailState extends State<PostDetail> {
             sliver: SliverToBoxAdapter(
               child: BriefDescriptionCard(
                 ratings: widget.post.ratings,
-                views: widget.post.views,
+                views: _views,
                 temperature: _weatherForecast == null
                     ? 30
                     : _weatherForecast!.temperature,

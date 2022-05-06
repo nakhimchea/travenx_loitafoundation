@@ -8,8 +8,9 @@ import 'package:travenx_loitafoundation/config/configs.dart'
 import 'package:travenx_loitafoundation/icons/icons.dart';
 import 'package:travenx_loitafoundation/models/post_object_model.dart';
 import 'package:travenx_loitafoundation/screens/portrait/home_screen/post_detail.dart';
+import 'package:travenx_loitafoundation/services/firestore_service.dart';
 
-class CardTileItem extends StatelessWidget {
+class CardTileItem extends StatefulWidget {
   final double vPadding;
   final PostObject post;
   const CardTileItem({
@@ -19,18 +20,36 @@ class CardTileItem extends StatelessWidget {
   }) : super(key: key);
 
   @override
+  State<CardTileItem> createState() => _CardTileItemState();
+}
+
+class _CardTileItemState extends State<CardTileItem> {
+  int _views = 0;
+  void _getViews() async {
+    _views = await FirestoreService()
+        .readViews(widget.post.postId)
+        .then((viewers) => viewers.length);
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _getViews();
+  }
+
+  @override
   Widget build(BuildContext context) {
     final double _imageSize = MediaQuery.of(context).size.height / 6.16;
     return GestureDetector(
       onTap: () => Navigator.push(
         context,
         MaterialPageRoute(
-          builder: (_) => PostDetail(post: post),
+          builder: (_) => PostDetail(post: widget.post, views: _views),
         ),
       ),
       child: Padding(
-        padding:
-            EdgeInsets.symmetric(horizontal: kHPadding, vertical: vPadding / 2),
+        padding: EdgeInsets.symmetric(
+            horizontal: kHPadding, vertical: widget.vPadding / 2),
         child: Row(
           children: [
             Container(
@@ -41,13 +60,14 @@ class CardTileItem extends StatelessWidget {
                   topLeft: Radius.circular(15.0),
                   bottomLeft: Radius.circular(15.0),
                 ),
-                child: post.imageUrls.elementAt(0).split('/').first == 'assets'
+                child: widget.post.imageUrls.elementAt(0).split('/').first ==
+                        'assets'
                     ? Image.asset(
-                        post.imageUrls.elementAt(0),
+                        widget.post.imageUrls.elementAt(0),
                         fit: BoxFit.cover,
                       )
                     : CachedNetworkImage(
-                        imageUrl: post.imageUrls.elementAt(0),
+                        imageUrl: widget.post.imageUrls.elementAt(0),
                         fit: BoxFit.cover,
                         placeholder: (context, _) => ImageFiltered(
                           imageFilter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
@@ -87,7 +107,7 @@ class CardTileItem extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
-                          post.title,
+                          widget.post.title,
                           textScaleFactor: textScaleFactor,
                           style: Theme.of(context).textTheme.headline4,
                           overflow: kIsWeb
@@ -95,9 +115,9 @@ class CardTileItem extends StatelessWidget {
                               : TextOverflow.ellipsis,
                         ),
                         Text(
-                          post.price == 0
+                          widget.post.price == 0
                               ? 'Free'
-                              : '\$${post.price % 1 == 0 ? post.price.toStringAsFixed(0) : post.price.toStringAsFixed(1)}',
+                              : '\$${widget.post.price % 1 == 0 ? widget.post.price.toStringAsFixed(0) : widget.post.price.toStringAsFixed(1)}',
                           textScaleFactor: textScaleFactor,
                           style: Theme.of(context).textTheme.subtitle1,
                           overflow: kIsWeb
@@ -117,10 +137,12 @@ class CardTileItem extends StatelessWidget {
                         Padding(
                           padding: const EdgeInsets.only(left: 5.0),
                           child: Text(
-                            (post.state == 'ភ្នំពេញ' ? 'រាជធានី' : 'ខេត្ត') +
-                                post.state +
+                            (widget.post.state == 'ភ្នំពេញ'
+                                    ? 'រាជធានី'
+                                    : 'ខេត្ត') +
+                                widget.post.state +
                                 ' ' +
-                                post.country,
+                                widget.post.country,
                             textScaleFactor: textScaleFactor,
                             style: Theme.of(context).textTheme.bodyText2,
                             overflow: kIsWeb
@@ -133,7 +155,9 @@ class CardTileItem extends StatelessWidget {
                     const SizedBox(height: 5.0),
                     Expanded(
                       child: Text(
-                        (post.details != null) ? post.details!.textDetail : '',
+                        (widget.post.details != null)
+                            ? widget.post.details!.textDetail
+                            : '',
                         textAlign: TextAlign.justify,
                         textScaleFactor: textScaleFactor,
                         maxLines: 3,
@@ -155,7 +179,7 @@ class CardTileItem extends StatelessWidget {
                             Padding(
                               padding: const EdgeInsets.only(left: 5.0),
                               child: Text(
-                                post.ratings.toStringAsFixed(1),
+                                widget.post.ratings.toStringAsFixed(1),
                                 textScaleFactor: textScaleFactor,
                                 style: Theme.of(context).textTheme.headline5,
                                 overflow: kIsWeb
@@ -175,7 +199,7 @@ class CardTileItem extends StatelessWidget {
                             Padding(
                               padding: const EdgeInsets.only(left: 5.0),
                               child: Text(
-                                post.views.toString(),
+                                _views.toString(),
                                 textScaleFactor: textScaleFactor,
                                 style: Theme.of(context).textTheme.subtitle2,
                                 overflow: kIsWeb

@@ -15,7 +15,6 @@ class PostObject {
   final String? openHours;
   final String? announcement;
   final double ratings;
-  final int views;
   final List<Activity> activities;
   final Details? details;
   final List<String>? policies;
@@ -35,7 +34,6 @@ class PostObject {
     this.openHours,
     this.announcement,
     required this.ratings,
-    required this.views,
     required this.activities,
     this.details,
     this.policies,

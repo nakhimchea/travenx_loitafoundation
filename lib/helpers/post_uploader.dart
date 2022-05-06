@@ -84,7 +84,6 @@ class PostUploader {
           'openHours': _openHours!,
           'announcement': _announcement!,
           'ratings': 5.0,
-          'views': 0, //TODO: Remove from here and get directly from FireStore
           'activities': _activities!.map((element) => element.label).toList(),
           'details': {
             'mapImageUrl': _details!.mapImageUrl == ''

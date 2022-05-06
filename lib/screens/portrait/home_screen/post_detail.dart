@@ -16,7 +16,12 @@ import 'package:travenx_loitafoundation/widgets/portrait/home_screen/sub/post_de
 
 class PostDetail extends StatefulWidget {
   final PostObject post;
-  const PostDetail({Key? key, required this.post}) : super(key: key);
+  final int views;
+  const PostDetail({
+    Key? key,
+    required this.post,
+    required this.views,
+  }) : super(key: key);
 
   @override
   _PostDetailState createState() => _PostDetailState();
@@ -25,7 +30,6 @@ class PostDetail extends StatefulWidget {
 class _PostDetailState extends State<PostDetail> {
   ModelWeatherForecast? _weatherForecast;
   final User? _user = FirebaseAuth.instance.currentUser;
-  int _views = 0;
   bool get _isSelfPost {
     return _user != null ? _user!.uid == widget.post.clientId : false;
   }
@@ -45,12 +49,8 @@ class _PostDetailState extends State<PostDetail> {
   }
 
   void isViewed() async {
-    final FirestoreService _firestoreService = FirestoreService();
     if (_user != null && !_isSelfPost)
-      await _firestoreService.setViews4Post(widget.post.postId, _user!.uid);
-    _views = await _firestoreService
-        .readViews(widget.post.postId)
-        .then((viewers) => viewers.length);
+      await FirestoreService().setViews4Post(widget.post.postId, _user!.uid);
   }
 
   @override
@@ -255,7 +255,7 @@ class _PostDetailState extends State<PostDetail> {
               child: PostHeader(
                 title: widget.post.title,
                 ratings: widget.post.ratings,
-                views: _views,
+                views: widget.views,
                 price: widget.post.price,
                 state: widget.post.state,
                 country: widget.post.country,
@@ -296,7 +296,7 @@ class _PostDetailState extends State<PostDetail> {
             sliver: SliverToBoxAdapter(
               child: BriefDescriptionCard(
                 ratings: widget.post.ratings,
-                views: _views,
+                views: widget.views,
                 temperature: _weatherForecast == null
                     ? 30
                     : _weatherForecast!.temperature,

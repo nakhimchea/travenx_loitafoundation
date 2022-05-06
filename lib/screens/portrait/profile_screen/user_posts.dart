@@ -231,11 +231,29 @@ class _UserPostsState extends State<UserPosts> {
         );
 }
 
-class _PostCard extends StatelessWidget {
+class _PostCard extends StatefulWidget {
   final PostObject post;
   final double spacing;
   const _PostCard({Key? key, required this.post, this.spacing = 10})
       : super(key: key);
+
+  @override
+  State<_PostCard> createState() => _PostCardState();
+}
+
+class _PostCardState extends State<_PostCard> {
+  int _views = 0;
+  void _getViews() async {
+    _views = await FirestoreService()
+        .readViews(widget.post.postId)
+        .then((viewers) => viewers.length);
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _getViews();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -243,27 +261,28 @@ class _PostCard extends StatelessWidget {
       onTap: () => Navigator.push(
         context,
         MaterialPageRoute(
-          builder: (_) => PostDetail(post: post),
+          builder: (_) => PostDetail(post: widget.post, views: _views),
         ),
       ),
       child: Column(
         children: [
           Container(
             height: MediaQuery.of(context).size.height / 6.16,
-            width:
-                ((MediaQuery.of(context).size.width - spacing) / 2) - kHPadding,
+            width: ((MediaQuery.of(context).size.width - widget.spacing) / 2) -
+                kHPadding,
             child: ClipRRect(
               borderRadius: BorderRadius.only(
                 topLeft: Radius.circular(15.0),
                 topRight: Radius.circular(15.0),
               ),
-              child: post.imageUrls.elementAt(0).split('/').first == 'assets'
+              child: widget.post.imageUrls.elementAt(0).split('/').first ==
+                      'assets'
                   ? Image.asset(
-                      post.imageUrls.elementAt(0),
+                      widget.post.imageUrls.elementAt(0),
                       fit: BoxFit.cover,
                     )
                   : CachedNetworkImage(
-                      imageUrl: post.imageUrls.elementAt(0),
+                      imageUrl: widget.post.imageUrls.elementAt(0),
                       fit: BoxFit.cover,
                       placeholder: (context, _) => ImageFiltered(
                         imageFilter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
@@ -282,8 +301,8 @@ class _PostCard extends StatelessWidget {
           Container(
             padding: const EdgeInsets.all(10.0),
             height: MediaQuery.of(context).size.height / 9.8,
-            width:
-                ((MediaQuery.of(context).size.width - spacing) / 2) - kHPadding,
+            width: ((MediaQuery.of(context).size.width - widget.spacing) / 2) -
+                kHPadding,
             decoration: BoxDecoration(
               color: Theme.of(context).bottomAppBarColor,
               borderRadius: BorderRadius.only(
@@ -298,7 +317,7 @@ class _PostCard extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      post.title,
+                      widget.post.title,
                       textScaleFactor: textScaleFactor,
                       style: Theme.of(context).textTheme.headline4,
                       overflow:
@@ -314,10 +333,12 @@ class _PostCard extends StatelessWidget {
                         Padding(
                           padding: const EdgeInsets.only(left: 5.0),
                           child: Text(
-                            (post.state == 'ភ្នំពេញ' ? 'រាជធានី' : 'ខេត្ត') +
-                                post.state +
+                            (widget.post.state == 'ភ្នំពេញ'
+                                    ? 'រាជធានី'
+                                    : 'ខេត្ត') +
+                                widget.post.state +
                                 ' ' +
-                                post.country,
+                                widget.post.country,
                             textScaleFactor: textScaleFactor,
                             style: Theme.of(context).textTheme.bodyText2,
                             overflow: kIsWeb
@@ -340,7 +361,7 @@ class _PostCard extends StatelessWidget {
                             Padding(
                               padding: const EdgeInsets.only(left: 5.0),
                               child: Text(
-                                post.ratings.toStringAsFixed(1),
+                                widget.post.ratings.toStringAsFixed(1),
                                 textScaleFactor: textScaleFactor,
                                 style: Theme.of(context).textTheme.headline5,
                                 overflow: kIsWeb
@@ -360,7 +381,7 @@ class _PostCard extends StatelessWidget {
                             Padding(
                               padding: const EdgeInsets.only(left: 5.0),
                               child: Text(
-                                post.views.toString(),
+                                _views.toString(),
                                 textScaleFactor: textScaleFactor,
                                 style: Theme.of(context).textTheme.subtitle2,
                                 overflow: kIsWeb
@@ -378,9 +399,9 @@ class _PostCard extends StatelessWidget {
                   top: MediaQuery.of(context).size.height / 40.0,
                   right: 0.0,
                   child: Text(
-                    post.price == 0
+                    widget.post.price == 0
                         ? 'Free'
-                        : '\$${post.price % 1 == 0 ? post.price.toStringAsFixed(0) : post.price.toStringAsFixed(1)}',
+                        : '\$${widget.post.price % 1 == 0 ? widget.post.price.toStringAsFixed(0) : widget.post.price.toStringAsFixed(1)}',
                     textScaleFactor: textScaleFactor,
                     style: Theme.of(context).textTheme.subtitle1,
                     overflow:

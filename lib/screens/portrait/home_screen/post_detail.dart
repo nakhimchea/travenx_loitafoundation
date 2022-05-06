@@ -48,8 +48,9 @@ class _PostDetailState extends State<PostDetail> {
     final FirestoreService _firestoreService = FirestoreService();
     if (_user != null && !_isSelfPost)
       await _firestoreService.setViews4Post(widget.post.postId, _user!.uid);
-    _views = await _firestoreService.readViews(widget.post.postId)
-    .then((viewers) => viewers.length);
+    _views = await _firestoreService
+        .readViews(widget.post.postId)
+        .then((viewers) => viewers.length);
   }
 
   @override

@@ -18,7 +18,6 @@ List<PostObject> postTranslator(
     double _price = 0;
     String? _openHours;
     String? _announcement;
-    double _ratings = 5;
     List<Activity> _activities = [];
     Details? _details;
     List<String>? _policies = [];
@@ -45,9 +44,6 @@ List<PostObject> postTranslator(
 
       if (post.get('announcement') != null)
         _announcement = post.get('announcement').toString();
-
-      if (post.get('ratings') != null)
-        _ratings = double.parse(post.get('ratings').toString());
     } catch (e) {
       print('Data\'s unavailable: $e');
     }
@@ -102,7 +98,6 @@ List<PostObject> postTranslator(
         price: _price,
         openHours: _openHours,
         announcement: _announcement,
-        ratings: _ratings,
         activities: _activities,
         details: _details,
         policies: _policies,

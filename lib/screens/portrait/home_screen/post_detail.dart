@@ -17,10 +17,12 @@ import 'package:travenx_loitafoundation/widgets/portrait/home_screen/sub/post_de
 class PostDetail extends StatefulWidget {
   final PostObject post;
   final int views;
+  final double ratings;
   const PostDetail({
     Key? key,
     required this.post,
     required this.views,
+    required this.ratings,
   }) : super(key: key);
 
   @override
@@ -254,7 +256,7 @@ class _PostDetailState extends State<PostDetail> {
             sliver: SliverToBoxAdapter(
               child: PostHeader(
                 title: widget.post.title,
-                ratings: widget.post.ratings,
+                ratings: widget.ratings,
                 views: widget.views,
                 price: widget.post.price,
                 state: widget.post.state,
@@ -295,7 +297,7 @@ class _PostDetailState extends State<PostDetail> {
             ),
             sliver: SliverToBoxAdapter(
               child: BriefDescriptionCard(
-                ratings: widget.post.ratings,
+                ratings: widget.ratings,
                 views: widget.views,
                 temperature: _weatherForecast == null
                     ? 30

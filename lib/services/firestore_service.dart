@@ -263,6 +263,53 @@ class FirestoreService {
         print('Cannot get icon menu data: ${e.toString()}');
       });
 
+  Future<List<dynamic>> readRatings(
+    String atPostId,
+  ) async =>
+      await _firestore
+          .collection('ratings')
+          .doc(atPostId)
+          .get()
+          .then((documentSnapshot) =>
+              documentSnapshot.exists ? documentSnapshot.get('ratings') : [])
+          .catchError((e) {
+        print('Cannot retrieve rating data: ${e.toString()}');
+      });
+
+  Future<double> getRatingRate(
+    String atPostId,
+  ) async =>
+      await readRatings(atPostId).then((ratings) {
+        int total = 0;
+        for (Map<String, dynamic> rating in ratings)
+          total += int.parse(rating['rating'].toString());
+        return total == 0 ? 5.0 : total / ratings.length;
+      });
+
+  Future<void> setRatings4Post(
+    String atPostId,
+    String uid,
+    Map<String, dynamic> data,
+  ) async {
+    List<dynamic> _ratings = await readRatings(atPostId).catchError((e) {
+      print('Cannot read ratings: ${e.toString()}');
+    });
+
+    for (Map<String, dynamic> rating in _ratings)
+      if (rating['uid'].toString().contains(uid)) {
+        _ratings.remove(rating);
+        _ratings.add(data);
+        break;
+      }
+
+    await _firestore.collection('ratings').doc(atPostId).set(
+      {'ratings': _ratings},
+      SetOptions(merge: true),
+    ).catchError((e) {
+      print('Cannot add ratings to Post: $e');
+    });
+  }
+
   Future<List<dynamic>> readViews(
     String atPostId,
   ) async =>
@@ -273,28 +320,27 @@ class FirestoreService {
           .then((documentSnapshot) =>
               documentSnapshot.exists ? documentSnapshot.get('viewers') : [])
           .catchError((e) {
-        print('Cannot retrieve profile data: ${e.toString()}');
+        print('Cannot retrieve viewer data: ${e.toString()}');
       });
 
   Future<void> setViews4Post(
     String atPostId, [
     String? viewerId,
   ]) async {
-    List<dynamic> _viewerIds = [];
     if (viewerId != null) {
-      _viewerIds = await readViews(atPostId).catchError((e) {
+      List<dynamic> _viewerIds = await readViews(atPostId).catchError((e) {
         print('Cannot read viewers: ${e.toString()}');
       });
-      if (!_viewerIds.toString().contains(viewerId)) _viewerIds.add(viewerId);
+      if (!_viewerIds.toString().contains(viewerId)) {
+        _viewerIds.add(viewerId);
+        await _firestore.collection('views').doc(atPostId).set(
+          {'viewers': _viewerIds},
+          SetOptions(merge: true),
+        ).catchError((e) {
+          print('Cannot add viewer to Post: $e');
+        });
+      }
     }
-
-    print(_viewerIds);
-    await _firestore.collection('views').doc(atPostId).set(
-      {'viewers': _viewerIds},
-      SetOptions(merge: true),
-    ).catchError((e) {
-      print('Cannot add Post ID to UserProfile: $e');
-    });
   }
 
   //ChatScreen

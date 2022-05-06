@@ -25,16 +25,23 @@ class CardTileItem extends StatefulWidget {
 
 class _CardTileItemState extends State<CardTileItem> {
   int _views = 0;
+  double _ratings = 5;
+
   void _getViews() async {
     _views = await FirestoreService()
         .readViews(widget.post.postId)
         .then((viewers) => viewers.length);
   }
 
+  void _getRatings() async {
+    _ratings = await FirestoreService().getRatingRate(widget.post.postId);
+  }
+
   @override
   void initState() {
     super.initState();
     _getViews();
+    _getRatings();
   }
 
   @override
@@ -44,7 +51,11 @@ class _CardTileItemState extends State<CardTileItem> {
       onTap: () => Navigator.push(
         context,
         MaterialPageRoute(
-          builder: (_) => PostDetail(post: widget.post, views: _views),
+          builder: (_) => PostDetail(
+            post: widget.post,
+            views: _views,
+            ratings: _ratings,
+          ),
         ),
       ),
       child: Padding(
@@ -179,7 +190,7 @@ class _CardTileItemState extends State<CardTileItem> {
                             Padding(
                               padding: const EdgeInsets.only(left: 5.0),
                               child: Text(
-                                widget.post.ratings.toStringAsFixed(1),
+                                _ratings.toStringAsFixed(1),
                                 textScaleFactor: textScaleFactor,
                                 style: Theme.of(context).textTheme.headline5,
                                 overflow: kIsWeb

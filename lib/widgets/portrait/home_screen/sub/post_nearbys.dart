@@ -41,7 +41,7 @@ class _PostNearbysState extends State<PostNearbys> {
   double _hPadding = 10;
   bool _isRemovedOnce = false;
 
-  bool hasNoData = false;
+  bool hasData = false;
 
   Widget _buildList() {
     if (!_isRemovedOnce)
@@ -49,20 +49,21 @@ class _PostNearbysState extends State<PostNearbys> {
         if (post.postId == widget.currentPostId) _isRemovedOnce = true;
         return post.postId == widget.currentPostId;
       });
+    if (postList.length == 0) setState(() => hasData = false);
 
     return ListView.builder(
       physics: BouncingScrollPhysics(),
       itemCount: postList.length,
       scrollDirection: Axis.horizontal,
       itemBuilder: (BuildContext context, int index) {
-        if (index == postList.length - 1)
-          return Padding(
-            padding: EdgeInsets.only(right: kHPadding - _hPadding),
-            child: _NearbyCard(post: postList[index], hPadding: _hPadding),
-          );
         if (index == 0)
           return Padding(
             padding: const EdgeInsets.only(left: kHPadding),
+            child: _NearbyCard(post: postList[index], hPadding: _hPadding),
+          );
+        else if (index == postList.length - 1)
+          return Padding(
+            padding: EdgeInsets.only(right: kHPadding - _hPadding),
             child: _NearbyCard(post: postList[index], hPadding: _hPadding),
           );
         else
@@ -121,7 +122,7 @@ class _PostNearbysState extends State<PostNearbys> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        !hasNoData
+        !hasData
             ? SizedBox.shrink()
             : Padding(
                 padding: const EdgeInsets.only(left: kHPadding),
@@ -131,10 +132,10 @@ class _PostNearbysState extends State<PostNearbys> {
                   style: Theme.of(context).textTheme.headline3,
                 ),
               ),
-        SizedBox(height: !hasNoData ? 0.0 : 10.0),
+        SizedBox(height: !hasData ? 0.0 : 10.0),
         Container(
           height:
-              !hasNoData ? 0.0 : MediaQuery.of(context).size.height / 3.75 + 10,
+              !hasData ? 0.0 : MediaQuery.of(context).size.height / 3.75 + 10,
           child: SmartRefresher(
             controller: _refreshController,
             physics: BouncingScrollPhysics(),
@@ -157,7 +158,7 @@ class _PostNearbysState extends State<PostNearbys> {
                     : _isLoadable = false);
                 return snapshot.docs;
               }));
-              if (postList.length == 0) setState(() => hasNoData = true);
+              if (postList.length != 0) setState(() => hasData = true);
               if (mounted) setState(() => _isRefreshable = false);
               _refreshController.refreshCompleted();
             },

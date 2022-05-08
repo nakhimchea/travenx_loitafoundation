@@ -286,6 +286,24 @@ class FirestoreService {
         return total == 0 ? 5.0 : total / ratings.length;
       });
 
+  List<int> getRatingExpression(
+    List<dynamic> ratings,
+    String atUid,
+  ) {
+    List<int> expression = [];
+    for (Map<String, dynamic> rating in ratings)
+      if (rating['uid'].toString().contains(atUid)) {
+        try {
+          expression.add(int.parse(rating['likes'].toString()));
+          expression.add(int.parse(rating['dislikes'].toString()));
+        } catch (e) {
+          print('Cannot read integer likes and dislikes $e');
+        }
+        break;
+      }
+    return expression;
+  }
+
   Future<void> setRatings4Post(
     String atPostId,
     String uid,
@@ -298,9 +316,9 @@ class FirestoreService {
     for (Map<String, dynamic> rating in _ratings)
       if (rating['uid'].toString().contains(uid)) {
         _ratings.remove(rating);
-        _ratings.add(data);
         break;
       }
+    _ratings.add(data);
 
     await _firestore.collection('ratings').doc(atPostId).set(
       {'ratings': _ratings},

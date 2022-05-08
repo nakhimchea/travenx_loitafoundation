@@ -77,21 +77,29 @@ class _ChatState extends State<Chat> {
                     child: widget.postImageUrl.split('/').first == 'assets'
                         ? Image.asset(
                             widget.postImageUrl,
+                            width: 45,
+                            height: 45,
                             fit: BoxFit.cover,
                           )
                         : CachedNetworkImage(
                             imageUrl: widget.postImageUrl,
+                            width: 45,
+                            height: 45,
                             fit: BoxFit.cover,
                             placeholder: (context, _) => ImageFiltered(
                               imageFilter:
                                   ImageFilter.blur(sigmaX: 10, sigmaY: 10),
                               child: Image.asset(
                                 'assets/images/travenx_180.png',
+                                width: 45,
+                                height: 45,
                                 fit: BoxFit.cover,
                               ),
                             ),
                             errorWidget: (context, _, __) => Image.asset(
                               'assets/images/travenx_180.png',
+                              width: 45,
+                              height: 45,
                               fit: BoxFit.cover,
                             ),
                           ),

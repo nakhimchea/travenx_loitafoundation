@@ -134,14 +134,16 @@ class _AddPostState extends State<AddPost> {
       final String _enCountryName =
           jsonDecode(_responseBody)[0]['country'].toString();
 
-      setState(() {
-        _state = cityNameTranslator(enCityName: _enStateName);
-        _country = countryNameTranslator(enCountryName: _enCountryName);
-        _positionCoordination = _coordination;
-      });
+      if (mounted)
+        setState(() {
+          _state = cityNameTranslator(enCityName: _enStateName);
+          _country = countryNameTranslator(enCountryName: _enCountryName);
+          _positionCoordination = _coordination;
+        });
       if (_weatherForecast == null) _getWeatherForecast();
-    } else
-      setState(() => _state = 'denied');
+    } else {
+      if (mounted) setState(() => _state = 'denied');
+    }
   }
 
   void _getWeatherForecast() async {
@@ -154,8 +156,9 @@ class _AddPostState extends State<AddPost> {
     final String _responseBody = await InternetService.httpGetResponseBody(
         url:
             '$_owmWeatherForecastUrl$_positionCoordination&appid=${await _secureStorage.read(key: 'owmKey')}&units=metric');
-    setState(
-        () => _weatherForecast = weatherForecastExtractor(data: _responseBody));
+    if (mounted)
+      setState(() =>
+          _weatherForecast = weatherForecastExtractor(data: _responseBody));
   }
 
   @override

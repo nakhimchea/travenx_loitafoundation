@@ -565,21 +565,29 @@ class _BuildChatItem extends StatelessWidget {
                         child: chatImageUrl.split('/').first == 'assets'
                             ? Image.asset(
                                 chatImageUrl,
+                                height: 50,
+                                width: 50,
                                 fit: BoxFit.cover,
                               )
                             : CachedNetworkImage(
                                 imageUrl: chatImageUrl,
+                                height: 50,
+                                width: 50,
                                 fit: BoxFit.cover,
                                 placeholder: (context, _) => ImageFiltered(
                                   imageFilter:
                                       ImageFilter.blur(sigmaX: 10, sigmaY: 10),
                                   child: Image.asset(
                                     'assets/images/travenx_180.png',
+                                    height: 50,
+                                    width: 50,
                                     fit: BoxFit.cover,
                                   ),
                                 ),
                                 errorWidget: (context, _, __) => Image.asset(
                                   'assets/images/travenx_180.png',
+                                  height: 50,
+                                  width: 50,
                                   fit: BoxFit.cover,
                                 ),
                               ),

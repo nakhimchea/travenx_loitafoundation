@@ -330,9 +330,10 @@ class _PostDetailState extends State<PostDetail> {
                 )
               : SliverToBoxAdapter(child: SizedBox.shrink()),
           SliverToBoxAdapter(
-            child: PostRatings(
-              currentPostId: widget.post.postId,
-            ),
+            child: PostGallery(currentPostId: widget.post.postId),
+          ),
+          SliverToBoxAdapter(
+            child: PostRatings(currentPostId: widget.post.postId),
           ),
           SliverToBoxAdapter(
             child: PostNearbys(

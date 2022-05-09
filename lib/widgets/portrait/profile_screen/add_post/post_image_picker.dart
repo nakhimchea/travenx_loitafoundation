@@ -11,7 +11,7 @@ import 'package:travenx_loitafoundation/services/image_picker_service.dart';
 class PostImagePicker extends StatelessWidget {
   final bool isImagePathHighlight;
   final List<XFile> imagesFile;
-  final void Function(XFile file, {bool isRemoved}) imagePickerCallback;
+  final void Function(XFile, {bool isRemoved}) imagePickerCallback;
   const PostImagePicker({
     Key? key,
     required this.isImagePathHighlight,

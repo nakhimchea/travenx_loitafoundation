@@ -328,6 +328,40 @@ class FirestoreService {
     });
   }
 
+  Future<List<dynamic>> readGallery(
+    String atPostId,
+  ) async =>
+      await _firestore
+          .collection('gallery')
+          .doc(atPostId)
+          .get()
+          .then((documentSnapshot) =>
+              documentSnapshot.exists ? documentSnapshot.get('imageUrls') : [])
+          .catchError((e) {
+        print('Cannot retrieve gallery data: ${e.toString()}');
+      });
+
+  Future<void> setGalleryImages(
+    String atPostId,
+    String uid,
+    List<String> imageUrls,
+  ) async {
+    List<String> _gallery = await readGallery(atPostId).then((list) {
+      List<String> convertedList = [];
+      list.forEach((element) => convertedList.add(element.toString()));
+      return convertedList;
+    }).catchError((e) {
+      print('Cannot read gallery: ${e.toString()}');
+    });
+
+    await _firestore.collection('gallery').doc(atPostId).set(
+      {'imageUrls': imageUrls..addAll(_gallery)},
+      SetOptions(merge: true),
+    ).catchError((e) {
+      print('Cannot add Gallery to Post: $e');
+    });
+  }
+
   Future<List<dynamic>> readViews(
     String atPostId,
   ) async =>

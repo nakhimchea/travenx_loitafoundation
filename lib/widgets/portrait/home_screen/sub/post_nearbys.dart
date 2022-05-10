@@ -49,7 +49,6 @@ class _PostNearbysState extends State<PostNearbys> {
         if (post.postId == widget.currentPostId) _isRemovedOnce = true;
         return post.postId == widget.currentPostId;
       });
-    if (postList.length == 0) setState(() => hasData = false);
 
     return ListView.builder(
       physics: BouncingScrollPhysics(),
@@ -158,7 +157,7 @@ class _PostNearbysState extends State<PostNearbys> {
                     : _isLoadable = false);
                 return snapshot.docs;
               }));
-              if (postList.length != 0) setState(() => hasData = true);
+              if (postList.length > 1) setState(() => hasData = true);
               if (mounted) setState(() => _isRefreshable = false);
               _refreshController.refreshCompleted();
             },

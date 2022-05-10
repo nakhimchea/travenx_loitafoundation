@@ -26,8 +26,12 @@ class PostGallery extends StatefulWidget {
 class _PostGalleryState extends State<PostGallery> {
   List<XFile> _imagesFile = [];
 
-  void _imagePicker(XFile file, {bool isRemoved = false}) => setState(() {
-        !isRemoved ? _imagesFile.add(file) : _imagesFile.remove(file);
+  void _imagePicker(XFile file, {bool? isRemoved}) => setState(() {
+        isRemoved == null
+            ? _imagesFile.add(file)
+            : !isRemoved
+                ? _imagesFile = []
+                : _imagesFile.remove(file);
       });
 
   List<String> _imageUrls = [];
@@ -103,24 +107,35 @@ class _PostGalleryState extends State<PostGallery> {
               ),
               Visibility(
                 visible: _imageUrls.length != 0,
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Icon(
-                      CustomOutlinedIcons.new_icon,
-                      color: Theme.of(context).hintColor,
-                      size: 16,
-                    ),
-                    const SizedBox(width: 5.0),
-                    Text(
-                      'ចែករំលែករូបភាព',
-                      textScaleFactor: textScaleFactor,
-                      style: Theme.of(context)
-                          .textTheme
-                          .subtitle1!
-                          .copyWith(color: Theme.of(context).hintColor),
-                    ),
-                  ],
+                child: GestureDetector(
+                  onTap: () {
+                    showDialog(
+                      context: context,
+                      builder: (context) => _CustomDialog(
+                        postId: widget.currentPostId,
+                        refreshCallback: retrieveGallery,
+                      ),
+                    );
+                  },
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Icon(
+                        CustomOutlinedIcons.new_icon,
+                        color: Theme.of(context).hintColor,
+                        size: 16,
+                      ),
+                      const SizedBox(width: 5.0),
+                      Text(
+                        'ចែករំលែករូបភាព',
+                        textScaleFactor: textScaleFactor,
+                        style: Theme.of(context)
+                            .textTheme
+                            .subtitle1!
+                            .copyWith(color: Theme.of(context).hintColor),
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ],
@@ -183,13 +198,65 @@ class _PostGalleryState extends State<PostGallery> {
   }
 }
 
+class _CustomDialog extends StatefulWidget {
+  final String postId;
+  final void Function() refreshCallback;
+  const _CustomDialog({
+    Key? key,
+    required this.postId,
+    required this.refreshCallback,
+  }) : super(key: key);
+
+  @override
+  State<_CustomDialog> createState() => _CustomDialogState();
+}
+
+class _CustomDialogState extends State<_CustomDialog> {
+  List<XFile> _imagesFile = [];
+
+  void _imagePicker(XFile file, {bool? isRemoved}) => setState(() {
+        isRemoved == null
+            ? _imagesFile.add(file)
+            : !isRemoved
+                ? _imagesFile = []
+                : _imagesFile.remove(file);
+      });
+
+  @override
+  Widget build(BuildContext context) {
+    return Dialog(
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+      insetPadding: EdgeInsets.zero,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(15.0),
+      ),
+      child: Wrap(
+        children: [
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: kHPadding),
+            child: _PostGalleryPicker(
+              isDialog: true,
+              postId: widget.postId,
+              refreshCallback: widget.refreshCallback,
+              imagesFile: _imagesFile,
+              pickerCallback: _imagePicker,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
 class _PostGalleryPicker extends StatelessWidget {
+  final bool isDialog;
   final String postId;
   final void Function() refreshCallback;
   final List<XFile> imagesFile;
-  final void Function(XFile, {bool isRemoved}) pickerCallback;
+  final void Function(XFile, {bool? isRemoved}) pickerCallback;
   const _PostGalleryPicker({
     Key? key,
+    this.isDialog = false,
     required this.postId,
     required this.refreshCallback,
     required this.imagesFile,
@@ -337,7 +404,10 @@ class _PostGalleryPicker extends StatelessWidget {
                   backgroundColor: Theme.of(context).disabledColor,
                   label: 'បោះបង់',
                   textStyle: Theme.of(context).textTheme.bodyText1,
-                  onPressed: () {},
+                  onPressed: () {
+                    pickerCallback(XFile(''), isRemoved: false);
+                    if (isDialog) Navigator.pop(context);
+                  },
                 ),
               ),
               Container(
@@ -373,6 +443,7 @@ class _PostGalleryPicker extends StatelessWidget {
                     }
                     refreshCallback();
                     Navigator.pop(context);
+                    if (isDialog) Navigator.pop(context);
                   },
                 ),
               ),

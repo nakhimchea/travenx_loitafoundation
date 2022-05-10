@@ -96,9 +96,13 @@ class _AddPostState extends State<AddPost> {
             : _categoryTypes.remove(categoryType);
       });
 
-  void _imagePicker(XFile file, {bool isRemoved = false}) => setState(() {
+  void _imagePicker(XFile file, {bool? isRemoved}) => setState(() {
         _isImagePathHighlight = false;
-        !isRemoved ? _imagesFile.add(file) : _imagesFile.remove(file);
+        isRemoved == null
+            ? _imagesFile.add(file)
+            : !isRemoved
+                ? _imagesFile = []
+                : _imagesFile.remove(file);
       });
 
   void _changeOpenHour(DateTime dateTime) =>

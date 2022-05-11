@@ -295,9 +295,7 @@ class _ProvinceListState extends State<_ProvinceList> {
                       padding: const EdgeInsets.only(
                         left: kHPadding,
                         right: kHPadding,
-                        top: kIsWeb
-                            ? 5.0
-                            : 44.0,
+                        top: kIsWeb ? 5.0 : 44.0,
                         bottom: kVPadding,
                       ),
                       child: _ProvinceCover(

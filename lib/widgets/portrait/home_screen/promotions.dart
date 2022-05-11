@@ -15,7 +15,13 @@ import 'package:travenx_loitafoundation/screens/portrait/home_screen/post_detail
 import 'package:travenx_loitafoundation/services/firestore_service.dart';
 
 class Promotions extends StatefulWidget {
-  const Promotions({Key? key}) : super(key: key);
+  final bool needRefresh;
+  final void Function() callback;
+  const Promotions({
+    Key? key,
+    required this.needRefresh,
+    required this.callback,
+  }) : super(key: key);
 
   @override
   _PromotionsState createState() => _PromotionsState();
@@ -98,8 +104,24 @@ class _PromotionsState extends State<Promotions> {
     return _footer;
   }
 
+  void _reloadData() async {
+    postList = postTranslator(
+        await _firestoreService.getPromotionData(_lastDoc).then((snapshot) {
+      setState(() => snapshot.docs.isNotEmpty
+          ? _lastDoc = snapshot.docs.last
+          : _isLoadable = false);
+      return snapshot.docs;
+    }));
+  }
+
   @override
   Widget build(BuildContext context) {
+    if (widget.needRefresh) {
+      postList = [];
+      _lastDoc = null;
+      _reloadData();
+      widget.callback();
+    }
     return Container(
       height: MediaQuery.of(context).size.height / 3.15,
       child: SmartRefresher(

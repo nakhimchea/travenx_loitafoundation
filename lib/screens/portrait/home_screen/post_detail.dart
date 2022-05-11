@@ -241,104 +241,95 @@ class _PostDetailState extends State<PostDetail> {
         primary: false,
         physics: BouncingScrollPhysics(),
         slivers: [
-          SliverPadding(
-            padding: EdgeInsets.only(top: 44.0),
-            sliver: SliverToBoxAdapter(
-              child: PostCover(imageUrls: widget.post.imageUrls),
-            ),
-          ),
-          SliverPadding(
-            padding: EdgeInsets.only(
-              left: kHPadding,
-              right: kHPadding,
-              top: 25.0,
-            ),
-            sliver: SliverToBoxAdapter(
-              child: PostHeader(
-                title: widget.post.title,
-                ratings: widget.ratings,
-                views: widget.views,
-                price: widget.post.price,
-                state: widget.post.state,
-                country: widget.post.country,
-                openHours: widget.post.openHours,
-              ),
-            ),
-          ),
-          _weatherForecast != null
-              ? SliverPadding(
-                  padding: EdgeInsets.symmetric(horizontal: kHPadding),
-                  sliver: SliverToBoxAdapter(
-                    child: WeatherAlerts(
-                      forecast: _weatherForecast!.forecast,
-                      sunrise: _weatherForecast!.sunrise,
-                      sunset: _weatherForecast!.sunset,
+          SliverToBoxAdapter(
+            child: SingleChildScrollView(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Padding(
+                    padding: EdgeInsets.only(top: 44.0),
+                    child: PostCover(imageUrls: widget.post.imageUrls),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.only(
+                      left: kHPadding,
+                      right: kHPadding,
+                      top: 25.0,
+                    ),
+                    child: PostHeader(
+                      title: widget.post.title,
+                      ratings: widget.ratings,
+                      views: widget.views,
+                      price: widget.post.price,
+                      state: widget.post.state,
+                      country: widget.post.country,
+                      openHours: widget.post.openHours,
                     ),
                   ),
-                )
-              : SliverToBoxAdapter(child: SizedBox.shrink()),
-          widget.post.announcement != null && widget.post.announcement != ''
-              ? SliverPadding(
-                  padding: EdgeInsets.symmetric(
-                    horizontal: kHPadding,
-                    vertical: kVPadding,
-                  ),
-                  sliver: SliverToBoxAdapter(
-                    child: AnnouncementCard(
-                      announcement: widget.post.announcement!,
+                  _weatherForecast != null
+                      ? Padding(
+                          padding: EdgeInsets.symmetric(horizontal: kHPadding),
+                          child: WeatherAlerts(
+                            forecast: _weatherForecast!.forecast,
+                            sunrise: _weatherForecast!.sunrise,
+                            sunset: _weatherForecast!.sunset,
+                          ),
+                        )
+                      : const SizedBox.shrink(),
+                  widget.post.announcement != null &&
+                          widget.post.announcement != ''
+                      ? Padding(
+                          padding: EdgeInsets.symmetric(
+                            horizontal: kHPadding,
+                            vertical: kVPadding,
+                          ),
+                          child: AnnouncementCard(
+                            announcement: widget.post.announcement!,
+                          ),
+                        )
+                      : const SizedBox.shrink(),
+                  Padding(
+                    padding: EdgeInsets.symmetric(
+                      horizontal: kHPadding,
+                      vertical: kVPadding,
+                    ),
+                    child: BriefDescriptionCard(
+                      ratings: widget.ratings,
+                      views: widget.views,
+                      temperature: _weatherForecast == null
+                          ? 30
+                          : _weatherForecast!.temperature,
                     ),
                   ),
-                )
-              : SliverToBoxAdapter(child: SizedBox.shrink()),
-          SliverPadding(
-            padding: EdgeInsets.symmetric(
-              horizontal: kHPadding,
-              vertical: kVPadding,
-            ),
-            sliver: SliverToBoxAdapter(
-              child: BriefDescriptionCard(
-                ratings: widget.ratings,
-                views: widget.views,
-                temperature: _weatherForecast == null
-                    ? 30
-                    : _weatherForecast!.temperature,
+                  widget.post.activities.isNotEmpty
+                      ? Padding(
+                          padding:
+                              const EdgeInsets.symmetric(vertical: kVPadding),
+                          child: Activities(activities: widget.post.activities),
+                        )
+                      : const SizedBox.shrink(),
+                  widget.post.details != null &&
+                          widget.post.details!.textDetail != ''
+                      ? Padding(
+                          padding: EdgeInsets.symmetric(
+                            horizontal: kHPadding,
+                            vertical: kVPadding,
+                          ),
+                          child: PostDetails(details: widget.post.details!),
+                        )
+                      : const SizedBox.shrink(),
+                  widget.post.policies != null &&
+                          widget.post.policies!.isNotEmpty
+                      ? Policies(policies: widget.post.policies!)
+                      : const SizedBox.shrink(),
+                  PostGallery(currentPostId: widget.post.postId),
+                  PostRatings(currentPostId: widget.post.postId),
+                  PostNearbys(
+                    cityName: widget.post.state,
+                    currentPostId: widget.post.postId,
+                  ),
+                ],
               ),
-            ),
-          ),
-          widget.post.activities.isNotEmpty
-              ? SliverPadding(
-                  padding: const EdgeInsets.symmetric(vertical: kVPadding),
-                  sliver: SliverToBoxAdapter(
-                    child: Activities(activities: widget.post.activities),
-                  ),
-                )
-              : SliverToBoxAdapter(child: SizedBox.shrink()),
-          widget.post.details != null && widget.post.details!.textDetail != ''
-              ? SliverPadding(
-                  padding: EdgeInsets.symmetric(
-                    horizontal: kHPadding,
-                    vertical: kVPadding,
-                  ),
-                  sliver: SliverToBoxAdapter(
-                    child: PostDetails(details: widget.post.details!),
-                  ),
-                )
-              : SliverToBoxAdapter(child: SizedBox.shrink()),
-          widget.post.policies != null && widget.post.policies!.isNotEmpty
-              ? SliverToBoxAdapter(
-                  child: Policies(policies: widget.post.policies!),
-                )
-              : SliverToBoxAdapter(child: SizedBox.shrink()),
-          SliverToBoxAdapter(
-            child: PostGallery(currentPostId: widget.post.postId),
-          ),
-          SliverToBoxAdapter(
-            child: PostRatings(currentPostId: widget.post.postId),
-          ),
-          SliverToBoxAdapter(
-            child: PostNearbys(
-              cityName: widget.post.state,
-              currentPostId: widget.post.postId,
             ),
           ),
         ],

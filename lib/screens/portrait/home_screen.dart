@@ -72,37 +72,36 @@ class _HomeScreenState extends State<HomeScreen>
               ],
             ),
             SliverToBoxAdapter(
-              child: SearchBar(),
-            ),
-            SliverPadding(
-              padding: const EdgeInsets.symmetric(
-                horizontal: kHPadding,
-                vertical: kVPadding + 6.0,
+              child: SingleChildScrollView(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    SearchBar(),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: kHPadding,
+                        vertical: kVPadding + 6.0,
+                      ),
+                      child: IconsMenu(),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(
+                        top: 6.0,
+                        bottom: kVPadding,
+                      ),
+                      child: Promotions(),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: kHPadding,
+                        vertical: kVPadding,
+                      ),
+                      child: Provinces(),
+                    ),
+                    Nearbys(),
+                  ],
+                ),
               ),
-              sliver: SliverToBoxAdapter(
-                child: IconsMenu(),
-              ),
-            ),
-            SliverPadding(
-              padding: const EdgeInsets.only(
-                top: 6.0,
-                bottom: kVPadding,
-              ),
-              sliver: SliverToBoxAdapter(
-                child: Promotions(),
-              ),
-            ),
-            SliverPadding(
-              padding: const EdgeInsets.symmetric(
-                horizontal: kHPadding,
-                vertical: kVPadding,
-              ),
-              sliver: SliverToBoxAdapter(
-                child: Provinces(),
-              ),
-            ),
-            SliverToBoxAdapter(
-              child: Nearbys(),
             ),
             SliverPersistentHeader(
               pinned: true,

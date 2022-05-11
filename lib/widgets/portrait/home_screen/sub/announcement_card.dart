@@ -14,6 +14,7 @@ class AnnouncementCard extends StatelessWidget {
       onTap: () => print('សេចក្ដីជូនដំណឹង ReadMore Clicked...'),
       child: Container(
         height: MediaQuery.of(context).size.height / 5.58,
+        width: double.infinity,
         padding: const EdgeInsets.all(kHPadding),
         decoration: BoxDecoration(
           color: Theme.of(context).cardColor,
@@ -24,7 +25,6 @@ class AnnouncementCard extends StatelessWidget {
           primary: false,
           physics: BouncingScrollPhysics(),
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(

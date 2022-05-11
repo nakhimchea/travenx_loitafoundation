@@ -105,7 +105,7 @@ class _ProvinceRoutesState extends State<ProvinceRoutes> {
               ),
             ),
           ),
-          SliverPadding(padding: EdgeInsets.only(bottom: 14.0)),
+          const SliverPadding(padding: EdgeInsets.only(bottom: 14.0)),
         ],
       ),
     );
@@ -297,7 +297,7 @@ class _ProvinceListState extends State<_ProvinceList> {
                         right: kHPadding,
                         top: kIsWeb
                             ? 5.0
-                            : 44.0, //TODO: This according to devices
+                            : 44.0,
                         bottom: kVPadding,
                       ),
                       child: _ProvinceCover(
@@ -339,7 +339,7 @@ class _ProvinceListState extends State<_ProvinceList> {
             children: [
               Padding(
                 padding: const EdgeInsets.only(
-                  top: kIsWeb ? 5.0 : 44.0, //TODO: This according to devices
+                  top: kIsWeb ? 5.0 : 44.0,
                   bottom: kVPadding,
                 ),
                 child: _ProvinceCover(

@@ -337,127 +337,138 @@ class _AddPostState extends State<AddPost> {
           backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         ),
         SliverToBoxAdapter(
-          child: _state == 'denied'
-              ? kIsWeb
-                  ? Container(
-                      height: 40,
-                      color: Theme.of(context).disabledColor,
-                      child: ListView(
-                        physics: BouncingScrollPhysics(),
-                        scrollDirection: Axis.horizontal,
-                        children: [
-                          const SizedBox(width: kHPadding),
-                          Center(
-                            child: Icon(
-                              CustomFilledIcons.location,
-                              color: Theme.of(context).primaryIconTheme.color,
-                              size: 16,
+          child: SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                _state == 'denied'
+                    ? kIsWeb
+                        ? Container(
+                            height: 40,
+                            color: Theme.of(context).disabledColor,
+                            child: ListView(
+                              physics: BouncingScrollPhysics(),
+                              scrollDirection: Axis.horizontal,
+                              children: [
+                                const SizedBox(width: kHPadding),
+                                Center(
+                                  child: Icon(
+                                    CustomFilledIcons.location,
+                                    color: Theme.of(context)
+                                        .primaryIconTheme
+                                        .color,
+                                    size: 16,
+                                  ),
+                                ),
+                                const SizedBox(width: 5),
+                                Center(
+                                  child: Text(
+                                    'សេវាប្រាប់ទិសតំបន់ត្រូវបានបិទ។ ',
+                                    style: Theme.of(context).textTheme.button,
+                                  ),
+                                ),
+                                Center(
+                                  child: Text(
+                                    'ចុចលើនិមិត្តសញ្ញាទីតាំងខាងលើ ដើម្បីបើកឡើងវិញ!',
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .button!
+                                        .copyWith(
+                                            color: Theme.of(context).hintColor),
+                                  ),
+                                ),
+                                const SizedBox(width: kHPadding),
+                              ],
                             ),
-                          ),
-                          const SizedBox(width: 5),
-                          Center(
-                            child: Text(
-                              'សេវាប្រាប់ទិសតំបន់ត្រូវបានបិទ។ ',
-                              style: Theme.of(context).textTheme.button,
+                          )
+                        : TextButton(
+                            onPressed: () async {
+                              try {
+                                if (await GeolocatorService
+                                    .openLocationSettings()) {
+                                  if (await Geolocator
+                                      .isLocationServiceEnabled()) {
+                                    Future.delayed(Duration(milliseconds: 250))
+                                        .whenComplete(() => _setLocationCity());
+                                  } else
+                                    print(
+                                        'Location service is still disabled.');
+                                } else
+                                  print('Failed to open Location settings.');
+                              } catch (e) {
+                                print('Unknown Error: $e');
+                              }
+                            },
+                            style: ButtonStyle(
+                              padding:
+                                  MaterialStateProperty.all(EdgeInsets.zero),
                             ),
-                          ),
-                          Center(
-                            child: Text(
-                              'ចុចលើនិមិត្តសញ្ញាទីតាំងខាងលើ ដើម្បីបើកឡើងវិញ!',
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .button!
-                                  .copyWith(color: Theme.of(context).hintColor),
-                            ),
-                          ),
-                          const SizedBox(width: kHPadding),
-                        ],
-                      ),
-                    )
-                  : TextButton(
-                      onPressed: () async {
-                        try {
-                          if (await GeolocatorService.openLocationSettings()) {
-                            if (await Geolocator.isLocationServiceEnabled()) {
-                              Future.delayed(Duration(milliseconds: 250))
-                                  .whenComplete(() => _setLocationCity());
-                            } else
-                              print('Location service is still disabled.');
-                          } else
-                            print('Failed to open Location settings.');
-                        } catch (e) {
-                          print('Unknown Error: $e');
-                        }
-                      },
-                      style: ButtonStyle(
-                        padding: MaterialStateProperty.all(EdgeInsets.zero),
-                      ),
-                      child: Container(
-                        height: 40,
-                        color: Theme.of(context).disabledColor,
-                        child: ListView(
-                          primary: false,
-                          physics: BouncingScrollPhysics(),
-                          scrollDirection: Axis.horizontal,
-                          children: [
-                            const SizedBox(width: kHPadding),
-                            Center(
-                              child: Icon(
-                                CustomFilledIcons.location,
-                                color: Theme.of(context).primaryIconTheme.color,
-                                size: 16,
+                            child: Container(
+                              height: 40,
+                              color: Theme.of(context).disabledColor,
+                              child: ListView(
+                                primary: false,
+                                physics: BouncingScrollPhysics(),
+                                scrollDirection: Axis.horizontal,
+                                children: [
+                                  const SizedBox(width: kHPadding),
+                                  Center(
+                                    child: Icon(
+                                      CustomFilledIcons.location,
+                                      color: Theme.of(context)
+                                          .primaryIconTheme
+                                          .color,
+                                      size: 16,
+                                    ),
+                                  ),
+                                  const SizedBox(width: 5),
+                                  Center(
+                                    child: Text(
+                                      'សេវាប្រាប់ទិសតំបន់ត្រូវបានបិទ។ ',
+                                      style: Theme.of(context).textTheme.button,
+                                    ),
+                                  ),
+                                  Center(
+                                    child: Text(
+                                      'ចុចទីនេះដើម្បីបើកឡើងវិញ!',
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .button!
+                                          .copyWith(
+                                              color:
+                                                  Theme.of(context).hintColor),
+                                    ),
+                                  ),
+                                  const SizedBox(width: kHPadding),
+                                ],
                               ),
                             ),
-                            const SizedBox(width: 5),
-                            Center(
-                              child: Text(
-                                'សេវាប្រាប់ទិសតំបន់ត្រូវបានបិទ។ ',
-                                style: Theme.of(context).textTheme.button,
-                              ),
-                            ),
-                            Center(
-                              child: Text(
-                                'ចុចទីនេះដើម្បីបើកឡើងវិញ!',
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .button!
-                                    .copyWith(
-                                        color: Theme.of(context).hintColor),
-                              ),
-                            ),
-                            const SizedBox(width: kHPadding),
-                          ],
-                        ),
-                      ),
-                    )
-              : SizedBox.shrink(),
-        ),
-        SliverToBoxAdapter(child: const SizedBox(height: kHPadding)),
-        SliverPadding(
-          padding: const EdgeInsets.symmetric(horizontal: kHPadding),
-          sliver: SliverToBoxAdapter(
-            child: StepOneDescription(
-              isAgreementHighlight: _isAgreementHighlight,
-            ),
-          ),
-        ),
-        SliverPadding(
-          padding: EdgeInsets.symmetric(horizontal: kHPadding + 12.0),
-          sliver: SliverToBoxAdapter(
-            child: CustomDivider(
-              color: Theme.of(context).primaryColor,
-              dashWidth: 6,
-              dashHeight: 1,
-            ),
-          ),
-        ),
-        SliverPadding(
-          padding: const EdgeInsets.symmetric(horizontal: kHPadding),
-          sliver: SliverToBoxAdapter(
-            child: StepOneCheckedBox(
-              isAgreementHighlight: _isAgreementHighlight,
-              isChecked: _agreementChecked,
-              isCheckedCallback: _toggleCheckedBox,
+                          )
+                    : const SizedBox.shrink(),
+                const SizedBox(height: kHPadding),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: kHPadding),
+                  child: StepOneDescription(
+                    isAgreementHighlight: _isAgreementHighlight,
+                  ),
+                ),
+                Padding(
+                  padding: EdgeInsets.symmetric(horizontal: kHPadding + 12.0),
+                  child: CustomDivider(
+                    color: Theme.of(context).primaryColor,
+                    dashWidth: 6,
+                    dashHeight: 1,
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: kHPadding),
+                  child: StepOneCheckedBox(
+                    isAgreementHighlight: _isAgreementHighlight,
+                    isChecked: _agreementChecked,
+                    isCheckedCallback: _toggleCheckedBox,
+                  ),
+                ),
+              ],
             ),
           ),
         ),
@@ -473,59 +484,59 @@ class _AddPostState extends State<AddPost> {
           toolbarHeight: 56 + kHPadding,
           backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         ),
-        SliverToBoxAdapter(child: const SizedBox(height: kHPadding)),
-        SliverPadding(
-          padding: const EdgeInsets.symmetric(horizontal: kHPadding),
-          sliver: SliverToBoxAdapter(
-            child: StepTwoFields(
-              isTitleHighlight: _isTitleHighlight,
-              disableHighlight: _disableHighlight,
-              titleController: _titleController,
-              priceController: _priceController,
+        SliverToBoxAdapter(
+          child: SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const SizedBox(height: kHPadding),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: kHPadding),
+                  child: StepTwoFields(
+                    isTitleHighlight: _isTitleHighlight,
+                    disableHighlight: _disableHighlight,
+                    titleController: _titleController,
+                    priceController: _priceController,
+                  ),
+                ),
+                Padding(
+                  padding: EdgeInsets.symmetric(horizontal: kHPadding + 12.0),
+                  child: CustomDivider(
+                    color: Theme.of(context).primaryColor,
+                    dashWidth: 6,
+                    dashHeight: 1,
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: kHPadding),
+                  child: CategorySelection(
+                    isCategoryHighlight: _isCategoryHighlight,
+                    categories: _categoryTypes,
+                    categoryPickerCallback: _categoryPicker,
+                  ),
+                ),
+                Padding(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: kHPadding + 12.0),
+                  child: CustomDivider(
+                    color: Theme.of(context).primaryColor,
+                    dashWidth: 6,
+                    dashHeight: 1,
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: kHPadding),
+                  child: PostImagePicker(
+                    isImagePathHighlight: _isImagePathHighlight,
+                    imagesFile: _imagesFile,
+                    imagePickerCallback: _imagePicker,
+                  ),
+                ),
+                const SizedBox(height: 100)
+              ],
             ),
           ),
         ),
-        SliverPadding(
-          padding: EdgeInsets.symmetric(horizontal: kHPadding + 12.0),
-          sliver: SliverToBoxAdapter(
-            child: CustomDivider(
-              color: Theme.of(context).primaryColor,
-              dashWidth: 6,
-              dashHeight: 1,
-            ),
-          ),
-        ),
-        SliverPadding(
-          padding: const EdgeInsets.symmetric(horizontal: kHPadding),
-          sliver: SliverToBoxAdapter(
-            child: CategorySelection(
-              isCategoryHighlight: _isCategoryHighlight,
-              categories: _categoryTypes,
-              categoryPickerCallback: _categoryPicker,
-            ),
-          ),
-        ),
-        SliverPadding(
-          padding: EdgeInsets.symmetric(horizontal: kHPadding + 12.0),
-          sliver: SliverToBoxAdapter(
-            child: CustomDivider(
-              color: Theme.of(context).primaryColor,
-              dashWidth: 6,
-              dashHeight: 1,
-            ),
-          ),
-        ),
-        SliverPadding(
-          padding: const EdgeInsets.symmetric(horizontal: kHPadding),
-          sliver: SliverToBoxAdapter(
-            child: PostImagePicker(
-              isImagePathHighlight: _isImagePathHighlight,
-              imagesFile: _imagesFile,
-              imagePickerCallback: _imagePicker,
-            ),
-          ),
-        ),
-        SliverToBoxAdapter(child: const SizedBox(height: 100)),
       ];
     else if (currentStep == 2)
       return [
@@ -538,61 +549,60 @@ class _AddPostState extends State<AddPost> {
           toolbarHeight: 56 + kHPadding,
           backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         ),
-        SliverToBoxAdapter(child: const SizedBox(height: kHPadding)),
         SliverToBoxAdapter(
-          child: BusinessTime(
-            openEnabled: timeOpenEnabled,
-            openEnabledCallback: _toggleTimeOpen,
-            closeEnabled: timeCloseEnabled,
-            closeEnabledCallback: _toggleTimeClose,
-            openHour: _openHour,
-            openHourCallback: _changeOpenHour,
-            closeHour: _closeHour,
-            closeHourCallback: _changeCloseHour,
-          ),
-        ),
-        SliverPadding(
-          padding: EdgeInsets.symmetric(
-            horizontal:
-                Theme.of(context).colorScheme.brightness == Brightness.dark
-                    ? kHPadding
-                    : 0,
-          ),
-          sliver: SliverToBoxAdapter(
-            child: CustomDivider(
-              color: Theme.of(context).primaryColor.withOpacity(0.2),
-              dashWidth: 6,
-              dashHeight: 1,
+          child: SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const SizedBox(height: kHPadding),
+                BusinessTime(
+                  openEnabled: timeOpenEnabled,
+                  openEnabledCallback: _toggleTimeOpen,
+                  closeEnabled: timeCloseEnabled,
+                  closeEnabledCallback: _toggleTimeClose,
+                  openHour: _openHour,
+                  openHourCallback: _changeOpenHour,
+                  closeHour: _closeHour,
+                  closeHourCallback: _changeCloseHour,
+                ),
+                Padding(
+                  padding: EdgeInsets.symmetric(
+                    horizontal: Theme.of(context).colorScheme.brightness ==
+                            Brightness.dark
+                        ? kHPadding
+                        : 0,
+                  ),
+                  child: CustomDivider(
+                    color: Theme.of(context).primaryColor.withOpacity(0.2),
+                    dashWidth: 6,
+                    dashHeight: 1,
+                  ),
+                ),
+                ActivityPicker(
+                  activities: _activityTypes,
+                  activityPickerCallback: _activityPicker,
+                ),
+                Padding(
+                  padding: EdgeInsets.symmetric(
+                    horizontal: Theme.of(context).colorScheme.brightness ==
+                            Brightness.dark
+                        ? kHPadding
+                        : 0,
+                  ),
+                  child: CustomDivider(
+                    color: Theme.of(context).primaryColor.withOpacity(0.2),
+                    dashWidth: 6,
+                    dashHeight: 1,
+                  ),
+                ),
+                StepThreeFields(
+                  policyControllers: _policyControllers,
+                  detailsController: _detailsController,
+                  policiesCallback: _changePolicyControllers,
+                  announcementController: _announcementController,
+                ),
+              ],
             ),
-          ),
-        ),
-        SliverToBoxAdapter(
-          child: ActivityPicker(
-            activities: _activityTypes,
-            activityPickerCallback: _activityPicker,
-          ),
-        ),
-        SliverPadding(
-          padding: EdgeInsets.symmetric(
-            horizontal:
-                Theme.of(context).colorScheme.brightness == Brightness.dark
-                    ? kHPadding
-                    : 0,
-          ),
-          sliver: SliverToBoxAdapter(
-            child: CustomDivider(
-              color: Theme.of(context).primaryColor.withOpacity(0.2),
-              dashWidth: 6,
-              dashHeight: 1,
-            ),
-          ),
-        ),
-        SliverToBoxAdapter(
-          child: StepThreeFields(
-            policyControllers: _policyControllers,
-            detailsController: _detailsController,
-            policiesCallback: _changePolicyControllers,
-            announcementController: _announcementController,
           ),
         ),
       ];
@@ -678,96 +688,90 @@ class _AddPostState extends State<AddPost> {
           toolbarHeight: 56 + kHPadding,
           backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         ),
-        SliverToBoxAdapter(child: const SizedBox(height: kHPadding)),
         SliverToBoxAdapter(
-          child: AddPostCover(imagesFile: _imagesFile),
-        ),
-        SliverPadding(
-          padding: EdgeInsets.only(
-            left: kHPadding,
-            right: kHPadding,
-            top: 25.0,
-          ),
-          sliver: SliverToBoxAdapter(
-            child: PostHeader(
-              title: _title,
-              ratings: 5.0,
-              views: 999,
-              price: _price,
-              state: _state,
-              country: _country,
-              openHours: _openHours,
+          child: SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const SizedBox(height: kHPadding),
+                AddPostCover(imagesFile: _imagesFile),
+                Padding(
+                  padding: const EdgeInsets.only(
+                    left: kHPadding,
+                    right: kHPadding,
+                    top: 25.0,
+                  ),
+                  child: PostHeader(
+                    title: _title,
+                    ratings: 5.0,
+                    views: 999,
+                    price: _price,
+                    state: _state,
+                    country: _country,
+                    openHours: _openHours,
+                  ),
+                ),
+                _weatherForecast != null
+                    ? Padding(
+                        padding: EdgeInsets.symmetric(horizontal: kHPadding),
+                        child: WeatherAlerts(
+                          forecast: _weatherForecast!.forecast,
+                          sunrise: _weatherForecast!.sunrise,
+                          sunset: _weatherForecast!.sunset,
+                        ),
+                      )
+                    : const SizedBox.shrink(),
+                _announcement != ''
+                    ? Padding(
+                        padding: EdgeInsets.symmetric(
+                          horizontal: kHPadding,
+                          vertical: kVPadding,
+                        ),
+                        child: AnnouncementCard(
+                          announcement: _announcement,
+                        ),
+                      )
+                    : const SizedBox.shrink(),
+                Padding(
+                  padding: EdgeInsets.symmetric(
+                    horizontal: kHPadding,
+                    vertical: kVPadding,
+                  ),
+                  child: BriefDescriptionCard(
+                    ratings: 5.0,
+                    views: 999,
+                    temperature: 30,
+                  ),
+                ),
+                _activities.isNotEmpty
+                    ? Padding(
+                        padding:
+                            const EdgeInsets.symmetric(vertical: kVPadding),
+                        child: Activities(activities: _activities),
+                      )
+                    : const SizedBox.shrink(),
+                _details.textDetail != ''
+                    ? Padding(
+                        padding: EdgeInsets.symmetric(
+                          horizontal: kHPadding,
+                          vertical: kVPadding,
+                        ),
+                        child: PostDetails(
+                          details: Details(
+                            textDetail: _details.textDetail,
+                            mapImageUrl: _details.mapImageUrl,
+                          ),
+                        ),
+                      )
+                    : const SizedBox.shrink(),
+                _policies.isNotEmpty
+                    ? Policies(policies: _policies)
+                    : const SizedBox.shrink(),
+                const SizedBox(height: 70)
+              ],
             ),
           ),
         ),
-        _weatherForecast != null
-            ? SliverPadding(
-                padding: EdgeInsets.symmetric(horizontal: kHPadding),
-                sliver: SliverToBoxAdapter(
-                  child: WeatherAlerts(
-                    forecast: _weatherForecast!.forecast,
-                    sunrise: _weatherForecast!.sunrise,
-                    sunset: _weatherForecast!.sunset,
-                  ),
-                ),
-              )
-            : SliverToBoxAdapter(child: SizedBox.shrink()),
-        _announcement != ''
-            ? SliverPadding(
-                padding: EdgeInsets.symmetric(
-                  horizontal: kHPadding,
-                  vertical: kVPadding,
-                ),
-                sliver: SliverToBoxAdapter(
-                  child: AnnouncementCard(
-                    announcement: _announcement,
-                  ),
-                ),
-              )
-            : SliverToBoxAdapter(child: SizedBox.shrink()),
-        SliverPadding(
-          padding: EdgeInsets.symmetric(
-            horizontal: kHPadding,
-            vertical: kVPadding,
-          ),
-          sliver: SliverToBoxAdapter(
-            child: BriefDescriptionCard(
-              ratings: 5.0,
-              views: 999,
-              temperature: 30,
-            ),
-          ),
-        ),
-        _activities.isNotEmpty
-            ? SliverPadding(
-                padding: const EdgeInsets.symmetric(vertical: kVPadding),
-                sliver: SliverToBoxAdapter(
-                  child: Activities(activities: _activities),
-                ),
-              )
-            : SliverToBoxAdapter(child: SizedBox.shrink()),
-        _details.textDetail != ''
-            ? SliverPadding(
-                padding: EdgeInsets.symmetric(
-                  horizontal: kHPadding,
-                  vertical: kVPadding,
-                ),
-                sliver: SliverToBoxAdapter(
-                  child: PostDetails(
-                    details: Details(
-                      textDetail: _details.textDetail,
-                      mapImageUrl: _details.mapImageUrl,
-                    ),
-                  ),
-                ),
-              )
-            : SliverToBoxAdapter(child: SizedBox.shrink()),
-        _policies.isNotEmpty
-            ? SliverToBoxAdapter(
-                child: Policies(policies: _policies),
-              )
-            : SliverToBoxAdapter(child: SizedBox.shrink()),
-        SliverToBoxAdapter(child: SizedBox(height: 70)),
       ];
     } else
       return [];

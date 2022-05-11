@@ -77,24 +77,35 @@ class _PostRatingsState extends State<PostRatings> {
               ),
               Visibility(
                 visible: _ratings.isNotEmpty,
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Icon(
-                      CustomOutlinedIcons.new_icon,
-                      color: Theme.of(context).hintColor,
-                      size: 16,
-                    ),
-                    const SizedBox(width: 5.0),
-                    Text(
-                      'ដាក់វាយតម្លៃ',
-                      textScaleFactor: textScaleFactor,
-                      style: Theme.of(context)
-                          .textTheme
-                          .subtitle1!
-                          .copyWith(color: Theme.of(context).hintColor),
-                    ),
-                  ],
+                child: GestureDetector(
+                  onTap: () {
+                    showDialog(
+                      context: context,
+                      builder: (context) => _CustomDialog(
+                        postId: widget.currentPostId,
+                        refreshCallback: getRatings,
+                      ),
+                    );
+                  },
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Icon(
+                        CustomOutlinedIcons.new_icon,
+                        color: Theme.of(context).hintColor,
+                        size: 16,
+                      ),
+                      const SizedBox(width: 5.0),
+                      Text(
+                        'ដាក់វាយតម្លៃ',
+                        textScaleFactor: textScaleFactor,
+                        style: Theme.of(context)
+                            .textTheme
+                            .subtitle1!
+                            .copyWith(color: Theme.of(context).hintColor),
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ],
@@ -157,11 +168,46 @@ class _PostRatingsState extends State<PostRatings> {
   }
 }
 
+class _CustomDialog extends StatelessWidget {
+  final String postId;
+  final void Function() refreshCallback;
+  const _CustomDialog({
+    Key? key,
+    required this.postId,
+    required this.refreshCallback,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Dialog(
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+      insetPadding: EdgeInsets.zero,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(15.0),
+      ),
+      child: Wrap(
+        children: [
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: kHPadding),
+            child: PostRatingFields(
+              isDialog: true,
+              currentPostId: postId,
+              refreshCallback: refreshCallback,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
 class PostRatingFields extends StatefulWidget {
+  final bool isDialog;
   final void Function() refreshCallback;
   final String currentPostId;
   const PostRatingFields({
     Key? key,
+    this.isDialog = false,
     required this.refreshCallback,
     required this.currentPostId,
   }) : super(key: key);
@@ -255,6 +301,7 @@ class _PostRatingFieldsState extends State<PostRatingFields> {
                   onPressed: () {
                     _updateRatings(0);
                     _commentController.clear();
+                    if (widget.isDialog) Navigator.pop(context);
                   },
                 ),
               ),
@@ -285,6 +332,7 @@ class _PostRatingFieldsState extends State<PostRatingFields> {
                     _commentController.clear();
                     widget.refreshCallback();
                     Navigator.pop(context);
+                    if (widget.isDialog) Navigator.pop(context);
                   },
                 ),
               ),

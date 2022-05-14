@@ -46,7 +46,8 @@ class MyApp extends StatelessWidget {
         return MaterialApp(
           debugShowCheckedModeBanner: false,
           title: 'Travenx',
-          locale: Locale.fromSubtags(languageCode: 'km'), //TODO: Change this to variable
+          locale: Locale.fromSubtags(
+              languageCode: 'km'), //TODO: Change this to variable
           localizationsDelegates: [
             AppLocalizations.delegate,
             GlobalMaterialLocalizations.delegate,

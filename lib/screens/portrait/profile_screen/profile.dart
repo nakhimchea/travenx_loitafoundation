@@ -37,7 +37,10 @@ class _ProfileState extends State<Profile> {
 
   @override
   Widget build(BuildContext context) {
-    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.dark);
+    SystemChrome.setSystemUIOverlayStyle(
+        Theme.of(context).colorScheme.brightness == Brightness.dark
+            ? SystemUiOverlayStyle.light
+            : SystemUiOverlayStyle.dark);
     return Scaffold(
       body: CustomScrollView(
         primary: false,
@@ -67,8 +70,8 @@ class _ProfileState extends State<Profile> {
                             )
                           : widget.loggedInCallback(),
                       child: Container(
-                        margin: EdgeInsets.symmetric(vertical: 4.0),
-                        padding: EdgeInsets.symmetric(vertical: 15.0),
+                        margin: const EdgeInsets.symmetric(vertical: 4.0),
+                        padding: const EdgeInsets.symmetric(vertical: 15.0),
                         decoration: BoxDecoration(
                           color: Theme.of(context).primaryColor,
                           borderRadius: BorderRadius.circular(30.0),
@@ -81,7 +84,7 @@ class _ProfileState extends State<Profile> {
                               color: Colors.white,
                               size: 20.0,
                             ),
-                            SizedBox(width: kHPadding),
+                            const SizedBox(width: kHPadding),
                             Text(
                               'បង្ហោះទីតាំង ឬអាជីវកម្ម',
                               textScaleFactor: textScaleFactor,
@@ -174,7 +177,7 @@ class _ProfileState extends State<Profile> {
                             )
                           ],
                         ),
-                        SizedBox(height: 15.0),
+                        const SizedBox(height: 15.0),
                         ProfileCategory(
                           icon: Icon(
                             CustomOutlinedIcons.setting,
@@ -247,7 +250,7 @@ class _ProfileState extends State<Profile> {
                             )
                           ],
                         ),
-                        SizedBox(height: 15.0),
+                        const SizedBox(height: 15.0),
                         ProfileCategory(
                           icon: Icon(
                             CustomFilledIcons.star,
@@ -266,9 +269,9 @@ class _ProfileState extends State<Profile> {
                           title: 'ចែករំលែកកម្មវិធី',
                           trailing: [],
                         ),
-                        SizedBox(height: 15.0),
+                        const SizedBox(height: 15.0),
                         ProfileCategory(
-                          icon: Icon(
+                          icon: const Icon(
                             CustomOutlinedIcons.logout,
                             color: Color(0xFFC23616),
                             size: 20.0,
@@ -291,7 +294,7 @@ class _ProfileState extends State<Profile> {
                             }
                           },
                         ),
-                        SizedBox(height: 15.0),
+                        const SizedBox(height: 15.0),
                         Text(
                           'កម្មវិធីជំនាន់ទី ១.០',
                           textScaleFactor: textScaleFactor,

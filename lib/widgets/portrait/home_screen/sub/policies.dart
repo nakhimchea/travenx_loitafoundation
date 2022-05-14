@@ -25,7 +25,7 @@ class Policies extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.symmetric(
+      padding: const EdgeInsets.symmetric(
         horizontal: kHPadding,
         vertical: kVPadding,
       ),

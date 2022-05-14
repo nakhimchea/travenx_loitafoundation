@@ -26,13 +26,13 @@ class Activities extends StatelessWidget {
         Container(
           height: MediaQuery.of(context).size.height / 7.8 + 55.0,
           child: ListView.builder(
-            physics: BouncingScrollPhysics(),
+            physics: const BouncingScrollPhysics(),
             itemCount: activities.length,
             scrollDirection: Axis.horizontal,
             itemBuilder: (BuildContext context, int index) {
               if (index == 0)
                 return Padding(
-                  padding: EdgeInsets.only(left: kHPadding),
+                  padding: const EdgeInsets.only(left: kHPadding),
                   child: _ActivityCard(
                       activity: activities[index], hPadding: _hPadding),
                 );
@@ -79,7 +79,7 @@ class _ActivityCard extends StatelessWidget {
                     Theme.of(context).colorScheme.brightness == Brightness.light
                         ? Colors.white
                         : Theme.of(context).primaryIconTheme.color,
-                borderRadius: BorderRadius.only(
+                borderRadius: const BorderRadius.only(
                   topLeft: Radius.circular(15.0),
                   topRight: Radius.circular(15.0),
                 ),
@@ -92,7 +92,7 @@ class _ActivityCard extends StatelessWidget {
               width: MediaQuery.of(context).size.width / 2.5,
               decoration: BoxDecoration(
                 color: Theme.of(context).disabledColor,
-                borderRadius: BorderRadius.only(
+                borderRadius: const BorderRadius.only(
                   bottomLeft: Radius.circular(15.0),
                   bottomRight: Radius.circular(15.0),
                 ),

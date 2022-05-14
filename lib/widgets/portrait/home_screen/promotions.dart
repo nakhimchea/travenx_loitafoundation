@@ -41,7 +41,7 @@ class _PromotionsState extends State<Promotions> {
     return ListView.builder(
       itemCount: postList.length,
       scrollDirection: Axis.horizontal,
-      physics: BouncingScrollPhysics(),
+      physics: const BouncingScrollPhysics(),
       itemBuilder: (BuildContext context, int index) {
         if (index == 0)
           return Padding(
@@ -59,7 +59,7 @@ class _PromotionsState extends State<Promotions> {
     );
   }
 
-  Widget loadingBuilder(BuildContext context, LoadStatus? mode) {
+  Widget _loadingBuilder(BuildContext context, LoadStatus? mode) {
     Widget _footer;
 
     if (mode == LoadStatus.idle)
@@ -126,14 +126,14 @@ class _PromotionsState extends State<Promotions> {
       height: MediaQuery.of(context).size.height / 3.15,
       child: SmartRefresher(
         controller: _refreshController,
-        physics: BouncingScrollPhysics(),
+        physics: const BouncingScrollPhysics(),
         enablePullDown: _isRefreshable,
         enablePullUp: _isLoadable,
         child: _buildList(),
-        header: CustomHeader(builder: (_, __) => SizedBox.shrink()),
+        header: CustomHeader(builder: (_, __) => const SizedBox.shrink()),
         footer: CustomFooter(
           loadStyle: LoadStyle.ShowWhenLoading,
-          builder: loadingBuilder,
+          builder: _loadingBuilder,
         ),
         onRefresh: () async {
           postList = postTranslator(await _firestoreService

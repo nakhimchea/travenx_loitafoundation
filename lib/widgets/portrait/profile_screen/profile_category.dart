@@ -24,8 +24,9 @@ class ProfileCategory extends StatelessWidget {
     return GestureDetector(
       onTap: onTap,
       child: Container(
-        margin: EdgeInsets.symmetric(vertical: 4.0),
-        padding: EdgeInsets.symmetric(horizontal: kHPadding, vertical: 15.0),
+        margin: const EdgeInsets.symmetric(vertical: 4.0),
+        padding:
+            const EdgeInsets.symmetric(horizontal: kHPadding, vertical: 15.0),
         alignment: Alignment.centerLeft,
         decoration: BoxDecoration(
           color: Theme.of(context).bottomAppBarColor,
@@ -35,7 +36,7 @@ class ProfileCategory extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             icon,
-            SizedBox(width: kHPadding),
+            const SizedBox(width: kHPadding),
             Text(
               title,
               textScaleFactor: textScaleFactor,

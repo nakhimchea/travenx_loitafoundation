@@ -23,7 +23,7 @@ class Loading extends StatelessWidget {
                   color: color != null ? color : Theme.of(context).cardColor),
             ),
           ],
-          pause: Duration(milliseconds: 200),
+          pause: const Duration(milliseconds: 200),
           totalRepeatCount: 50,
         ),
       ],

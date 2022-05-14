@@ -201,7 +201,7 @@ class _LoginTextFieldState extends State<LoginTextField> {
                                       ),
                                     ],
                                   )
-                                : SizedBox.shrink(),
+                                : const SizedBox.shrink(),
                           ],
                         ),
                       ),

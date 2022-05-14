@@ -106,7 +106,7 @@ class ShortProfile extends StatelessWidget {
             ],
           ),
           Padding(
-            padding: EdgeInsets.symmetric(
+            padding: const EdgeInsets.symmetric(
               horizontal: kHPadding,
               vertical: kHPadding,
             ),
@@ -117,7 +117,7 @@ class ShortProfile extends StatelessWidget {
                   textScaleFactor: textScaleFactor,
                   style: Theme.of(context).textTheme.headline2,
                 ),
-                SizedBox(height: 5.0),
+                const SizedBox(height: 5.0),
                 Text(
                   phoneNumber != '' ? phoneNumber : _anonymous.phoneNumber,
                   textScaleFactor: textScaleFactor,

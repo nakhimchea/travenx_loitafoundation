@@ -73,7 +73,7 @@ class _WalletScreenState extends State<WalletScreen> {
                           children: [
                             Text(
                               'Total balance',
-                              style: TextStyle(fontSize: 16),
+                              style: const TextStyle(fontSize: 16),
                             ),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.center,
@@ -108,7 +108,7 @@ class _WalletScreenState extends State<WalletScreen> {
                                     size: 15,
                                     color: Theme.of(context).primaryColor,
                                   ),
-                                  SizedBox(width: 5),
+                                  const SizedBox(width: 5),
                                   Text(
                                     'Receive',
                                     style: TextStyle(
@@ -125,7 +125,7 @@ class _WalletScreenState extends State<WalletScreen> {
                     ),
                   ),
                   SliverPadding(
-                    padding: EdgeInsets.symmetric(horizontal: kHPadding),
+                    padding: const EdgeInsets.symmetric(horizontal: kHPadding),
                     sliver: SliverToBoxAdapter(
                       child: Column(
                         children: [
@@ -206,7 +206,7 @@ class _HistoryCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.symmetric(vertical: 5.0),
+      padding: const EdgeInsets.symmetric(vertical: 5.0),
       child: Container(
         height: 80,
         width: double.infinity,
@@ -217,7 +217,7 @@ class _HistoryCard extends StatelessWidget {
         child: Center(
           child: Text(
             'ថ្ងៃទី ២១ ខែ ៧ ឆ្នាំ ២០២២ បានចំណាយប្រាក់            ចំនួន \$0.05',
-            style: TextStyle(fontSize: 14),
+            style: const TextStyle(fontSize: 14),
           ),
         ),
       ),

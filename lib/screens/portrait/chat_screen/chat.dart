@@ -113,7 +113,7 @@ class _ChatState extends State<Chat> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            MessageStreamer(
+            _MessageStreamer(
               userId: widget.userId,
               userDisplayName: widget.userDisplayName,
               userProfileUrl: widget.userProfileUrl,
@@ -122,7 +122,7 @@ class _ChatState extends State<Chat> {
               withDisplayName: widget.withDisplayName,
               withProfileUrl: widget.withProfileUrl,
             ),
-            MessageSender(
+            _MessageSender(
               userId: widget.userId,
               withUserId: widget.withUserId,
               postId: widget.postId,
@@ -136,7 +136,7 @@ class _ChatState extends State<Chat> {
   }
 }
 
-class MessageStreamer extends StatelessWidget {
+class _MessageStreamer extends StatelessWidget {
   final String userId;
   final String userDisplayName;
   final String userProfileUrl;
@@ -144,7 +144,7 @@ class MessageStreamer extends StatelessWidget {
   final String withUserId;
   final String withDisplayName;
   final String withProfileUrl;
-  const MessageStreamer({
+  const _MessageStreamer({
     Key? key,
     required this.userId,
     required this.userDisplayName,
@@ -162,10 +162,10 @@ class MessageStreamer extends StatelessWidget {
       builder: (BuildContext context,
           AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>> snapshot) {
         if (!snapshot.hasData)
-          return Center(child: CircularProgressIndicator.adaptive());
+          return const Center(child: CircularProgressIndicator.adaptive());
 
         final _messages = snapshot.data!.docs;
-        List<MessageBubble> _messageBubbles = [];
+        List<_MessageBubble> _messageBubbles = [];
         for (var _message in _messages) {
           final senderUid = _message.get('senderUid');
           final senderName = _message.get('senderName');
@@ -175,7 +175,7 @@ class MessageStreamer extends StatelessWidget {
           final dateTime = DateTime.fromMillisecondsSinceEpoch(
               int.parse(_message.get('dateTime').toString()));
 
-          _messageBubbles.add(MessageBubble(
+          _messageBubbles.add(_MessageBubble(
             senderName: senderName,
             senderProfileUrl: senderProfileUrl,
             message: message,
@@ -187,9 +187,10 @@ class MessageStreamer extends StatelessWidget {
 
         return Expanded(
           child: ListView(
-            physics: BouncingScrollPhysics(),
+            physics: const BouncingScrollPhysics(),
             reverse: true,
-            padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 20.0),
+            padding:
+                const EdgeInsets.symmetric(horizontal: 10.0, vertical: 20.0),
             children: _messageBubbles,
           ),
         );
@@ -198,7 +199,7 @@ class MessageStreamer extends StatelessWidget {
   }
 }
 
-class MessageBubble extends StatelessWidget {
+class _MessageBubble extends StatelessWidget {
   final String senderName;
   final String senderProfileUrl;
   final String message;
@@ -206,7 +207,7 @@ class MessageBubble extends StatelessWidget {
   final DateTime dateTime;
   final bool isMe;
 
-  const MessageBubble({
+  const _MessageBubble({
     Key? key,
     required this.senderName,
     required this.senderProfileUrl,
@@ -219,7 +220,7 @@ class MessageBubble extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.all(10.0),
+      padding: const EdgeInsets.all(10.0),
       child: Column(
         crossAxisAlignment:
             isMe ? CrossAxisAlignment.end : CrossAxisAlignment.start,
@@ -230,11 +231,11 @@ class MessageBubble extends StatelessWidget {
           ),
           Material(
             borderRadius: isMe
-                ? BorderRadius.only(
+                ? const BorderRadius.only(
                     topLeft: Radius.circular(30.0),
                     bottomLeft: Radius.circular(30.0),
                     topRight: Radius.circular(30.0))
-                : BorderRadius.only(
+                : const BorderRadius.only(
                     bottomLeft: Radius.circular(30.0),
                     bottomRight: Radius.circular(30.0),
                     topRight: Radius.circular(30.0),
@@ -243,7 +244,8 @@ class MessageBubble extends StatelessWidget {
                 ? Theme.of(context).primaryColor.withOpacity(0.7)
                 : Colors.white,
             child: Padding(
-              padding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0),
+              padding:
+                  const EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0),
               child: Text(
                 message,
                 style: TextStyle(
@@ -259,14 +261,14 @@ class MessageBubble extends StatelessWidget {
   }
 }
 
-class MessageSender extends StatefulWidget {
+class _MessageSender extends StatefulWidget {
   final String userId;
   final String withUserId;
   final String postId;
   final String currentUserDisplayName;
   final String currentUserProfileUrl;
 
-  const MessageSender({
+  const _MessageSender({
     Key? key,
     required this.userId,
     required this.withUserId,
@@ -279,7 +281,7 @@ class MessageSender extends StatefulWidget {
   _MessageSenderState createState() => _MessageSenderState();
 }
 
-class _MessageSenderState extends State<MessageSender> {
+class _MessageSenderState extends State<_MessageSender> {
   final TextEditingController _sendingMessageController =
       TextEditingController();
 
@@ -315,24 +317,24 @@ class _MessageSenderState extends State<MessageSender> {
                 contentPadding:
                     const EdgeInsets.symmetric(horizontal: kHPadding),
                 border: OutlineInputBorder(
-                  borderRadius: BorderRadius.all(Radius.circular(30.0)),
+                  borderRadius: const BorderRadius.all(Radius.circular(30.0)),
                 ),
                 disabledBorder: OutlineInputBorder(
                   borderSide: BorderSide(
                       color: Theme.of(context).primaryIconTheme.color!,
                       width: 1.0),
-                  borderRadius: BorderRadius.all(Radius.circular(30.0)),
+                  borderRadius: const BorderRadius.all(Radius.circular(30.0)),
                 ),
                 enabledBorder: OutlineInputBorder(
                   borderSide: BorderSide(
                       color: Theme.of(context).primaryIconTheme.color!,
                       width: 1.0),
-                  borderRadius: BorderRadius.all(Radius.circular(30.0)),
+                  borderRadius: const BorderRadius.all(Radius.circular(30.0)),
                 ),
                 focusedBorder: OutlineInputBorder(
                   borderSide: BorderSide(
                       color: Theme.of(context).primaryColor, width: 1.0),
-                  borderRadius: BorderRadius.all(Radius.circular(30.0)),
+                  borderRadius: const BorderRadius.all(Radius.circular(30.0)),
                 ),
               ),
             ),
@@ -373,7 +375,7 @@ class _MessageSenderState extends State<MessageSender> {
                         : Theme.of(context).primaryColor,
                   ),
                 )
-              : SizedBox.shrink(),
+              : const SizedBox.shrink(),
         ],
       ),
     );

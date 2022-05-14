@@ -114,13 +114,13 @@ class _PostRatingsState extends State<PostRatings> {
         _ratings.isEmpty
             ? Padding(
                 padding: const EdgeInsets.only(bottom: kVPadding),
-                child: PostRatingFields(
+                child: _PostRatingFields(
                     refreshCallback: getRatings,
                     currentPostId: widget.currentPostId),
               )
             : Column(
                 children: [
-                  RatingCard(
+                  _RatingCard(
                       profileUrl: _profileUrls.first,
                       displayName: _displayNames.first,
                       rating: _ratings.first,
@@ -133,7 +133,7 @@ class _PostRatingsState extends State<PostRatings> {
                           _expressions.isEmpty ? 0 : _expressions.first.last),
                   SizedBox(height: _ratings.length != 1 ? _vPadding : 0),
                   _ratings.length != 1
-                      ? RatingCard(
+                      ? _RatingCard(
                           profileUrl: _profileUrls.last,
                           displayName: _displayNames.last,
                           rating: _ratings.last,
@@ -189,7 +189,7 @@ class _CustomDialog extends StatelessWidget {
         children: [
           Padding(
             padding: const EdgeInsets.symmetric(vertical: kHPadding),
-            child: PostRatingFields(
+            child: _PostRatingFields(
               isDialog: true,
               currentPostId: postId,
               refreshCallback: refreshCallback,
@@ -201,11 +201,11 @@ class _CustomDialog extends StatelessWidget {
   }
 }
 
-class PostRatingFields extends StatefulWidget {
+class _PostRatingFields extends StatefulWidget {
   final bool isDialog;
   final void Function() refreshCallback;
   final String currentPostId;
-  const PostRatingFields({
+  const _PostRatingFields({
     Key? key,
     this.isDialog = false,
     required this.refreshCallback,
@@ -213,10 +213,10 @@ class PostRatingFields extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  State<PostRatingFields> createState() => _PostRatingFieldsState();
+  State<_PostRatingFields> createState() => _PostRatingFieldsState();
 }
 
-class _PostRatingFieldsState extends State<PostRatingFields> {
+class _PostRatingFieldsState extends State<_PostRatingFields> {
   TextEditingController _commentController = TextEditingController();
 
   int currentRatings = 0;
@@ -226,7 +226,7 @@ class _PostRatingFieldsState extends State<PostRatingFields> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.symmetric(horizontal: kHPadding),
+      margin: const EdgeInsets.symmetric(horizontal: kHPadding),
       padding: const EdgeInsets.symmetric(
           horizontal: kHPadding, vertical: kHPadding),
       decoration: BoxDecoration(
@@ -247,7 +247,7 @@ class _PostRatingFieldsState extends State<PostRatingFields> {
             style: Theme.of(context).textTheme.bodyText1,
           ),
           const SizedBox(height: kVPadding),
-          RateButton(
+          _RateButton(
               currentRatings: currentRatings, ratingCallback: _updateRatings),
           const SizedBox(height: kVPadding),
           TextField(
@@ -344,10 +344,10 @@ class _PostRatingFieldsState extends State<PostRatingFields> {
   }
 }
 
-class RateButton extends StatelessWidget {
+class _RateButton extends StatelessWidget {
   final int currentRatings;
   final void Function(int) ratingCallback;
-  const RateButton({
+  const _RateButton({
     Key? key,
     required this.currentRatings,
     required this.ratingCallback,
@@ -388,7 +388,7 @@ class RateButton extends StatelessWidget {
   }
 }
 
-class RatingCard extends StatelessWidget {
+class _RatingCard extends StatelessWidget {
   final String profileUrl;
   final String displayName;
   final int rating;
@@ -397,7 +397,7 @@ class RatingCard extends StatelessWidget {
   final List<String> imageUrls;
   final int likes;
   final int dislikes;
-  const RatingCard({
+  const _RatingCard({
     Key? key,
     required this.profileUrl,
     required this.displayName,
@@ -412,7 +412,7 @@ class RatingCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.symmetric(horizontal: kHPadding),
+      margin: const EdgeInsets.symmetric(horizontal: kHPadding),
       padding: const EdgeInsets.symmetric(
           horizontal: kHPadding, vertical: kHPadding),
       decoration: BoxDecoration(
@@ -516,13 +516,13 @@ class RatingCard extends StatelessWidget {
           SizedBox(height: comment == '' ? 0 : kVPadding),
           Row(
             children: [
-              ExpressionButton(
+              _ExpressionButton(
                 number: likes,
                 isLikeButton: true,
                 isClicked: true,
               ),
               const SizedBox(width: kHPadding),
-              ExpressionButton(
+              _ExpressionButton(
                 number: dislikes,
                 isLikeButton: false,
                 isClicked: false,
@@ -535,11 +535,11 @@ class RatingCard extends StatelessWidget {
   }
 }
 
-class ExpressionButton extends StatelessWidget {
+class _ExpressionButton extends StatelessWidget {
   final int number;
   final bool isLikeButton;
   final bool isClicked;
-  const ExpressionButton({
+  const _ExpressionButton({
     Key? key,
     required this.number,
     required this.isLikeButton,

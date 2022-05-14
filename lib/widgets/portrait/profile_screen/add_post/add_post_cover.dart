@@ -81,7 +81,7 @@ class _AddPostCoverState extends State<AddPostCover> {
               boxShadow: [
                 BoxShadow(
                   color: Colors.black54.withOpacity(0.1),
-                  offset: Offset(0, 2),
+                  offset: const Offset(0, 2),
                   blurRadius: 10.0,
                 ),
               ],

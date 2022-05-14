@@ -23,7 +23,7 @@ class AnnouncementCard extends StatelessWidget {
         ),
         child: SingleChildScrollView(
           primary: false,
-          physics: BouncingScrollPhysics(),
+          physics: const BouncingScrollPhysics(),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [

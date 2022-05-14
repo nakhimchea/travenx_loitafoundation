@@ -81,7 +81,7 @@ class _UserPostsState extends State<UserPosts> {
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: kHPadding),
         child: _isLoading
-            ? Center(child: CircularProgressIndicator.adaptive())
+            ? const Center(child: CircularProgressIndicator.adaptive())
             : postList.length == 0
                 ? Center(
                     child: Column(
@@ -121,7 +121,7 @@ class _UserPostsState extends State<UserPosts> {
 
   Widget _buildPostList() => postList.length % 2 == 1
       ? ListView.builder(
-          physics: BouncingScrollPhysics(),
+          physics: const BouncingScrollPhysics(),
           itemCount: postList.length ~/ 2 + 1,
           itemBuilder: (BuildContext context, int index) =>
               index == 0 && postList.length == 1
@@ -152,7 +152,7 @@ class _UserPostsState extends State<UserPosts> {
                         )
                       : index == (postList.length - 1) ~/ 2
                           ? Padding(
-                              padding: EdgeInsets.only(bottom: kHPadding),
+                              padding: const EdgeInsets.only(bottom: kHPadding),
                               child: _PostCard(
                                 post: postList.elementAt(index * 2),
                                 spacing: _spacing,
@@ -176,7 +176,7 @@ class _UserPostsState extends State<UserPosts> {
                             ),
         )
       : ListView.builder(
-          physics: BouncingScrollPhysics(),
+          physics: const BouncingScrollPhysics(),
           itemCount: postList.length ~/ 2,
           itemBuilder: (BuildContext context, int index) => index == 0
               ? Padding(
@@ -197,7 +197,7 @@ class _UserPostsState extends State<UserPosts> {
                 )
               : index == postList.length ~/ 2 - 1
                   ? Padding(
-                      padding: EdgeInsets.only(bottom: kHPadding),
+                      padding: const EdgeInsets.only(bottom: kHPadding),
                       child: Row(
                         children: [
                           _PostCard(
@@ -282,7 +282,7 @@ class _PostCardState extends State<_PostCard> {
             width: ((MediaQuery.of(context).size.width - widget.spacing) / 2) -
                 kHPadding,
             child: ClipRRect(
-              borderRadius: BorderRadius.only(
+              borderRadius: const BorderRadius.only(
                 topLeft: Radius.circular(15.0),
                 topRight: Radius.circular(15.0),
               ),
@@ -316,7 +316,7 @@ class _PostCardState extends State<_PostCard> {
                 kHPadding,
             decoration: BoxDecoration(
               color: Theme.of(context).bottomAppBarColor,
-              borderRadius: BorderRadius.only(
+              borderRadius: const BorderRadius.only(
                 bottomLeft: Radius.circular(15.0),
                 bottomRight: Radius.circular(15.0),
               ),

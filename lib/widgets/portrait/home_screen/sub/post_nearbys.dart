@@ -51,7 +51,7 @@ class _PostNearbysState extends State<PostNearbys> {
       });
 
     return ListView.builder(
-      physics: BouncingScrollPhysics(),
+      physics: const BouncingScrollPhysics(),
       itemCount: postList.length,
       scrollDirection: Axis.horizontal,
       itemBuilder: (BuildContext context, int index) {
@@ -71,7 +71,7 @@ class _PostNearbysState extends State<PostNearbys> {
     );
   }
 
-  Widget loadingBuilder(BuildContext context, LoadStatus? mode) {
+  Widget _loadingBuilder(BuildContext context, LoadStatus? mode) {
     Widget _footer;
 
     if (mode == LoadStatus.idle)
@@ -122,7 +122,7 @@ class _PostNearbysState extends State<PostNearbys> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         !hasData
-            ? SizedBox.shrink()
+            ? const SizedBox.shrink()
             : Padding(
                 padding: const EdgeInsets.only(left: kHPadding),
                 child: Text(
@@ -137,14 +137,14 @@ class _PostNearbysState extends State<PostNearbys> {
               !hasData ? 0.0 : MediaQuery.of(context).size.height / 3.75 + 10,
           child: SmartRefresher(
             controller: _refreshController,
-            physics: BouncingScrollPhysics(),
+            physics: const BouncingScrollPhysics(),
             enablePullDown: _isRefreshable,
             enablePullUp: _isLoadable,
             child: _buildList(),
-            header: CustomHeader(builder: (_, __) => SizedBox.shrink()),
+            header: CustomHeader(builder: (_, __) => const SizedBox.shrink()),
             footer: CustomFooter(
               loadStyle: LoadStyle.ShowWhenLoading,
-              builder: loadingBuilder,
+              builder: _loadingBuilder,
             ),
             onRefresh: () async {
               postList = postTranslator(await _firestoreService
@@ -241,7 +241,7 @@ class _NearbyCardState extends State<_NearbyCard> {
                   ((MediaQuery.of(context).size.width - widget.hPadding) / 2) -
                       kHPadding,
               child: ClipRRect(
-                borderRadius: BorderRadius.only(
+                borderRadius: const BorderRadius.only(
                   topLeft: Radius.circular(15.0),
                   topRight: Radius.circular(15.0),
                 ),
@@ -276,7 +276,7 @@ class _NearbyCardState extends State<_NearbyCard> {
                       kHPadding,
               decoration: BoxDecoration(
                 color: Theme.of(context).bottomAppBarColor,
-                borderRadius: BorderRadius.only(
+                borderRadius: const BorderRadius.only(
                   bottomLeft: Radius.circular(15.0),
                   bottomRight: Radius.circular(15.0),
                 ),

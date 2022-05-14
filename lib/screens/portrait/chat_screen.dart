@@ -61,14 +61,14 @@ class _ChatScreenState extends State<ChatScreen> {
   Widget _buildList() {
     if (buildChatPostIds.length != _chatPostsTitle.length ||
         buildChatPostIds.length != _chatPostsImageUrl.length)
-      return SizedBox.shrink();
+      return const SizedBox.shrink();
     return Padding(
-      padding: EdgeInsets.symmetric(
+      padding: const EdgeInsets.symmetric(
         horizontal: kHPadding,
         vertical: kVPadding,
       ),
       child: ListView.builder(
-        physics: BouncingScrollPhysics(),
+        physics: const BouncingScrollPhysics(),
         itemCount: _chatPostsTitle.length,
         itemBuilder: (BuildContext context, int index) {
           return _BuildChatItem(
@@ -88,7 +88,7 @@ class _ChatScreenState extends State<ChatScreen> {
     );
   }
 
-  Widget loadingBuilder(BuildContext context, LoadStatus? mode) {
+  Widget _loadingBuilder(BuildContext context, LoadStatus? mode) {
     Widget _footer;
 
     if (mode == LoadStatus.idle)
@@ -167,14 +167,14 @@ class _ChatScreenState extends State<ChatScreen> {
             style: Theme.of(context).textTheme.headline1,
           ),
           centerTitle: false,
-          actions: [ActionOptions()],
+          actions: [_ActionOptions()],
         ),
         body: StreamBuilder(
           stream: _firestoreService.streamProfile(_user!.uid),
           builder: (BuildContext context,
               AsyncSnapshot<DocumentSnapshot<Map<String, dynamic>>> snapshot) {
             if (!snapshot.hasData)
-              return Center(child: CircularProgressIndicator.adaptive());
+              return const Center(child: CircularProgressIndicator.adaptive());
             if (!snapshot.data!.exists)
               return Center(
                 child: Column(
@@ -233,7 +233,7 @@ class _ChatScreenState extends State<ChatScreen> {
 
             return SmartRefresher(
               controller: _refreshController,
-              physics: BouncingScrollPhysics(),
+              physics: const BouncingScrollPhysics(),
               enablePullDown: _isRefreshable,
               enablePullUp: true,
               child: _chatPostIds.length == 0
@@ -257,10 +257,10 @@ class _ChatScreenState extends State<ChatScreen> {
                       ),
                     )
                   : _buildList(),
-              header: CustomHeader(builder: (_, __) => SizedBox.shrink()),
+              header: CustomHeader(builder: (_, __) => const SizedBox.shrink()),
               footer: CustomFooter(
                 loadStyle: LoadStyle.ShowWhenLoading,
-                builder: loadingBuilder,
+                builder: _loadingBuilder,
               ),
               onRefresh: () async {
                 assert(_chatPostIds.length == _chatWithUserIds.length);
@@ -315,7 +315,7 @@ class _ChatScreenState extends State<ChatScreen> {
             Container(
               height: MediaQuery.of(context).size.height,
               width: MediaQuery.of(context).size.width,
-              decoration: BoxDecoration(
+              decoration: const BoxDecoration(
                 image: DecorationImage(
                   image: AssetImage(
                     'assets/images/profile_screen/scaffold_background.png',
@@ -358,8 +358,8 @@ class _ChatScreenState extends State<ChatScreen> {
   }
 }
 
-class ActionOptions extends StatelessWidget {
-  const ActionOptions({Key? key}) : super(key: key);
+class _ActionOptions extends StatelessWidget {
+  const _ActionOptions({Key? key}) : super(key: key);
 
   void _selectedItem(BuildContext context, item) {
     switch (item) {
@@ -372,7 +372,7 @@ class ActionOptions extends StatelessWidget {
       case 2:
         print("Third item Clicked...");
         Navigator.of(context)
-            .push(MaterialPageRoute(builder: (context) => Scaffold()));
+            .push(MaterialPageRoute(builder: (context) => const Scaffold()));
         break;
     }
   }
@@ -406,7 +406,7 @@ class ActionOptions extends StatelessWidget {
         itemBuilder: (context) => [
           PopupMenuItem<int>(
             value: 0,
-            child: PopUpListTile(
+            child: const PopUpListTile(
               iconData: Icons.logout,
               title: 'សន្មត់ថាបានអានទាំងអស់',
             ),
@@ -414,7 +414,7 @@ class ActionOptions extends StatelessWidget {
           PopupMenuDivider(),
           PopupMenuItem<int>(
             value: 1,
-            child: PopUpListTile(
+            child: const PopUpListTile(
               iconData: Icons.logout,
               title: 'សារដែលបានខ្ចប់',
             ),
@@ -422,7 +422,7 @@ class ActionOptions extends StatelessWidget {
           PopupMenuDivider(),
           PopupMenuItem<int>(
             value: 2,
-            child: PopUpListTile(
+            child: const PopUpListTile(
               iconData: Icons.logout,
               title: 'រាយការណ៍បញ្ហា',
             ),
@@ -626,8 +626,8 @@ class _BuildChatItem extends StatelessWidget {
                             ),
                           ),
                           chatMessage == ''
-                              ? SizedBox.shrink()
-                              : SizedBox(width: 20.0),
+                              ? const SizedBox.shrink()
+                              : const SizedBox(width: 20.0),
                           Text(
                             '${chatDateTime.hour.toString()}:' +
                                 '${chatDateTime.minute < 10 ? '0' + chatDateTime.minute.toString() : chatDateTime.minute.toString()} ' +
@@ -644,7 +644,7 @@ class _BuildChatItem extends StatelessWidget {
                       ),
                       trailing: snapshot.data!.docs.single.get('senderUid') ==
                               _user.uid
-                          ? SizedBox.shrink()
+                          ? const SizedBox.shrink()
                           : CircleAvatar(
                               radius: 7.0,
                               backgroundColor: Theme.of(context).primaryColor,

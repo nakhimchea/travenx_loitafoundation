@@ -41,7 +41,6 @@ class MyApp extends StatelessWidget {
       create: (context) => ThemeProvider(),
       builder: (context, _) {
         final themeProvider = Provider.of<ThemeProvider>(context);
-
         return MaterialApp(
           debugShowCheckedModeBanner: false,
           title: 'Travenx',
@@ -166,7 +165,7 @@ class _ResponsiveDeciderState extends State<ResponsiveDecider> {
     textScaleFactor = MediaQuery.of(context).size.width / 375;
     textScaleFactor = textScaleFactor > 1.5 ? 1.5 : textScaleFactor;
 
-    Future.delayed(Duration(seconds: 2))
+    Future.delayed(const Duration(seconds: 2))
         .whenComplete(() => setState(() => _isLoading = false));
 
     return _isLoading
@@ -187,7 +186,7 @@ class _ResponsiveDeciderState extends State<ResponsiveDecider> {
                       ),
                     ),
                     child: Container(
-                      margin: EdgeInsets.only(top: 80.0),
+                      margin: const EdgeInsets.only(top: 80.0),
                       child: Text(
                         'Travenx',
                         textScaleFactor: textScaleFactor,

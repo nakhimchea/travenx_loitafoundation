@@ -355,7 +355,7 @@ class _PostGalleryPicker extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.symmetric(horizontal: kHPadding),
+      margin: const EdgeInsets.symmetric(horizontal: kHPadding),
       padding: const EdgeInsets.symmetric(
           horizontal: kHPadding, vertical: kHPadding),
       decoration: BoxDecoration(

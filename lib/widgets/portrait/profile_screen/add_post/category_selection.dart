@@ -38,7 +38,7 @@ class CategorySelection extends StatelessWidget {
             alignment: WrapAlignment.spaceBetween,
             spacing: 7,
             children: [
-              CategoryButton(
+              _CategoryButton(
                 label: 'បោះតង់',
                 state: categories.contains(CategoryType.camping),
                 onPressed: () {
@@ -46,7 +46,7 @@ class CategorySelection extends StatelessWidget {
                       isRemoved: categories.contains(CategoryType.camping));
                 },
               ),
-              CategoryButton(
+              _CategoryButton(
                 label: 'សមុទ្រ',
                 state: categories.contains(CategoryType.sea),
                 onPressed: () {
@@ -54,7 +54,7 @@ class CategorySelection extends StatelessWidget {
                       isRemoved: categories.contains(CategoryType.sea));
                 },
               ),
-              CategoryButton(
+              _CategoryButton(
                 label: 'ប្រាសាទ',
                 state: categories.contains(CategoryType.temple),
                 onPressed: () {
@@ -62,7 +62,7 @@ class CategorySelection extends StatelessWidget {
                       isRemoved: categories.contains(CategoryType.temple));
                 },
               ),
-              CategoryButton(
+              _CategoryButton(
                 label: 'ភ្នំ',
                 state: categories.contains(CategoryType.mountain),
                 onPressed: () {
@@ -70,7 +70,7 @@ class CategorySelection extends StatelessWidget {
                       isRemoved: categories.contains(CategoryType.mountain));
                 },
               ),
-              CategoryButton(
+              _CategoryButton(
                 label: 'ឧទ្យាន',
                 state: categories.contains(CategoryType.park),
                 onPressed: () {
@@ -78,7 +78,7 @@ class CategorySelection extends StatelessWidget {
                       isRemoved: categories.contains(CategoryType.park));
                 },
               ),
-              CategoryButton(
+              _CategoryButton(
                 label: 'រមណីយដ្ឋាន',
                 state: categories.contains(CategoryType.resort),
                 onPressed: () {
@@ -86,7 +86,7 @@ class CategorySelection extends StatelessWidget {
                       isRemoved: categories.contains(CategoryType.resort));
                 },
               ),
-              CategoryButton(
+              _CategoryButton(
                 label: 'សួនសត្វ',
                 state: categories.contains(CategoryType.zoo),
                 onPressed: () {
@@ -94,7 +94,7 @@ class CategorySelection extends StatelessWidget {
                       isRemoved: categories.contains(CategoryType.zoo));
                 },
               ),
-              CategoryButton(
+              _CategoryButton(
                 label: 'ផ្សេងៗ',
                 state: categories.contains(CategoryType.locations),
                 onPressed: () {
@@ -110,11 +110,11 @@ class CategorySelection extends StatelessWidget {
   }
 }
 
-class CategoryButton extends StatelessWidget {
+class _CategoryButton extends StatelessWidget {
   final String label;
   final bool state;
   final void Function()? onPressed;
-  const CategoryButton({
+  const _CategoryButton({
     Key? key,
     required this.label,
     required this.state,

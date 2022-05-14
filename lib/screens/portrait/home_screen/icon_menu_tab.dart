@@ -65,14 +65,14 @@ class _IconMenuTabState extends State<IconMenuTab> {
             preferredSize: const Size.fromHeight(43.0),
             child: Column(
               children: [
-                Divider(height: 0.0, thickness: 0.5),
-                CustomTabBar(),
+                const Divider(height: 0.0, thickness: 0.5),
+                _CustomTabBar(),
               ],
             ),
           ),
         ),
         body: TabBarView(
-          physics: NeverScrollableScrollPhysics(),
+          physics: const NeverScrollableScrollPhysics(),
           children: _buildIconMenusList(vPadding: kCardTileVPadding),
         ),
       ),
@@ -110,7 +110,7 @@ class _BuildIconMenuListState extends State<_BuildIconMenuList> {
 
   Widget _buildList() {
     return ListView.builder(
-      physics: BouncingScrollPhysics(),
+      physics: const BouncingScrollPhysics(),
       padding: const EdgeInsets.only(
         top: kVPadding + 2.0,
         bottom: kVPadding + 6.0,
@@ -125,7 +125,7 @@ class _BuildIconMenuListState extends State<_BuildIconMenuList> {
     );
   }
 
-  Widget loadingBuilder(BuildContext context, LoadStatus? mode) {
+  Widget _loadingBuilder(BuildContext context, LoadStatus? mode) {
     Widget _footer;
 
     if (mode == LoadStatus.idle)
@@ -174,13 +174,13 @@ class _BuildIconMenuListState extends State<_BuildIconMenuList> {
   Widget build(BuildContext context) {
     return SmartRefresher(
       controller: _refreshController,
-      physics: BouncingScrollPhysics(),
+      physics: const BouncingScrollPhysics(),
       enablePullDown: _isRefreshable,
       enablePullUp: _isLoadable,
       child: _buildList(),
       footer: CustomFooter(
         loadStyle: LoadStyle.ShowWhenLoading,
-        builder: loadingBuilder,
+        builder: _loadingBuilder,
       ),
       onRefresh: () async {
         assert(DefaultTabController.of(context) != null);
@@ -221,8 +221,8 @@ class _BuildIconMenuListState extends State<_BuildIconMenuList> {
   }
 }
 
-class CustomTabBar extends StatelessWidget {
-  const CustomTabBar({Key? key}) : super(key: key);
+class _CustomTabBar extends StatelessWidget {
+  const _CustomTabBar({Key? key}) : super(key: key);
 
   List<Tab> _buildTabs() {
     List<Tab> _tabItems = [];

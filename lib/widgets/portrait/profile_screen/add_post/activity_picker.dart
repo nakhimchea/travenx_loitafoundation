@@ -31,7 +31,7 @@ class ActivityPicker extends StatelessWidget {
             alignment: WrapAlignment.spaceBetween,
             spacing: 7,
             children: [
-              ActivityButton(
+              _ActivityButton(
                 label: 'ជិះទូក',
                 state: activities.contains(ActivityType.boating),
                 onPressed: () {
@@ -39,7 +39,7 @@ class ActivityPicker extends StatelessWidget {
                       isRemoved: activities.contains(ActivityType.boating));
                 },
               ),
-              ActivityButton(
+              _ActivityButton(
                 label: 'មុជទឹក',
                 state: activities.contains(ActivityType.diving),
                 onPressed: () {
@@ -47,7 +47,7 @@ class ActivityPicker extends StatelessWidget {
                       isRemoved: activities.contains(ActivityType.diving));
                 },
               ),
-              ActivityButton(
+              _ActivityButton(
                 label: 'ស្ទូចត្រី',
                 state: activities.contains(ActivityType.fishing),
                 onPressed: () {
@@ -55,7 +55,7 @@ class ActivityPicker extends StatelessWidget {
                       isRemoved: activities.contains(ActivityType.fishing));
                 },
               ),
-              ActivityButton(
+              _ActivityButton(
                 label: 'លំហែកាយ',
                 state: activities.contains(ActivityType.relaxing),
                 onPressed: () {
@@ -63,7 +63,7 @@ class ActivityPicker extends StatelessWidget {
                       isRemoved: activities.contains(ActivityType.relaxing));
                 },
               ),
-              ActivityButton(
+              _ActivityButton(
                 label: 'ហែលទឹក',
                 state: activities.contains(ActivityType.swimming),
                 onPressed: () {
@@ -79,11 +79,11 @@ class ActivityPicker extends StatelessWidget {
   }
 }
 
-class ActivityButton extends StatelessWidget {
+class _ActivityButton extends StatelessWidget {
   final String label;
   final bool state;
   final void Function()? onPressed;
-  const ActivityButton({
+  const _ActivityButton({
     Key? key,
     required this.label,
     required this.state,

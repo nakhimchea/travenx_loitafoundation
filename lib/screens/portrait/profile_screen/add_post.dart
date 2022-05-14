@@ -318,7 +318,7 @@ class _AddPostState extends State<AddPost> {
       ),
       body: CustomScrollView(
         primary: false,
-        physics: BouncingScrollPhysics(),
+        physics: const BouncingScrollPhysics(),
         slivers: _contentDecision(),
       ),
     );
@@ -332,7 +332,7 @@ class _AddPostState extends State<AddPost> {
           automaticallyImplyLeading: false,
           elevation: 1,
           actions: [],
-          title: Steps(currentStep: currentStep),
+          title: _Steps(currentStep: currentStep),
           toolbarHeight: 56 + kHPadding,
           backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         ),
@@ -347,7 +347,7 @@ class _AddPostState extends State<AddPost> {
                             height: 40,
                             color: Theme.of(context).disabledColor,
                             child: ListView(
-                              physics: BouncingScrollPhysics(),
+                              physics: const BouncingScrollPhysics(),
                               scrollDirection: Axis.horizontal,
                               children: [
                                 const SizedBox(width: kHPadding),
@@ -388,7 +388,8 @@ class _AddPostState extends State<AddPost> {
                                     .openLocationSettings()) {
                                   if (await Geolocator
                                       .isLocationServiceEnabled()) {
-                                    Future.delayed(Duration(milliseconds: 250))
+                                    Future.delayed(
+                                            const Duration(milliseconds: 250))
                                         .whenComplete(() => _setLocationCity());
                                   } else
                                     print(
@@ -408,7 +409,7 @@ class _AddPostState extends State<AddPost> {
                               color: Theme.of(context).disabledColor,
                               child: ListView(
                                 primary: false,
-                                physics: BouncingScrollPhysics(),
+                                physics: const BouncingScrollPhysics(),
                                 scrollDirection: Axis.horizontal,
                                 children: [
                                   const SizedBox(width: kHPadding),
@@ -453,7 +454,8 @@ class _AddPostState extends State<AddPost> {
                   ),
                 ),
                 Padding(
-                  padding: EdgeInsets.symmetric(horizontal: kHPadding + 12.0),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: kHPadding + 12.0),
                   child: CustomDivider(
                     color: Theme.of(context).primaryColor,
                     dashWidth: 6,
@@ -480,7 +482,7 @@ class _AddPostState extends State<AddPost> {
           automaticallyImplyLeading: false,
           elevation: 1,
           actions: [],
-          title: Steps(currentStep: currentStep),
+          title: _Steps(currentStep: currentStep),
           toolbarHeight: 56 + kHPadding,
           backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         ),
@@ -500,7 +502,8 @@ class _AddPostState extends State<AddPost> {
                   ),
                 ),
                 Padding(
-                  padding: EdgeInsets.symmetric(horizontal: kHPadding + 12.0),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: kHPadding + 12.0),
                   child: CustomDivider(
                     color: Theme.of(context).primaryColor,
                     dashWidth: 6,
@@ -545,7 +548,7 @@ class _AddPostState extends State<AddPost> {
           automaticallyImplyLeading: false,
           elevation: 1,
           actions: [],
-          title: Steps(currentStep: currentStep),
+          title: _Steps(currentStep: currentStep),
           toolbarHeight: 56 + kHPadding,
           backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         ),
@@ -684,7 +687,7 @@ class _AddPostState extends State<AddPost> {
           elevation: 0.5,
           leading: null,
           actions: [],
-          title: Steps(currentStep: currentStep),
+          title: _Steps(currentStep: currentStep),
           toolbarHeight: 56 + kHPadding,
           backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         ),
@@ -713,7 +716,8 @@ class _AddPostState extends State<AddPost> {
                 ),
                 _weatherForecast != null
                     ? Padding(
-                        padding: EdgeInsets.symmetric(horizontal: kHPadding),
+                        padding:
+                            const EdgeInsets.symmetric(horizontal: kHPadding),
                         child: WeatherAlerts(
                           forecast: _weatherForecast!.forecast,
                           sunrise: _weatherForecast!.sunrise,
@@ -723,7 +727,7 @@ class _AddPostState extends State<AddPost> {
                     : const SizedBox.shrink(),
                 _announcement != ''
                     ? Padding(
-                        padding: EdgeInsets.symmetric(
+                        padding: const EdgeInsets.symmetric(
                           horizontal: kHPadding,
                           vertical: kVPadding,
                         ),
@@ -733,7 +737,7 @@ class _AddPostState extends State<AddPost> {
                       )
                     : const SizedBox.shrink(),
                 Padding(
-                  padding: EdgeInsets.symmetric(
+                  padding: const EdgeInsets.symmetric(
                     horizontal: kHPadding,
                     vertical: kVPadding,
                   ),
@@ -752,7 +756,7 @@ class _AddPostState extends State<AddPost> {
                     : const SizedBox.shrink(),
                 _details.textDetail != ''
                     ? Padding(
-                        padding: EdgeInsets.symmetric(
+                        padding: const EdgeInsets.symmetric(
                           horizontal: kHPadding,
                           vertical: kVPadding,
                         ),
@@ -778,9 +782,9 @@ class _AddPostState extends State<AddPost> {
   }
 }
 
-class Steps extends StatelessWidget {
+class _Steps extends StatelessWidget {
   final int currentStep;
-  const Steps({Key? key, required this.currentStep}) : super(key: key);
+  const _Steps({Key? key, required this.currentStep}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

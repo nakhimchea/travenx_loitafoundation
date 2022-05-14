@@ -24,7 +24,7 @@ class CustomTabBar extends StatelessWidget {
         color: Theme.of(context).primaryColor,
         borderRadius: BorderRadius.circular(18.0),
       ),
-      indicatorPadding: EdgeInsets.symmetric(vertical: 6.0),
+      indicatorPadding: const EdgeInsets.symmetric(vertical: 6.0),
       labelColor: Colors.white,
       labelStyle: Theme.of(context).textTheme.button,
       unselectedLabelColor: Theme.of(context).textTheme.button!.color,
@@ -103,7 +103,7 @@ class _CustomTabBarListState extends State<CustomTabBarList> {
       height:
           MediaQuery.of(context).size.height * 5 / 6.16 + kCardTileVPadding * 5,
       child: tabLists.length < 5
-          ? Center(child: CircularProgressIndicator.adaptive())
+          ? const Center(child: CircularProgressIndicator.adaptive())
           : TabBarView(
               controller: widget.tabController,
               children: _buildTabBarLists(),

@@ -39,13 +39,13 @@ class _LoginState extends State<Login> {
   Widget build(BuildContext context) {
     SystemChrome.setSystemUIOverlayStyle(
         Theme.of(context).colorScheme.brightness == Brightness.dark
-            ? SystemUiOverlayStyle.dark
-            : SystemUiOverlayStyle.light);
+            ? SystemUiOverlayStyle.light
+            : SystemUiOverlayStyle.dark);
     return LayoutBuilder(
       builder: (context, constraints) => Stack(
         children: [
           Container(
-            alignment: Alignment(0, -1.1),
+            alignment: const Alignment(0, -1.1),
             width: constraints.maxWidth,
             height: constraints.maxHeight,
             decoration: BoxDecoration(
@@ -75,7 +75,7 @@ class _LoginState extends State<Login> {
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
                 Container(
-                  margin: EdgeInsets.only(bottom: 25.0),
+                  margin: const EdgeInsets.only(bottom: 25.0),
                   child: !_isPhoneLogin
                       ? LoginMethods(
                           isPhoneLogin: _isPhoneLogin,
@@ -329,7 +329,7 @@ class LoginButton extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 30.0),
       child: Container(
-        margin: EdgeInsets.all(3.0),
+        margin: const EdgeInsets.all(3.0),
         width: double.infinity,
         height: (MediaQuery.of(context).size.height / 16).ceil().toDouble(),
         decoration: BoxDecoration(
@@ -489,7 +489,7 @@ class PolicyAgreement extends StatelessWidget {
                           Brightness.light
                       ? Colors.white
                       : Colors.white60)),
-          SizedBox(height: 3),
+          const SizedBox(height: 3),
           Text('លក្ខខណ្ឌ និងគោលនយោបាយឯកជនភាព',
               style: Theme.of(context).textTheme.button!.copyWith(
                   color: Theme.of(context).colorScheme.brightness ==

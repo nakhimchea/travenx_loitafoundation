@@ -67,7 +67,7 @@ class _CardTileItemState extends State<CardTileItem> {
               height: _imageSize,
               width: _imageSize,
               child: ClipRRect(
-                borderRadius: BorderRadius.only(
+                borderRadius: const BorderRadius.only(
                   topLeft: Radius.circular(15.0),
                   bottomLeft: Radius.circular(15.0),
                 ),
@@ -101,7 +101,7 @@ class _CardTileItemState extends State<CardTileItem> {
                   _imageSize,
               decoration: BoxDecoration(
                 color: Theme.of(context).bottomAppBarColor,
-                borderRadius: BorderRadius.only(
+                borderRadius: const BorderRadius.only(
                   topRight: Radius.circular(15.0),
                   bottomRight: Radius.circular(15.0),
                 ),

@@ -50,8 +50,8 @@ class _HomeScreenState extends State<HomeScreen>
         bottom: false,
         child: SmartRefresher(
           controller: _refreshController,
-          physics: BouncingScrollPhysics(),
-          header: ClassicHeader(
+          physics: const BouncingScrollPhysics(),
+          header: const ClassicHeader(
             refreshingText: 'កំពុងទាញយកទិន្នន័យ',
             failedText: 'ទាញយកទិន្នន័យបរាជ័យ',
             completeText: 'ទាញយកទិន្នន័យរួចរាល់',
@@ -66,7 +66,7 @@ class _HomeScreenState extends State<HomeScreen>
           onLoading: null,
           child: CustomScrollView(
             primary: false,
-            physics: BouncingScrollPhysics(),
+            physics: const BouncingScrollPhysics(),
             slivers: [
               SliverToBoxAdapter(
                 child: Visibility(

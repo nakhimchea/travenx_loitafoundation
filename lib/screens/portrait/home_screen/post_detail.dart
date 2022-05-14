@@ -102,7 +102,7 @@ class _PostDetailState extends State<PostDetail> {
                 bottom: kVPadding + 16.0,
               ),
               color: Theme.of(context).bottomAppBarColor,
-              child: Center(
+              child: const Center(
                 child: Text('កន្លែងនេះជារបស់អ្នក!'),
               ),
             )
@@ -239,7 +239,7 @@ class _PostDetailState extends State<PostDetail> {
             ),
       body: CustomScrollView(
         primary: false,
-        physics: BouncingScrollPhysics(),
+        physics: const BouncingScrollPhysics(),
         slivers: [
           SliverToBoxAdapter(
             child: SingleChildScrollView(
@@ -247,11 +247,11 @@ class _PostDetailState extends State<PostDetail> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Padding(
-                    padding: EdgeInsets.only(top: 44.0),
+                    padding: const EdgeInsets.only(top: 44.0),
                     child: PostCover(imageUrls: widget.post.imageUrls),
                   ),
                   Padding(
-                    padding: EdgeInsets.only(
+                    padding: const EdgeInsets.only(
                       left: kHPadding,
                       right: kHPadding,
                       top: 25.0,
@@ -279,7 +279,7 @@ class _PostDetailState extends State<PostDetail> {
                   widget.post.announcement != null &&
                           widget.post.announcement != ''
                       ? Padding(
-                          padding: EdgeInsets.symmetric(
+                          padding: const EdgeInsets.symmetric(
                             horizontal: kHPadding,
                             vertical: kVPadding,
                           ),
@@ -289,7 +289,7 @@ class _PostDetailState extends State<PostDetail> {
                         )
                       : const SizedBox.shrink(),
                   Padding(
-                    padding: EdgeInsets.symmetric(
+                    padding: const EdgeInsets.symmetric(
                       horizontal: kHPadding,
                       vertical: kVPadding,
                     ),
@@ -311,7 +311,7 @@ class _PostDetailState extends State<PostDetail> {
                   widget.post.details != null &&
                           widget.post.details!.textDetail != ''
                       ? Padding(
-                          padding: EdgeInsets.symmetric(
+                          padding: const EdgeInsets.symmetric(
                             horizontal: kHPadding,
                             vertical: kVPadding,
                           ),

@@ -38,7 +38,7 @@ class CustomFloatingActionButton extends StatelessWidget {
           boxShadow: [
             BoxShadow(
               color: Theme.of(context).disabledColor.withOpacity(0.5),
-              offset: Offset(0, 1),
+              offset: const Offset(0, 1),
               spreadRadius: 2.0,
               blurRadius: 3.0,
             ),

@@ -50,7 +50,7 @@ class BusinessTime extends StatelessWidget {
                     openEnabledCallback();
                     showDialog(
                       context: context,
-                      builder: (context) => CustomDialog(
+                      builder: (context) => _CustomDialog(
                         hour: openHour,
                         hourCallback: openHourCallback,
                       ),
@@ -116,7 +116,7 @@ class BusinessTime extends StatelessWidget {
                     closeEnabledCallback();
                     showDialog(
                       context: context,
-                      builder: (context) => CustomDialog(
+                      builder: (context) => _CustomDialog(
                         isOpenHour: false,
                         hour: closeHour,
                         hourCallback: closeHourCallback,
@@ -209,11 +209,11 @@ class BusinessTime extends StatelessWidget {
   }
 }
 
-class CustomDialog extends StatefulWidget {
+class _CustomDialog extends StatefulWidget {
   final bool isOpenHour;
   final DateTime hour;
   final void Function(DateTime) hourCallback;
-  const CustomDialog({
+  const _CustomDialog({
     Key? key,
     this.isOpenHour = true,
     required this.hour,
@@ -221,10 +221,10 @@ class CustomDialog extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  State<CustomDialog> createState() => _CustomDialogState();
+  State<_CustomDialog> createState() => _CustomDialogState();
 }
 
-class _CustomDialogState extends State<CustomDialog> {
+class _CustomDialogState extends State<_CustomDialog> {
   bool _resetHold = false;
   bool _doneHold = false;
   @override

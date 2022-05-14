@@ -22,7 +22,7 @@ class LoginCardButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 30.0),
+      padding: const EdgeInsets.symmetric(horizontal: 30.0),
       child: GestureDetector(
         onTap: onTap,
         child: Container(
@@ -59,7 +59,7 @@ class LoginCardButton extends StatelessWidget {
                           kIsWeb ? TextOverflow.clip : TextOverflow.ellipsis,
                     ),
                     Align(
-                      alignment: Alignment(0, -0.06),
+                      alignment: const Alignment(0, -0.06),
                       child: Text(
                         trailing != '' ? ' ' + trailing : '',
                         textScaleFactor: textScaleFactor,

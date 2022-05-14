@@ -40,7 +40,7 @@ class WeatherAlerts extends StatelessWidget {
                         .bodyText1!
                         .copyWith(color: Theme.of(context).errorColor),
                   )
-            : SizedBox.shrink(),
+            : const SizedBox.shrink(),
         const SizedBox(height: 25.0),
         this.sunset != ''
             ? Center(
@@ -54,7 +54,7 @@ class WeatherAlerts extends StatelessWidget {
                       .copyWith(color: Theme.of(context).iconTheme.color),
                 ),
               )
-            : SizedBox.shrink(),
+            : const SizedBox.shrink(),
         SizedBox(height: this.sunset != '' ? 15.0 : 0.0),
       ],
     );

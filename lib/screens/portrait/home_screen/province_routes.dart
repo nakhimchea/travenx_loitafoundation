@@ -40,7 +40,7 @@ class _ProvinceRoutesState extends State<ProvinceRoutes> {
     return Scaffold(
       body: CustomScrollView(
         primary: false,
-        physics: BouncingScrollPhysics(),
+        physics: const BouncingScrollPhysics(),
         slivers: [
           SliverAppBar(
             pinned: true,
@@ -142,7 +142,7 @@ class _ProvincesItem extends StatelessWidget {
               height: _imageSize,
               width: _imageSize,
               child: ClipRRect(
-                borderRadius: BorderRadius.only(
+                borderRadius: const BorderRadius.only(
                   topLeft: Radius.circular(15.0),
                   bottomLeft: Radius.circular(15.0),
                 ),
@@ -159,7 +159,7 @@ class _ProvincesItem extends StatelessWidget {
                   _imageSize,
               decoration: BoxDecoration(
                 color: Theme.of(context).bottomAppBarColor,
-                borderRadius: BorderRadius.only(
+                borderRadius: const BorderRadius.only(
                   topRight: Radius.circular(15.0),
                   bottomRight: Radius.circular(15.0),
                 ),
@@ -285,7 +285,7 @@ class _ProvinceListState extends State<_ProvinceList> {
   Widget _buildList() {
     return postList.length != 0
         ? ListView.builder(
-            physics: BouncingScrollPhysics(),
+            physics: const BouncingScrollPhysics(),
             itemBuilder: (BuildContext context, int index) {
               if (index == 0)
                 return Column(
@@ -349,7 +349,7 @@ class _ProvinceListState extends State<_ProvinceList> {
           );
   }
 
-  Widget loadingBuilder(BuildContext context, LoadStatus? mode) {
+  Widget _loadingBuilder(BuildContext context, LoadStatus? mode) {
     Widget _footer;
 
     if (mode == LoadStatus.idle)
@@ -398,14 +398,14 @@ class _ProvinceListState extends State<_ProvinceList> {
   Widget build(BuildContext context) {
     return SmartRefresher(
       controller: _refreshController,
-      physics: BouncingScrollPhysics(),
+      physics: const BouncingScrollPhysics(),
       enablePullDown: _isRefreshable,
       enablePullUp: _isLoadable,
       child: _buildList(),
-      header: CustomHeader(builder: (_, __) => SizedBox.shrink()),
+      header: CustomHeader(builder: (_, __) => const SizedBox.shrink()),
       footer: CustomFooter(
         loadStyle: LoadStyle.ShowWhenLoading,
-        builder: loadingBuilder,
+        builder: _loadingBuilder,
       ),
       onRefresh: () async {
         postList = postTranslator(await _firestoreService
@@ -469,7 +469,7 @@ class _ProvinceCover extends StatelessWidget {
           child: Container(),
         ),
         Padding(
-          padding: EdgeInsets.all(20.0),
+          padding: const EdgeInsets.all(20.0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [

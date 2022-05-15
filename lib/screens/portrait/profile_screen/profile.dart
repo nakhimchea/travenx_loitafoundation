@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:travenx_loitafoundation/config/configs.dart'
     show kHPadding, kVPadding, textScaleFactor, selectedIndex;
@@ -86,7 +87,7 @@ class _ProfileState extends State<Profile> {
                             ),
                             const SizedBox(width: kHPadding),
                             Text(
-                              'បង្ហោះទីតាំង ឬអាជីវកម្ម',
+                              AppLocalizations.of(context)!.pfAddPost,
                               textScaleFactor: textScaleFactor,
                               style: Theme.of(context)
                                   .textTheme
@@ -109,7 +110,7 @@ class _ProfileState extends State<Profile> {
                         color: Theme.of(context).primaryColor,
                         size: 20.0,
                       ),
-                      title: 'ទីតាំង ឬអាជីវកម្មបានបង្ហោះ',
+                      title: AppLocalizations.of(context)!.pfAddedPost,
                       trailing: [
                         Icon(
                           Icons.arrow_forward_ios_sharp,
@@ -138,7 +139,7 @@ class _ProfileState extends State<Profile> {
                             color: Theme.of(context).primaryColor,
                             size: 20.0,
                           ),
-                          title: 'ប្រវត្តិរូប',
+                          title: AppLocalizations.of(context)!.pfProfile,
                           trailing: [
                             Icon(
                               Icons.arrow_forward_ios_sharp,
@@ -153,7 +154,7 @@ class _ProfileState extends State<Profile> {
                             color: Theme.of(context).primaryColor,
                             size: 20.0,
                           ),
-                          title: 'បានរក្សាទុក',
+                          title: AppLocalizations.of(context)!.pfSaved,
                           trailing: [
                             Icon(
                               Icons.arrow_forward_ios_sharp,
@@ -168,7 +169,7 @@ class _ProfileState extends State<Profile> {
                             color: Theme.of(context).primaryColor,
                             size: 20.0,
                           ),
-                          title: 'បានវាយតម្លៃ',
+                          title: AppLocalizations.of(context)!.pfReviewed,
                           trailing: [
                             Icon(
                               Icons.arrow_forward_ios_sharp,
@@ -184,7 +185,7 @@ class _ProfileState extends State<Profile> {
                             color: Theme.of(context).primaryIconTheme.color,
                             size: 20.0,
                           ),
-                          title: 'ភាសា',
+                          title: AppLocalizations.of(context)!.pfLanguages,
                           trailing: [
                             Text(
                               'ភាសាខ្មែរ',
@@ -211,7 +212,7 @@ class _ProfileState extends State<Profile> {
                             color: Theme.of(context).primaryIconTheme.color,
                             size: 20.0,
                           ),
-                          title: 'អំពីយើង',
+                          title: AppLocalizations.of(context)!.pfAboutUs,
                           trailing: [
                             Icon(
                               Icons.arrow_forward_ios_sharp,
@@ -226,7 +227,8 @@ class _ProfileState extends State<Profile> {
                             color: Theme.of(context).primaryIconTheme.color,
                             size: 20.0,
                           ),
-                          title: 'លក្ខខណ្ឌ និងគោលការណ៍ផ្សេងៗ',
+                          title:
+                              AppLocalizations.of(context)!.pfTermsAndPolicies,
                           trailing: [
                             Icon(
                               Icons.arrow_forward_ios_sharp,
@@ -241,7 +243,7 @@ class _ProfileState extends State<Profile> {
                             color: Theme.of(context).primaryIconTheme.color,
                             size: 20.0,
                           ),
-                          title: 'សំនួរ/ចម្លើយ',
+                          title: AppLocalizations.of(context)!.pfFAQ,
                           trailing: [
                             Icon(
                               Icons.arrow_forward_ios_sharp,
@@ -257,7 +259,7 @@ class _ProfileState extends State<Profile> {
                             color: Theme.of(context).highlightColor,
                             size: 20.0,
                           ),
-                          title: 'វាយតម្លៃកម្មវិធី',
+                          title: AppLocalizations.of(context)!.pfRateUs,
                           trailing: [],
                         ),
                         ProfileCategory(
@@ -266,7 +268,7 @@ class _ProfileState extends State<Profile> {
                             color: Theme.of(context).hintColor,
                             size: 20.0,
                           ),
-                          title: 'ចែករំលែកកម្មវិធី',
+                          title: AppLocalizations.of(context)!.pfShare,
                           trailing: [],
                         ),
                         const SizedBox(height: 15.0),
@@ -276,7 +278,7 @@ class _ProfileState extends State<Profile> {
                             color: Color(0xFFC23616),
                             size: 20.0,
                           ),
-                          title: 'ចាកចេញ',
+                          title: AppLocalizations.of(context)!.pfLogOut,
                           textColor: Color(0xFFC23616),
                           trailing: [],
                           onTap: () async {
@@ -296,7 +298,7 @@ class _ProfileState extends State<Profile> {
                         ),
                         const SizedBox(height: 15.0),
                         Text(
-                          'កម្មវិធីជំនាន់ទី ១.០',
+                          AppLocalizations.of(context)!.pfVersion,
                           textScaleFactor: textScaleFactor,
                           style: Theme.of(context).textTheme.bodyText1,
                         ),

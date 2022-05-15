@@ -7,12 +7,13 @@ import 'package:travenx_loitafoundation/screens/portrait/home_screen/icon_menu_t
 class IconsMenu extends StatelessWidget {
   const IconsMenu({Key? key}) : super(key: key);
 
-  List<_IconMenu> _buildIconMenus(int initIndex, int finalIndex) {
+  List<_IconMenu> _buildIconMenus(
+      BuildContext context, int initIndex, int finalIndex) {
     List<_IconMenu> iconMenuItems = [];
 
     for (int index = initIndex; index <= finalIndex; index++)
       iconMenuItems.add(_IconMenu(
-        modelIconMenu: modelIconMenus.elementAt(index),
+        modelIconMenu: modelIconMenus(context).elementAt(index),
         currentIndex: index,
       ));
 
@@ -25,12 +26,12 @@ class IconsMenu extends StatelessWidget {
       children: [
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
-          children: _buildIconMenus(0, 3),
+          children: _buildIconMenus(context, 0, 3),
         ),
         const SizedBox(height: 10),
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
-          children: _buildIconMenus(4, 7),
+          children: _buildIconMenus(context, 4, 7),
         ),
       ],
     );

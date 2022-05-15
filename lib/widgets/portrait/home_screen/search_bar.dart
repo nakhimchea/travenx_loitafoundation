@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:travenx_loitafoundation/config/configs.dart'
     show kHPadding, kVPadding, textScaleFactor;
 import 'package:travenx_loitafoundation/icons/icons.dart';
@@ -35,7 +36,7 @@ class SearchBar extends StatelessWidget {
               color: Theme.of(context).primaryIconTheme.color,
             ),
             Text(
-              'ស្វែងរក',
+              AppLocalizations.of(context)!.searchLabel,
               textScaleFactor: textScaleFactor,
               style: Theme.of(context).textTheme.bodyText1,
             ),

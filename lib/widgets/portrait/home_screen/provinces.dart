@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:travenx_loitafoundation/config/configs.dart'
     show kHPadding, kVPadding, textScaleFactor, Palette;
 import 'package:travenx_loitafoundation/icons/icons.dart';
@@ -15,7 +16,7 @@ class Provinces extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
         Text(
-          'ទូទាំងប្រទេស',
+          AppLocalizations.of(context)!.pvLabel,
           textScaleFactor: textScaleFactor,
           style: Theme.of(context).textTheme.headline3,
         ),
@@ -25,15 +26,18 @@ class Provinces extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                _ProvinceCard(modelProvince: modelProvinces.elementAt(0)),
-                _ProvinceCard(modelProvince: modelProvinces.elementAt(1)),
+                _ProvinceCard(
+                    modelProvince: modelProvinces(context).elementAt(0)),
+                _ProvinceCard(
+                    modelProvince: modelProvinces(context).elementAt(1)),
               ],
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                _ProvinceCard(modelProvince: modelProvinces.elementAt(2)),
-                _ProvinceCard(modelProvince: modelProvinces.last),
+                _ProvinceCard(
+                    modelProvince: modelProvinces(context).elementAt(2)),
+                _ProvinceCard(modelProvince: modelProvinces(context).last),
               ],
             ),
           ],
@@ -51,7 +55,7 @@ class _ProvinceCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () => modelProvince == modelProvinces.last
+      onTap: () => modelProvince.label == modelProvinces(context).last.label
           ? Navigator.push(
               context, MaterialPageRoute(builder: (_) => ProvinceRoutes()))
           : Navigator.push(
@@ -82,7 +86,7 @@ class _ProvinceCard extends StatelessWidget {
                   (MediaQuery.of(context).size.width - (kHPadding * 2) - 10) /
                       2,
               decoration: BoxDecoration(
-                gradient: modelProvince != modelProvinces.last
+                gradient: modelProvince != modelProvinces(context).last
                     ? Palette.whiteGradient
                     : Palette.blackGradient,
                 borderRadius: BorderRadius.circular(15.0),
@@ -101,7 +105,7 @@ class _ProvinceCard extends StatelessWidget {
                     overflow:
                         kIsWeb ? TextOverflow.clip : TextOverflow.ellipsis,
                   ),
-                  modelProvince == modelProvinces.last
+                  modelProvince == modelProvinces(context).last
                       ? Padding(
                           padding: const EdgeInsets.symmetric(vertical: 8.0),
                           child: Icon(

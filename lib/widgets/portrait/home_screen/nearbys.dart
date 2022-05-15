@@ -5,6 +5,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:geolocator/geolocator.dart';
@@ -162,13 +163,13 @@ class _NearbysState extends State<Nearbys> {
                         const SizedBox(width: 5),
                         Center(
                           child: Text(
-                            'សេវាប្រាប់ទិសតំបន់ត្រូវបានបិទ។ ទីតាំងបានកំណត់នៅភ្នំពេញ។ ',
+                            AppLocalizations.of(context)!.nbLocationClosed,
                             style: Theme.of(context).textTheme.button,
                           ),
                         ),
                         Center(
                           child: Text(
-                            'ចុចលើនិមិត្តសញ្ញាទីតាំងខាងលើ ដើម្បីបើកឡើងវិញ!',
+                            AppLocalizations.of(context)!.nbLocationToOpenWeb,
                             style: Theme.of(context)
                                 .textTheme
                                 .button!
@@ -225,13 +226,14 @@ class _NearbysState extends State<Nearbys> {
                           const SizedBox(width: 5),
                           Center(
                             child: Text(
-                              'សេវាប្រាប់ទិសតំបន់ត្រូវបានបិទ។ ទីតាំងបានកំណត់នៅភ្នំពេញ។ ',
+                              AppLocalizations.of(context)!.nbLocationClosed,
                               style: Theme.of(context).textTheme.button,
                             ),
                           ),
                           Center(
                             child: Text(
-                              'ចុចទីនេះដើម្បីបើកឡើងវិញ!',
+                              AppLocalizations.of(context)!
+                                  .nbLocationToOpenMobile,
                               style: Theme.of(context)
                                   .textTheme
                                   .button!
@@ -248,7 +250,7 @@ class _NearbysState extends State<Nearbys> {
         Padding(
           padding: const EdgeInsets.only(left: kHPadding),
           child: Text(
-            'ទីតាំងក្បែរៗ',
+            AppLocalizations.of(context)!.nbLabel,
             textScaleFactor: textScaleFactor,
             style: Theme.of(context).textTheme.headline3,
           ),
@@ -273,7 +275,7 @@ class _NearbysState extends State<Nearbys> {
                             ),
                             const SizedBox(height: 10),
                             Text(
-                              'មិនមានទិន្នន័យអំពីទីតាំងក្បែរៗ។',
+                              AppLocalizations.of(context)!.nbNoData,
                               style: Theme.of(context).textTheme.bodyText1,
                             ),
                             SizedBox(

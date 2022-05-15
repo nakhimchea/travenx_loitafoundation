@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:travenx_loitafoundation/config/constant.dart'
-    show kCardTileVPadding;
+    show kHPadding, kCardTileVPadding;
 import 'package:travenx_loitafoundation/helpers/post_translator.dart';
 import 'package:travenx_loitafoundation/models/post_object_model.dart';
 import 'package:travenx_loitafoundation/services/firestore_service.dart';
@@ -24,17 +25,18 @@ class CustomTabBar extends StatelessWidget {
         color: Theme.of(context).primaryColor,
         borderRadius: BorderRadius.circular(18.0),
       ),
+      padding: const EdgeInsets.symmetric(horizontal: kHPadding),
       indicatorPadding: const EdgeInsets.symmetric(vertical: 6.0),
       labelColor: Colors.white,
       labelStyle: Theme.of(context).textTheme.button,
       unselectedLabelColor: Theme.of(context).textTheme.button!.color,
       unselectedLabelStyle: Theme.of(context).textTheme.button,
       tabs: [
-        Tab(text: 'កន្លែងថ្មី'),
-        Tab(text: 'ព្រឹត្តិការណ៍ថ្មី'),
-        Tab(text: 'ច្រើនទស្សនា'),
-        Tab(text: 'ល្បីប្រចាំខែ'),
-        Tab(text: 'ទាំងអស់'),
+        Tab(text: AppLocalizations.of(context)!.tbNewPlacesLabel),
+        Tab(text: AppLocalizations.of(context)!.tbNewEventsLabel),
+        Tab(text: AppLocalizations.of(context)!.tbMostVisitsLabel),
+        Tab(text: AppLocalizations.of(context)!.tbMostFamousLabel),
+        Tab(text: AppLocalizations.of(context)!.tbAllPlacesLabel),
       ],
     );
   }
@@ -56,18 +58,17 @@ class CustomTabBarList extends StatefulWidget {
 class _CustomTabBarListState extends State<CustomTabBarList> {
   final FirestoreService _firestoreService = FirestoreService();
 
-  List<String> tabs = [
-    'កន្លែងថ្មី',
-    'ព្រឹត្តិការណ៍ថ្មី',
-    'ច្រើនទស្សនា',
-    'ល្បីប្រចាំខែ',
-    'ទាំងអស់',
-  ];
-
   List<List<PostObject>> tabLists = [];
 
   void setTabBarData() async {
-    for (String tab in tabs)
+    final List<String> _tabs = [
+      'កន្លែងថ្មី',
+      'ព្រឹត្តិការណ៍ថ្មី',
+      'ច្រើនទស្សនា',
+      'ល្បីប្រចាំខែ',
+      'ទាំងអស់'
+    ];
+    for (String tab in _tabs)
       tabLists.add(postTranslator(await _firestoreService
           .getTabBarData(tab)
           .then((snapshot) => snapshot.docs)));

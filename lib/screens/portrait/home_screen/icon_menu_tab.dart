@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:travenx_loitafoundation/config/configs.dart'
@@ -21,7 +22,7 @@ class _IconMenuTabState extends State<IconMenuTab> {
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
-      length: modelIconMenus.length,
+      length: modelIconMenus(context).length,
       initialIndex: widget.initIndex,
       child: Scaffold(
         appBar: AppBar(
@@ -39,7 +40,7 @@ class _IconMenuTabState extends State<IconMenuTab> {
             splashColor: Colors.transparent,
           ),
           title: Text(
-            'តំបន់នីមួយៗ',
+            AppLocalizations.of(context)!.icAppBar,
             textScaleFactor: textScaleFactor,
             style: Theme.of(context).textTheme.headline3,
           ),
@@ -82,7 +83,7 @@ class _IconMenuTabState extends State<IconMenuTab> {
   List<_BuildIconMenuList> _buildIconMenusList({required double vPadding}) {
     List<_BuildIconMenuList> tabBarListItems = [];
 
-    for (int i = 0; i < modelIconMenus.length; i++) {
+    for (int i = 0; i < modelIconMenus(context).length; i++) {
       tabBarListItems.add(_BuildIconMenuList(vPadding: vPadding));
     }
     return tabBarListItems;
@@ -186,7 +187,7 @@ class _BuildIconMenuListState extends State<_BuildIconMenuList> {
         assert(DefaultTabController.of(context) != null);
         postList = postTranslator(await _firestoreService
             .getIconMenuData(
-                modelIconMenus
+                modelIconMenus(context)
                     .elementAt(DefaultTabController.of(context)!.index)
                     .label,
                 _lastDoc)
@@ -204,7 +205,7 @@ class _BuildIconMenuListState extends State<_BuildIconMenuList> {
         postList = List.from(postList)
           ..addAll(postTranslator(await _firestoreService
               .getIconMenuData(
-                  modelIconMenus
+                  modelIconMenus(context)
                       .elementAt(DefaultTabController.of(context)!.index)
                       .label,
                   _lastDoc)
@@ -224,9 +225,9 @@ class _BuildIconMenuListState extends State<_BuildIconMenuList> {
 class _CustomTabBar extends StatelessWidget {
   const _CustomTabBar({Key? key}) : super(key: key);
 
-  List<Tab> _buildTabs() {
+  List<Tab> _buildTabs(BuildContext context) {
     List<Tab> _tabItems = [];
-    for (ModelIconMenu modelIconMenu in modelIconMenus)
+    for (ModelIconMenu modelIconMenu in modelIconMenus(context))
       _tabItems.add(Tab(text: modelIconMenu.label));
 
     return _tabItems;
@@ -246,7 +247,7 @@ class _CustomTabBar extends StatelessWidget {
       labelStyle: Theme.of(context).textTheme.button,
       unselectedLabelColor: Theme.of(context).textTheme.button!.color,
       unselectedLabelStyle: Theme.of(context).textTheme.button,
-      tabs: _buildTabs(),
+      tabs: _buildTabs(context),
     );
   }
 }

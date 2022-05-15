@@ -6,6 +6,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:travenx_loitafoundation/config/configs.dart'
@@ -162,7 +163,7 @@ class _ChatScreenState extends State<ChatScreen> {
           shadowColor: Theme.of(context).disabledColor,
           backgroundColor: Theme.of(context).scaffoldBackgroundColor,
           title: Text(
-            'សារ',
+            AppLocalizations.of(context)!.chatLabel,
             textScaleFactor: textScaleFactor,
             style: Theme.of(context).textTheme.headline1,
           ),
@@ -187,7 +188,7 @@ class _ChatScreenState extends State<ChatScreen> {
                     ),
                     const SizedBox(height: 10),
                     Text(
-                      'មិនមានទិន្នន័យសារ។',
+                      AppLocalizations.of(context)!.chatNoData,
                       style: Theme.of(context).textTheme.bodyText1,
                     ),
                     SizedBox(height: MediaQuery.of(context).size.height / 10),
@@ -248,7 +249,7 @@ class _ChatScreenState extends State<ChatScreen> {
                           ),
                           const SizedBox(height: 10),
                           Text(
-                            'មិនមានទិន្នន័យសារ។',
+                            AppLocalizations.of(context)!.chatNoData,
                             style: Theme.of(context).textTheme.bodyText1,
                           ),
                           SizedBox(
@@ -406,25 +407,25 @@ class _ActionOptions extends StatelessWidget {
         itemBuilder: (context) => [
           PopupMenuItem<int>(
             value: 0,
-            child: const PopUpListTile(
+            child: PopUpListTile(
               iconData: Icons.logout,
-              title: 'សន្មត់ថាបានអានទាំងអស់',
+              title: AppLocalizations.of(context)!.chatPopMarkAsRead,
             ),
           ),
           PopupMenuDivider(),
           PopupMenuItem<int>(
             value: 1,
-            child: const PopUpListTile(
+            child: PopUpListTile(
               iconData: Icons.logout,
-              title: 'សារដែលបានខ្ចប់',
+              title: AppLocalizations.of(context)!.chatPopArchive,
             ),
           ),
           PopupMenuDivider(),
           PopupMenuItem<int>(
             value: 2,
-            child: const PopUpListTile(
+            child: PopUpListTile(
               iconData: Icons.logout,
-              title: 'រាយការណ៍បញ្ហា',
+              title: AppLocalizations.of(context)!.chatPopReport,
             ),
           ),
         ],

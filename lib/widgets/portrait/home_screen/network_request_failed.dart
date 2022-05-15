@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:travenx_loitafoundation/config/configs.dart'
     show kHPadding, textScaleFactor;
 import 'package:travenx_loitafoundation/icons/icons.dart';
@@ -25,7 +26,7 @@ class NetworkRequestFailed extends StatelessWidget {
           const SizedBox(width: 10),
           Center(
             child: Text(
-              'អ៉ីនធឺណែត៖ មិនដំណើរការ។ សូមព្យាយាមម្តងទៀត!',
+              AppLocalizations.of(context)!.noNetwork,
               textScaleFactor: textScaleFactor,
               style: Theme.of(context)
                   .textTheme

@@ -2,6 +2,7 @@ import 'dart:io' show Platform;
 
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:travenx_loitafoundation/config/variable.dart';
 import 'package:travenx_loitafoundation/icons/icons.dart';
 import 'package:travenx_loitafoundation/providers/custom_nav_bar.dart';
@@ -35,15 +36,27 @@ class PortraitBody extends StatefulWidget {
 class _PortraitBodyState extends State<PortraitBody> {
   List<Widget> _screens = [];
 
-  final Map<String, List<IconData>> _icons = const {
-    'ទំព័រដើម': [CustomOutlinedIcons.home, CustomFilledIcons.home],
-    'សារ': [CustomOutlinedIcons.message, CustomFilledIcons.message],
-    'កាបូប': [CustomOutlinedIcons.wallet, CustomFilledIcons.wallet],
-    'គណនី': [CustomOutlinedIcons.user, CustomFilledIcons.user],
-  };
-
   @override
   Widget build(BuildContext context) {
+    final Map<String, List<IconData>> _icons = {
+      AppLocalizations.of(context)!.bNavHome: [
+        CustomOutlinedIcons.home,
+        CustomFilledIcons.home
+      ],
+      AppLocalizations.of(context)!.bNavChat: [
+        CustomOutlinedIcons.message,
+        CustomFilledIcons.message
+      ],
+      AppLocalizations.of(context)!.bNavWallet: [
+        CustomOutlinedIcons.wallet,
+        CustomFilledIcons.wallet
+      ],
+      AppLocalizations.of(context)!.bNavAccount: [
+        CustomOutlinedIcons.user,
+        CustomFilledIcons.user
+      ],
+    };
+
     setState(() => _screens = [
           HomeScreen(),
           ChatScreen(

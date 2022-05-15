@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:travenx_loitafoundation/config/configs.dart'
@@ -57,7 +58,7 @@ class _ProvinceRoutesState extends State<ProvinceRoutes> {
               splashColor: Colors.transparent,
             ),
             title: Text(
-              'ខេត្ត/ក្រុងទាំងអស់',
+              AppLocalizations.of(context)!.pvAppBar,
               textScaleFactor: textScaleFactor,
               style: Theme.of(context).textTheme.headline3,
             ),
@@ -92,16 +93,18 @@ class _ProvinceRoutesState extends State<ProvinceRoutes> {
                     height: MediaQuery.of(context).size.height / 8.12 +
                         kCardTileVPadding,
                     child: _ProvincesItem(
-                      modelProvince: modelProvinces.elementAt(index),
+                      modelProvince: modelProvinces(context).elementAt(index),
                       totalPosts: postCounters == null
                           ? '0'
-                          : postCounters![modelProvinces.elementAt(index).label]
-                              .toString(),
+                          : postCounters![modelProvinces(context)
+                                  .elementAt(index)
+                                  .label] ??
+                              '0'.toString(),
                       vPadding: kCardTileVPadding,
                     ),
                   );
                 },
-                childCount: modelProvinces.length - 1,
+                childCount: modelProvinces(context).length - 1,
               ),
             ),
           ),
@@ -181,7 +184,7 @@ class _ProvincesItem extends StatelessWidget {
                     Row(
                       children: [
                         Text(
-                          'ទីតាំងសរុប៖ ',
+                          AppLocalizations.of(context)!.pvCountPlaces,
                           textScaleFactor: textScaleFactor,
                           style: Theme.of(context).textTheme.button,
                         ),
@@ -306,7 +309,7 @@ class _ProvinceListState extends State<_ProvinceList> {
                       padding: const EdgeInsets.symmetric(
                           horizontal: kHPadding, vertical: 6.0),
                       child: Text(
-                        'ទីតាំងទាំងអស់',
+                        AppLocalizations.of(context)!.pvTitle,
                         textScaleFactor: textScaleFactor,
                         style: Theme.of(context).textTheme.headline3,
                       ),
@@ -474,7 +477,12 @@ class _ProvinceCover extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Text(
-                (modelProvince.label == 'ភ្នំពេញ' ? 'រាជធានី' : 'ខេត្ត') +
+                (AppLocalizations.of(context)!.localeName == 'km'
+                        ? modelProvince.label ==
+                                AppLocalizations.of(context)!.pvPhnomPenh
+                            ? 'រាជធានី'
+                            : 'ខេត្ត'
+                        : '') +
                     modelProvince.label,
                 textScaleFactor: textScaleFactor,
                 style: Theme.of(context)
@@ -486,7 +494,7 @@ class _ProvinceCover extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
-                    'ទីតាំងសរុប៖ ',
+                    AppLocalizations.of(context)!.pvCountPlaces,
                     textScaleFactor: textScaleFactor,
                     style: Theme.of(context)
                         .textTheme

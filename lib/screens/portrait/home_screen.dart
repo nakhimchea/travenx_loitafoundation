@@ -2,6 +2,7 @@ import 'dart:async' show StreamSubscription;
 
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:travenx_loitafoundation/config/configs.dart'
@@ -51,12 +52,12 @@ class _HomeScreenState extends State<HomeScreen>
         child: SmartRefresher(
           controller: _refreshController,
           physics: const BouncingScrollPhysics(),
-          header: const ClassicHeader(
-            refreshingText: 'កំពុងទាញយកទិន្នន័យ',
-            failedText: 'ទាញយកទិន្នន័យបរាជ័យ',
-            completeText: 'ទាញយកទិន្នន័យរួចរាល់',
-            idleText: 'ទាញចុះក្រោមទៀត',
-            releaseText: 'កំពុងទាញយកទិន្នន័យ',
+          header: ClassicHeader(
+            refreshingText: AppLocalizations.of(context)!.rRefreshingText,
+            failedText: AppLocalizations.of(context)!.rFailedText,
+            completeText: AppLocalizations.of(context)!.rCompleteText,
+            idleText: AppLocalizations.of(context)!.rIdleText,
+            releaseText: AppLocalizations.of(context)!.rReleaseText,
           ),
           onRefresh: () {
             _needRefresh = true;
@@ -159,7 +160,6 @@ class PersistentHeader extends SliverPersistentHeaderDelegate {
   Widget build(
       BuildContext context, double shrinkOffset, bool overlapsContent) {
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: kHPadding),
       width: MediaQuery.of(context).size.width - 2 * kHPadding,
       height: 55.0,
       color: Theme.of(context).scaffoldBackgroundColor,

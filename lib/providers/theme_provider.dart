@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:travenx_loitafoundation/config/palette.dart';
 
 class ThemeProvider extends ChangeNotifier {
-  ThemeMode themeMode = ThemeMode.light;
+  ThemeMode? themeMode;
 
   bool get isLightMode => themeMode == ThemeMode.light;
 

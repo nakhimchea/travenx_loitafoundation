@@ -8,6 +8,8 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:provider/provider.dart';
 import 'package:travenx_loitafoundation/config/variable.dart';
+import 'package:travenx_loitafoundation/l10n/locales.dart';
+import 'package:travenx_loitafoundation/providers/locale_provider.dart';
 import 'package:travenx_loitafoundation/providers/responsive_widget.dart';
 import 'package:travenx_loitafoundation/providers/theme_provider.dart';
 import 'package:travenx_loitafoundation/widgets/custom_loading.dart';
@@ -39,23 +41,31 @@ Future<void> main() async {
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      create: (context) => ThemeProvider(),
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider<ThemeProvider>(
+          create: (context) => ThemeProvider(),
+        ),
+        ChangeNotifierProvider<LocaleProvider>(
+          create: (context) => LocaleProvider(),
+        ),
+      ],
       builder: (context, _) {
         final themeProvider = Provider.of<ThemeProvider>(context);
+        final localeProvider = Provider.of<LocaleProvider>(context);
         return MaterialApp(
           debugShowCheckedModeBanner: false,
           title: 'Travenx',
-          locale: Locale.fromSubtags(
-              languageCode: 'km'), //TODO: Change this to variable
+          locale:
+              localeProvider.locale ?? Locale.fromSubtags(languageCode: 'en'),
           localizationsDelegates: [
             AppLocalizations.delegate,
             GlobalMaterialLocalizations.delegate,
             GlobalWidgetsLocalizations.delegate,
             GlobalCupertinoLocalizations.delegate,
           ],
-          supportedLocales: const [Locale('km'), Locale('en', 'US')],
-          themeMode: themeProvider.themeMode,
+          supportedLocales: Locales.languages,
+          themeMode: themeProvider.themeMode ?? ThemeMode.light,
           theme: Travenx.lightTheme,
           darkTheme: Travenx.darkTheme,
           home: ResponsiveDecider(),

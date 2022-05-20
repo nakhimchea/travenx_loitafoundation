@@ -69,9 +69,11 @@ class _CustomTabBarListState extends State<CustomTabBarList> {
       'ទាំងអស់'
     ];
     for (String tab in _tabs)
-      tabLists.add(postTranslator(await _firestoreService
-          .getTabBarData(tab)
-          .then((snapshot) => snapshot.docs)));
+      tabLists.add(postTranslator(
+          context,
+          await _firestoreService
+              .getTabBarData(tab)
+              .then((snapshot) => snapshot.docs)));
   }
 
   @override

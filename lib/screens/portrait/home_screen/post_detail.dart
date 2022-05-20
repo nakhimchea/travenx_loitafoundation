@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:travenx_loitafoundation/config/configs.dart'
     show kHPadding, kVPadding, textScaleFactor, selectedIndex;
@@ -102,8 +103,8 @@ class _PostDetailState extends State<PostDetail> {
                 bottom: kVPadding + 16.0,
               ),
               color: Theme.of(context).bottomAppBarColor,
-              child: const Center(
-                child: Text('កន្លែងនេះជារបស់អ្នក!'),
+              child: Center(
+                child: Text(AppLocalizations.of(context)!.pdThisPlaceIsYours),
               ),
             )
           : Container(
@@ -223,7 +224,7 @@ class _PostDetailState extends State<PostDetail> {
                         borderRadius: BorderRadius.circular(15.0),
                       ),
                       child: Text(
-                        'ផលិតផល និង សេវាកម្ម',
+                        AppLocalizations.of(context)!.pdProductAndServices,
                         textScaleFactor: textScaleFactor,
                         style: Theme.of(context)
                             .textTheme

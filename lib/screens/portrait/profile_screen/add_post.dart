@@ -3,6 +3,7 @@ import 'dart:io' show Platform;
 
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:geolocator/geolocator.dart' show Geolocator;
 import 'package:image_picker/image_picker.dart';
@@ -140,8 +141,9 @@ class _AddPostState extends State<AddPost> {
 
       if (mounted)
         setState(() {
-          _state = cityNameTranslator(enCityName: _enStateName);
-          _country = countryNameTranslator(enCountryName: _enCountryName);
+          _state = cityNameTranslator(context, enCityName: _enStateName);
+          _country =
+              countryNameTranslator(context, enCountryName: _enCountryName);
           _positionCoordination = _coordination;
         });
       if (_weatherForecast == null) _getWeatherForecast();
@@ -189,7 +191,7 @@ class _AddPostState extends State<AddPost> {
           splashColor: Colors.transparent,
         ),
         title: Text(
-          'បង្ហោះទីតាំង ឬអាជីវកម្ម',
+          AppLocalizations.of(context)!.pfAddPost,
           textScaleFactor: textScaleFactor,
           style: Theme.of(context).textTheme.headline3,
         ),
@@ -213,7 +215,7 @@ class _AddPostState extends State<AddPost> {
                 });
               },
               child: Text(
-                'រំលង',
+                AppLocalizations.of(context)!.skipLabel,
                 style: Theme.of(context).textTheme.bodyText1,
               ),
             ),
@@ -233,7 +235,7 @@ class _AddPostState extends State<AddPost> {
               child: Expanded(
                 child: StepperNavigationButton(
                   backgroundColor: Theme.of(context).disabledColor,
-                  label: 'ថយក្រោយ',
+                  label: AppLocalizations.of(context)!.backLabel,
                   textStyle: Theme.of(context).textTheme.bodyText1,
                   onPressed: () => setState(() => currentStep--),
                 ),
@@ -245,7 +247,9 @@ class _AddPostState extends State<AddPost> {
                 backgroundColor: _agreementChecked
                     ? Theme.of(context).primaryColor
                     : Theme.of(context).disabledColor,
-                label: currentStep == 3 ? 'បង្ហោះ' : 'បន្ទាប់',
+                label: currentStep == 3
+                    ? AppLocalizations.of(context)!.postLabel
+                    : AppLocalizations.of(context)!.nextLabel,
                 textStyle: Theme.of(context)
                     .textTheme
                     .bodyText1!
@@ -363,13 +367,15 @@ class _AddPostState extends State<AddPost> {
                                 const SizedBox(width: 5),
                                 Center(
                                   child: Text(
-                                    'សេវាប្រាប់ទិសតំបន់ត្រូវបានបិទ។ ',
+                                    AppLocalizations.of(context)!
+                                        .locationClosed,
                                     style: Theme.of(context).textTheme.button,
                                   ),
                                 ),
                                 Center(
                                   child: Text(
-                                    'ចុចលើនិមិត្តសញ្ញាទីតាំងខាងលើ ដើម្បីបើកឡើងវិញ!',
+                                    AppLocalizations.of(context)!
+                                        .locationToOpenWeb,
                                     style: Theme.of(context)
                                         .textTheme
                                         .button!
@@ -425,13 +431,15 @@ class _AddPostState extends State<AddPost> {
                                   const SizedBox(width: 5),
                                   Center(
                                     child: Text(
-                                      'សេវាប្រាប់ទិសតំបន់ត្រូវបានបិទ។ ',
+                                      AppLocalizations.of(context)!
+                                          .locationClosed,
                                       style: Theme.of(context).textTheme.button,
                                     ),
                                   ),
                                   Center(
                                     child: Text(
-                                      'ចុចទីនេះដើម្បីបើកឡើងវិញ!',
+                                      AppLocalizations.of(context)!
+                                          .locationToOpenMobile,
                                       style: Theme.of(context)
                                           .textTheme
                                           .button!
@@ -618,28 +626,28 @@ class _AddPostState extends State<AddPost> {
       for (CategoryType categoryType in _categoryTypes)
         switch (categoryType) {
           case CategoryType.camping:
-            _categories.add('បោះតង់');
+            _categories.add(AppLocalizations.of(context)!.icCamping);
             break;
           case CategoryType.sea:
-            _categories.add('សមុទ្រ');
+            _categories.add(AppLocalizations.of(context)!.icSea);
             break;
           case CategoryType.temple:
-            _categories.add('ប្រាសាទ');
+            _categories.add(AppLocalizations.of(context)!.icTemple);
             break;
           case CategoryType.mountain:
-            _categories.add('ភ្នំ');
+            _categories.add(AppLocalizations.of(context)!.icMountain);
             break;
           case CategoryType.park:
-            _categories.add('ឧទ្យាន');
+            _categories.add(AppLocalizations.of(context)!.icPark);
             break;
           case CategoryType.resort:
-            _categories.add('រមណីយដ្ឋាន');
+            _categories.add(AppLocalizations.of(context)!.icResort);
             break;
           case CategoryType.zoo:
-            _categories.add('សួនសត្វ');
+            _categories.add(AppLocalizations.of(context)!.icZoo);
             break;
           case CategoryType.locations:
-            _categories.add('តំបន់ផ្សេងៗ');
+            _categories.add(AppLocalizations.of(context)!.icLocations);
             break;
           default:
             break;
@@ -647,28 +655,30 @@ class _AddPostState extends State<AddPost> {
       _openHours = timeOpenEnabled && timeCloseEnabled
           ? '${timeTranslator(_openHour)} - ${timeTranslator(_closeHour)}'
           : timeOpenEnabled
-              ? 'ចាប់ពីម៉ោង ${timeTranslator(_openHour)}'
+              ? AppLocalizations.of(context)!.pfApFromTime +
+                  '${timeTranslator(_openHour)}'
               : timeCloseEnabled
-                  ? 'ដល់ម៉ោង ${timeTranslator(_closeHour)}'
+                  ? AppLocalizations.of(context)!.pfApToTime +
+                      '${timeTranslator(_closeHour)}'
                   : '';
       _announcement = _announcementController.text.trim();
       _activities = [];
       for (ActivityType activityType in _activityTypes)
         switch (activityType) {
           case ActivityType.boating:
-            _activities.add(boating);
+            _activities.add(boating(context));
             break;
           case ActivityType.diving:
-            _activities.add(diving);
+            _activities.add(diving(context));
             break;
           case ActivityType.fishing:
-            _activities.add(fishing);
+            _activities.add(fishing(context));
             break;
           case ActivityType.relaxing:
-            _activities.add(relaxing);
+            _activities.add(relaxing(context));
             break;
           case ActivityType.swimming:
-            _activities.add(swimming);
+            _activities.add(swimming(context));
             break;
           default:
             break;
@@ -797,7 +807,7 @@ class _Steps extends StatelessWidget {
             child: Column(
               children: [
                 Text(
-                  'ទីតាំង',
+                  AppLocalizations.of(context)!.pfApLocation,
                   textScaleFactor: textScaleFactor,
                   style: Theme.of(context).textTheme.bodyText1!.copyWith(
                         color: currentStep == 0
@@ -829,7 +839,7 @@ class _Steps extends StatelessWidget {
             child: Column(
               children: [
                 Text(
-                  'ចាំបាច់',
+                  AppLocalizations.of(context)!.pfApBasic,
                   textScaleFactor: textScaleFactor,
                   style: Theme.of(context).textTheme.bodyText1!.copyWith(
                         color: currentStep == 1
@@ -861,7 +871,7 @@ class _Steps extends StatelessWidget {
             child: Column(
               children: [
                 Text(
-                  'បន្ថែម',
+                  AppLocalizations.of(context)!.pfApAdditional,
                   textScaleFactor: textScaleFactor,
                   style: Theme.of(context).textTheme.bodyText1!.copyWith(
                         color: currentStep == 2
@@ -893,7 +903,7 @@ class _Steps extends StatelessWidget {
             child: Column(
               children: [
                 Text(
-                  'ពិនិត្យ',
+                  AppLocalizations.of(context)!.pfApPreview,
                   textScaleFactor: textScaleFactor,
                   style: Theme.of(context).textTheme.bodyText1!.copyWith(
                         color: currentStep == 3

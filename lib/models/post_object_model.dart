@@ -1,4 +1,5 @@
-import 'package:flutter/widgets.dart' show Widget;
+import 'package:flutter/widgets.dart' show BuildContext, Widget;
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class PostObject {
@@ -39,30 +40,30 @@ class PostObject {
   });
 }
 
-final Activity boating = Activity(
-  image: SvgPicture.asset('assets/images/home_screen/sub/boating.svg'),
-  label: 'ជិះទូក',
-);
+Activity boating(BuildContext context) => Activity(
+      image: SvgPicture.asset('assets/images/home_screen/sub/boating.svg'),
+      label: AppLocalizations.of(context)!.pdActivityBoating,
+    );
 
-final Activity diving = Activity(
-  image: SvgPicture.asset('assets/images/home_screen/sub/diving.svg'),
-  label: 'មើលផ្កាថ្ម',
-);
+Activity diving(BuildContext context) => Activity(
+      image: SvgPicture.asset('assets/images/home_screen/sub/diving.svg'),
+      label: AppLocalizations.of(context)!.pdActivityDiving,
+    );
 
-final Activity fishing = Activity(
-  image: SvgPicture.asset('assets/images/home_screen/sub/fishing.svg'),
-  label: 'ស្ទូចត្រី',
-);
+Activity fishing(BuildContext context) => Activity(
+      image: SvgPicture.asset('assets/images/home_screen/sub/fishing.svg'),
+      label: AppLocalizations.of(context)!.pdActivityFishing,
+    );
 
-final Activity relaxing = Activity(
-  image: SvgPicture.asset('assets/images/home_screen/sub/relaxing.svg'),
-  label: 'លំហែកាយ',
-);
+Activity relaxing(BuildContext context) => Activity(
+      image: SvgPicture.asset('assets/images/home_screen/sub/relaxing.svg'),
+      label: AppLocalizations.of(context)!.pdActivityRelaxing,
+    );
 
-final Activity swimming = Activity(
-  image: SvgPicture.asset('assets/images/home_screen/sub/swimming.svg'),
-  label: 'ហែលទឹក',
-);
+Activity swimming(BuildContext context) => Activity(
+      image: SvgPicture.asset('assets/images/home_screen/sub/swimming.svg'),
+      label: AppLocalizations.of(context)!.pdActivitySwimming,
+    );
 
 class Activity {
   final Widget image;

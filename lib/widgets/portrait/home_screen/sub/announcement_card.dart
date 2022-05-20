@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:travenx_loitafoundation/config/configs.dart'
     show kHPadding, textScaleFactor;
 
@@ -28,7 +29,7 @@ class AnnouncementCard extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                'សេចក្ដីជូនដំណឹង',
+                AppLocalizations.of(context)!.pdAnnouncementLabel,
                 textScaleFactor: textScaleFactor,
                 style: Theme.of(context).textTheme.subtitle1!.copyWith(
                       fontSize: 16.0,
@@ -61,7 +62,7 @@ class AnnouncementCard extends StatelessWidget {
                               .copyWith(fontWeight: FontWeight.w400),
                           children: [
                             TextSpan(
-                              text: ' អានបន្ថែម',
+                              text: AppLocalizations.of(context)!.pdReadmore,
                               style: Theme.of(context)
                                   .textTheme
                                   .headline4!

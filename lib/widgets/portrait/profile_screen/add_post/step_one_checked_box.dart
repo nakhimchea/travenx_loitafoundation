@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:travenx_loitafoundation/config/configs.dart'
     show kHPadding, textScaleFactor;
 
@@ -45,7 +46,7 @@ class StepOneCheckedBox extends StatelessWidget {
             const SizedBox(width: 10),
             Expanded(
               child: Text(
-                'យល់ព្រមបើកសេវាប្រាប់ទិសតំបន់ និង ទទួលស្គាល់ថាលោកអ្នកបាននៅទីតាំង ឬអាជីវកម្មផ្ទាល់។',
+                AppLocalizations.of(context)!.pfApSoCheckbox,
                 textAlign: TextAlign.justify,
                 textScaleFactor: textScaleFactor,
                 style: Theme.of(context).textTheme.bodyText1!.copyWith(

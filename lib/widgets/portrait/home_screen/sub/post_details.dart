@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:readmore/readmore.dart';
 import 'package:travenx_loitafoundation/config/configs.dart'
     show kHPadding, textScaleFactor;
@@ -15,7 +16,7 @@ class PostDetails extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
         Text(
-          'លំអិត',
+          AppLocalizations.of(context)!.pdDetailsLabel,
           textScaleFactor: textScaleFactor,
           style: Theme.of(context).textTheme.headline3,
         ),
@@ -26,8 +27,8 @@ class PostDetails extends StatelessWidget {
           trimLines: 5,
           textAlign: TextAlign.justify,
           trimMode: TrimMode.Line,
-          trimCollapsedText: 'អានបន្ថែម',
-          trimExpandedText: 'រួចរាល់',
+          trimCollapsedText: AppLocalizations.of(context)!.pdReadmore,
+          trimExpandedText: AppLocalizations.of(context)!.doneLabel,
           style: Theme.of(context).textTheme.bodyText1,
           moreStyle: Theme.of(context)
               .textTheme
@@ -56,7 +57,8 @@ class PostDetails extends StatelessWidget {
             splashColor: Colors.transparent,
             highlightColor: Colors.transparent,
             child: Text(
-              'ចូលទៅកាន់ Google Map',
+              AppLocalizations.of(context)!.pdDetailsGetDirection +
+                  ' Google Map',
               textScaleFactor: textScaleFactor,
               style: Theme.of(context)
                   .textTheme

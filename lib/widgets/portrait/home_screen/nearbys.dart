@@ -127,7 +127,8 @@ class _NearbysState extends State<Nearbys> {
       final String _enCityName =
           jsonDecode(_responseBody)[0]['state'].toString();
 
-      setState(() => cityName = cityNameTranslator(enCityName: _enCityName));
+      setState(() =>
+          cityName = cityNameTranslator(context, enCityName: _enCityName));
     } else
       setState(() => cityName = 'denied');
   }
@@ -163,13 +164,14 @@ class _NearbysState extends State<Nearbys> {
                         const SizedBox(width: 5),
                         Center(
                           child: Text(
-                            AppLocalizations.of(context)!.nbLocationClosed,
+                            AppLocalizations.of(context)!.locationClosed +
+                                AppLocalizations.of(context)!.locationSet,
                             style: Theme.of(context).textTheme.button,
                           ),
                         ),
                         Center(
                           child: Text(
-                            AppLocalizations.of(context)!.nbLocationToOpenWeb,
+                            AppLocalizations.of(context)!.locationToOpenWeb,
                             style: Theme.of(context)
                                 .textTheme
                                 .button!
@@ -226,14 +228,15 @@ class _NearbysState extends State<Nearbys> {
                           const SizedBox(width: 5),
                           Center(
                             child: Text(
-                              AppLocalizations.of(context)!.nbLocationClosed,
+                              AppLocalizations.of(context)!.locationClosed +
+                                  AppLocalizations.of(context)!.locationSet,
                               style: Theme.of(context).textTheme.button,
                             ),
                           ),
                           Center(
                             child: Text(
                               AppLocalizations.of(context)!
-                                  .nbLocationToOpenMobile,
+                                  .locationToOpenMobile,
                               style: Theme.of(context)
                                   .textTheme
                                   .button!
@@ -297,16 +300,20 @@ class _NearbysState extends State<Nearbys> {
                           builder: _loadingBuilder,
                         ),
                         onRefresh: () async {
-                          postList = postTranslator(await _firestoreService
-                              .getProvinceData(
-                                  cityName == 'denied' ? 'ភ្នំពេញ' : cityName,
-                                  _lastDoc)
-                              .then((snapshot) {
-                            setState(() => snapshot.docs.isNotEmpty
-                                ? _lastDoc = snapshot.docs.last
-                                : _isLoadable = false);
-                            return snapshot.docs;
-                          }));
+                          postList = postTranslator(
+                              context,
+                              await _firestoreService
+                                  .getProvinceData(
+                                      cityName == 'denied'
+                                          ? 'ភ្នំពេញ'
+                                          : cityName,
+                                      _lastDoc)
+                                  .then((snapshot) {
+                                setState(() => snapshot.docs.isNotEmpty
+                                    ? _lastDoc = snapshot.docs.last
+                                    : _isLoadable = false);
+                                return snapshot.docs;
+                              }));
                           if (postList.length == 0)
                             setState(() => hasNoData = true);
                           if (mounted) setState(() => _isRefreshable = false);
@@ -314,16 +321,20 @@ class _NearbysState extends State<Nearbys> {
                         },
                         onLoading: () async {
                           postList = List.from(postList)
-                            ..addAll(postTranslator(await _firestoreService
-                                .getProvinceData(
-                                    cityName == 'denied' ? 'ភ្នំពេញ' : cityName,
-                                    _lastDoc)
-                                .then((snapshot) {
-                              setState(() => snapshot.docs.isNotEmpty
-                                  ? _lastDoc = snapshot.docs.last
-                                  : _isLoadable = false);
-                              return snapshot.docs;
-                            })));
+                            ..addAll(postTranslator(
+                                context,
+                                await _firestoreService
+                                    .getProvinceData(
+                                        cityName == 'denied'
+                                            ? 'ភ្នំពេញ'
+                                            : cityName,
+                                        _lastDoc)
+                                    .then((snapshot) {
+                                  setState(() => snapshot.docs.isNotEmpty
+                                      ? _lastDoc = snapshot.docs.last
+                                      : _isLoadable = false);
+                                  return snapshot.docs;
+                                })));
                           if (mounted) setState(() {});
                           _refreshController.loadComplete();
                         },
@@ -455,12 +466,12 @@ class _NearbyCardState extends State<_NearbyCard> {
                           Padding(
                             padding: const EdgeInsets.only(left: 5.0),
                             child: Text(
-                              (widget.post.state == 'ភ្នំពេញ'
-                                      ? 'រាជធានី'
-                                      : 'ខេត្ត') +
-                                  widget.post.state +
-                                  ' ' +
-                                  widget.post.country,
+                              (AppLocalizations.of(context)!.localeName == 'km'
+                                      ? widget.post.state == 'ភ្នំពេញ'
+                                          ? 'រាជធានី'
+                                          : 'ខេត្ត'
+                                      : '') +
+                                  widget.post.state,
                               textScaleFactor: textScaleFactor,
                               style: Theme.of(context).textTheme.bodyText2,
                               overflow: kIsWeb

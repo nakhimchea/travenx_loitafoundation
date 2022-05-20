@@ -1,8 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/widgets.dart' show BuildContext;
 import 'package:travenx_loitafoundation/models/post_object_model.dart';
 
 List<PostObject> postTranslator(
-    List<DocumentSnapshot<Map<String, dynamic>>> posts) {
+    BuildContext context, List<DocumentSnapshot<Map<String, dynamic>>> posts) {
   List<PostObject> _postObjects = [];
 
   for (var post in posts) {
@@ -52,19 +53,19 @@ List<PostObject> postTranslator(
       for (var activity in post.get('activities')) {
         switch (activity.toString()) {
           case 'ជិះទូក':
-            _activities.add(boating);
+            _activities.add(boating(context));
             break;
           case 'មើលផ្កាថ្ម':
-            _activities.add(diving);
+            _activities.add(diving(context));
             break;
           case 'ស្ទូចត្រី':
-            _activities.add(fishing);
+            _activities.add(fishing(context));
             break;
           case 'លំហែកាយ':
-            _activities.add(relaxing);
+            _activities.add(relaxing(context));
             break;
           case 'ហែលទឹក':
-            _activities.add(swimming);
+            _activities.add(swimming(context));
             break;
           default:
             break;

@@ -1,9 +1,11 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:travenx_loitafoundation/config/configs.dart';
 import 'package:travenx_loitafoundation/services/authentication_service.dart';
 import 'package:travenx_loitafoundation/widgets/custom_loading.dart';
+import 'package:travenx_loitafoundation/widgets/loading_dialog.dart';
 
 class LoginTextField extends StatefulWidget {
   final String logoUrl;
@@ -91,10 +93,14 @@ class _LoginTextFieldState extends State<LoginTextField> {
                         padding: const EdgeInsets.only(left: 30.0),
                         child: Image.asset(
                           widget.logoUrl,
-                          width:
-                              widget.hintText == 'បញ្ចូលលេខកូដ' ? 36.0 : 22.0,
-                          height:
-                              widget.hintText == 'បញ្ចូលលេខកូដ' ? 36.0 : 22.0,
+                          width: widget.hintText ==
+                                  AppLocalizations.of(context)!.lgEnterCode
+                              ? 36.0
+                              : 22.0,
+                          height: widget.hintText ==
+                                  AppLocalizations.of(context)!.lgEnterCode
+                              ? 36.0
+                              : 22.0,
                         ),
                       ),
                       const SizedBox(width: 20.0),
@@ -139,6 +145,11 @@ class _LoginTextFieldState extends State<LoginTextField> {
                                         visible: widget.isCodeSent,
                                         child: TextButton(
                                           onPressed: () async {
+                                            showDialog(
+                                                barrierDismissible: false,
+                                                context: context,
+                                                builder: (context) =>
+                                                    LoadingDialog());
                                             widget.showLoginCallback();
                                             setState(() => _isLoading = true);
                                             await AuthService()
@@ -152,6 +163,7 @@ class _LoginTextFieldState extends State<LoginTextField> {
                                                   () => _isLoading = false);
                                               widget.showLoginCallback();
                                             });
+                                            Navigator.pop(context);
                                           },
                                           style: ButtonStyle(
                                             overlayColor: MaterialStateProperty
@@ -160,7 +172,8 @@ class _LoginTextFieldState extends State<LoginTextField> {
                                             ),
                                           ),
                                           child: Text(
-                                            'ផ្ញើលេខកូដ',
+                                            AppLocalizations.of(context)!
+                                                .lgSendCode,
                                             textScaleFactor: textScaleFactor,
                                             style: Theme.of(context)
                                                 .textTheme
@@ -173,7 +186,8 @@ class _LoginTextFieldState extends State<LoginTextField> {
                                       ),
                                       Visibility(
                                         visible: !widget.isCodeSent,
-                                        child: Text('$_countSeconds វិនាទី',
+                                        child: Text(
+                                            '$_countSeconds ${AppLocalizations.of(context)!.lgSecond + ((AppLocalizations.of(context)!.localeName == 'en' && _countSeconds > 1) ? 's' : '')}',
                                             textScaleFactor: textScaleFactor,
                                             style: Theme.of(context)
                                                 .textTheme
@@ -186,7 +200,7 @@ class _LoginTextFieldState extends State<LoginTextField> {
                                       ),
                                     ],
                                   )
-                                : SizedBox.shrink(),
+                                : const SizedBox.shrink(),
                           ],
                         ),
                       ),

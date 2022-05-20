@@ -96,10 +96,11 @@ class _ProvinceRoutesState extends State<ProvinceRoutes> {
                       modelProvince: modelProvinces(context).elementAt(index),
                       totalPosts: postCounters == null
                           ? '0'
-                          : postCounters![modelProvinces(context)
-                                  .elementAt(index)
-                                  .label] ??
-                              '0'.toString(),
+                          : (postCounters![modelProvinces(context)
+                                      .elementAt(index)
+                                      .label] ??
+                                  '0')
+                              .toString(),
                       vPadding: kCardTileVPadding,
                     ),
                   );
@@ -411,27 +412,31 @@ class _ProvinceListState extends State<_ProvinceList> {
         builder: _loadingBuilder,
       ),
       onRefresh: () async {
-        postList = postTranslator(await _firestoreService
-            .getProvinceData(widget.modelProvince.label, _lastDoc)
-            .then((snapshot) {
-          setState(() => snapshot.docs.isNotEmpty
-              ? _lastDoc = snapshot.docs.last
-              : _isLoadable = false);
-          return snapshot.docs;
-        }));
+        postList = postTranslator(
+            context,
+            await _firestoreService
+                .getProvinceData(widget.modelProvince.label, _lastDoc)
+                .then((snapshot) {
+              setState(() => snapshot.docs.isNotEmpty
+                  ? _lastDoc = snapshot.docs.last
+                  : _isLoadable = false);
+              return snapshot.docs;
+            }));
         if (mounted) setState(() => _isRefreshable = false);
         _refreshController.refreshCompleted();
       },
       onLoading: () async {
         postList = List.from(postList)
-          ..addAll(postTranslator(await _firestoreService
-              .getProvinceData(widget.modelProvince.label, _lastDoc)
-              .then((snapshot) {
-            setState(() => snapshot.docs.isNotEmpty
-                ? _lastDoc = snapshot.docs.last
-                : _isLoadable = false);
-            return snapshot.docs;
-          })));
+          ..addAll(postTranslator(
+              context,
+              await _firestoreService
+                  .getProvinceData(widget.modelProvince.label, _lastDoc)
+                  .then((snapshot) {
+                setState(() => snapshot.docs.isNotEmpty
+                    ? _lastDoc = snapshot.docs.last
+                    : _isLoadable = false);
+                return snapshot.docs;
+              })));
         if (mounted) setState(() {});
         _refreshController.loadComplete();
       },

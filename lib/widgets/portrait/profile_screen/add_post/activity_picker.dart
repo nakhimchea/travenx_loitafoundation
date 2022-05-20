@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:travenx_loitafoundation/config/configs.dart'
     show kHPadding, textScaleFactor;
 import 'package:travenx_loitafoundation/helpers/activity_type.dart';
@@ -21,7 +22,7 @@ class ActivityPicker extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Text(
-            'សកម្មភាព (ជ្រើសរើសបានលើសពី១)',
+            AppLocalizations.of(context)!.pfApSthActivityLabel,
             textAlign: TextAlign.justify,
             textScaleFactor: textScaleFactor,
             style: Theme.of(context).textTheme.button,
@@ -32,7 +33,7 @@ class ActivityPicker extends StatelessWidget {
             spacing: 7,
             children: [
               _ActivityButton(
-                label: 'ជិះទូក',
+                label: AppLocalizations.of(context)!.pdActivityBoating,
                 state: activities.contains(ActivityType.boating),
                 onPressed: () {
                   activityPickerCallback(ActivityType.boating,
@@ -40,7 +41,7 @@ class ActivityPicker extends StatelessWidget {
                 },
               ),
               _ActivityButton(
-                label: 'មុជទឹក',
+                label: AppLocalizations.of(context)!.pdActivityDiving,
                 state: activities.contains(ActivityType.diving),
                 onPressed: () {
                   activityPickerCallback(ActivityType.diving,
@@ -48,7 +49,7 @@ class ActivityPicker extends StatelessWidget {
                 },
               ),
               _ActivityButton(
-                label: 'ស្ទូចត្រី',
+                label: AppLocalizations.of(context)!.pdActivityFishing,
                 state: activities.contains(ActivityType.fishing),
                 onPressed: () {
                   activityPickerCallback(ActivityType.fishing,
@@ -56,7 +57,7 @@ class ActivityPicker extends StatelessWidget {
                 },
               ),
               _ActivityButton(
-                label: 'លំហែកាយ',
+                label: AppLocalizations.of(context)!.pdActivityRelaxing,
                 state: activities.contains(ActivityType.relaxing),
                 onPressed: () {
                   activityPickerCallback(ActivityType.relaxing,
@@ -64,7 +65,7 @@ class ActivityPicker extends StatelessWidget {
                 },
               ),
               _ActivityButton(
-                label: 'ហែលទឹក',
+                label: AppLocalizations.of(context)!.pdActivitySwimming,
                 state: activities.contains(ActivityType.swimming),
                 onPressed: () {
                   activityPickerCallback(ActivityType.swimming,

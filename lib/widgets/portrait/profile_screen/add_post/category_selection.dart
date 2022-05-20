@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:travenx_loitafoundation/config/configs.dart'
     show kHPadding, textScaleFactor;
 import 'package:travenx_loitafoundation/helpers/category_type.dart';
@@ -28,7 +29,7 @@ class CategorySelection extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Text(
-            'ប្រភេទតំបន់ទីតាំង ឬអាជីវកម្ម (ជ្រើសរើសបានលើសពី១)',
+            AppLocalizations.of(context)!.pfApStBusinessType,
             textAlign: TextAlign.justify,
             textScaleFactor: textScaleFactor,
             style: Theme.of(context).textTheme.button,
@@ -39,7 +40,7 @@ class CategorySelection extends StatelessWidget {
             spacing: 7,
             children: [
               _CategoryButton(
-                label: 'បោះតង់',
+                label: AppLocalizations.of(context)!.icCamping,
                 state: categories.contains(CategoryType.camping),
                 onPressed: () {
                   categoryPickerCallback(CategoryType.camping,
@@ -47,7 +48,7 @@ class CategorySelection extends StatelessWidget {
                 },
               ),
               _CategoryButton(
-                label: 'សមុទ្រ',
+                label: AppLocalizations.of(context)!.icSea,
                 state: categories.contains(CategoryType.sea),
                 onPressed: () {
                   categoryPickerCallback(CategoryType.sea,
@@ -55,7 +56,7 @@ class CategorySelection extends StatelessWidget {
                 },
               ),
               _CategoryButton(
-                label: 'ប្រាសាទ',
+                label: AppLocalizations.of(context)!.icTemple,
                 state: categories.contains(CategoryType.temple),
                 onPressed: () {
                   categoryPickerCallback(CategoryType.temple,
@@ -63,7 +64,7 @@ class CategorySelection extends StatelessWidget {
                 },
               ),
               _CategoryButton(
-                label: 'ភ្នំ',
+                label: AppLocalizations.of(context)!.icMountain,
                 state: categories.contains(CategoryType.mountain),
                 onPressed: () {
                   categoryPickerCallback(CategoryType.mountain,
@@ -71,7 +72,7 @@ class CategorySelection extends StatelessWidget {
                 },
               ),
               _CategoryButton(
-                label: 'ឧទ្យាន',
+                label: AppLocalizations.of(context)!.icPark,
                 state: categories.contains(CategoryType.park),
                 onPressed: () {
                   categoryPickerCallback(CategoryType.park,
@@ -79,7 +80,7 @@ class CategorySelection extends StatelessWidget {
                 },
               ),
               _CategoryButton(
-                label: 'រមណីយដ្ឋាន',
+                label: AppLocalizations.of(context)!.icResort,
                 state: categories.contains(CategoryType.resort),
                 onPressed: () {
                   categoryPickerCallback(CategoryType.resort,
@@ -87,7 +88,7 @@ class CategorySelection extends StatelessWidget {
                 },
               ),
               _CategoryButton(
-                label: 'សួនសត្វ',
+                label: AppLocalizations.of(context)!.icZoo,
                 state: categories.contains(CategoryType.zoo),
                 onPressed: () {
                   categoryPickerCallback(CategoryType.zoo,
@@ -95,7 +96,7 @@ class CategorySelection extends StatelessWidget {
                 },
               ),
               _CategoryButton(
-                label: 'ផ្សេងៗ',
+                label: AppLocalizations.of(context)!.icLocations,
                 state: categories.contains(CategoryType.locations),
                 onPressed: () {
                   categoryPickerCallback(CategoryType.locations,

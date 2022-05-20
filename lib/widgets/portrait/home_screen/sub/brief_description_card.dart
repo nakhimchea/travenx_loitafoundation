@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:travenx_loitafoundation/config/configs.dart'
     show textScaleFactor, briefIconSize;
@@ -25,7 +26,7 @@ class BriefDescriptionCard extends StatelessWidget {
           width: briefIconSize,
           height: briefIconSize,
         ),
-        label: 'វាយតម្លៃ',
+        label: AppLocalizations.of(context)!.pdBdReviewLabel,
       ),
       ModelIconMenu(
         icon: SvgPicture.asset(
@@ -33,7 +34,7 @@ class BriefDescriptionCard extends StatelessWidget {
           width: briefIconSize,
           height: briefIconSize,
         ),
-        label: 'ចម្ងាយ',
+        label: AppLocalizations.of(context)!.pdBdDistanceLabel,
       ),
       ModelIconMenu(
         icon: SvgPicture.asset(
@@ -41,7 +42,7 @@ class BriefDescriptionCard extends StatelessWidget {
           width: briefIconSize,
           height: briefIconSize,
         ),
-        label: 'ព្យាករណ៍',
+        label: AppLocalizations.of(context)!.pdBdForecastLabel,
       ),
       ModelIconMenu(
         icon: SvgPicture.asset(
@@ -49,7 +50,7 @@ class BriefDescriptionCard extends StatelessWidget {
           width: briefIconSize,
           height: briefIconSize,
         ),
-        label: 'អ្នកចូលមើល',
+        label: AppLocalizations.of(context)!.pdBdViewLabel,
       ),
     ];
 

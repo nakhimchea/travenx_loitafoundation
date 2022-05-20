@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:travenx_loitafoundation/config/configs.dart'
     show kHPadding, kVPadding, textScaleFactor;
 
@@ -23,16 +24,13 @@ class StepOneDescription extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            'សេវាប្រាប់ទិសតំបន់ទីតាំង ឬអាជីវកម្ម',
+            AppLocalizations.of(context)!.pfApSoLabel,
             textScaleFactor: textScaleFactor,
             style: Theme.of(context).textTheme.headline3,
           ),
           const SizedBox(height: kHPadding),
           Text(
-            '    លោកអ្នកត្រូវតែនៅទីតាំង ឬអាជីវកម្ម ដើម្បីបង្ហោះផ្សាយពាណិជ្ជកម្មនេះបាន។'
-            ' លោកអ្នកត្រូវទទួលស្គាល់ថាពួកយើងចាប់យកទីតាំងដែលលោកអ្នកកំពុងស្ថិតនៅ'
-            ' ដើម្បីចាប់យក ព័ត៌មាន អាកាសធាតុ ព្យាករណ៍ និងពេលវេលាថ្ងៃរះ និងលិចនៅទីតាំងរបស់លោកអ្នក។'
-            ' ដាច់ខាតលោកអ្នកត្រូវតែបើកសេវាប្រាប់ទិសតំបន់ដើម្បីបន្ត។',
+            AppLocalizations.of(context)!.pfApSoDescription,
             textAlign: TextAlign.justify,
             textScaleFactor: textScaleFactor,
             style: Theme.of(context).textTheme.bodyText1,

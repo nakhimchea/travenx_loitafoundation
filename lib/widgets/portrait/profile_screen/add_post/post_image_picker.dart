@@ -2,6 +2,7 @@ import 'dart:io' show Platform, File;
 
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:travenx_loitafoundation/config/configs.dart'
     show kHPadding, textScaleFactor;
@@ -27,6 +28,7 @@ class PostImagePicker extends StatelessWidget {
             4;
     return Container(
       padding: const EdgeInsets.all(kHPadding),
+      width: double.infinity,
       decoration: BoxDecoration(
         color: isImagePathHighlight
             ? Theme.of(context).errorColor.withOpacity(0.1)
@@ -37,7 +39,7 @@ class PostImagePicker extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            'រូបភាពទាក់ទាញ (រូបដំបូងនឹងត្រូវបានដាក់បង្ហាញជាងគេទៅអតិថិជន)',
+            AppLocalizations.of(context)!.pfApStImagePickerLabel,
             textAlign: TextAlign.justify,
             textScaleFactor: textScaleFactor,
             style: Theme.of(context).textTheme.button,

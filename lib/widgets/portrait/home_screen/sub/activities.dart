@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:travenx_loitafoundation/config/configs.dart'
     show kHPadding, textScaleFactor;
 import 'package:travenx_loitafoundation/models/post_object_model.dart';
@@ -17,7 +18,7 @@ class Activities extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.only(left: kHPadding),
           child: Text(
-            'សកម្មភាព',
+            AppLocalizations.of(context)!.pdActivityLabel,
             textScaleFactor: textScaleFactor,
             style: Theme.of(context).textTheme.headline3,
           ),

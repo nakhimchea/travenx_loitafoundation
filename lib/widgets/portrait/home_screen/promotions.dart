@@ -4,6 +4,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:travenx_loitafoundation/config/configs.dart'
@@ -106,12 +107,13 @@ class _PromotionsState extends State<Promotions> {
 
   void _reloadData() async {
     postList = postTranslator(
+        context,
         await _firestoreService.getPromotionData(_lastDoc).then((snapshot) {
-      setState(() => snapshot.docs.isNotEmpty
-          ? _lastDoc = snapshot.docs.last
-          : _isLoadable = false);
-      return snapshot.docs;
-    }));
+          setState(() => snapshot.docs.isNotEmpty
+              ? _lastDoc = snapshot.docs.last
+              : _isLoadable = false);
+          return snapshot.docs;
+        }));
   }
 
   @override
@@ -136,27 +138,31 @@ class _PromotionsState extends State<Promotions> {
           builder: _loadingBuilder,
         ),
         onRefresh: () async {
-          postList = postTranslator(await _firestoreService
-              .getPromotionData(_lastDoc)
-              .then((snapshot) {
-            setState(() => snapshot.docs.isNotEmpty
-                ? _lastDoc = snapshot.docs.last
-                : _isLoadable = false);
-            return snapshot.docs;
-          }));
+          postList = postTranslator(
+              context,
+              await _firestoreService
+                  .getPromotionData(_lastDoc)
+                  .then((snapshot) {
+                setState(() => snapshot.docs.isNotEmpty
+                    ? _lastDoc = snapshot.docs.last
+                    : _isLoadable = false);
+                return snapshot.docs;
+              }));
           if (mounted) setState(() => _isRefreshable = false);
           _refreshController.refreshCompleted();
         },
         onLoading: () async {
           postList = List.from(postList)
-            ..addAll(postTranslator(await _firestoreService
-                .getPromotionData(_lastDoc)
-                .then((snapshot) {
-              setState(() => snapshot.docs.isNotEmpty
-                  ? _lastDoc = snapshot.docs.last
-                  : _isLoadable = false);
-              return snapshot.docs;
-            })));
+            ..addAll(postTranslator(
+                context,
+                await _firestoreService
+                    .getPromotionData(_lastDoc)
+                    .then((snapshot) {
+                  setState(() => snapshot.docs.isNotEmpty
+                      ? _lastDoc = snapshot.docs.last
+                      : _isLoadable = false);
+                  return snapshot.docs;
+                })));
           if (mounted) setState(() {});
           _refreshController.loadComplete();
         },
@@ -281,12 +287,12 @@ class _PromotionCardState extends State<_PromotionCard> {
                           Padding(
                             padding: const EdgeInsets.only(left: 5.0),
                             child: Text(
-                              (widget.post.state == 'ភ្នំពេញ'
-                                      ? 'រាជធានី'
-                                      : 'ខេត្ត') +
-                                  widget.post.state +
-                                  ' ' +
-                                  widget.post.country,
+                              (AppLocalizations.of(context)!.localeName == 'km'
+                                      ? widget.post.state == 'ភ្នំពេញ'
+                                          ? 'រាជធានី'
+                                          : 'ខេត្ត'
+                                      : '') +
+                                  widget.post.state,
                               textScaleFactor: textScaleFactor,
                               style: Theme.of(context)
                                   .textTheme

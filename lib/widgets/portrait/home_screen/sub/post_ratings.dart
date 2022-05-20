@@ -2,6 +2,7 @@ import 'dart:ui' show ImageFilter;
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:travenx_loitafoundation/config/configs.dart'
     show kHPadding, kVPadding, textScaleFactor;
 import 'package:travenx_loitafoundation/helpers/rating_uploader.dart';
@@ -71,7 +72,7 @@ class _PostRatingsState extends State<PostRatings> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                'វាយតម្លៃ',
+                AppLocalizations.of(context)!.pdReviewLabel,
                 textScaleFactor: textScaleFactor,
                 style: Theme.of(context).textTheme.headline3,
               ),
@@ -97,7 +98,7 @@ class _PostRatingsState extends State<PostRatings> {
                       ),
                       const SizedBox(width: 5.0),
                       Text(
-                        'ដាក់វាយតម្លៃ',
+                        AppLocalizations.of(context)!.pdReviewAddLabel,
                         textScaleFactor: textScaleFactor,
                         style: Theme.of(context)
                             .textTheme
@@ -152,7 +153,7 @@ class _PostRatingsState extends State<PostRatings> {
                       alignment: Alignment.center,
                       padding: const EdgeInsets.symmetric(vertical: kVPadding),
                       child: Text(
-                        'បង្ហាញទាំងអស់',
+                        AppLocalizations.of(context)!.pdShowAllLabel,
                         textScaleFactor: textScaleFactor,
                         style: Theme.of(context)
                             .textTheme
@@ -236,13 +237,13 @@ class _PostRatingFieldsState extends State<_PostRatingFields> {
       child: Column(
         children: [
           Text(
-            'ដាក់វាយតម្លៃ',
+            AppLocalizations.of(context)!.pdReviewAddLabel,
             textScaleFactor: textScaleFactor,
             style: Theme.of(context).textTheme.headline2,
           ),
           const SizedBox(height: 5.0),
           Text(
-            'ចុចលើរូបផ្កាយដើម្បីវាយតម្លៃ',
+            AppLocalizations.of(context)!.pdReviewInstruction,
             textScaleFactor: textScaleFactor,
             style: Theme.of(context).textTheme.bodyText1,
           ),
@@ -267,7 +268,7 @@ class _PostRatingFieldsState extends State<_PostRatingFields> {
                 horizontal: 12.0,
                 vertical: 12.0,
               ),
-              hintText: 'បញ្ចេញមតិ',
+              hintText: AppLocalizations.of(context)!.pdReviewCommentHint,
               hintStyle: Theme.of(context)
                   .textTheme
                   .bodyText1!
@@ -283,7 +284,7 @@ class _PostRatingFieldsState extends State<_PostRatingFields> {
             child: Padding(
               padding: const EdgeInsets.symmetric(vertical: kVPadding),
               child: Text(
-                'ការបញ្ចេញមតិនឹងត្រូវបង្ហោះជាសាធារណៈ។',
+                AppLocalizations.of(context)!.pdReviewSharePublic,
                 textScaleFactor: textScaleFactor,
                 style: Theme.of(context).textTheme.bodyText1,
               ),
@@ -296,7 +297,7 @@ class _PostRatingFieldsState extends State<_PostRatingFields> {
                 width: MediaQuery.of(context).size.width / 2 - 3 * kHPadding,
                 child: StepperNavigationButton(
                   backgroundColor: Theme.of(context).disabledColor,
-                  label: 'លុបចោល',
+                  label: AppLocalizations.of(context)!.pdCancelLabel,
                   textStyle: Theme.of(context).textTheme.bodyText1,
                   onPressed: () {
                     _updateRatings(0);
@@ -312,7 +313,7 @@ class _PostRatingFieldsState extends State<_PostRatingFields> {
                   backgroundColor: currentRatings == 0
                       ? Theme.of(context).disabledColor
                       : Theme.of(context).primaryColor,
-                  label: 'បង្ហោះ',
+                  label: AppLocalizations.of(context)!.postLabel,
                   textStyle: Theme.of(context).textTheme.bodyText1!.copyWith(
                       color: currentRatings != 0 ? Colors.white : null),
                   onPressed: () async {

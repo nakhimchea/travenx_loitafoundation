@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:travenx_loitafoundation/config/configs.dart'
     show textScaleFactor, descriptionIconSize, detailIconSize;
 import 'package:travenx_loitafoundation/icons/icons.dart';
@@ -101,9 +102,13 @@ class PostHeader extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.only(left: 5.0),
               child: Text(
-                (this.state == 'ភ្នំពេញ' ? 'រាជធានី' : 'ខេត្ត') +
+                (AppLocalizations.of(context)!.localeName == 'km'
+                        ? this.state == 'ភ្នំពេញ'
+                            ? 'រាជធានី'
+                            : 'ខេត្ត'
+                        : '') +
                     this.state +
-                    ' ' +
+                    ', ' +
                     this.country,
                 textScaleFactor: textScaleFactor,
                 style: Theme.of(context).textTheme.bodyText1,
@@ -125,7 +130,7 @@ class PostHeader extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.only(left: 5.0),
                     child: Text(
-                      'បើកដំណើរការ',
+                      AppLocalizations.of(context)!.pdBusinessHourLabel,
                       textScaleFactor: textScaleFactor,
                       style: Theme.of(context)
                           .textTheme

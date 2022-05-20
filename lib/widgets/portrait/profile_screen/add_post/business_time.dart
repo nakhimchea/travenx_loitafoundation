@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:travenx_loitafoundation/config/configs.dart'
     show kHPadding, kVPadding, textScaleFactor;
 import 'package:travenx_loitafoundation/helpers/time_translator.dart';
@@ -37,7 +38,7 @@ class BusinessTime extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            'ព័ត៌មានបន្ថែម',
+            AppLocalizations.of(context)!.pfApSthAdditionalLabel,
             textScaleFactor: textScaleFactor,
             style: Theme.of(context).textTheme.headline3,
           ),
@@ -79,7 +80,9 @@ class BusinessTime extends StatelessWidget {
                             borderRadius: BorderRadius.circular(5.0),
                           ),
                           child: Text(
-                            'ម៉ោង ' + timeTranslator(openHour),
+                            AppLocalizations.of(context)!
+                                    .pfApSthAdditionalAtLabel +
+                                timeTranslator(openHour),
                             style: Theme.of(context).textTheme.button!.copyWith(
                                 color: openEnabled
                                     ? Theme.of(context).iconTheme.color
@@ -94,7 +97,8 @@ class BusinessTime extends StatelessWidget {
                           padding: const EdgeInsets.symmetric(horizontal: 3.0),
                           color: Theme.of(context).bottomAppBarColor,
                           child: Text(
-                            'បើកដំណើរការ',
+                            AppLocalizations.of(context)!
+                                .pfApSthAdditionalOpenLabel,
                             textScaleFactor: textScaleFactor,
                             style: Theme.of(context).textTheme.button!.copyWith(
                                 color: openEnabled
@@ -146,7 +150,9 @@ class BusinessTime extends StatelessWidget {
                             borderRadius: BorderRadius.circular(5.0),
                           ),
                           child: Text(
-                            'ម៉ោង ' + timeTranslator(closeHour),
+                            AppLocalizations.of(context)!
+                                    .pfApSthAdditionalAtLabel +
+                                timeTranslator(closeHour),
                             style: Theme.of(context).textTheme.button!.copyWith(
                                 color: closeEnabled
                                     ? Theme.of(context).iconTheme.color
@@ -161,7 +167,8 @@ class BusinessTime extends StatelessWidget {
                           padding: const EdgeInsets.symmetric(horizontal: 3.0),
                           color: Theme.of(context).bottomAppBarColor,
                           child: Text(
-                            'ផ្អាកដំណើរការ',
+                            AppLocalizations.of(context)!
+                                .pfApSthAdditionalCloseLabel,
                             textScaleFactor: textScaleFactor,
                             style: Theme.of(context).textTheme.button!.copyWith(
                                 color: closeEnabled
@@ -282,7 +289,7 @@ class _CustomDialogState extends State<_CustomDialog> {
                 child: Padding(
                   padding: const EdgeInsets.only(left: 30.0, bottom: kVPadding),
                   child: Text(
-                    'Reset',
+                    AppLocalizations.of(context)!.resetLabel,
                     style: Theme.of(context).textTheme.headline3!.copyWith(
                         color: _resetHold
                             ? widget.isOpenHour
@@ -305,7 +312,7 @@ class _CustomDialogState extends State<_CustomDialog> {
                   padding:
                       const EdgeInsets.only(right: 30.0, bottom: kVPadding),
                   child: Text(
-                    'Done',
+                    AppLocalizations.of(context)!.doneLabel,
                     style: Theme.of(context).textTheme.headline3!.copyWith(
                         color: _doneHold
                             ? widget.isOpenHour

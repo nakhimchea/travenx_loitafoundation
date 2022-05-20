@@ -5,6 +5,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:travenx_loitafoundation/config/configs.dart'
     show kHPadding, kVPadding, textScaleFactor;
@@ -101,7 +102,7 @@ class _PostGalleryState extends State<PostGallery> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                'កម្រងរូបភាព',
+                AppLocalizations.of(context)!.pdGalleryLabel,
                 textScaleFactor: textScaleFactor,
                 style: Theme.of(context).textTheme.headline3,
               ),
@@ -127,7 +128,7 @@ class _PostGalleryState extends State<PostGallery> {
                       ),
                       const SizedBox(width: 5.0),
                       Text(
-                        'ចែករំលែករូបភាព',
+                        AppLocalizations.of(context)!.pdGalleryUploadLabel,
                         textScaleFactor: textScaleFactor,
                         style: Theme.of(context)
                             .textTheme
@@ -183,7 +184,7 @@ class _PostGalleryState extends State<PostGallery> {
                   alignment: Alignment.center,
                   padding: const EdgeInsets.symmetric(vertical: kVPadding),
                   child: Text(
-                    'បង្ហាញទាំងអស់',
+                    AppLocalizations.of(context)!.pdShowAllLabel,
                     textScaleFactor: textScaleFactor,
                     style: Theme.of(context)
                         .textTheme
@@ -365,7 +366,7 @@ class _PostGalleryPicker extends StatelessWidget {
       child: Column(
         children: [
           Text(
-            'ចែករំលែករូបភាព',
+            AppLocalizations.of(context)!.pdGalleryUploadLabel,
             textScaleFactor: textScaleFactor,
             style: Theme.of(context).textTheme.headline2,
           ),
@@ -389,7 +390,7 @@ class _PostGalleryPicker extends StatelessWidget {
             child: Padding(
               padding: const EdgeInsets.symmetric(vertical: kVPadding),
               child: Text(
-                'ការចែករំលែករូបភាពនឹងត្រូវបង្ហោះជាសាធារណៈ។',
+                AppLocalizations.of(context)!.pdGallerySharePublic,
                 textScaleFactor: textScaleFactor,
                 style: Theme.of(context).textTheme.bodyText1,
               ),
@@ -402,7 +403,7 @@ class _PostGalleryPicker extends StatelessWidget {
                 width: MediaQuery.of(context).size.width / 2 - 3 * kHPadding,
                 child: StepperNavigationButton(
                   backgroundColor: Theme.of(context).disabledColor,
-                  label: 'បោះបង់',
+                  label: AppLocalizations.of(context)!.pdCancelLabel,
                   textStyle: Theme.of(context).textTheme.bodyText1,
                   onPressed: () {
                     pickerCallback(XFile(''), isRemoved: false);
@@ -417,7 +418,7 @@ class _PostGalleryPicker extends StatelessWidget {
                   backgroundColor: imagesFile.length == 0
                       ? Theme.of(context).disabledColor
                       : Theme.of(context).primaryColor,
-                  label: 'ចែករំលែក',
+                  label: AppLocalizations.of(context)!.pdUploadLabel,
                   textStyle: Theme.of(context).textTheme.bodyText1!.copyWith(
                       color: imagesFile.length != 0 ? Colors.white : null),
                   onPressed: () async {

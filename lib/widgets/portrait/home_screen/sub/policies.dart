@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:travenx_loitafoundation/config/configs.dart'
     show kHPadding, kVPadding, textScaleFactor;
 
@@ -33,7 +34,7 @@ class Policies extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           Text(
-            'គោលការណ៍',
+            AppLocalizations.of(context)!.pdPoliciesLabel,
             textScaleFactor: textScaleFactor,
             style: Theme.of(context).textTheme.headline3,
           ),

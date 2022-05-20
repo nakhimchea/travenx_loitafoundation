@@ -4,6 +4,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:travenx_loitafoundation/config/configs.dart'
     show kHPadding, textScaleFactor, descriptionIconSize;
 import 'package:travenx_loitafoundation/helpers/post_translator.dart';
@@ -30,8 +31,10 @@ class _UserPostsState extends State<UserPosts> {
   bool _isLoading = true;
 
   void getData() async {
-    postList = postTranslator(await _firestoreService
-        .getUserPosts(FirebaseAuth.instance.currentUser!.uid));
+    postList = postTranslator(
+        context,
+        await _firestoreService
+            .getUserPosts(FirebaseAuth.instance.currentUser!.uid));
     setState(() => _isLoading = false);
   }
 
@@ -59,7 +62,7 @@ class _UserPostsState extends State<UserPosts> {
           splashColor: Colors.transparent,
         ),
         title: Text(
-          'ទីតាំង ឬអាជីវកម្មបានបង្ហោះ',
+          AppLocalizations.of(context)!.pfAddedPost,
           textScaleFactor: textScaleFactor,
           style: Theme.of(context).textTheme.headline3,
         ),
@@ -94,7 +97,7 @@ class _UserPostsState extends State<UserPosts> {
                         ),
                         const SizedBox(height: 10),
                         Text(
-                          'មិនមានទិន្នន័យអំពីទីតាំង ឬអាជិវកម្មរបស់អ្នក។',
+                          AppLocalizations.of(context)!.pfAddedPostNoData,
                           style: Theme.of(context).textTheme.bodyText1,
                         ),
                         SizedBox(

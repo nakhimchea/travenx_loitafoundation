@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:travenx_loitafoundation/config/configs.dart'
     show kHPadding, textScaleFactor;
 import 'package:travenx_loitafoundation/widgets/portrait/profile_screen/add_post/custom_input_box.dart';
@@ -28,22 +29,22 @@ class StepTwoFields extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            'ព័ត៌មានចាំបាច់',
+            AppLocalizations.of(context)!.pfApStLabel,
             textScaleFactor: textScaleFactor,
             style: Theme.of(context).textTheme.headline3,
           ),
           const SizedBox(height: kHPadding),
           CustomInputBox(
             isHighlight: isTitleHighlight,
-            label: 'ចំណងជើង',
-            hintText: 'ហាងកាហ្វេ និងនំខេក',
+            label: AppLocalizations.of(context)!.pfApStTitleLabel,
+            hintText: AppLocalizations.of(context)!.pfApStTitleHint,
             textController: titleController,
             disableHighlight: disableHighlight,
           ),
           const SizedBox(height: kHPadding),
           CustomInputBox(
-            label: 'តម្លៃ (\$)',
-            hintText: '\$0.00 (Free ឬចូលដោយសេរី)',
+            label: AppLocalizations.of(context)!.pfApStPriceLabel,
+            hintText: AppLocalizations.of(context)!.pfApStPriceHint,
             textController: priceController,
             inputType: TextInputType.numberWithOptions(decimal: true),
           ),

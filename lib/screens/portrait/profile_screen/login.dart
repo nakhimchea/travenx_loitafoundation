@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:travenx_loitafoundation/config/variable.dart';
 import 'package:travenx_loitafoundation/services/authentication_service.dart';
@@ -118,7 +119,7 @@ class CustomAppBar extends StatelessWidget {
             top: MediaQuery.of(context).size.height / 11,
             left: 16.0,
           ),
-          child: Text('',
+          child: Text('Travenx',
 
               ///Can be used with App Name
               textScaleFactor: textScaleFactor,
@@ -141,7 +142,7 @@ class CustomAppBar extends StatelessWidget {
             style: ButtonStyle(
                 overlayColor:
                     MaterialStateProperty.all<Color>(Colors.transparent)),
-            child: Text('រំលង',
+            child: Text(AppLocalizations.of(context)!.skipLabel,
                 style: Theme.of(context).textTheme.headline3!.copyWith(
                     color: Theme.of(context).colorScheme.brightness ==
                             Brightness.light
@@ -193,7 +194,7 @@ class LoginAppBar extends StatelessWidget {
               style: ButtonStyle(
                   overlayColor:
                       MaterialStateProperty.all<Color>(Colors.transparent)),
-              child: Text('រំលង',
+              child: Text(AppLocalizations.of(context)!.skipLabel,
                   style: Theme.of(context).textTheme.headline3!.copyWith(
                       color: Theme.of(context).colorScheme.brightness ==
                               Brightness.light
@@ -248,7 +249,7 @@ class _LoginMethodsState extends State<LoginMethods> {
               const SizedBox(height: 100),
               LoginCardButton(
                 leadingUrl: 'assets/icons/profile_screen/phone_logo.png',
-                title: 'ភ្ជាប់តាមគណនី លេខទូរសព្ទ',
+                title: AppLocalizations.of(context)!.lgConnectPhone,
                 titleColor: Theme.of(context).primaryColor,
                 onTap: widget.isPhoneLoginCallback,
               ),
@@ -264,7 +265,7 @@ class _LoginMethodsState extends State<LoginMethods> {
                       color: Colors.white60,
                     ),
                     Text(
-                      'ឬ',
+                      AppLocalizations.of(context)!.lgOr,
                       style: Theme.of(context).textTheme.headline4!.copyWith(
                           color: Colors.white60, fontWeight: FontWeight.w400),
                     ),
@@ -279,7 +280,7 @@ class _LoginMethodsState extends State<LoginMethods> {
               const SizedBox(height: 25.0),
               LoginCardButton(
                   leadingUrl: 'assets/icons/profile_screen/facebook_logo.png',
-                  title: 'ភ្ជាប់តាមគណនី ហ្វេសប៊ុក',
+                  title: AppLocalizations.of(context)!.lgConnectFacebook,
                   onTap: () async {
                     setState(() => _isLoading = true);
                     await AuthService()
@@ -294,7 +295,7 @@ class _LoginMethodsState extends State<LoginMethods> {
               const SizedBox(height: 15.0),
               LoginCardButton(
                 leadingUrl: 'assets/icons/profile_screen/google_logo.png',
-                title: 'ភ្ជាប់តាមគណនី ',
+                title: AppLocalizations.of(context)!.lgConnect,
                 trailing: 'Google',
                 onTap: () async {
                   setState(() => _isLoading = true);
@@ -430,7 +431,7 @@ class _PhoneLoginState extends State<PhoneLogin> {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        Text('ភ្ជាប់តាមលេខទូរសព្ទ',
+        Text(AppLocalizations.of(context)!.lgConnectPhone,
             textScaleFactor: textScaleFactor,
             style: Theme.of(context)
                 .textTheme
@@ -450,7 +451,7 @@ class _PhoneLoginState extends State<PhoneLogin> {
             const SizedBox(height: 15),
             LoginTextField(
               logoUrl: 'assets/icons/profile_screen/one_time_password_logo.png',
-              hintText: 'បញ្ចូលលេខកូដ',
+              hintText: AppLocalizations.of(context)!.lgEnterCode,
               onChangedCallback: _getOtpNumber,
               isCodeSent: !_isCodeSent,
               pinCodeEnabled: _pinCodeEnabled,
@@ -464,7 +465,7 @@ class _PhoneLoginState extends State<PhoneLogin> {
                 ? Loading()
                 : _showLogin
                     ? LoginButton(
-                        title: 'ចូល',
+                        title: AppLocalizations.of(context)!.lgLogIn,
                         isCodeSent: _isCodeSent,
                         onPressed: _isLoggingIn,
                       )
@@ -483,14 +484,14 @@ class PolicyAgreement extends StatelessWidget {
       onTap: () => print('Policy Button click...'),
       child: Column(
         children: [
-          Text('តាមរយ:ការប្រើកម្មវិធីនេះ អ្នកយល់ព្រមទទួលយក',
+          Text(AppLocalizations.of(context)!.lgAccept,
               style: Theme.of(context).textTheme.button!.copyWith(
                   color: Theme.of(context).colorScheme.brightness ==
                           Brightness.light
                       ? Colors.white
                       : Colors.white60)),
           const SizedBox(height: 3),
-          Text('លក្ខខណ្ឌ និងគោលនយោបាយឯកជនភាព',
+          Text(AppLocalizations.of(context)!.lgTermsPolicies,
               style: Theme.of(context).textTheme.button!.copyWith(
                   color: Theme.of(context).colorScheme.brightness ==
                           Brightness.light

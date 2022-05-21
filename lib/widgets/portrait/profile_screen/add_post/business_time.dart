@@ -82,7 +82,7 @@ class BusinessTime extends StatelessWidget {
                           child: Text(
                             AppLocalizations.of(context)!
                                     .pfApSthAdditionalAtLabel +
-                                timeTranslator(openHour),
+                                timeTranslator(context, openHour),
                             style: Theme.of(context).textTheme.button!.copyWith(
                                 color: openEnabled
                                     ? Theme.of(context).iconTheme.color
@@ -152,7 +152,7 @@ class BusinessTime extends StatelessWidget {
                           child: Text(
                             AppLocalizations.of(context)!
                                     .pfApSthAdditionalAtLabel +
-                                timeTranslator(closeHour),
+                                timeTranslator(context, closeHour),
                             style: Theme.of(context).textTheme.button!.copyWith(
                                 color: closeEnabled
                                     ? Theme.of(context).iconTheme.color

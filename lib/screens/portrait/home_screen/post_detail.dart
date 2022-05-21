@@ -47,8 +47,8 @@ class _PostDetailState extends State<PostDetail> {
     final String _responseBody = await InternetService.httpGetResponseBody(
         url:
             '$_owmWeatherForecastUrl${widget.post.positionCoordination}&appid=${await _secureStorage.read(key: 'owmKey')}&units=metric');
-    setState(
-        () => _weatherForecast = weatherForecastExtractor(data: _responseBody));
+    setState(() => _weatherForecast =
+        weatherForecastExtractor(context, data: _responseBody));
   }
 
   void isViewed() async {

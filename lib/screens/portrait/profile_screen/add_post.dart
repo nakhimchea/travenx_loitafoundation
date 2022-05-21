@@ -163,8 +163,8 @@ class _AddPostState extends State<AddPost> {
         url:
             '$_owmWeatherForecastUrl$_positionCoordination&appid=${await _secureStorage.read(key: 'owmKey')}&units=metric');
     if (mounted)
-      setState(() =>
-          _weatherForecast = weatherForecastExtractor(data: _responseBody));
+      setState(() => _weatherForecast =
+          weatherForecastExtractor(context, data: _responseBody));
   }
 
   @override
@@ -653,13 +653,13 @@ class _AddPostState extends State<AddPost> {
             break;
         }
       _openHours = timeOpenEnabled && timeCloseEnabled
-          ? '${timeTranslator(_openHour)} - ${timeTranslator(_closeHour)}'
+          ? '${timeTranslator(context, _openHour)} - ${timeTranslator(context, _closeHour)}'
           : timeOpenEnabled
               ? AppLocalizations.of(context)!.pfApFromTime +
-                  '${timeTranslator(_openHour)}'
+                  '${timeTranslator(context, _openHour)}'
               : timeCloseEnabled
                   ? AppLocalizations.of(context)!.pfApToTime +
-                      '${timeTranslator(_closeHour)}'
+                      '${timeTranslator(context, _closeHour)}'
                   : '';
       _announcement = _announcementController.text.trim();
       _activities = [];

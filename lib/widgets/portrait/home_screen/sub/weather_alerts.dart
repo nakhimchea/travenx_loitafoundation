@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:travenx_loitafoundation/config/configs.dart'
     show textScaleFactor;
 
@@ -22,7 +23,11 @@ class WeatherAlerts extends StatelessWidget {
         this.forecast.length > 0
             ? this.forecast.length == 1
                 ? Text(
-                    'ទីនេះ ថ្ងៃ${this.forecast.first.split('/')[0]}នឹងមាន${this.forecast.first.split('/')[1]} នៅម៉ោង ${this.forecast.first.split('/')[2]}។',
+                    AppLocalizations.of(context)!.localeName == 'km'
+                        ? 'ទីនេះ ${this.forecast.first.split('/')[0]}នឹងមាន${this.forecast.first.split('/')[1]} នៅម៉ោង ${this.forecast.first.split('/')[2]}។'
+                        : AppLocalizations.of(context)!.localeName == 'en'
+                            ? 'There will be a ${this.forecast.first.split('/')[1]} here ${this.forecast.first.split('/')[0]} at ${this.forecast.first.split('/')[2]}.'
+                            : '',
                     textAlign: TextAlign.justify,
                     textScaleFactor: textScaleFactor,
                     style: Theme.of(context)
@@ -31,8 +36,13 @@ class WeatherAlerts extends StatelessWidget {
                         .copyWith(color: Theme.of(context).errorColor),
                   )
                 : Text(
-                    'ទីនេះ ថ្ងៃ${this.forecast.first.split('/')[0]}នឹងមាន${this.forecast.first.split('/')[1]} នៅម៉ោង ${this.forecast.first.split('/')[2]}។'
-                    ' ហើយថ្ងៃ${this.forecast.elementAt(1).split('/')[0]}នឹងមាន${this.forecast.elementAt(1).split('/')[1]} នៅម៉ោង ${this.forecast.elementAt(1).split('/')[2]}។',
+                    AppLocalizations.of(context)!.localeName == 'km'
+                        ? 'ទីនេះ ${this.forecast.first.split('/')[0]}នឹងមាន${this.forecast.first.split('/')[1]} នៅម៉ោង ${this.forecast.first.split('/')[2]}។'
+                            ' ហើយ ${this.forecast.elementAt(1).split('/')[0]}នឹងមាន${this.forecast.elementAt(1).split('/')[1]} នៅម៉ោង ${this.forecast.elementAt(1).split('/')[2]}។'
+                        : AppLocalizations.of(context)!.localeName == 'en'
+                            ? 'There will be a ${this.forecast.first.split('/')[1]} here ${this.forecast.first.split('/')[0]} at ${this.forecast.first.split('/')[2]}.'
+                                ' And there will also be a ${this.forecast.elementAt(1).split('/')[1]} ${this.forecast.elementAt(1).split('/')[0]} at ${this.forecast.first.split('/')[2]}.'
+                            : '',
                     textAlign: TextAlign.justify,
                     textScaleFactor: textScaleFactor,
                     style: Theme.of(context)
@@ -45,7 +55,11 @@ class WeatherAlerts extends StatelessWidget {
         this.sunset != ''
             ? Center(
                 child: Text(
-                  'ថ្ងៃនេះព្រះអាទិត្យលិចនៅទីតាំងនេះ ម៉ោង $sunset។\nហើយរះថ្ងៃស្អែក នៅម៉ោង $sunrise។',
+                  AppLocalizations.of(context)!.localeName == 'km'
+                      ? 'ថ្ងៃនេះព្រះអាទិត្យលិចនៅទីតាំងនេះ ម៉ោង $sunset។\nហើយរះថ្ងៃស្អែក នៅម៉ោង $sunrise។'
+                      : AppLocalizations.of(context)!.localeName == 'en'
+                          ? 'Today, the sun will here set at $sunset.\nAnd rise tomorrow at $sunrise.'
+                          : '',
                   textAlign: TextAlign.center,
                   textScaleFactor: textScaleFactor,
                   style: Theme.of(context)

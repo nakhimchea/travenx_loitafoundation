@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:travenx_loitafoundation/config/variable.dart'
     show textScaleFactor;
 import 'package:travenx_loitafoundation/icons/icons.dart';
@@ -64,11 +65,11 @@ class CustomSnackBarContent extends StatelessWidget {
                     ),
             ],
           ),
-          SizedBox(width: 10),
+          const SizedBox(width: 10),
           Expanded(
             child: contentCode != 'code_sent'
                 ? Image.asset(
-                    'assets/images/profile_screen/$contentCode.png',
+                    'assets/images/profile_screen/${AppLocalizations.of(context)!.localeName == 'km' ? contentCode + '_km' : contentCode}.png',
                     height: 16.0 * textScaleFactor,
                     fit: BoxFit.fitHeight,
                     alignment: Alignment.centerLeft,
@@ -76,11 +77,11 @@ class CustomSnackBarContent extends StatelessWidget {
                 : Row(
                     children: [
                       Image.asset(
-                        'assets/images/profile_screen/$contentCode.png',
+                        'assets/images/profile_screen/${AppLocalizations.of(context)!.localeName == 'km' ? contentCode + '_km' : contentCode}.png',
                         height: 16.0 * textScaleFactor,
                         fit: BoxFit.fitHeight,
                       ),
-                      SizedBox(width: 5),
+                      const SizedBox(width: 5),
                       Text(
                         '$phoneNumber',
                         textScaleFactor: textScaleFactor,

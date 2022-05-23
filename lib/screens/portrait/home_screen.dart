@@ -57,7 +57,7 @@ class _HomeScreenState extends State<HomeScreen>
             failedText: AppLocalizations.of(context)!.rFailedText,
             completeText: AppLocalizations.of(context)!.rCompleteText,
             idleText: AppLocalizations.of(context)!.rIdleText,
-            releaseText: AppLocalizations.of(context)!.rReleaseText,
+            releaseText: AppLocalizations.of(context)!.loadingText,
           ),
           onRefresh: () {
             _needRefresh = true;

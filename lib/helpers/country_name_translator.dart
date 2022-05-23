@@ -10,9 +10,13 @@ String countryNameTranslator(
           ? {
               'KH': 'ប្រទេសកម្ពុជា',
             }
-          : {
-              'KH': 'Cambodia',
-            };
+          : AppLocalizations.of(context)!.localeName == 'en'
+              ? {
+                  'KH': 'Cambodia',
+                }
+              : {
+                  'KH': 'KH',
+                };
   return countryPairs[enCountryName] != null
       ? countryPairs[enCountryName].toString()
       : 'ប្រទេសកម្ពុជា';

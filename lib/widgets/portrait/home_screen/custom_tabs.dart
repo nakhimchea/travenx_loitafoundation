@@ -62,6 +62,7 @@ class _CustomTabBarListState extends State<CustomTabBarList> {
 
   void setTabBarData() async {
     final List<String> _tabs = [
+      //TODO: get data by language
       'កន្លែងថ្មី',
       'ព្រឹត្តិការណ៍ថ្មី',
       'ច្រើនទស្សនា',

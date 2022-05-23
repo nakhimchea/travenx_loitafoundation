@@ -8,7 +8,7 @@
     "rFailedText": "Failed",
     "rCompleteText": "Completed",
     "rIdleText": "Drag down to reload",
-    "rReleaseText": "Loading...",
+    "loadingText": "Loading...",
 
     "noNetwork": "Internet is not working. Try again!",
 

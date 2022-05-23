@@ -319,7 +319,7 @@ class _ChatScreenState extends State<ChatScreen> {
               decoration: const BoxDecoration(
                 image: DecorationImage(
                   image: AssetImage(
-                    'assets/images/profile_screen/scaffold_background.png',
+                    'assets/images/travenx.png',
                   ),
                   fit: BoxFit.cover,
                 ),

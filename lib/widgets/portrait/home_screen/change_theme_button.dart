@@ -127,8 +127,8 @@ class _CustomLanguageDialogState extends State<_CustomLanguageDialog> {
                   GestureDetector(
                     onTap: () => Navigator.pop(context),
                     child: Padding(
-                      padding:
-                          const EdgeInsets.only(left: 30.0, bottom: kVPadding),
+                      padding: const EdgeInsets.only(
+                          left: 30.0, bottom: kVPadding + 5.0, top: 5.0),
                       child: Text(
                         selectedLanguage == 0
                             ? 'បោះបង់'

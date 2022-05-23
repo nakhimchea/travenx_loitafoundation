@@ -160,7 +160,7 @@ class _WalletScreenState extends State<WalletScreen> {
               decoration: BoxDecoration(
                 image: DecorationImage(
                   image: AssetImage(
-                    'assets/images/profile_screen/scaffold_background.png',
+                    'assets/images/travenx.png',
                   ),
                   fit: BoxFit.cover,
                 ),

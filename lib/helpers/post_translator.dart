@@ -49,7 +49,8 @@ List<PostObject> postTranslator(
       print('Data\'s unavailable: $e');
     }
 
-    if (post.get('activities') != null)
+    if (post.get('activities') !=
+        null) //TODO: Activity add in English than Khmer
       for (var activity in post.get('activities')) {
         switch (activity.toString()) {
           case 'ជិះទូក':

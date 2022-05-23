@@ -1,5 +1,6 @@
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 class Loading extends StatelessWidget {
@@ -17,14 +18,24 @@ class Loading extends StatelessWidget {
         const SizedBox(height: 13.0),
         AnimatedTextKit(
           animatedTexts: [
-            WavyAnimatedText(
-              'Loading...',
-              textStyle: TextStyle(
-                  color: color != null ? color : Theme.of(context).cardColor),
-            ),
+            AppLocalizations.of(context)!.localeName == 'en'
+                ? WavyAnimatedText(
+                    AppLocalizations.of(context)!.loadingText,
+                    textStyle: TextStyle(
+                        color: color != null
+                            ? color
+                            : Theme.of(context).cardColor),
+                  )
+                : FadeAnimatedText(
+                    AppLocalizations.of(context)!.loadingText,
+                    textStyle: TextStyle(
+                        color: color != null
+                            ? color
+                            : Theme.of(context).cardColor),
+                  ),
           ],
-          pause: const Duration(milliseconds: 200),
-          totalRepeatCount: 50,
+          pause: Duration.zero,
+          repeatForever: true,
         ),
       ],
     );

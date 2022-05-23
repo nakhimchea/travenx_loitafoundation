@@ -350,9 +350,7 @@ class _PostCardState extends State<_PostCard> {
                             (widget.post.state == 'ភ្នំពេញ'
                                     ? 'រាជធានី'
                                     : 'ខេត្ត') +
-                                widget.post.state +
-                                ' ' +
-                                widget.post.country,
+                                widget.post.state,
                             textScaleFactor: textScaleFactor,
                             style: Theme.of(context).textTheme.bodyText2,
                             overflow: kIsWeb

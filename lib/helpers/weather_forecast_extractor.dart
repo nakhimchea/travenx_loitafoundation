@@ -165,7 +165,7 @@ String _conditionTranslator(BuildContext context, String enCondition) {
         return 'light rain';
     }
   else
-    return 'light rain';
+    return 'rain';
 }
 
 String _dateTranslator(BuildContext context, DateTime dateTime) {

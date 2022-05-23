@@ -309,8 +309,8 @@ class _CustomDialogState extends State<_CustomDialog> {
                 onLongPress: () => setState(() => _doneHold = true),
                 onLongPressEnd: (_) => setState(() => _doneHold = false),
                 child: Padding(
-                  padding:
-                      const EdgeInsets.only(right: 30.0, bottom: kVPadding),
+                  padding: const EdgeInsets.only(
+                      right: 30.0, bottom: kVPadding + 5.0, top: 5.0),
                   child: Text(
                     AppLocalizations.of(context)!.doneLabel,
                     style: Theme.of(context).textTheme.headline3!.copyWith(

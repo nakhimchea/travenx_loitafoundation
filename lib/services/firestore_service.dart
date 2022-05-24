@@ -79,7 +79,7 @@ class FirestoreService {
     Map<String, dynamic> data,
   ) async =>
       await _firestore
-          .collection('kh_home_screen')
+          .collection('home_screen')
           .doc('icon_menus')
           .collection(iconMenu)
           .doc(atPostId)
@@ -97,7 +97,7 @@ class FirestoreService {
   ) async =>
       lastDoc != null
           ? await _firestore
-              .collection('kh_home_screen')
+              .collection('home_screen')
               .doc('icon_menus')
               .collection(iconMenu)
               .startAfterDocument(lastDoc)
@@ -107,7 +107,7 @@ class FirestoreService {
               print('Cannot get icon menu data: ${e.toString()}');
             })
           : await _firestore
-              .collection('kh_home_screen')
+              .collection('home_screen')
               .doc('icon_menus')
               .collection(iconMenu)
               .limit(2)
@@ -121,7 +121,7 @@ class FirestoreService {
     Map<String, dynamic> data,
   ) async =>
       await _firestore
-          .collection('kh_promotions')
+          .collection('promotions')
           .doc(atPostId)
           .set(
             data,
@@ -136,7 +136,7 @@ class FirestoreService {
   ) async =>
       lastDoc != null
           ? await _firestore
-              .collection('kh_promotions')
+              .collection('promotions')
               .startAfterDocument(lastDoc)
               .limit(2)
               .get()
@@ -144,7 +144,7 @@ class FirestoreService {
               print('Cannot get promotion data: ${e.toString()}');
             })
           : await _firestore
-              .collection('kh_promotions')
+              .collection('promotions')
               .limit(2)
               .get()
               .catchError((e) {
@@ -157,7 +157,7 @@ class FirestoreService {
     Map<String, dynamic> data,
   ) async =>
       await _firestore
-          .collection('kh_home_screen')
+          .collection('home_screen')
           .doc('provinces')
           .collection(province)
           .doc(atPostId)
@@ -170,7 +170,7 @@ class FirestoreService {
       });
 
   Future<Map<String, dynamic>> getProvinceCounter() async => await _firestore
-          .collection('kh_home_screen')
+          .collection('home_screen')
           .doc('provinces_total_posts')
           .get()
           .then((snapshot) => snapshot.data()!)
@@ -182,7 +182,7 @@ class FirestoreService {
     String atProvince,
   ) async =>
       await _firestore
-          .collection('kh_home_screen')
+          .collection('home_screen')
           .doc('provinces_total_posts')
           .update({
         atProvince: int.parse(await getProvinceCounter()
@@ -196,7 +196,7 @@ class FirestoreService {
     String atProvince,
   ) async =>
       await _firestore
-          .collection('kh_home_screen')
+          .collection('home_screen')
           .doc('provinces_total_posts')
           .update({
         atProvince: int.parse(await getProvinceCounter()
@@ -212,7 +212,7 @@ class FirestoreService {
   ) async =>
       lastDoc != null
           ? await _firestore
-              .collection('kh_home_screen')
+              .collection('home_screen')
               .doc('provinces')
               .collection(province)
               .startAfterDocument(lastDoc)
@@ -222,7 +222,7 @@ class FirestoreService {
               print('Cannot get icon menu data: ${e.toString()}');
             })
           : await _firestore
-              .collection('kh_home_screen')
+              .collection('home_screen')
               .doc('provinces')
               .collection(province)
               .limit(3)
@@ -237,7 +237,7 @@ class FirestoreService {
     Map<String, dynamic> data,
   ) async =>
       await _firestore
-          .collection('kh_home_screen')
+          .collection('home_screen')
           .doc('tab_lists')
           .collection(tab)
           .doc(atPostId)
@@ -253,7 +253,7 @@ class FirestoreService {
     String tab,
   ) async =>
       await _firestore
-          .collection('kh_home_screen')
+          .collection('home_screen')
           .doc('tab_lists')
           .collection(tab)
           .orderBy('postId', descending: true)
@@ -535,7 +535,7 @@ class FirestoreService {
     String atPostId,
   ) async =>
       await _firestore
-          .collection('kh_home_screen')
+          .collection('home_screen')
           .doc('icon_menus')
           .collection('តំបន់ទាំងអស់')
           .doc(atPostId)

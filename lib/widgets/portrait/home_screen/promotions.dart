@@ -8,7 +8,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:travenx_loitafoundation/config/configs.dart'
-    show kHPadding, textScaleFactor, descriptionIconSize, Palette;
+    show kHPadding, kVPadding, textScaleFactor, descriptionIconSize, Palette;
 import 'package:travenx_loitafoundation/helpers/post_translator.dart';
 import 'package:travenx_loitafoundation/icons/icons.dart';
 import 'package:travenx_loitafoundation/models/post_object_model.dart';
@@ -124,7 +124,31 @@ class _PromotionsState extends State<Promotions> {
       _reloadData();
       widget.callback();
     }
+    if (_refreshController.headerStatus == RefreshStatus.completed &&
+        postList.length == 0)
+      return Container(
+        padding: const EdgeInsets.only(top: 6.0, bottom: kVPadding),
+        height: MediaQuery.of(context).size.height / 3.15,
+        alignment: Alignment.center,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Icon(
+              CustomOutlinedIcons.warning,
+              size: 24.0,
+              color: Theme.of(context).primaryIconTheme.color,
+            ),
+            const SizedBox(height: 10),
+            Text(
+              AppLocalizations.of(context)!.noData,
+              style: Theme.of(context).textTheme.bodyText1,
+            ),
+          ],
+        ),
+      );
+
     return Container(
+      padding: const EdgeInsets.only(top: 6.0, bottom: kVPadding),
       height: MediaQuery.of(context).size.height / 3.15,
       child: SmartRefresher(
         controller: _refreshController,

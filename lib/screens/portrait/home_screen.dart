@@ -107,15 +107,9 @@ class _HomeScreenState extends State<HomeScreen>
                         ),
                         child: IconsMenu(),
                       ),
-                      Padding(
-                        padding: const EdgeInsets.only(
-                          top: 6.0,
-                          bottom: kVPadding,
-                        ),
-                        child: Promotions(
-                          needRefresh: _needRefresh,
-                          callback: _toggleNeedRefresh,
-                        ),
+                      Promotions(
+                        needRefresh: _needRefresh,
+                        callback: _toggleNeedRefresh,
                       ),
                       Padding(
                         padding: const EdgeInsets.symmetric(

@@ -5,6 +5,7 @@ import 'package:travenx_loitafoundation/config/constant.dart'
 import 'package:travenx_loitafoundation/helpers/post_translator.dart';
 import 'package:travenx_loitafoundation/models/post_object_model.dart';
 import 'package:travenx_loitafoundation/services/firestore_service.dart';
+import 'package:travenx_loitafoundation/widgets/custom_loading.dart';
 import 'package:travenx_loitafoundation/widgets/portrait/card_tile_item.dart';
 
 class CustomTabBar extends StatelessWidget {
@@ -107,7 +108,7 @@ class _CustomTabBarListState extends State<CustomTabBarList> {
       height:
           MediaQuery.of(context).size.height * 5 / 6.16 + kCardTileVPadding * 5,
       child: tabLists.length < 5
-          ? const Center(child: CircularProgressIndicator.adaptive())
+          ? Loading(color: Theme.of(context).disabledColor)
           : TabBarView(
               controller: widget.tabController,
               children: _buildTabBarLists(),

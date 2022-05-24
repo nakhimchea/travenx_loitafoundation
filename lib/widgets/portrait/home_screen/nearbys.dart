@@ -20,6 +20,7 @@ import 'package:travenx_loitafoundation/screens/portrait/home_screen/post_detail
 import 'package:travenx_loitafoundation/services/firestore_service.dart';
 import 'package:travenx_loitafoundation/services/geolocator_service.dart';
 import 'package:travenx_loitafoundation/services/internet_service.dart';
+import 'package:travenx_loitafoundation/widgets/custom_loading.dart';
 
 class Nearbys extends StatefulWidget {
   const Nearbys({Key? key}) : super(key: key);
@@ -263,7 +264,7 @@ class _NearbysState extends State<Nearbys> {
             ? Container(
                 alignment: Alignment.center,
                 height: MediaQuery.of(context).size.height / 3.75 + 10,
-                child: const CircularProgressIndicator.adaptive())
+                child: Loading(color: Theme.of(context).disabledColor))
             : Container(
                 height: MediaQuery.of(context).size.height / 3.75 + 10,
                 child: hasNoData

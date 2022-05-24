@@ -349,6 +349,25 @@ class _ProvinceListState extends State<_ProvinceList> {
                   totalPosts: '0',
                 ),
               ),
+              Container(
+                alignment: Alignment.center,
+                height: MediaQuery.of(context).size.height / 2,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Icon(
+                      CustomOutlinedIcons.warning,
+                      size: 24.0,
+                      color: Theme.of(context).primaryIconTheme.color,
+                    ),
+                    const SizedBox(height: 10),
+                    Text(
+                      AppLocalizations.of(context)!.noData,
+                      style: Theme.of(context).textTheme.bodyText1,
+                    ),
+                  ],
+                ),
+              ),
             ],
           );
   }

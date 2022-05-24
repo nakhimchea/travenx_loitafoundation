@@ -110,20 +110,41 @@ class _BuildIconMenuListState extends State<_BuildIconMenuList> {
   DocumentSnapshot? _lastDoc;
 
   Widget _buildList() {
-    return ListView.builder(
-      physics: const BouncingScrollPhysics(),
-      padding: const EdgeInsets.only(
-        top: kVPadding + 2.0,
-        bottom: kVPadding + 6.0,
-      ),
-      itemBuilder: (BuildContext context, int index) {
-        return CardTileItem(
-          post: postList.elementAt(index),
-          vPadding: widget.vPadding,
-        );
-      },
-      itemCount: postList.length,
-    );
+    if (_refreshController.headerStatus == RefreshStatus.completed &&
+        postList.length == 0)
+      return Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Icon(
+              CustomOutlinedIcons.warning,
+              size: 24.0,
+              color: Theme.of(context).primaryIconTheme.color,
+            ),
+            const SizedBox(height: 10),
+            Text(
+              AppLocalizations.of(context)!.noData,
+              style: Theme.of(context).textTheme.bodyText1,
+            ),
+            SizedBox(height: MediaQuery.of(context).size.height / 20),
+          ],
+        ),
+      );
+    else
+      return ListView.builder(
+        physics: const BouncingScrollPhysics(),
+        padding: const EdgeInsets.only(
+          top: kVPadding + 2.0,
+          bottom: kVPadding + 6.0,
+        ),
+        itemBuilder: (BuildContext context, int index) {
+          return CardTileItem(
+            post: postList.elementAt(index),
+            vPadding: widget.vPadding,
+          );
+        },
+        itemCount: postList.length,
+      );
   }
 
   Widget _loadingBuilder(BuildContext context, LoadStatus? mode) {

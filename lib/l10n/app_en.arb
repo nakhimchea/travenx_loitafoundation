@@ -11,6 +11,7 @@
     "loadingText": "Loading...",
 
     "noNetwork": "Internet is not working. Try again!",
+    "noData": "No Data",
 
     "searchLabel": "Search",
 

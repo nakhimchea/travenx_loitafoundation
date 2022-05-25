@@ -3,7 +3,11 @@ import 'package:provider/provider.dart';
 import 'package:travenx_loitafoundation/config/constant.dart' show kVPadding;
 import 'package:travenx_loitafoundation/providers/locale_provider.dart';
 
-class ChangeThemeButton extends StatelessWidget {
+class ChangeLanguageButton extends StatelessWidget {
+  final void Function() callback;
+  const ChangeLanguageButton({Key? key, required this.callback})
+      : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -19,7 +23,7 @@ class ChangeThemeButton extends StatelessWidget {
       onTap: () {
         showDialog(
           context: context,
-          builder: (context) => _CustomLanguageDialog(),
+          builder: (context) => _CustomLanguageDialog(callback: callback),
         );
       },
     );
@@ -27,8 +31,10 @@ class ChangeThemeButton extends StatelessWidget {
 }
 
 class _CustomLanguageDialog extends StatefulWidget {
+  final void Function() callback;
   const _CustomLanguageDialog({
     Key? key,
+    required this.callback,
   }) : super(key: key);
 
   @override
@@ -95,27 +101,27 @@ class _CustomLanguageDialogState extends State<_CustomLanguageDialog> {
                   ),
                 ),
               ),
-              InkWell(
-                onTap: () => setState(() => selectedLanguage = 2),
-                focusColor: Colors.transparent,
-                highlightColor: Colors.transparent,
-                hoverColor: Colors.transparent,
-                child: Container(
-                  color: selectedLanguage != null && selectedLanguage == 2
-                      ? Theme.of(context).disabledColor
-                      : null,
-                  width: double.infinity,
-                  alignment: Alignment.center,
-                  padding: const EdgeInsets.symmetric(vertical: kVPadding),
-                  child: Text(
-                    '中文',
-                    style: Theme.of(context)
-                        .textTheme
-                        .button!
-                        .copyWith(fontSize: 18),
-                  ),
-                ),
-              ),
+              // InkWell(
+              //   onTap: () => setState(() => selectedLanguage = 2),
+              //   focusColor: Colors.transparent,
+              //   highlightColor: Colors.transparent,
+              //   hoverColor: Colors.transparent,
+              //   child: Container(
+              //     color: selectedLanguage != null && selectedLanguage == 2
+              //         ? Theme.of(context).disabledColor
+              //         : null,
+              //     width: double.infinity,
+              //     alignment: Alignment.center,
+              //     padding: const EdgeInsets.symmetric(vertical: kVPadding),
+              //     child: Text(
+              //       '中文',
+              //       style: Theme.of(context)
+              //           .textTheme
+              //           .button!
+              //           .copyWith(fontSize: 18),
+              //     ),
+              //   ),
+              // ),
               Divider(
                 color: Theme.of(context).primaryColor.withOpacity(0.8),
                 indent: 6.0,
@@ -147,6 +153,7 @@ class _CustomLanguageDialogState extends State<_CustomLanguageDialog> {
                           Provider.of<LocaleProvider>(context, listen: false);
                       if (selectedLanguage != null)
                         provider.setLocale(selectedLanguage!);
+                      widget.callback();
                       Navigator.pop(context);
                     },
                     child: Padding(

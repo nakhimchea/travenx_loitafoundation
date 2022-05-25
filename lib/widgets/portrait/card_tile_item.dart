@@ -3,6 +3,7 @@ import 'dart:ui';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:travenx_loitafoundation/config/configs.dart'
     show kHPadding, textScaleFactor, descriptionIconSize;
 import 'package:travenx_loitafoundation/icons/icons.dart';
@@ -148,11 +149,13 @@ class _CardTileItemState extends State<CardTileItem> {
                         Padding(
                           padding: const EdgeInsets.only(left: 5.0),
                           child: Text(
-                            (widget.post.state == 'ភ្នំពេញ'
-                                    ? 'រាជធានី'
-                                    : 'ខេត្ត') +
+                            (AppLocalizations.of(context)!.localeName == 'km'
+                                    ? widget.post.state == 'ភ្នំពេញ'
+                                        ? 'រាជធានី'
+                                        : 'ខេត្ត'
+                                    : '') +
                                 widget.post.state +
-                                ' ' +
+                                ', ' +
                                 widget.post.country,
                             textScaleFactor: textScaleFactor,
                             style: Theme.of(context).textTheme.bodyText2,

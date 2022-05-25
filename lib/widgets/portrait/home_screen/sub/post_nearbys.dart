@@ -309,12 +309,12 @@ class _NearbyCardState extends State<_NearbyCard> {
                           Padding(
                             padding: const EdgeInsets.only(left: 5.0),
                             child: Text(
-                              (widget.post.state == 'ភ្នំពេញ'
-                                      ? 'រាជធានី'
-                                      : 'ខេត្ត') +
-                                  widget.post.state +
-                                  ' ' +
-                                  widget.post.country,
+                              (AppLocalizations.of(context)!.localeName == 'km'
+                                      ? widget.post.state == 'ភ្នំពេញ'
+                                          ? 'រាជធានី'
+                                          : 'ខេត្ត'
+                                      : '') +
+                                  widget.post.state,
                               textScaleFactor: textScaleFactor,
                               style: Theme.of(context).textTheme.bodyText2,
                               overflow: kIsWeb

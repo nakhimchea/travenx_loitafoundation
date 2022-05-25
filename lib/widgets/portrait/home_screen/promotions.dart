@@ -17,11 +17,9 @@ import 'package:travenx_loitafoundation/services/firestore_service.dart';
 
 class Promotions extends StatefulWidget {
   final bool needRefresh;
-  final void Function() callback;
   const Promotions({
     Key? key,
     required this.needRefresh,
-    required this.callback,
   }) : super(key: key);
 
   @override
@@ -122,13 +120,12 @@ class _PromotionsState extends State<Promotions> {
   @override
   Widget build(BuildContext context) {
     if (widget.needRefresh) {
+      _isRefreshable = true;
+      _isLoadable = true;
       postList = [];
       _lastDoc = null;
       _reloadData();
-      widget.callback();
     }
-    if (_refreshController.headerStatus == RefreshStatus.completed &&
-        postList.length == 0) return const SizedBox.shrink();
 
     return Container(
       padding: const EdgeInsets.only(top: 6.0, bottom: kVPadding),

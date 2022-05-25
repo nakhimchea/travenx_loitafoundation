@@ -44,11 +44,15 @@ class CustomTabBar extends StatelessWidget {
 }
 
 class CustomTabBarList extends StatefulWidget {
+  final bool needRefresh;
+  final void Function() callback;
   final BuildContext context;
   final TabController tabController;
   final double vPadding;
   const CustomTabBarList(
       {Key? key,
+      required this.needRefresh,
+      required this.callback,
       required this.context,
       required this.tabController,
       this.vPadding = kCardTileVPadding})
@@ -105,6 +109,12 @@ class _CustomTabBarListState extends State<CustomTabBarList> {
 
   @override
   Widget build(BuildContext context) {
+    if (widget.needRefresh) {
+      tabLists = [];
+      setTabBarData();
+      widget.callback();
+    }
+
     return Container(
       height:
           MediaQuery.of(context).size.height * 5 / 6.16 + kCardTileVPadding * 5,

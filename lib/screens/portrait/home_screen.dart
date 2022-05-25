@@ -90,7 +90,7 @@ class _HomeScreenState extends State<HomeScreen>
                 actions: [
                   Padding(
                     padding: const EdgeInsets.only(right: kHPadding),
-                    child: ChangeThemeButton(),
+                    child: ChangeLanguageButton(callback: _toggleNeedRefresh),
                   ),
                 ],
               ),
@@ -107,10 +107,7 @@ class _HomeScreenState extends State<HomeScreen>
                         ),
                         child: IconsMenu(),
                       ),
-                      Promotions(
-                        needRefresh: _needRefresh,
-                        callback: _toggleNeedRefresh,
-                      ),
+                      Promotions(needRefresh: _needRefresh),
                       Padding(
                         padding: const EdgeInsets.symmetric(
                           horizontal: kHPadding,
@@ -118,7 +115,7 @@ class _HomeScreenState extends State<HomeScreen>
                         ),
                         child: Provinces(),
                       ),
-                      Nearbys(),
+                      Nearbys(needRefresh: _needRefresh),
                     ],
                   ),
                 ),
@@ -133,7 +130,10 @@ class _HomeScreenState extends State<HomeScreen>
                 padding: const EdgeInsets.only(bottom: kVPadding),
                 sliver: SliverToBoxAdapter(
                   child: CustomTabBarList(
-                      context: context, tabController: _tabController),
+                      needRefresh: _needRefresh,
+                      callback: _toggleNeedRefresh,
+                      context: context,
+                      tabController: _tabController),
                 ),
               ),
             ],

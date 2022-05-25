@@ -23,7 +23,11 @@ import 'package:travenx_loitafoundation/services/internet_service.dart';
 import 'package:travenx_loitafoundation/widgets/custom_loading.dart';
 
 class Nearbys extends StatefulWidget {
-  const Nearbys({Key? key}) : super(key: key);
+  final bool needRefresh;
+  const Nearbys({
+    Key? key,
+    required this.needRefresh,
+  }) : super(key: key);
 
   @override
   _NearbysState createState() => _NearbysState();
@@ -134,6 +138,21 @@ class _NearbysState extends State<Nearbys> {
       setState(() => cityName = 'denied');
   }
 
+  void _reloadData() async {
+    postList = postTranslator(
+        context,
+        await _firestoreService
+            .getProvinceData(
+                cityName == 'denied' ? 'ភ្នំពេញ' : cityName, _lastDoc)
+            .then((snapshot) {
+          setState(() => snapshot.docs.isNotEmpty
+              ? _lastDoc = snapshot.docs.last
+              : _isLoadable = false);
+          return snapshot.docs;
+        }));
+    if (postList.length == 0) setState(() => hasNoData = true);
+  }
+
   @override
   void initState() {
     super.initState();
@@ -142,6 +161,14 @@ class _NearbysState extends State<Nearbys> {
 
   @override
   Widget build(BuildContext context) {
+    if (widget.needRefresh) {
+      _isRefreshable = true;
+      _isLoadable = true;
+      postList = [];
+      _lastDoc = null;
+      _reloadData();
+    }
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[

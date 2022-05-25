@@ -44,10 +44,12 @@ class CustomTabBar extends StatelessWidget {
 }
 
 class CustomTabBarList extends StatefulWidget {
+  final BuildContext context;
   final TabController tabController;
   final double vPadding;
   const CustomTabBarList(
       {Key? key,
+      required this.context,
       required this.tabController,
       this.vPadding = kCardTileVPadding})
       : super(key: key);
@@ -63,16 +65,15 @@ class _CustomTabBarListState extends State<CustomTabBarList> {
 
   void setTabBarData() async {
     final List<String> _tabs = [
-      //TODO: get data by language
-      'កន្លែងថ្មី',
-      'ព្រឹត្តិការណ៍ថ្មី',
-      'ច្រើនទស្សនា',
-      'ល្បីប្រចាំខែ',
-      'ទាំងអស់'
+      AppLocalizations.of(widget.context)!.tbNewPlacesLabel,
+      AppLocalizations.of(widget.context)!.tbNewEventsLabel,
+      AppLocalizations.of(widget.context)!.tbMostVisitsLabel,
+      AppLocalizations.of(widget.context)!.tbMostFamousLabel,
+      AppLocalizations.of(widget.context)!.tbAllPlacesLabel,
     ];
     for (String tab in _tabs)
       tabLists.add(postTranslator(
-          context,
+          widget.context,
           await _firestoreService
               .getTabBarData(tab)
               .then((snapshot) => snapshot.docs)));

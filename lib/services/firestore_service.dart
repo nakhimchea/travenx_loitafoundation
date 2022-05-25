@@ -117,11 +117,12 @@ class FirestoreService {
             });
 
   Future<void> setPromotionData(
+    String language,
     String atPostId,
     Map<String, dynamic> data,
   ) async =>
       await _firestore
-          .collection('promotions')
+          .collection('promotions_' + language)
           .doc(atPostId)
           .set(
             data,
@@ -132,11 +133,12 @@ class FirestoreService {
       });
 
   Future<QuerySnapshot<Map<String, dynamic>>> getPromotionData(
+    String language,
     DocumentSnapshot? lastDoc,
   ) async =>
       lastDoc != null
           ? await _firestore
-              .collection('promotions')
+              .collection('promotions_' + language)
               .startAfterDocument(lastDoc)
               .limit(2)
               .get()
@@ -144,7 +146,7 @@ class FirestoreService {
               print('Cannot get promotion data: ${e.toString()}');
             })
           : await _firestore
-              .collection('promotions')
+              .collection('promotions_' + language)
               .limit(2)
               .get()
               .catchError((e) {
@@ -168,6 +170,31 @@ class FirestoreService {
           .catchError((e) {
         print('Cannot set merge province data: ${e.toString()}');
       });
+
+  Future<QuerySnapshot<Map<String, dynamic>>> getProvinceData(
+    String province,
+    DocumentSnapshot? lastDoc,
+  ) async =>
+      lastDoc != null
+          ? await _firestore
+              .collection('home_screen')
+              .doc('provinces')
+              .collection(province)
+              .startAfterDocument(lastDoc)
+              .limit(3)
+              .get()
+              .catchError((e) {
+              print('Cannot get icon menu data: ${e.toString()}');
+            })
+          : await _firestore
+              .collection('home_screen')
+              .doc('provinces')
+              .collection(province)
+              .limit(3)
+              .get()
+              .catchError((e) {
+              print('Cannot get icon menu data: ${e.toString()}');
+            });
 
   Future<Map<String, dynamic>> getProvinceCounter() async => await _firestore
           .collection('home_screen')
@@ -206,31 +233,6 @@ class FirestoreService {
         print('Cannot update value in provinces_total_posts: $e');
       });
 
-  Future<QuerySnapshot<Map<String, dynamic>>> getProvinceData(
-    String province,
-    DocumentSnapshot? lastDoc,
-  ) async =>
-      lastDoc != null
-          ? await _firestore
-              .collection('home_screen')
-              .doc('provinces')
-              .collection(province)
-              .startAfterDocument(lastDoc)
-              .limit(3)
-              .get()
-              .catchError((e) {
-              print('Cannot get icon menu data: ${e.toString()}');
-            })
-          : await _firestore
-              .collection('home_screen')
-              .doc('provinces')
-              .collection(province)
-              .limit(3)
-              .get()
-              .catchError((e) {
-              print('Cannot get icon menu data: ${e.toString()}');
-            });
-
   Future<void> setTabBarData(
     String tab,
     String atPostId,
@@ -262,6 +264,37 @@ class FirestoreService {
           .catchError((e) {
         print('Cannot get icon menu data: ${e.toString()}');
       });
+
+  Future<DocumentSnapshot<Map<String, dynamic>>?> getPostData(
+    String atPostId,
+  ) async {
+    DocumentSnapshot<Map<String, dynamic>>? _doc;
+    await _firestore
+        .collection('home_screen')
+        .doc('icon_menus')
+        .collection('តំបន់ទាំងអស់')
+        .doc(atPostId)
+        .get()
+        .then((documentSnapshot) {
+      if (documentSnapshot.exists && documentSnapshot.data()!.isNotEmpty)
+        _doc = documentSnapshot;
+    }).catchError((e) {
+      print('Cannot get post data $atPostId: ${e.toString()}');
+    });
+    await _firestore
+        .collection('home_screen')
+        .doc('icon_menus')
+        .collection('All')
+        .doc(atPostId)
+        .get()
+        .then((documentSnapshot) {
+      if (documentSnapshot.exists && documentSnapshot.data()!.isNotEmpty)
+        _doc = documentSnapshot;
+    }).catchError((e) {
+      print('Cannot get post data $atPostId: ${e.toString()}');
+    });
+    return _doc;
+  }
 
   Future<List<dynamic>> readRatings(
     String atPostId,
@@ -531,19 +564,6 @@ class FirestoreService {
               .orderBy('dateTime', descending: true)
               .snapshots();
 
-  Future<DocumentSnapshot<Map<String, dynamic>>> getPostData(
-    String atPostId,
-  ) async =>
-      await _firestore
-          .collection('home_screen')
-          .doc('icon_menus')
-          .collection('តំបន់ទាំងអស់')
-          .doc(atPostId)
-          .get()
-          .catchError((e) {
-        print('Cannot get post data $atPostId: ${e.toString()}');
-      });
-
   // ProfileScreen
   Future<List<DocumentSnapshot<Map<String, dynamic>>>> getUserPosts(
     String atUserId,
@@ -553,7 +573,9 @@ class FirestoreService {
     List<dynamic> _postIds = await _readPostIds(atUserId).catchError((e) {
       print('Cannot read my postIds: ${e.toString()}');
     });
-    for (var _postId in _postIds) posts.add(await getPostData(_postId));
+    for (var _postId in _postIds)
+      if (await getPostData(_postId) != null)
+        posts.add((await getPostData(_postId))!);
     return posts;
   }
 }

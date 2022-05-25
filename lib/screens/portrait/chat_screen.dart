@@ -224,7 +224,7 @@ class _ChatScreenState extends State<ChatScreen> {
                     .getPostData(_chatPostIds.first)
                     .then((snapshot) {
                   _chatPostsImageUrl.insert(
-                      0, snapshot.get('imageUrls')[0].toString());
+                      0, snapshot!.get('imageUrls')[0].toString());
                   _chatPostsTitle.insert(0, snapshot.get('title').toString());
                   setState(() => addTimes++);
                 });
@@ -272,7 +272,7 @@ class _ChatScreenState extends State<ChatScreen> {
                         .getPostData(_chatPostIds.elementAt(index))
                         .then((snapshot) {
                       _chatPostsImageUrl
-                          .add(snapshot.get('imageUrls')[0].toString());
+                          .add(snapshot!.get('imageUrls')[0].toString());
                       _chatPostsTitle.add(snapshot.get('title').toString());
                     });
                   }
@@ -293,7 +293,7 @@ class _ChatScreenState extends State<ChatScreen> {
                           .getPostData(_chatPostIds.elementAt(index))
                           .then((snapshot) {
                         _chatPostsImageUrl
-                            .add(snapshot.get('imageUrls')[0].toString());
+                            .add(snapshot!.get('imageUrls')[0].toString());
                         _chatPostsTitle.add(snapshot.get('title').toString());
                       });
                     }

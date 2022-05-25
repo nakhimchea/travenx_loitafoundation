@@ -1,5 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/widgets.dart' show BuildContext;
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:travenx_loitafoundation/models/post_object_model.dart';
 import 'package:travenx_loitafoundation/services/firestore_service.dart';
@@ -56,7 +58,7 @@ class PostUploader {
     this._policies = policies;
   }
 
-  Future<void> pushPostObject() async {
+  Future<void> pushPostObject(BuildContext context) async {
     final StorageService _storageService = StorageService();
     //TODO: get promotion true false, tabBar menu List
     try {
@@ -94,18 +96,24 @@ class PostUploader {
           'postId': _postId,
         };
         //Upload to Promotion
-        await _pushPromotion(atPostId: _postId, data: data);
+        await _pushPromotion(context, atPostId: _postId, data: data);
 
         //Upload to IconMenus
-        await _pushIconMenu(
+        await _pushIconMenu(context,
             iconMenus: _categories, atPostId: _postId, data: data);
 
         //Upload to Province
         await _pushProvinces(province: _state, atPostId: _postId, data: data);
 
         //Upload to TabBar
-        await _pushTabBar(tabName: 'កន្លែងថ្មី', atPostId: _postId, data: data);
-        await _pushTabBar(tabName: 'ទាំងអស់', atPostId: _postId, data: data);
+        await _pushTabBar(
+            tabName: AppLocalizations.of(context)!.tbNewPlacesLabel,
+            atPostId: _postId,
+            data: data);
+        await _pushTabBar(
+            tabName: AppLocalizations.of(context)!.tbAllPlacesLabel,
+            atPostId: _postId,
+            data: data);
 
         //Link profile to Post
         await _firestoreService
@@ -121,15 +129,25 @@ class PostUploader {
     }
   }
 
-  Future<void> _pushIconMenu({
+  Future<void> _pushIconMenu(
+    BuildContext context, {
     required List<String> iconMenus,
     required String atPostId,
     required Map<String, dynamic> data,
   }) async {
     for (String iconMenu in iconMenus)
       await _firestoreService.setIconMenuData(iconMenu, atPostId, data);
-    await _firestoreService.setIconMenuData('តំបន់ទាំងអស់', atPostId, data);
+    await _firestoreService.setIconMenuData(
+        AppLocalizations.of(context)!.icAll, atPostId, data);
   }
+
+  Future<void> _pushPromotion(
+    BuildContext context, {
+    required String atPostId,
+    required Map<String, dynamic> data,
+  }) async =>
+      await _firestoreService.setPromotionData(
+          AppLocalizations.of(context)!.localeName, atPostId, data);
 
   Future<void> _pushProvinces({
     required String province,
@@ -139,12 +157,6 @@ class PostUploader {
     await _firestoreService.setProvinceData(province, atPostId, data);
     await _firestoreService.increaseProvinceCounter(province);
   }
-
-  Future<void> _pushPromotion({
-    required String atPostId,
-    required Map<String, dynamic> data,
-  }) async =>
-      await _firestoreService.setPromotionData(atPostId, data);
 
   Future<void> _pushTabBar({
     required String tabName,

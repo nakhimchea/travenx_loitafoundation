@@ -302,7 +302,7 @@ class _AddPostState extends State<AddPost> {
                               context: context,
                               builder: (context) => LoadingDialog(),
                             );
-                            await _postUploader.pushPostObject();
+                            await _postUploader.pushPostObject(context);
                             Navigator.pop(context);
                             Navigator.pop(context);
                             Navigator.push(

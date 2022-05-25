@@ -130,11 +130,10 @@ class _HomeScreenState extends State<HomeScreen>
                 ),
               ),
               SliverPadding(
-                padding: const EdgeInsets.only(
-                  bottom: kVPadding,
-                ),
+                padding: const EdgeInsets.only(bottom: kVPadding),
                 sliver: SliverToBoxAdapter(
-                  child: CustomTabBarList(tabController: _tabController),
+                  child: CustomTabBarList(
+                      context: context, tabController: _tabController),
                 ),
               ),
             ],

@@ -108,7 +108,10 @@ class _PromotionsState extends State<Promotions> {
   void _reloadData() async {
     postList = postTranslator(
         context,
-        await _firestoreService.getPromotionData(_lastDoc).then((snapshot) {
+        await _firestoreService
+            .getPromotionData(
+                AppLocalizations.of(context)!.localeName, _lastDoc)
+            .then((snapshot) {
           setState(() => snapshot.docs.isNotEmpty
               ? _lastDoc = snapshot.docs.last
               : _isLoadable = false);
@@ -125,27 +128,7 @@ class _PromotionsState extends State<Promotions> {
       widget.callback();
     }
     if (_refreshController.headerStatus == RefreshStatus.completed &&
-        postList.length == 0)
-      return Container(
-        padding: const EdgeInsets.only(top: 6.0, bottom: kVPadding),
-        height: MediaQuery.of(context).size.height / 3.15,
-        alignment: Alignment.center,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Icon(
-              CustomOutlinedIcons.warning,
-              size: 24.0,
-              color: Theme.of(context).primaryIconTheme.color,
-            ),
-            const SizedBox(height: 10),
-            Text(
-              AppLocalizations.of(context)!.noData,
-              style: Theme.of(context).textTheme.bodyText1,
-            ),
-          ],
-        ),
-      );
+        postList.length == 0) return const SizedBox.shrink();
 
     return Container(
       padding: const EdgeInsets.only(top: 6.0, bottom: kVPadding),
@@ -165,7 +148,8 @@ class _PromotionsState extends State<Promotions> {
           postList = postTranslator(
               context,
               await _firestoreService
-                  .getPromotionData(_lastDoc)
+                  .getPromotionData(
+                      AppLocalizations.of(context)!.localeName, _lastDoc)
                   .then((snapshot) {
                 setState(() => snapshot.docs.isNotEmpty
                     ? _lastDoc = snapshot.docs.last
@@ -180,7 +164,8 @@ class _PromotionsState extends State<Promotions> {
             ..addAll(postTranslator(
                 context,
                 await _firestoreService
-                    .getPromotionData(_lastDoc)
+                    .getPromotionData(
+                        AppLocalizations.of(context)!.localeName, _lastDoc)
                     .then((snapshot) {
                   setState(() => snapshot.docs.isNotEmpty
                       ? _lastDoc = snapshot.docs.last

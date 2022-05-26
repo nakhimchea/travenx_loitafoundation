@@ -116,7 +116,7 @@ class _NearbysState extends State<Nearbys> {
   String cityName = '';
   bool hasNoData = false;
 
-  void _setLocationCity() async {
+  Future<String> _setLocationCity() async {
     final FlutterSecureStorage _secureStorage = FlutterSecureStorage(
         iOptions:
             IOSOptions(accessibility: IOSAccessibility.unlocked_this_device),
@@ -134,8 +134,10 @@ class _NearbysState extends State<Nearbys> {
 
       setState(() =>
           cityName = cityNameTranslator(context, enCityName: _enCityName));
+      return cityName;
     } else
       setState(() => cityName = 'denied');
+    return cityName;
   }
 
   void _reloadData() async {
@@ -166,7 +168,7 @@ class _NearbysState extends State<Nearbys> {
       _isLoadable = true;
       postList = [];
       _lastDoc = null;
-      _reloadData();
+      _setLocationCity().whenComplete(() => _reloadData());
     }
 
     return Column(

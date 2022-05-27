@@ -87,15 +87,25 @@ flutter:
     - assets/icons/home_screen/sub/
 
   fonts:
-    - family: Nokora
-      fonts:
-        - asset: fonts/Nokora-Regular.ttf
     - family: CustomOutlinedIcons
       fonts:
         - asset: fonts/Custom-Oulined-Icons.ttf
     - family: CustomFilledIcons
       fonts:
         - asset: fonts/Custom-Filled-Icons.ttf
+
+    # Font Styles: Khmer
+    - family: Nokora
+      fonts:
+        - asset: fonts/Nokora-Regular.ttf
+    - family: Myura
+      fonts:
+        - asset: fonts/Myura.ttf
+
+    # Font Styles: English
+    - family: SanFrancisco
+      fonts:
+        - asset: fonts/San-Francisco.otf
     - family: Poppins
       fonts:
         - asset: fonts/Poppins-Medium.ttf

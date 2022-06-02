@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:travenx_loitafoundation/config/configs.dart'
     show kHPadding, kVPadding, textScaleFactor, Palette;
-import 'package:travenx_loitafoundation/icons/icons.dart';
 import 'package:travenx_loitafoundation/models/province_model.dart';
 import 'package:travenx_loitafoundation/screens/portrait/home_screen/province_routes.dart';
 
@@ -18,7 +17,9 @@ class Provinces extends StatelessWidget {
         Text(
           AppLocalizations.of(context)!.pvLabel,
           textScaleFactor: textScaleFactor,
-          style: Theme.of(context).textTheme.headline3,
+          style: AppLocalizations.of(context)!.localeName == 'km'
+              ? Theme.of(context).primaryTextTheme.titleLarge
+              : Theme.of(context).textTheme.titleLarge,
         ),
         const SizedBox(height: 10.0),
         Column(
@@ -98,23 +99,18 @@ class _ProvinceCard extends StatelessWidget {
                   Text(
                     modelProvince.label,
                     textScaleFactor: textScaleFactor,
-                    style: Theme.of(context)
-                        .textTheme
-                        .headline1!
-                        .copyWith(color: Color(0xDDFFFFFF)),
+                    style: AppLocalizations.of(context)!.localeName == 'km'
+                        ? Theme.of(context)
+                            .primaryTextTheme
+                            .displayLarge!
+                            .copyWith(color: Color(0xDDFFFFFF))
+                        : Theme.of(context)
+                            .textTheme
+                            .displayMedium!
+                            .copyWith(color: Color(0xDDFFFFFF)),
                     overflow:
                         kIsWeb ? TextOverflow.clip : TextOverflow.ellipsis,
                   ),
-                  modelProvince == modelProvinces(context).last
-                      ? Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 8.0),
-                          child: Icon(
-                            CustomOutlinedIcons.right,
-                            size: 24.0,
-                            color: const Color(0xDDFFFFFF),
-                          ),
-                        )
-                      : const SizedBox.shrink(),
                 ],
               ),
             ),

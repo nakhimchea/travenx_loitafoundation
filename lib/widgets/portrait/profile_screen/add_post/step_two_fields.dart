@@ -31,7 +31,7 @@ class StepTwoFields extends StatelessWidget {
           Text(
             AppLocalizations.of(context)!.pfApStLabel,
             textScaleFactor: textScaleFactor,
-            style: Theme.of(context).textTheme.headline3,
+            style: Theme.of(context).textTheme.displaySmall,
           ),
           const SizedBox(height: kHPadding),
           CustomInputBox(

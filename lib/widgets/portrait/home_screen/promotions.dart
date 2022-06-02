@@ -129,7 +129,7 @@ class _PromotionsState extends State<Promotions> {
 
     return Container(
       padding: const EdgeInsets.only(top: 6.0, bottom: kVPadding),
-      height: MediaQuery.of(context).size.height / 3.15,
+      height: MediaQuery.of(context).size.height / 3,
       child: SmartRefresher(
         controller: _refreshController,
         physics: const BouncingScrollPhysics(),
@@ -231,12 +231,12 @@ class _PromotionCardState extends State<_PromotionCard> {
                   ? Image.asset(
                       widget.post.imageUrls.elementAt(0),
                       height: double.infinity,
-                      width: MediaQuery.of(context).size.width / 2,
+                      width: MediaQuery.of(context).size.width / 1.9,
                       fit: BoxFit.cover,
                     )
                   : CachedNetworkImage(
                       height: double.infinity,
-                      width: MediaQuery.of(context).size.width / 2,
+                      width: MediaQuery.of(context).size.width / 1.9,
                       imageUrl: widget.post.imageUrls.elementAt(0),
                       fit: BoxFit.cover,
                       placeholder: (context, _) => ImageFiltered(
@@ -252,134 +252,146 @@ class _PromotionCardState extends State<_PromotionCard> {
                       ),
                     ),
             ),
+            Positioned(
+              top: 0,
+              right: 0,
+              child: Container(
+                padding: const EdgeInsets.all(10),
+                decoration: BoxDecoration(
+                  color: widget.post.price ~/ 100 > 0
+                      ? Theme.of(context).errorColor
+                      : widget.post.price ~/ 25 > 0
+                          ? Theme.of(context).highlightColor
+                          : Theme.of(context).primaryColor,
+                  borderRadius: BorderRadius.only(
+                    topRight: Radius.circular(15.0),
+                    bottomLeft: Radius.circular(15.0),
+                  ),
+                ),
+                child: Text(
+                  widget.post.price == 0
+                      ? 'Free'
+                      : '\$${widget.post.price % 1 == 0 ? widget.post.price.toStringAsFixed(0) : widget.post.price.toStringAsFixed(2)}',
+                  textScaleFactor: textScaleFactor,
+                  style: Theme.of(context)
+                      .textTheme
+                      .titleLarge!
+                      .copyWith(color: Colors.white),
+                ),
+              ),
+            ),
             Container(
-              height: double.infinity,
-              width: MediaQuery.of(context).size.width / 2,
+              padding: const EdgeInsets.all(10),
+              width: MediaQuery.of(context).size.width / 1.9,
               decoration: BoxDecoration(
                 gradient: Palette.blackGradient,
                 borderRadius: BorderRadius.circular(15.0),
               ),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.end,
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  ListTile(
-                    contentPadding:
-                        const EdgeInsets.symmetric(horizontal: 10.0),
-                    dense: true,
-                    visualDensity: VisualDensity(horizontal: 0, vertical: -3),
-                    title: Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 5.0),
-                      child: Text(
-                        widget.post.title,
-                        maxLines: 2,
-                        textScaleFactor: textScaleFactor,
-                        style: Theme.of(context)
+                  Text(
+                    widget.post.title,
+                    maxLines: 2,
+                    textScaleFactor: textScaleFactor,
+                    style: AppLocalizations.of(context)!.localeName == 'km'
+                        ? Theme.of(context)
+                            .primaryTextTheme
+                            .displayMedium!
+                            .copyWith(color: Colors.white)
+                        : Theme.of(context)
                             .textTheme
-                            .headline2!
+                            .displayMedium!
                             .copyWith(color: Colors.white),
-                        overflow:
-                            kIsWeb ? TextOverflow.clip : TextOverflow.ellipsis,
+                    overflow:
+                        kIsWeb ? TextOverflow.clip : TextOverflow.ellipsis,
+                  ),
+                  SizedBox(
+                    height: AppLocalizations.of(context)!.localeName == 'km'
+                        ? 0
+                        : 5,
+                  ),
+                  Row(
+                    children: [
+                      Icon(
+                        CustomFilledIcons.location,
+                        color: Theme.of(context).primaryColor,
+                        size: descriptionIconSize,
                       ),
-                    ),
-                    subtitle: Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 5.0),
-                      child: Row(
+                      const SizedBox(width: 5.0),
+                      Expanded(
+                        child: Text(
+                          (AppLocalizations.of(context)!.localeName == 'km'
+                                  ? widget.post.state == 'ភ្នំពេញ'
+                                      ? 'រាជធានី'
+                                      : 'ខេត្ត'
+                                  : '') +
+                              widget.post.state,
+                          textScaleFactor: textScaleFactor,
+                          style:
+                              AppLocalizations.of(context)!.localeName == 'km'
+                                  ? Theme.of(context)
+                                      .primaryTextTheme
+                                      .bodySmall!
+                                      .copyWith(color: Colors.white)
+                                  : Theme.of(context)
+                                      .textTheme
+                                      .bodySmall!
+                                      .copyWith(color: Colors.white),
+                          overflow: kIsWeb
+                              ? TextOverflow.clip
+                              : TextOverflow.ellipsis,
+                        ),
+                      ),
+                    ],
+                  ),
+                  SizedBox(
+                    height: AppLocalizations.of(context)!.localeName == 'km'
+                        ? 5
+                        : 10,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Row(
                         children: [
                           Icon(
-                            CustomFilledIcons.location,
-                            color: Theme.of(context).primaryColor,
+                            CustomFilledIcons.star,
+                            color: Theme.of(context).highlightColor,
                             size: descriptionIconSize,
                           ),
-                          Padding(
-                            padding: const EdgeInsets.only(left: 5.0),
-                            child: Text(
-                              (AppLocalizations.of(context)!.localeName == 'km'
-                                      ? widget.post.state == 'ភ្នំពេញ'
-                                          ? 'រាជធានី'
-                                          : 'ខេត្ត'
-                                      : '') +
-                                  widget.post.state,
-                              textScaleFactor: textScaleFactor,
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .bodyText2!
-                                  .copyWith(color: Colors.white),
-                              overflow: kIsWeb
-                                  ? TextOverflow.clip
-                                  : TextOverflow.ellipsis,
-                            ),
+                          const SizedBox(width: 5.0),
+                          Text(
+                            _ratings.toStringAsFixed(1),
+                            textScaleFactor: textScaleFactor,
+                            style: Theme.of(context)
+                                .textTheme
+                                .titleSmall!
+                                .copyWith(color: Colors.white),
                           ),
                         ],
                       ),
-                    ),
-                    trailing: Text(
-                      widget.post.price == 0
-                          ? 'Free'
-                          : '\$${widget.post.price % 1 == 0 ? widget.post.price.toStringAsFixed(0) : widget.post.price.toStringAsFixed(1)}',
-                      textScaleFactor: textScaleFactor,
-                      style: Theme.of(context).textTheme.subtitle1,
-                      overflow:
-                          kIsWeb ? TextOverflow.clip : TextOverflow.ellipsis,
-                    ),
+                      Row(
+                        children: [
+                          Icon(
+                            CustomOutlinedIcons.view,
+                            color: Theme.of(context).hintColor,
+                            size: descriptionIconSize,
+                          ),
+                          const SizedBox(width: 5.0),
+                          Text(
+                            _views.toString(),
+                            textScaleFactor: textScaleFactor,
+                            style: Theme.of(context)
+                                .textTheme
+                                .bodyMedium!
+                                .copyWith(color: Colors.white),
+                          ),
+                        ],
+                      ),
+                    ],
                   ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 10.0,
-                      vertical: 5.0,
-                    ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Row(
-                          children: [
-                            Icon(
-                              CustomFilledIcons.star,
-                              color: Theme.of(context).highlightColor,
-                              size: descriptionIconSize,
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.only(left: 5.0),
-                              child: Text(
-                                _ratings.toStringAsFixed(1),
-                                textScaleFactor: textScaleFactor,
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .headline5!
-                                    .copyWith(color: Colors.white),
-                                overflow: kIsWeb
-                                    ? TextOverflow.clip
-                                    : TextOverflow.ellipsis,
-                              ),
-                            ),
-                          ],
-                        ),
-                        Row(
-                          children: [
-                            Icon(
-                              CustomOutlinedIcons.view,
-                              color: Theme.of(context).hintColor,
-                              size: descriptionIconSize,
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.only(left: 5.0),
-                              child: Text(
-                                _views.toString(),
-                                textScaleFactor: textScaleFactor,
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .subtitle2!
-                                    .copyWith(color: Colors.white),
-                                overflow: kIsWeb
-                                    ? TextOverflow.clip
-                                    : TextOverflow.ellipsis,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
-                  ),
-                  const SizedBox(height: 10),
                 ],
               ),
             ),

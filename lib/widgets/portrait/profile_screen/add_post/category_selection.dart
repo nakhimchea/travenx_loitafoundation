@@ -32,7 +32,7 @@ class CategorySelection extends StatelessWidget {
             AppLocalizations.of(context)!.pfApStBusinessType,
             textAlign: TextAlign.justify,
             textScaleFactor: textScaleFactor,
-            style: Theme.of(context).textTheme.button,
+            style: Theme.of(context).textTheme.bodyMedium,
           ),
           const SizedBox(height: kHPadding),
           Wrap(
@@ -131,7 +131,7 @@ class _CategoryButton extends StatelessWidget {
             ? Theme.of(context).primaryColor.withOpacity(0.8)
             : Theme.of(context).scaffoldBackgroundColor),
         overlayColor: MaterialStateProperty.all<Color?>(
-            Theme.of(context).textTheme.button!.color!.withOpacity(0.1)),
+            Theme.of(context).textTheme.bodyMedium!.color!.withOpacity(0.1)),
         shape: MaterialStateProperty.all<OutlinedBorder?>(
             RoundedRectangleBorder(borderRadius: BorderRadius.circular(25.0))),
       ),

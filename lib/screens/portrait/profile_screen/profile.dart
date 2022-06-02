@@ -300,8 +300,9 @@ class _ProfileState extends State<Profile> {
                         Text(
                           AppLocalizations.of(context)!.pfVersion,
                           textScaleFactor: textScaleFactor,
-                          style: Theme.of(context).textTheme.bodyText1,
+                          style: Theme.of(context).textTheme.bodyLarge,
                         ),
+                        const SizedBox(height: 60),
                       ],
                     ),
                   ),

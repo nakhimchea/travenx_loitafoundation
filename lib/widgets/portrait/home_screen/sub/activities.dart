@@ -20,7 +20,9 @@ class Activities extends StatelessWidget {
           child: Text(
             AppLocalizations.of(context)!.pdActivityLabel,
             textScaleFactor: textScaleFactor,
-            style: Theme.of(context).textTheme.headline3,
+            style: AppLocalizations.of(context)!.localeName == 'km'
+                ? Theme.of(context).primaryTextTheme.titleLarge
+                : Theme.of(context).textTheme.titleLarge,
           ),
         ),
         const SizedBox(height: 10.0),
@@ -78,8 +80,8 @@ class _ActivityCard extends StatelessWidget {
               decoration: BoxDecoration(
                 color:
                     Theme.of(context).colorScheme.brightness == Brightness.light
-                        ? Colors.white
-                        : Theme.of(context).primaryIconTheme.color,
+                        ? Theme.of(context).canvasColor
+                        : Theme.of(context).iconTheme.color,
                 borderRadius: const BorderRadius.only(
                   topLeft: Radius.circular(15.0),
                   topRight: Radius.circular(15.0),
@@ -101,7 +103,9 @@ class _ActivityCard extends StatelessWidget {
               child: Text(
                 activity.label,
                 textScaleFactor: textScaleFactor,
-                style: Theme.of(context).textTheme.headline2,
+                style: AppLocalizations.of(context)!.localeName == 'km'
+                    ? Theme.of(context).primaryTextTheme.displaySmall
+                    : Theme.of(context).textTheme.displaySmall,
                 textAlign: TextAlign.center,
                 overflow: TextOverflow.ellipsis,
               ),

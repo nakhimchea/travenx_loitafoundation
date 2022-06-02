@@ -60,7 +60,7 @@ class _ChatState extends State<Chat> {
         title: Text(
           widget.postTitle,
           textScaleFactor: textScaleFactor,
-          style: Theme.of(context).textTheme.headline3,
+          style: Theme.of(context).textTheme.displaySmall,
         ),
         actions: [
           Padding(
@@ -227,7 +227,7 @@ class _MessageBubble extends StatelessWidget {
         children: <Widget>[
           Text(
             senderName,
-            style: Theme.of(context).textTheme.button,
+            style: Theme.of(context).textTheme.bodyMedium,
           ),
           Material(
             borderRadius: isMe
@@ -309,10 +309,10 @@ class _MessageSenderState extends State<_MessageSender> {
                   .copyWith(color: Theme.of(context).iconTheme.color),
               autocorrect: false,
               enableSuggestions: false,
-              cursorHeight: Theme.of(context).textTheme.bodyText1!.fontSize,
+              cursorHeight: Theme.of(context).textTheme.bodyLarge!.fontSize,
               decoration: InputDecoration(
                 hintText: 'Aa',
-                hintStyle: Theme.of(context).textTheme.bodyText1,
+                hintStyle: Theme.of(context).textTheme.bodyLarge,
                 fillColor: Theme.of(context).scaffoldBackgroundColor,
                 contentPadding:
                     const EdgeInsets.symmetric(horizontal: kHPadding),

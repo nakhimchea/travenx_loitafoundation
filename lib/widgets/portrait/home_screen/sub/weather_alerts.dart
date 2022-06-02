@@ -19,7 +19,7 @@ class WeatherAlerts extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        SizedBox(height: this.forecast.length > 0 ? 5.0 : 0.0),
+        SizedBox(height: this.forecast.length > 0 ? 10.0 : 0.0),
         this.forecast.length > 0
             ? this.forecast.length == 1
                 ? Text(
@@ -30,10 +30,15 @@ class WeatherAlerts extends StatelessWidget {
                             : '',
                     textAlign: TextAlign.justify,
                     textScaleFactor: textScaleFactor,
-                    style: Theme.of(context)
-                        .textTheme
-                        .bodyText1!
-                        .copyWith(color: Theme.of(context).errorColor),
+                    style: AppLocalizations.of(context)!.localeName == 'km'
+                        ? Theme.of(context)
+                            .primaryTextTheme
+                            .bodyMedium!
+                            .copyWith(color: Theme.of(context).errorColor)
+                        : Theme.of(context)
+                            .textTheme
+                            .bodyMedium!
+                            .copyWith(color: Theme.of(context).errorColor),
                   )
                 : Text(
                     AppLocalizations.of(context)!.localeName == 'km'
@@ -45,13 +50,18 @@ class WeatherAlerts extends StatelessWidget {
                             : '',
                     textAlign: TextAlign.justify,
                     textScaleFactor: textScaleFactor,
-                    style: Theme.of(context)
-                        .textTheme
-                        .bodyText1!
-                        .copyWith(color: Theme.of(context).errorColor),
+                    style: AppLocalizations.of(context)!.localeName == 'km'
+                        ? Theme.of(context)
+                            .primaryTextTheme
+                            .bodyMedium!
+                            .copyWith(color: Theme.of(context).errorColor)
+                        : Theme.of(context)
+                            .textTheme
+                            .bodyMedium!
+                            .copyWith(color: Theme.of(context).errorColor),
                   )
             : const SizedBox.shrink(),
-        const SizedBox(height: 25.0),
+        const SizedBox(height: 20.0),
         this.sunset != ''
             ? Center(
                 child: Text(
@@ -62,10 +72,15 @@ class WeatherAlerts extends StatelessWidget {
                           : '',
                   textAlign: TextAlign.center,
                   textScaleFactor: textScaleFactor,
-                  style: Theme.of(context)
-                      .textTheme
-                      .bodyText1!
-                      .copyWith(color: Theme.of(context).iconTheme.color),
+                  style: AppLocalizations.of(context)!.localeName == 'km'
+                      ? Theme.of(context)
+                          .primaryTextTheme
+                          .titleSmall!
+                          .copyWith(fontWeight: FontWeight.w400)
+                      : Theme.of(context)
+                          .textTheme
+                          .titleSmall!
+                          .copyWith(fontWeight: FontWeight.w400),
                 ),
               )
             : const SizedBox.shrink(),

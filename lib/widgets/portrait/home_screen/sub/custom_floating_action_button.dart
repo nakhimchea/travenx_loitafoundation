@@ -46,8 +46,9 @@ class CustomFloatingActionButton extends StatelessWidget {
         ),
         child: Icon(
           iconData,
-          color:
-              iconColor != null ? iconColor : Theme.of(context).iconTheme.color,
+          color: iconColor != null
+              ? iconColor
+              : Theme.of(context).primaryIconTheme.color,
           size: iconSize,
         ),
       ),

@@ -119,7 +119,7 @@ class ShortProfile extends StatelessWidget {
                   textScaleFactor: constraints.maxWidth / 300 > 1.6
                       ? 1.6
                       : constraints.maxWidth / 300,
-                  style: Theme.of(context).textTheme.headline2,
+                  style: Theme.of(context).textTheme.displayMedium,
                 ),
                 SizedBox(height: 5.0),
                 Text(
@@ -127,7 +127,7 @@ class ShortProfile extends StatelessWidget {
                   textScaleFactor: constraints.maxWidth / 300 > 1.6
                       ? 1.6
                       : constraints.maxWidth / 300,
-                  style: Theme.of(context).textTheme.bodyText1,
+                  style: Theme.of(context).textTheme.bodyLarge,
                 ),
               ],
             ),

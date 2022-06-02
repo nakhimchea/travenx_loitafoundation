@@ -185,7 +185,7 @@ class _PostDetailState extends State<PostDetail> {
                         radius: MediaQuery.of(context).size.height / 20 -
                             kVPadding -
                             10,
-                        backgroundColor: Theme.of(context).bottomAppBarColor,
+                        backgroundColor: Theme.of(context).canvasColor,
                         child: Icon(
                           CustomFilledIcons.message,
                           size: 24.0,
@@ -204,7 +204,7 @@ class _PostDetailState extends State<PostDetail> {
                       radius: MediaQuery.of(context).size.height / 20 -
                           kVPadding -
                           10,
-                      backgroundColor: Theme.of(context).bottomAppBarColor,
+                      backgroundColor: Theme.of(context).canvasColor,
                       child: Icon(
                         Icons.call_rounded,
                         size: 24.0,
@@ -228,7 +228,7 @@ class _PostDetailState extends State<PostDetail> {
                         textScaleFactor: textScaleFactor,
                         style: Theme.of(context)
                             .textTheme
-                            .headline3!
+                            .displaySmall!
                             .copyWith(color: Colors.white),
                         overflow:
                             kIsWeb ? TextOverflow.clip : TextOverflow.ellipsis,
@@ -255,7 +255,7 @@ class _PostDetailState extends State<PostDetail> {
                     padding: const EdgeInsets.only(
                       left: kHPadding,
                       right: kHPadding,
-                      top: 25.0,
+                      top: 20.0,
                     ),
                     child: PostHeader(
                       title: widget.post.title,
@@ -329,6 +329,7 @@ class _PostDetailState extends State<PostDetail> {
                     cityName: widget.post.state,
                     currentPostId: widget.post.postId,
                   ),
+                  const SizedBox(height: kHPadding),
                 ],
               ),
             ),

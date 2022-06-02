@@ -37,7 +37,7 @@ class StepThreeFields extends StatelessWidget {
             AppLocalizations.of(context)!.pfApSthPoliciesLabel,
             textAlign: TextAlign.justify,
             textScaleFactor: textScaleFactor,
-            style: Theme.of(context).textTheme.button,
+            style: Theme.of(context).textTheme.bodyMedium,
           ),
           PoliciesInputBox(
             hintText: AppLocalizations.of(context)!.pfApSthPoliciesHint,

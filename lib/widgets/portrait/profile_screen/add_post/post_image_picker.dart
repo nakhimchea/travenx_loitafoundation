@@ -42,7 +42,7 @@ class PostImagePicker extends StatelessWidget {
             AppLocalizations.of(context)!.pfApStImagePickerLabel,
             textAlign: TextAlign.justify,
             textScaleFactor: textScaleFactor,
-            style: Theme.of(context).textTheme.button,
+            style: Theme.of(context).textTheme.bodyMedium,
           ),
           const SizedBox(height: kHPadding),
           Wrap(

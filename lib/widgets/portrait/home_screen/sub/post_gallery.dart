@@ -96,15 +96,17 @@ class _PostGalleryState extends State<PostGallery> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Padding(
-          padding:
-              EdgeInsets.symmetric(horizontal: kHPadding, vertical: kVPadding),
+          padding: const EdgeInsets.symmetric(
+              horizontal: kHPadding, vertical: kVPadding),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
                 AppLocalizations.of(context)!.pdGalleryLabel,
                 textScaleFactor: textScaleFactor,
-                style: Theme.of(context).textTheme.headline3,
+                style: AppLocalizations.of(context)!.localeName == 'km'
+                    ? Theme.of(context).primaryTextTheme.titleLarge
+                    : Theme.of(context).textTheme.titleLarge,
               ),
               Visibility(
                 visible: _imageUrls.length != 0,
@@ -119,21 +121,25 @@ class _PostGalleryState extends State<PostGallery> {
                     );
                   },
                   child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Icon(
                         CustomOutlinedIcons.new_icon,
                         color: Theme.of(context).hintColor,
-                        size: 16,
+                        size: 18,
                       ),
                       const SizedBox(width: 5.0),
                       Text(
                         AppLocalizations.of(context)!.pdGalleryUploadLabel,
                         textScaleFactor: textScaleFactor,
-                        style: Theme.of(context)
-                            .textTheme
-                            .subtitle1!
-                            .copyWith(color: Theme.of(context).hintColor),
+                        style: AppLocalizations.of(context)!.localeName == 'km'
+                            ? Theme.of(context)
+                                .primaryTextTheme
+                                .titleMedium!
+                                .copyWith(color: Theme.of(context).hintColor)
+                            : Theme.of(context)
+                                .textTheme
+                                .titleMedium!
+                                .copyWith(color: Theme.of(context).hintColor),
                       ),
                     ],
                   ),
@@ -148,7 +154,7 @@ class _PostGalleryState extends State<PostGallery> {
               : null,
           child: _imageUrls.length > 0
               ? ListView.builder(
-                  physics: BouncingScrollPhysics(),
+                  physics: const BouncingScrollPhysics(),
                   itemCount: _imageUrls.length,
                   scrollDirection: Axis.horizontal,
                   itemBuilder: (BuildContext context, int index) {
@@ -186,10 +192,15 @@ class _PostGalleryState extends State<PostGallery> {
                   child: Text(
                     AppLocalizations.of(context)!.pdShowAllLabel,
                     textScaleFactor: textScaleFactor,
-                    style: Theme.of(context)
-                        .textTheme
-                        .subtitle1!
-                        .copyWith(color: Theme.of(context).hintColor),
+                    style: AppLocalizations.of(context)!.localeName == 'km'
+                        ? Theme.of(context)
+                            .primaryTextTheme
+                            .titleMedium!
+                            .copyWith(color: Theme.of(context).hintColor)
+                        : Theme.of(context)
+                            .textTheme
+                            .titleMedium!
+                            .copyWith(color: Theme.of(context).hintColor),
                   ),
                 ),
               )
@@ -278,7 +289,7 @@ class _PostGalleryPicker extends StatelessWidget {
               width: imageSize,
               height: imageSize,
               decoration: BoxDecoration(
-                color: Theme.of(context).primaryColor.withOpacity(0.1),
+                color: Theme.of(context).scaffoldBackgroundColor,
                 borderRadius: BorderRadius.circular(15.0),
               ),
               child: Icon(
@@ -296,7 +307,7 @@ class _PostGalleryPicker extends StatelessWidget {
                 width: imageSize,
                 height: imageSize,
                 decoration: BoxDecoration(
-                  color: Theme.of(context).primaryColor.withOpacity(0.1),
+                  color: Theme.of(context).scaffoldBackgroundColor,
                   borderRadius: BorderRadius.circular(15.0),
                 ),
                 child: ClipRRect(
@@ -333,7 +344,7 @@ class _PostGalleryPicker extends StatelessWidget {
                         (MediaQuery.of(context).size.width - (4 * kHPadding)) /
                             18,
                     decoration: BoxDecoration(
-                      color: Theme.of(context).bottomAppBarColor,
+                      color: Theme.of(context).canvasColor,
                       borderRadius: BorderRadius.circular(4.0),
                     ),
                     child: Icon(
@@ -360,7 +371,7 @@ class _PostGalleryPicker extends StatelessWidget {
       padding: const EdgeInsets.symmetric(
           horizontal: kHPadding, vertical: kHPadding),
       decoration: BoxDecoration(
-        color: Theme.of(context).bottomAppBarColor,
+        color: Theme.of(context).canvasColor,
         borderRadius: BorderRadius.circular(15.0),
       ),
       child: Column(
@@ -368,7 +379,9 @@ class _PostGalleryPicker extends StatelessWidget {
           Text(
             AppLocalizations.of(context)!.pdGalleryUploadLabel,
             textScaleFactor: textScaleFactor,
-            style: Theme.of(context).textTheme.headline2,
+            style: AppLocalizations.of(context)!.localeName == 'km'
+                ? Theme.of(context).primaryTextTheme.displayMedium
+                : Theme.of(context).textTheme.displayMedium,
           ),
           const SizedBox(height: kVPadding),
           Align(
@@ -392,7 +405,9 @@ class _PostGalleryPicker extends StatelessWidget {
               child: Text(
                 AppLocalizations.of(context)!.pdGallerySharePublic,
                 textScaleFactor: textScaleFactor,
-                style: Theme.of(context).textTheme.bodyText1,
+                style: AppLocalizations.of(context)!.localeName == 'km'
+                    ? Theme.of(context).primaryTextTheme.bodyMedium
+                    : Theme.of(context).textTheme.bodyMedium,
               ),
             ),
           ),
@@ -404,7 +419,9 @@ class _PostGalleryPicker extends StatelessWidget {
                 child: StepperNavigationButton(
                   backgroundColor: Theme.of(context).disabledColor,
                   label: AppLocalizations.of(context)!.pdCancelLabel,
-                  textStyle: Theme.of(context).textTheme.bodyText1,
+                  textStyle: AppLocalizations.of(context)!.localeName == 'km'
+                      ? Theme.of(context).primaryTextTheme.bodyLarge
+                      : Theme.of(context).textTheme.bodyLarge,
                   onPressed: () {
                     pickerCallback(XFile(''), isRemoved: false);
                     if (isDialog) Navigator.pop(context);
@@ -412,15 +429,17 @@ class _PostGalleryPicker extends StatelessWidget {
                 ),
               ),
               Container(
-                height: 44,
                 width: MediaQuery.of(context).size.width / 2 - 3 * kHPadding,
                 child: StepperNavigationButton(
                   backgroundColor: imagesFile.length == 0
                       ? Theme.of(context).disabledColor
                       : Theme.of(context).primaryColor,
                   label: AppLocalizations.of(context)!.pdUploadLabel,
-                  textStyle: Theme.of(context).textTheme.bodyText1!.copyWith(
-                      color: imagesFile.length != 0 ? Colors.white : null),
+                  textStyle: AppLocalizations.of(context)!.localeName == 'km'
+                      ? Theme.of(context).primaryTextTheme.bodyLarge!.copyWith(
+                          color: imagesFile.length != 0 ? Colors.white : null)
+                      : Theme.of(context).textTheme.bodyLarge!.copyWith(
+                          color: imagesFile.length != 0 ? Colors.white : null),
                   onPressed: () async {
                     final User? _currentUser =
                         FirebaseAuth.instance.currentUser;

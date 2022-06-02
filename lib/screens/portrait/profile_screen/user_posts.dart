@@ -64,7 +64,7 @@ class _UserPostsState extends State<UserPosts> {
         title: Text(
           AppLocalizations.of(context)!.pfAddedPost,
           textScaleFactor: textScaleFactor,
-          style: Theme.of(context).textTheme.headline3,
+          style: Theme.of(context).textTheme.displaySmall,
         ),
         actions: [
           IconButton(
@@ -98,7 +98,7 @@ class _UserPostsState extends State<UserPosts> {
                         const SizedBox(height: 10),
                         Text(
                           AppLocalizations.of(context)!.pfAddedPostNoData,
-                          style: Theme.of(context).textTheme.bodyText1,
+                          style: Theme.of(context).textTheme.bodyLarge,
                         ),
                         SizedBox(
                             height: MediaQuery.of(context).size.height / 10),
@@ -333,7 +333,7 @@ class _PostCardState extends State<_PostCard> {
                     Text(
                       widget.post.title,
                       textScaleFactor: textScaleFactor,
-                      style: Theme.of(context).textTheme.headline4,
+                      style: Theme.of(context).textTheme.titleLarge,
                       overflow:
                           kIsWeb ? TextOverflow.clip : TextOverflow.ellipsis,
                     ),
@@ -352,7 +352,7 @@ class _PostCardState extends State<_PostCard> {
                                     : 'ខេត្ត') +
                                 widget.post.state,
                             textScaleFactor: textScaleFactor,
-                            style: Theme.of(context).textTheme.bodyText2,
+                            style: Theme.of(context).textTheme.bodySmall,
                             overflow: kIsWeb
                                 ? TextOverflow.clip
                                 : TextOverflow.ellipsis,
@@ -375,7 +375,7 @@ class _PostCardState extends State<_PostCard> {
                               child: Text(
                                 _ratings.toStringAsFixed(1),
                                 textScaleFactor: textScaleFactor,
-                                style: Theme.of(context).textTheme.headline5,
+                                style: Theme.of(context).textTheme.titleMedium,
                                 overflow: kIsWeb
                                     ? TextOverflow.clip
                                     : TextOverflow.ellipsis,
@@ -395,7 +395,7 @@ class _PostCardState extends State<_PostCard> {
                               child: Text(
                                 _views.toString(),
                                 textScaleFactor: textScaleFactor,
-                                style: Theme.of(context).textTheme.subtitle2,
+                                style: Theme.of(context).textTheme.titleSmall,
                                 overflow: kIsWeb
                                     ? TextOverflow.clip
                                     : TextOverflow.ellipsis,
@@ -415,7 +415,7 @@ class _PostCardState extends State<_PostCard> {
                         ? 'Free'
                         : '\$${widget.post.price % 1 == 0 ? widget.post.price.toStringAsFixed(0) : widget.post.price.toStringAsFixed(1)}',
                     textScaleFactor: textScaleFactor,
-                    style: Theme.of(context).textTheme.subtitle1,
+                    style: Theme.of(context).textTheme.titleMedium,
                     overflow:
                         kIsWeb ? TextOverflow.clip : TextOverflow.ellipsis,
                   ),

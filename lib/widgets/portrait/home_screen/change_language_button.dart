@@ -141,9 +141,12 @@ class _CustomLanguageDialogState extends State<_CustomLanguageDialog> {
                             : selectedLanguage == 2
                                 ? '取消'
                                 : 'Cancel',
-                        style: Theme.of(context).textTheme.headline3!.copyWith(
-                            color: Theme.of(context).primaryColor,
-                            fontWeight: FontWeight.w400),
+                        style: Theme.of(context)
+                            .textTheme
+                            .displaySmall!
+                            .copyWith(
+                                color: Theme.of(context).primaryColor,
+                                fontWeight: FontWeight.w400),
                       ),
                     ),
                   ),

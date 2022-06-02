@@ -18,7 +18,9 @@ class PostDetails extends StatelessWidget {
         Text(
           AppLocalizations.of(context)!.pdDetailsLabel,
           textScaleFactor: textScaleFactor,
-          style: Theme.of(context).textTheme.headline3,
+          style: AppLocalizations.of(context)!.localeName == 'km'
+              ? Theme.of(context).primaryTextTheme.titleLarge
+              : Theme.of(context).textTheme.titleLarge,
         ),
         const SizedBox(height: 10.0),
         ReadMoreText(
@@ -29,15 +31,27 @@ class PostDetails extends StatelessWidget {
           trimMode: TrimMode.Line,
           trimCollapsedText: AppLocalizations.of(context)!.pdReadmore,
           trimExpandedText: AppLocalizations.of(context)!.doneLabel,
-          style: Theme.of(context).textTheme.bodyText1,
-          moreStyle: Theme.of(context)
-              .textTheme
-              .headline4!
-              .copyWith(color: Theme.of(context).hintColor),
-          lessStyle: Theme.of(context)
-              .textTheme
-              .headline4!
-              .copyWith(color: Theme.of(context).hintColor),
+          style: AppLocalizations.of(context)!.localeName == 'km'
+              ? Theme.of(context).primaryTextTheme.bodyLarge
+              : Theme.of(context).textTheme.bodyLarge,
+          moreStyle: AppLocalizations.of(context)!.localeName == 'km'
+              ? Theme.of(context)
+                  .primaryTextTheme
+                  .titleMedium!
+                  .copyWith(color: Theme.of(context).hintColor)
+              : Theme.of(context)
+                  .textTheme
+                  .titleMedium!
+                  .copyWith(color: Theme.of(context).hintColor),
+          lessStyle: AppLocalizations.of(context)!.localeName == 'km'
+              ? Theme.of(context)
+                  .primaryTextTheme
+                  .titleMedium!
+                  .copyWith(color: Theme.of(context).hintColor)
+              : Theme.of(context)
+                  .textTheme
+                  .titleMedium!
+                  .copyWith(color: Theme.of(context).hintColor),
         ),
         const SizedBox(height: 20.0),
         ClipRRect(
@@ -62,7 +76,7 @@ class PostDetails extends StatelessWidget {
               textScaleFactor: textScaleFactor,
               style: Theme.of(context)
                   .textTheme
-                  .headline4!
+                  .titleMedium!
                   .copyWith(color: Theme.of(context).hintColor),
             ),
           ),

@@ -40,7 +40,7 @@ class ProfileCategory extends StatelessWidget {
             Text(
               title,
               textScaleFactor: textScaleFactor,
-              style: Theme.of(context).textTheme.bodyText1!.copyWith(
+              style: Theme.of(context).textTheme.bodyLarge!.copyWith(
                     color: textColor != null
                         ? textColor
                         : Theme.of(context).iconTheme.color,

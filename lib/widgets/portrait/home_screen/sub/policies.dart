@@ -16,7 +16,9 @@ class Policies extends StatelessWidget {
           '• ' + policy,
           textScaleFactor: textScaleFactor,
           textAlign: TextAlign.justify,
-          style: Theme.of(context).textTheme.bodyText1,
+          style: AppLocalizations.of(context)!.localeName == 'km'
+              ? Theme.of(context).primaryTextTheme.bodyLarge
+              : Theme.of(context).textTheme.bodyLarge,
         ),
       );
 
@@ -36,7 +38,9 @@ class Policies extends StatelessWidget {
           Text(
             AppLocalizations.of(context)!.pdPoliciesLabel,
             textScaleFactor: textScaleFactor,
-            style: Theme.of(context).textTheme.headline3,
+            style: AppLocalizations.of(context)!.localeName == 'km'
+                ? Theme.of(context).primaryTextTheme.titleLarge
+                : Theme.of(context).textTheme.titleLarge,
           ),
           const SizedBox(height: 10.0),
           Column(

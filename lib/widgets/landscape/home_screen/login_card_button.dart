@@ -78,7 +78,7 @@ class LoginCardButton extends StatelessWidget {
                         textScaleFactor: constraints.maxWidth / 200 > 1.6
                             ? 1.6
                             : constraints.maxWidth / 200,
-                        style: Theme.of(context).textTheme.headline4!.copyWith(
+                        style: Theme.of(context).textTheme.titleLarge!.copyWith(
                               fontSize: 10.0,
                               fontFamily: 'Poppins',
                               fontWeight: FontWeight.w500,

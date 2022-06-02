@@ -57,7 +57,7 @@ class MyApp extends StatelessWidget {
           debugShowCheckedModeBanner: false,
           title: 'Travenx',
           locale:
-              localeProvider.locale ?? Locale.fromSubtags(languageCode: 'en'),
+              localeProvider.locale ?? Locale.fromSubtags(languageCode: 'km'),
           localizationsDelegates: [
             AppLocalizations.delegate,
             GlobalMaterialLocalizations.delegate,
@@ -66,7 +66,7 @@ class MyApp extends StatelessWidget {
           ],
           supportedLocales: Locales.languages,
           themeMode: themeProvider.themeMode ?? ThemeMode.light,
-          theme: Travenx.lightTheme,
+          theme: Travenx.themeLightGrey,
           darkTheme: Travenx.darkTheme,
           home: ResponsiveDecider(),
           scrollBehavior: CustomScrollBehavior(),

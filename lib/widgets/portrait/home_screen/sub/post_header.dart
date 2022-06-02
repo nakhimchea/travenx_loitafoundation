@@ -37,7 +37,9 @@ class PostHeader extends StatelessWidget {
                 this.title,
                 maxLines: 2,
                 textScaleFactor: textScaleFactor,
-                style: Theme.of(context).textTheme.headline1,
+                style: AppLocalizations.of(context)!.localeName == 'km'
+                    ? Theme.of(context).primaryTextTheme.displayLarge
+                    : Theme.of(context).textTheme.displayLarge,
                 overflow: kIsWeb ? TextOverflow.clip : TextOverflow.ellipsis,
               ),
             ),
@@ -48,19 +50,15 @@ class PostHeader extends StatelessWidget {
                   color: Theme.of(context).highlightColor,
                   size: descriptionIconSize,
                 ),
-                Padding(
-                  padding: const EdgeInsets.only(left: 5.0),
-                  child: Text(
-                    this.ratings.toStringAsFixed(1),
-                    textScaleFactor: textScaleFactor,
-                    style: Theme.of(context).textTheme.headline5,
-                    overflow:
-                        kIsWeb ? TextOverflow.clip : TextOverflow.ellipsis,
-                  ),
+                const SizedBox(width: 5),
+                Text(
+                  this.ratings.toStringAsFixed(1),
+                  textScaleFactor: textScaleFactor,
+                  style: Theme.of(context).textTheme.titleMedium,
                 ),
               ],
             ),
-            const SizedBox(width: 10.0),
+            const SizedBox(width: 16.0),
             Row(
               children: [
                 Icon(
@@ -68,15 +66,11 @@ class PostHeader extends StatelessWidget {
                   color: Theme.of(context).hintColor,
                   size: descriptionIconSize,
                 ),
-                Padding(
-                  padding: const EdgeInsets.only(left: 5.0),
-                  child: Text(
-                    this.views.toString(),
-                    textScaleFactor: textScaleFactor,
-                    style: Theme.of(context).textTheme.subtitle2,
-                    overflow:
-                        kIsWeb ? TextOverflow.clip : TextOverflow.ellipsis,
-                  ),
+                const SizedBox(width: 5),
+                Text(
+                  this.views.toString(),
+                  textScaleFactor: textScaleFactor,
+                  style: Theme.of(context).textTheme.headlineLarge,
                 ),
               ],
             ),
@@ -87,11 +81,12 @@ class PostHeader extends StatelessWidget {
               ? 'Free'
               : '\$${this.price % 1 == 0 ? this.price.toStringAsFixed(0) : this.price.toStringAsFixed(2)}',
           textScaleFactor: textScaleFactor,
-          style:
-              Theme.of(context).textTheme.subtitle1!.copyWith(fontSize: 22.0),
+          style: Theme.of(context)
+              .primaryTextTheme
+              .displayMedium!
+              .copyWith(color: Theme.of(context).highlightColor),
           overflow: kIsWeb ? TextOverflow.clip : TextOverflow.ellipsis,
         ),
-        const SizedBox(height: 10.0),
         Row(
           children: [
             Icon(
@@ -99,8 +94,8 @@ class PostHeader extends StatelessWidget {
               color: Theme.of(context).primaryColor,
               size: detailIconSize,
             ),
-            Padding(
-              padding: const EdgeInsets.only(left: 5.0),
+            const SizedBox(width: 5),
+            Expanded(
               child: Text(
                 (AppLocalizations.of(context)!.localeName == 'km'
                         ? this.state == 'ភ្នំពេញ'
@@ -111,7 +106,9 @@ class PostHeader extends StatelessWidget {
                     ', ' +
                     this.country,
                 textScaleFactor: textScaleFactor,
-                style: Theme.of(context).textTheme.bodyText1,
+                style: AppLocalizations.of(context)!.localeName == 'km'
+                    ? Theme.of(context).primaryTextTheme.bodyLarge
+                    : Theme.of(context).textTheme.bodyLarge,
                 overflow: kIsWeb ? TextOverflow.clip : TextOverflow.ellipsis,
               ),
             ),
@@ -127,31 +124,37 @@ class PostHeader extends StatelessWidget {
                     color: Theme.of(context).hintColor,
                     size: detailIconSize,
                   ),
-                  Padding(
-                    padding: const EdgeInsets.only(left: 5.0),
-                    child: Text(
-                      AppLocalizations.of(context)!.pdBusinessHourLabel,
-                      textScaleFactor: textScaleFactor,
-                      style: Theme.of(context)
-                          .textTheme
-                          .bodyText1!
-                          .copyWith(color: Theme.of(context).hintColor),
-                      overflow:
-                          kIsWeb ? TextOverflow.clip : TextOverflow.ellipsis,
-                    ),
+                  const SizedBox(width: 5),
+                  Text(
+                    AppLocalizations.of(context)!.pdBusinessHourLabel,
+                    textScaleFactor: textScaleFactor,
+                    style: AppLocalizations.of(context)!.localeName == 'km'
+                        ? Theme.of(context)
+                            .primaryTextTheme
+                            .bodyLarge!
+                            .copyWith(color: Theme.of(context).hintColor)
+                        : Theme.of(context)
+                            .textTheme
+                            .bodyLarge!
+                            .copyWith(color: Theme.of(context).hintColor),
+                    overflow:
+                        kIsWeb ? TextOverflow.clip : TextOverflow.ellipsis,
                   ),
-                  Padding(
-                    padding: const EdgeInsets.only(left: 5.0),
-                    child: Text(
-                      this.openHours!,
-                      textScaleFactor: textScaleFactor,
-                      style: Theme.of(context)
-                          .textTheme
-                          .bodyText1!
-                          .copyWith(color: Theme.of(context).iconTheme.color),
-                      overflow:
-                          kIsWeb ? TextOverflow.clip : TextOverflow.ellipsis,
-                    ),
+                  const SizedBox(width: 5),
+                  Text(
+                    this.openHours!,
+                    textScaleFactor: textScaleFactor,
+                    style: AppLocalizations.of(context)!.localeName == 'km'
+                        ? Theme.of(context)
+                            .primaryTextTheme
+                            .titleMedium!
+                            .copyWith(fontWeight: FontWeight.w400)
+                        : Theme.of(context)
+                            .textTheme
+                            .titleMedium!
+                            .copyWith(fontWeight: FontWeight.w400),
+                    overflow:
+                        kIsWeb ? TextOverflow.clip : TextOverflow.ellipsis,
                   ),
                 ],
               ),

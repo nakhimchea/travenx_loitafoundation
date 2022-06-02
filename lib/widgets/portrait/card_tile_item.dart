@@ -5,7 +5,7 @@ import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:travenx_loitafoundation/config/configs.dart'
-    show kHPadding, textScaleFactor, descriptionIconSize;
+    show descriptionIconSize, kHPadding, textScaleFactor;
 import 'package:travenx_loitafoundation/icons/icons.dart';
 import 'package:travenx_loitafoundation/models/post_object_model.dart';
 import 'package:travenx_loitafoundation/screens/portrait/home_screen/post_detail.dart';
@@ -101,40 +101,42 @@ class _CardTileItemState extends State<CardTileItem> {
                   2 * kHPadding -
                   _imageSize,
               decoration: BoxDecoration(
-                color: Theme.of(context).bottomAppBarColor,
+                color: Theme.of(context).canvasColor,
                 borderRadius: const BorderRadius.only(
                   topRight: Radius.circular(15.0),
                   bottomRight: Radius.circular(15.0),
                 ),
               ),
               child: Padding(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 10.0,
-                  vertical: 14.0,
-                ),
+                padding: const EdgeInsets.all(10.0),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text(
-                          widget.post.title,
-                          textScaleFactor: textScaleFactor,
-                          style: Theme.of(context).textTheme.headline4,
-                          overflow: kIsWeb
-                              ? TextOverflow.clip
-                              : TextOverflow.ellipsis,
+                        Expanded(
+                          child: Text(
+                            widget.post.title,
+                            textScaleFactor: textScaleFactor,
+                            style: AppLocalizations.of(context)!.localeName ==
+                                    'km'
+                                ? Theme.of(context).primaryTextTheme.titleMedium
+                                : Theme.of(context).textTheme.titleMedium,
+                            overflow: kIsWeb
+                                ? TextOverflow.clip
+                                : TextOverflow.ellipsis,
+                          ),
                         ),
                         Text(
                           widget.post.price == 0
                               ? 'Free'
                               : '\$${widget.post.price % 1 == 0 ? widget.post.price.toStringAsFixed(0) : widget.post.price.toStringAsFixed(1)}',
                           textScaleFactor: textScaleFactor,
-                          style: Theme.of(context).textTheme.subtitle1,
-                          overflow: kIsWeb
-                              ? TextOverflow.clip
-                              : TextOverflow.ellipsis,
+                          style: Theme.of(context)
+                              .textTheme
+                              .titleLarge!
+                              .copyWith(
+                                  color: Theme.of(context).highlightColor),
                         ),
                       ],
                     ),
@@ -146,22 +148,25 @@ class _CardTileItemState extends State<CardTileItem> {
                           color: Theme.of(context).primaryColor,
                           size: descriptionIconSize,
                         ),
-                        Padding(
-                          padding: const EdgeInsets.only(left: 5.0),
-                          child: Text(
-                            (AppLocalizations.of(context)!.localeName == 'km'
-                                    ? widget.post.state == 'ភ្នំពេញ'
-                                        ? 'រាជធានី'
-                                        : 'ខេត្ត'
-                                    : '') +
-                                widget.post.state +
-                                ', ' +
-                                widget.post.country,
-                            textScaleFactor: textScaleFactor,
-                            style: Theme.of(context).textTheme.bodyText2,
-                            overflow: kIsWeb
-                                ? TextOverflow.clip
-                                : TextOverflow.ellipsis,
+                        Expanded(
+                          child: Padding(
+                            padding: const EdgeInsets.only(left: 5.0),
+                            child: Text(
+                              (AppLocalizations.of(context)!.localeName == 'km'
+                                      ? widget.post.state == 'ភ្នំពេញ'
+                                          ? 'រាជធានី'
+                                          : 'ខេត្ត'
+                                      : '') +
+                                  widget.post.state,
+                              textScaleFactor: textScaleFactor,
+                              style: AppLocalizations.of(context)!.localeName ==
+                                      'km'
+                                  ? Theme.of(context).primaryTextTheme.bodySmall
+                                  : Theme.of(context).textTheme.bodySmall,
+                              overflow: kIsWeb
+                                  ? TextOverflow.clip
+                                  : TextOverflow.ellipsis,
+                            ),
                           ),
                         ),
                       ],
@@ -175,7 +180,9 @@ class _CardTileItemState extends State<CardTileItem> {
                         textAlign: TextAlign.justify,
                         textScaleFactor: textScaleFactor,
                         maxLines: 3,
-                        style: Theme.of(context).textTheme.bodyText2,
+                        style: AppLocalizations.of(context)!.localeName == 'km'
+                            ? Theme.of(context).primaryTextTheme.bodySmall
+                            : Theme.of(context).textTheme.bodySmall,
                         overflow:
                             kIsWeb ? TextOverflow.clip : TextOverflow.ellipsis,
                       ),
@@ -195,10 +202,7 @@ class _CardTileItemState extends State<CardTileItem> {
                               child: Text(
                                 _ratings.toStringAsFixed(1),
                                 textScaleFactor: textScaleFactor,
-                                style: Theme.of(context).textTheme.headline5,
-                                overflow: kIsWeb
-                                    ? TextOverflow.clip
-                                    : TextOverflow.ellipsis,
+                                style: Theme.of(context).textTheme.titleSmall,
                               ),
                             ),
                           ],
@@ -215,10 +219,7 @@ class _CardTileItemState extends State<CardTileItem> {
                               child: Text(
                                 _views.toString(),
                                 textScaleFactor: textScaleFactor,
-                                style: Theme.of(context).textTheme.subtitle2,
-                                overflow: kIsWeb
-                                    ? TextOverflow.clip
-                                    : TextOverflow.ellipsis,
+                                style: Theme.of(context).textTheme.bodyLarge,
                               ),
                             ),
                           ],

@@ -80,12 +80,12 @@ class _PostCoverState extends State<PostCover> {
         ),
         Positioned(
           right: 27.0,
-          bottom: 7.0,
+          bottom: 10.0,
           child: Container(
             height: 31.0,
             width: 54.0,
             decoration: BoxDecoration(
-              color: Theme.of(context).bottomAppBarColor.withOpacity(0.6),
+              color: Theme.of(context).canvasColor.withOpacity(0.6),
               borderRadius: BorderRadius.circular(10.0),
               boxShadow: [
                 BoxShadow(
@@ -100,10 +100,7 @@ class _PostCoverState extends State<PostCover> {
                 '${_imagesIndex + 1}/${widget.imageUrls.length}',
                 textScaleFactor: textScaleFactor,
                 textAlign: TextAlign.center,
-                style: Theme.of(context)
-                    .textTheme
-                    .headline4!
-                    .copyWith(fontSize: 12.0),
+                style: Theme.of(context).textTheme.titleSmall,
               ),
             ),
           ),

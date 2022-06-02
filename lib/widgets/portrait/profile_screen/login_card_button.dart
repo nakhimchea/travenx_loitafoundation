@@ -49,12 +49,18 @@ class LoginCardButton extends StatelessWidget {
                     Text(
                       title,
                       textScaleFactor: textScaleFactor,
-                      style: Theme.of(context).textTheme.headline4!.copyWith(
-                          color: titleColor != null
-                              ? Colors.white
-                              : Theme.of(context).textTheme.headline4!.color,
-                          fontSize: 15.0,
-                          fontWeight: FontWeight.w400),
+                      style: Theme.of(context)
+                          .textTheme
+                          .headlineMedium!
+                          .copyWith(
+                              color: titleColor != null
+                                  ? Colors.white
+                                  : Theme.of(context)
+                                      .textTheme
+                                      .headlineMedium!
+                                      .color,
+                              fontSize: 15.0,
+                              fontWeight: FontWeight.w400),
                       overflow:
                           kIsWeb ? TextOverflow.clip : TextOverflow.ellipsis,
                     ),
@@ -63,7 +69,10 @@ class LoginCardButton extends StatelessWidget {
                       child: Text(
                         trailing != '' ? ' ' + trailing : '',
                         textScaleFactor: textScaleFactor,
-                        style: Theme.of(context).textTheme.headline4!.copyWith(
+                        style: Theme.of(context)
+                            .textTheme
+                            .headlineMedium!
+                            .copyWith(
                               fontSize: 15.0,
                               fontFamily: 'Poppins',
                               fontWeight: FontWeight.w500,

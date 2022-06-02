@@ -38,7 +38,9 @@ class SearchBar extends StatelessWidget {
             Text(
               AppLocalizations.of(context)!.searchLabel,
               textScaleFactor: textScaleFactor,
-              style: Theme.of(context).textTheme.bodyText1,
+              style: AppLocalizations.of(context)!.localeName == 'km'
+                  ? Theme.of(context).primaryTextTheme.bodyMedium
+                  : Theme.of(context).textTheme.bodyMedium,
             ),
           ],
         ),

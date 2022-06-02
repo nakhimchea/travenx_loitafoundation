@@ -56,10 +56,12 @@ class BriefDescriptionCard extends StatelessWidget {
 
     final int _distance = 500;
     return Container(
-      height: MediaQuery.of(context).size.height / 8.12,
+      height: MediaQuery.of(context).size.height / 8.12 < 130
+          ? 130
+          : MediaQuery.of(context).size.height / 8.12,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(15.0),
-        color: Theme.of(context).bottomAppBarColor,
+        color: Theme.of(context).canvasColor,
       ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -112,18 +114,22 @@ class _CardRowItem extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         icon,
-        const SizedBox(height: 5.0),
+        const SizedBox(height: 8.0),
         Text(
           text,
           textScaleFactor: textScaleFactor,
-          style:
-              Theme.of(context).textTheme.headline3!.copyWith(fontFamily: ''),
+          style: Theme.of(context).textTheme.displaySmall!.copyWith(
+                fontWeight: FontWeight.w700,
+                fontFamily: '',
+              ),
         ),
-        const SizedBox(height: 5.0),
+        const SizedBox(height: 8.0),
         Text(
           subText,
           textScaleFactor: textScaleFactor,
-          style: Theme.of(context).textTheme.bodyText2,
+          style: AppLocalizations.of(context)!.localeName == 'km'
+              ? Theme.of(context).primaryTextTheme.bodySmall
+              : Theme.of(context).textTheme.bodySmall,
         ),
       ],
     );

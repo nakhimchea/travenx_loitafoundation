@@ -92,7 +92,7 @@ class _LoginState extends State<Login> {
                         ),
                 ),
                 PolicyAgreement(),
-                const SizedBox(height: 25.0),
+                const SizedBox(height: 85.0),
               ],
             ),
           ),
@@ -143,7 +143,7 @@ class CustomAppBar extends StatelessWidget {
                 overlayColor:
                     MaterialStateProperty.all<Color>(Colors.transparent)),
             child: Text(AppLocalizations.of(context)!.skipLabel,
-                style: Theme.of(context).textTheme.headline3!.copyWith(
+                style: Theme.of(context).textTheme.displaySmall!.copyWith(
                     color: Theme.of(context).colorScheme.brightness ==
                             Brightness.light
                         ? Colors.white
@@ -195,7 +195,7 @@ class LoginAppBar extends StatelessWidget {
                   overlayColor:
                       MaterialStateProperty.all<Color>(Colors.transparent)),
               child: Text(AppLocalizations.of(context)!.skipLabel,
-                  style: Theme.of(context).textTheme.headline3!.copyWith(
+                  style: Theme.of(context).textTheme.displaySmall!.copyWith(
                       color: Theme.of(context).colorScheme.brightness ==
                               Brightness.light
                           ? Colors.white
@@ -266,7 +266,7 @@ class _LoginMethodsState extends State<LoginMethods> {
                     ),
                     Text(
                       AppLocalizations.of(context)!.lgOr,
-                      style: Theme.of(context).textTheme.headline4!.copyWith(
+                      style: Theme.of(context).textTheme.titleLarge!.copyWith(
                           color: Colors.white60, fontWeight: FontWeight.w400),
                     ),
                     Container(
@@ -348,7 +348,7 @@ class LoginButton extends StatelessWidget {
           child: Text(
             title,
             textScaleFactor: MediaQuery.of(context).size.width / 428,
-            style: Theme.of(context).textTheme.headline1!.copyWith(
+            style: Theme.of(context).textTheme.displayMedium!.copyWith(
                 color: isCodeSent
                     ? Theme.of(context).bottomAppBarColor
                     : Theme.of(context).disabledColor),
@@ -485,14 +485,14 @@ class PolicyAgreement extends StatelessWidget {
       child: Column(
         children: [
           Text(AppLocalizations.of(context)!.lgAccept,
-              style: Theme.of(context).textTheme.button!.copyWith(
+              style: Theme.of(context).textTheme.bodyMedium!.copyWith(
                   color: Theme.of(context).colorScheme.brightness ==
                           Brightness.light
                       ? Colors.white
                       : Colors.white60)),
           const SizedBox(height: 3),
           Text(AppLocalizations.of(context)!.lgTermsPolicies,
-              style: Theme.of(context).textTheme.button!.copyWith(
+              style: Theme.of(context).textTheme.bodyMedium!.copyWith(
                   color: Theme.of(context).colorScheme.brightness ==
                           Brightness.light
                       ? Colors.white

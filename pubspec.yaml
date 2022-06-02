@@ -15,6 +15,9 @@ dependencies:
 
   cupertino_icons: ^1.0.2
 
+  # Bottom Navigation Bar
+  curved_navigation_bar: ^1.0.3
+
   # load images from internet
   cached_network_image: ^3.2.0
 
@@ -98,9 +101,9 @@ flutter:
     - family: Nokora
       fonts:
         - asset: fonts/Nokora-Regular.ttf
-    - family: Myura
+    - family: Sowannaphum
       fonts:
-        - asset: fonts/Myura.ttf
+        - asset: fonts/Sowannaphum.ttf
 
     # Font Styles: English
     - family: SanFrancisco

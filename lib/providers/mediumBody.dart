@@ -4,7 +4,6 @@ import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:travenx_loitafoundation/config/variable.dart';
 import 'package:travenx_loitafoundation/icons/icons.dart';
-import 'package:travenx_loitafoundation/providers/custom_nav_bar.dart';
 import 'package:travenx_loitafoundation/screens/medium/screens.dart';
 
 class MediumBody extends StatefulWidget {
@@ -70,11 +69,11 @@ class _MediumBodyState extends State<MediumBody> {
               ? const EdgeInsets.only(bottom: 10.0)
               : EdgeInsets.zero,
           color: Theme.of(context).bottomAppBarColor,
-          child: CustomNavBar(
-            icons: _icons,
-            selectedIndex: selectedIndex,
-            onTap: (index) => setState(() => selectedIndex = index),
-          ),
+          // child: CustomNavBar(
+          //   icons: _icons,
+          //   selectedIndex: selectedIndex,
+          //   onTap: (index) => setState(() => selectedIndex = index),
+          // ),
         ),
       ),
     );

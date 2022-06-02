@@ -32,12 +32,12 @@ class CustomInputBox extends StatelessWidget {
           label,
           textAlign: TextAlign.justify,
           textScaleFactor: textScaleFactor,
-          style: Theme.of(context).textTheme.button,
+          style: Theme.of(context).textTheme.bodyMedium,
         ),
         const SizedBox(height: 3),
         TextField(
           controller: textController,
-          style: Theme.of(context).textTheme.button!.copyWith(
+          style: Theme.of(context).textTheme.bodyMedium!.copyWith(
               color: Theme.of(context).iconTheme.color,
               fontSize: 14 * textScaleFactor),
           minLines: minimumLines,

@@ -40,7 +40,7 @@ class BusinessTime extends StatelessWidget {
           Text(
             AppLocalizations.of(context)!.pfApSthAdditionalLabel,
             textScaleFactor: textScaleFactor,
-            style: Theme.of(context).textTheme.headline3,
+            style: Theme.of(context).textTheme.displaySmall,
           ),
           const SizedBox(height: kHPadding),
           Row(
@@ -83,11 +83,14 @@ class BusinessTime extends StatelessWidget {
                             AppLocalizations.of(context)!
                                     .pfApSthAdditionalAtLabel +
                                 timeTranslator(context, openHour),
-                            style: Theme.of(context).textTheme.button!.copyWith(
-                                color: openEnabled
-                                    ? Theme.of(context).iconTheme.color
-                                    : null,
-                                fontSize: 14 * textScaleFactor),
+                            style: Theme.of(context)
+                                .textTheme
+                                .bodyMedium!
+                                .copyWith(
+                                    color: openEnabled
+                                        ? Theme.of(context).iconTheme.color
+                                        : null,
+                                    fontSize: 14 * textScaleFactor),
                           ),
                         ),
                       ),
@@ -100,12 +103,15 @@ class BusinessTime extends StatelessWidget {
                             AppLocalizations.of(context)!
                                 .pfApSthAdditionalOpenLabel,
                             textScaleFactor: textScaleFactor,
-                            style: Theme.of(context).textTheme.button!.copyWith(
-                                color: openEnabled
-                                    ? Theme.of(context)
-                                        .primaryColor
-                                        .withOpacity(0.8)
-                                    : null),
+                            style: Theme.of(context)
+                                .textTheme
+                                .bodyMedium!
+                                .copyWith(
+                                    color: openEnabled
+                                        ? Theme.of(context)
+                                            .primaryColor
+                                            .withOpacity(0.8)
+                                        : null),
                           ),
                         ),
                       ),
@@ -153,11 +159,14 @@ class BusinessTime extends StatelessWidget {
                             AppLocalizations.of(context)!
                                     .pfApSthAdditionalAtLabel +
                                 timeTranslator(context, closeHour),
-                            style: Theme.of(context).textTheme.button!.copyWith(
-                                color: closeEnabled
-                                    ? Theme.of(context).iconTheme.color
-                                    : null,
-                                fontSize: 14 * textScaleFactor),
+                            style: Theme.of(context)
+                                .textTheme
+                                .bodyMedium!
+                                .copyWith(
+                                    color: closeEnabled
+                                        ? Theme.of(context).iconTheme.color
+                                        : null,
+                                    fontSize: 14 * textScaleFactor),
                           ),
                         ),
                       ),
@@ -170,12 +179,15 @@ class BusinessTime extends StatelessWidget {
                             AppLocalizations.of(context)!
                                 .pfApSthAdditionalCloseLabel,
                             textScaleFactor: textScaleFactor,
-                            style: Theme.of(context).textTheme.button!.copyWith(
-                                color: closeEnabled
-                                    ? Theme.of(context)
-                                        .errorColor
-                                        .withOpacity(0.8)
-                                    : null),
+                            style: Theme.of(context)
+                                .textTheme
+                                .bodyMedium!
+                                .copyWith(
+                                    color: closeEnabled
+                                        ? Theme.of(context)
+                                            .errorColor
+                                            .withOpacity(0.8)
+                                        : null),
                           ),
                         ),
                       ),
@@ -290,7 +302,7 @@ class _CustomDialogState extends State<_CustomDialog> {
                   padding: const EdgeInsets.only(left: 30.0, bottom: kVPadding),
                   child: Text(
                     AppLocalizations.of(context)!.resetLabel,
-                    style: Theme.of(context).textTheme.headline3!.copyWith(
+                    style: Theme.of(context).textTheme.displaySmall!.copyWith(
                         color: _resetHold
                             ? widget.isOpenHour
                                 ? Theme.of(context)
@@ -313,7 +325,7 @@ class _CustomDialogState extends State<_CustomDialog> {
                       right: 30.0, bottom: kVPadding + 5.0, top: 5.0),
                   child: Text(
                     AppLocalizations.of(context)!.doneLabel,
-                    style: Theme.of(context).textTheme.headline3!.copyWith(
+                    style: Theme.of(context).textTheme.displaySmall!.copyWith(
                         color: _doneHold
                             ? widget.isOpenHour
                                 ? Theme.of(context)

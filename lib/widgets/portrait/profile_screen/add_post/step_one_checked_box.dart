@@ -49,7 +49,7 @@ class StepOneCheckedBox extends StatelessWidget {
                 AppLocalizations.of(context)!.pfApSoCheckbox,
                 textAlign: TextAlign.justify,
                 textScaleFactor: textScaleFactor,
-                style: Theme.of(context).textTheme.bodyText1!.copyWith(
+                style: Theme.of(context).textTheme.bodyLarge!.copyWith(
                     color: isChecked ? Theme.of(context).primaryColor : null),
               ),
             ),

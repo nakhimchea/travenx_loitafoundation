@@ -115,13 +115,13 @@ class ShortProfile extends StatelessWidget {
                 Text(
                   '${displayName != '' ? displayName : _anonymous.displayName}',
                   textScaleFactor: textScaleFactor,
-                  style: Theme.of(context).textTheme.headline2,
+                  style: Theme.of(context).textTheme.displayMedium,
                 ),
                 const SizedBox(height: 5.0),
                 Text(
                   phoneNumber != '' ? phoneNumber : _anonymous.phoneNumber,
                   textScaleFactor: textScaleFactor,
-                  style: Theme.of(context).textTheme.bodyText1,
+                  style: Theme.of(context).textTheme.bodyLarge,
                 ),
               ],
             ),

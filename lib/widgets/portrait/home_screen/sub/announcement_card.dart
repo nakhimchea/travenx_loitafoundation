@@ -14,7 +14,7 @@ class AnnouncementCard extends StatelessWidget {
     return GestureDetector(
       onTap: () => print('សេចក្ដីជូនដំណឹង ReadMore Clicked...'),
       child: Container(
-        height: MediaQuery.of(context).size.height / 5.58,
+        height: MediaQuery.of(context).size.height / 5,
         width: double.infinity,
         padding: const EdgeInsets.all(kHPadding),
         decoration: BoxDecoration(
@@ -31,12 +31,17 @@ class AnnouncementCard extends StatelessWidget {
               Text(
                 AppLocalizations.of(context)!.pdAnnouncementLabel,
                 textScaleFactor: textScaleFactor,
-                style: Theme.of(context).textTheme.subtitle1!.copyWith(
-                      fontSize: 16.0,
-                      fontFamily: 'Nokora',
-                    ),
+                style: AppLocalizations.of(context)!.localeName == 'km'
+                    ? Theme.of(context)
+                        .primaryTextTheme
+                        .titleLarge!
+                        .copyWith(color: Color(0xFFFA8231))
+                    : Theme.of(context)
+                        .textTheme
+                        .titleLarge!
+                        .copyWith(color: Color(0xFFFA8231)),
               ),
-              const SizedBox(height: 10.0),
+              const SizedBox(height: 5.0),
               RichText(
                 textAlign: TextAlign.justify,
                 maxLines: 6,
@@ -46,27 +51,36 @@ class AnnouncementCard extends StatelessWidget {
                   text: '    ',
                   children: [
                     TextSpan(
-                      text: this.announcement.length < 200
+                      text: this.announcement.length < 75
                           ? this.announcement
-                          : this.announcement.substring(0, 200),
-                      style: Theme.of(context)
-                          .textTheme
-                          .headline4!
-                          .copyWith(fontWeight: FontWeight.w400),
+                          : this.announcement.substring(0, 75),
+                      style: AppLocalizations.of(context)!.localeName == 'km'
+                          ? Theme.of(context).primaryTextTheme.bodyLarge
+                          : Theme.of(context).textTheme.bodyLarge,
                       children: [
                         TextSpan(
-                          text: ' ...',
-                          style: Theme.of(context)
-                              .textTheme
-                              .headline4!
-                              .copyWith(fontWeight: FontWeight.w400),
+                          text: this.announcement.length < 75 ? '' : ' ...',
+                          style:
+                              AppLocalizations.of(context)!.localeName == 'km'
+                                  ? Theme.of(context).primaryTextTheme.bodyLarge
+                                  : Theme.of(context).textTheme.bodyLarge,
                           children: [
                             TextSpan(
-                              text: AppLocalizations.of(context)!.pdReadmore,
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .headline4!
-                                  .copyWith(color: Theme.of(context).hintColor),
+                              text: this.announcement.length < 75
+                                  ? ''
+                                  : AppLocalizations.of(context)!.pdReadmore,
+                              style: AppLocalizations.of(context)!.localeName ==
+                                      'km'
+                                  ? Theme.of(context)
+                                      .primaryTextTheme
+                                      .bodyLarge!
+                                      .copyWith(
+                                          color: Theme.of(context).hintColor)
+                                  : Theme.of(context)
+                                      .textTheme
+                                      .bodyLarge!
+                                      .copyWith(
+                                          color: Theme.of(context).hintColor),
                             ),
                           ],
                         ),

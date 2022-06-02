@@ -1,11 +1,11 @@
 import 'dart:io' show Platform;
 
+import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:travenx_loitafoundation/config/variable.dart';
 import 'package:travenx_loitafoundation/icons/icons.dart';
-import 'package:travenx_loitafoundation/providers/custom_nav_bar.dart';
 import 'package:travenx_loitafoundation/screens/portrait/screens.dart';
 
 class PortraitBody extends StatefulWidget {
@@ -81,20 +81,55 @@ class _PortraitBodyState extends State<PortraitBody> {
         ]);
     return DefaultTabController(
       length: _icons.length,
-      child: Scaffold(
-        body: IndexedStack(
-          index: selectedIndex,
-          children: _screens,
-        ),
-        bottomNavigationBar: Container(
-          padding: !kIsWeb && Platform.isIOS
-              ? const EdgeInsets.only(bottom: 10.0)
-              : EdgeInsets.zero,
-          color: Theme.of(context).bottomAppBarColor,
-          child: CustomNavBar(
-            icons: _icons,
-            selectedIndex: selectedIndex,
-            onTap: (index) => setState(() => selectedIndex = index),
+      child: Container(
+        color: Theme.of(context).bottomAppBarColor,
+        child: SafeArea(
+          top: false,
+          left: false,
+          right: false,
+          child: ClipRect(
+            child: Scaffold(
+              extendBody: true,
+              body: IndexedStack(
+                index: selectedIndex,
+                children: _screens,
+              ),
+              bottomNavigationBar: CurvedNavigationBar(
+                color: Theme.of(context).bottomAppBarColor,
+                buttonBackgroundColor: Colors.white.withOpacity(0.7),
+                backgroundColor: Colors.transparent,
+                index: selectedIndex,
+                onTap: (index) => setState(() => selectedIndex = index),
+                height: !kIsWeb && Platform.isIOS ? 50 : 60,
+                animationCurve: Curves.easeInOutExpo,
+                animationDuration: Duration(milliseconds: 400),
+                items: _icons
+                    .map(
+                      (key, icon) => MapEntry(
+                        key,
+                        Icon(
+                          key == _icons.keys.elementAt(selectedIndex)
+                              ? icon[1]
+                              : icon[0],
+                          color: key == _icons.keys.elementAt(selectedIndex)
+                              ? Theme.of(context).primaryColor
+                              : Theme.of(context).primaryIconTheme.color,
+                          size: icon[0] == CustomOutlinedIcons.wallet ||
+                                  icon[1] == CustomFilledIcons.wallet
+                              ? 26.0
+                              : icon[0] == CustomOutlinedIcons.user ||
+                                      icon[1] == CustomFilledIcons.user ||
+                                      icon[0] == CustomOutlinedIcons.message ||
+                                      icon[1] == CustomFilledIcons.message
+                                  ? 29.0
+                                  : 30.0,
+                        ),
+                      ),
+                    )
+                    .values
+                    .toList(),
+              ),
+            ),
           ),
         ),
       ),

@@ -29,9 +29,15 @@ class CustomTabBar extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: kHPadding),
       indicatorPadding: const EdgeInsets.symmetric(vertical: 6.0),
       labelColor: Colors.white,
-      labelStyle: Theme.of(context).textTheme.button,
-      unselectedLabelColor: Theme.of(context).textTheme.button!.color,
-      unselectedLabelStyle: Theme.of(context).textTheme.button,
+      labelStyle: AppLocalizations.of(context)!.localeName == 'km'
+          ? Theme.of(context).primaryTextTheme.bodyMedium
+          : Theme.of(context).textTheme.bodyMedium,
+      unselectedLabelColor: AppLocalizations.of(context)!.localeName == 'km'
+          ? Theme.of(context).primaryTextTheme.bodyMedium!.color
+          : Theme.of(context).textTheme.bodyMedium!.color,
+      unselectedLabelStyle: AppLocalizations.of(context)!.localeName == 'km'
+          ? Theme.of(context).primaryTextTheme.bodyMedium
+          : Theme.of(context).textTheme.bodyMedium,
       tabs: [
         Tab(text: AppLocalizations.of(context)!.tbNewPlacesLabel),
         Tab(text: AppLocalizations.of(context)!.tbNewEventsLabel),

@@ -83,7 +83,7 @@ class _HomeScreenState extends State<HomeScreen>
                 title: Text(
                   'Travenx',
                   textScaleFactor: textScaleFactor,
-                  style: Theme.of(context).textTheme.headline6,
+                  style: Theme.of(context).textTheme.displayLarge,
                 ),
                 centerTitle: false,
                 floating: true,
@@ -154,7 +154,7 @@ class PersistentHeader extends SliverPersistentHeaderDelegate {
       BuildContext context, double shrinkOffset, bool overlapsContent) {
     return Container(
       width: MediaQuery.of(context).size.width - 2 * kHPadding,
-      height: 55.0,
+      height: 58.0,
       color: Theme.of(context).scaffoldBackgroundColor,
       alignment: Alignment.center,
       child: tabBar,
@@ -162,10 +162,10 @@ class PersistentHeader extends SliverPersistentHeaderDelegate {
   }
 
   @override
-  double get maxExtent => 55.0;
+  double get maxExtent => 58.0;
 
   @override
-  double get minExtent => 55.0;
+  double get minExtent => 58.0;
 
   @override
   bool shouldRebuild(SliverPersistentHeaderDelegate oldDelegate) {

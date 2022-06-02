@@ -74,7 +74,9 @@ class _PostRatingsState extends State<PostRatings> {
               Text(
                 AppLocalizations.of(context)!.pdReviewLabel,
                 textScaleFactor: textScaleFactor,
-                style: Theme.of(context).textTheme.headline3,
+                style: AppLocalizations.of(context)!.localeName == 'km'
+                    ? Theme.of(context).primaryTextTheme.titleLarge
+                    : Theme.of(context).textTheme.titleLarge,
               ),
               Visibility(
                 visible: _ratings.isNotEmpty,
@@ -89,21 +91,25 @@ class _PostRatingsState extends State<PostRatings> {
                     );
                   },
                   child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Icon(
                         CustomOutlinedIcons.new_icon,
                         color: Theme.of(context).hintColor,
-                        size: 16,
+                        size: 18,
                       ),
                       const SizedBox(width: 5.0),
                       Text(
                         AppLocalizations.of(context)!.pdReviewAddLabel,
                         textScaleFactor: textScaleFactor,
-                        style: Theme.of(context)
-                            .textTheme
-                            .subtitle1!
-                            .copyWith(color: Theme.of(context).hintColor),
+                        style: AppLocalizations.of(context)!.localeName == 'km'
+                            ? Theme.of(context)
+                                .primaryTextTheme
+                                .titleMedium!
+                                .copyWith(color: Theme.of(context).hintColor)
+                            : Theme.of(context)
+                                .textTheme
+                                .titleMedium!
+                                .copyWith(color: Theme.of(context).hintColor),
                       ),
                     ],
                   ),
@@ -155,10 +161,15 @@ class _PostRatingsState extends State<PostRatings> {
                       child: Text(
                         AppLocalizations.of(context)!.pdShowAllLabel,
                         textScaleFactor: textScaleFactor,
-                        style: Theme.of(context)
-                            .textTheme
-                            .subtitle1!
-                            .copyWith(color: Theme.of(context).hintColor),
+                        style: AppLocalizations.of(context)!.localeName == 'km'
+                            ? Theme.of(context)
+                                .primaryTextTheme
+                                .titleMedium!
+                                .copyWith(color: Theme.of(context).hintColor)
+                            : Theme.of(context)
+                                .textTheme
+                                .titleMedium!
+                                .copyWith(color: Theme.of(context).hintColor),
                       ),
                     ),
                   ),
@@ -231,7 +242,7 @@ class _PostRatingFieldsState extends State<_PostRatingFields> {
       padding: const EdgeInsets.symmetric(
           horizontal: kHPadding, vertical: kHPadding),
       decoration: BoxDecoration(
-        color: Theme.of(context).bottomAppBarColor,
+        color: Theme.of(context).canvasColor,
         borderRadius: BorderRadius.circular(15.0),
       ),
       child: Column(
@@ -239,13 +250,17 @@ class _PostRatingFieldsState extends State<_PostRatingFields> {
           Text(
             AppLocalizations.of(context)!.pdReviewAddLabel,
             textScaleFactor: textScaleFactor,
-            style: Theme.of(context).textTheme.headline2,
+            style: AppLocalizations.of(context)!.localeName == 'km'
+                ? Theme.of(context).primaryTextTheme.displayMedium
+                : Theme.of(context).textTheme.displayMedium,
           ),
           const SizedBox(height: 5.0),
           Text(
             AppLocalizations.of(context)!.pdReviewInstruction,
             textScaleFactor: textScaleFactor,
-            style: Theme.of(context).textTheme.bodyText1,
+            style: AppLocalizations.of(context)!.localeName == 'km'
+                ? Theme.of(context).primaryTextTheme.bodyLarge
+                : Theme.of(context).textTheme.bodyLarge,
           ),
           const SizedBox(height: kVPadding),
           _RateButton(
@@ -253,9 +268,13 @@ class _PostRatingFieldsState extends State<_PostRatingFields> {
           const SizedBox(height: kVPadding),
           TextField(
             controller: _commentController,
-            style: Theme.of(context).textTheme.button!.copyWith(
-                color: Theme.of(context).iconTheme.color,
-                fontSize: 14 * textScaleFactor),
+            style: AppLocalizations.of(context)!.localeName == 'km'
+                ? Theme.of(context).primaryTextTheme.bodyMedium!.copyWith(
+                    color: Theme.of(context).primaryIconTheme.color,
+                    fontSize: 14 * textScaleFactor)
+                : Theme.of(context).textTheme.bodyMedium!.copyWith(
+                    color: Theme.of(context).primaryIconTheme.color,
+                    fontSize: 14 * textScaleFactor),
             minLines: 5,
             maxLines: 24,
             textAlign: TextAlign.justify,
@@ -263,16 +282,21 @@ class _PostRatingFieldsState extends State<_PostRatingFields> {
             cursorHeight: 14 * textScaleFactor,
             decoration: InputDecoration(
               filled: true,
-              fillColor: Theme.of(context).primaryColor.withOpacity(0.1),
+              fillColor: Theme.of(context).scaffoldBackgroundColor,
               contentPadding: const EdgeInsets.symmetric(
                 horizontal: 12.0,
                 vertical: 12.0,
               ),
               hintText: AppLocalizations.of(context)!.pdReviewCommentHint,
-              hintStyle: Theme.of(context)
-                  .textTheme
-                  .bodyText1!
-                  .copyWith(fontSize: 14 * textScaleFactor),
+              hintStyle: AppLocalizations.of(context)!.localeName == 'km'
+                  ? Theme.of(context)
+                      .primaryTextTheme
+                      .bodyLarge!
+                      .copyWith(fontSize: 14 * textScaleFactor)
+                  : Theme.of(context)
+                      .textTheme
+                      .bodyLarge!
+                      .copyWith(fontSize: 14 * textScaleFactor),
               border: OutlineInputBorder(
                 borderSide: BorderSide.none,
                 borderRadius: BorderRadius.circular(10.0),
@@ -286,7 +310,9 @@ class _PostRatingFieldsState extends State<_PostRatingFields> {
               child: Text(
                 AppLocalizations.of(context)!.pdReviewSharePublic,
                 textScaleFactor: textScaleFactor,
-                style: Theme.of(context).textTheme.bodyText1,
+                style: AppLocalizations.of(context)!.localeName == 'km'
+                    ? Theme.of(context).primaryTextTheme.bodyLarge
+                    : Theme.of(context).textTheme.bodyMedium,
               ),
             ),
           ),
@@ -298,7 +324,9 @@ class _PostRatingFieldsState extends State<_PostRatingFields> {
                 child: StepperNavigationButton(
                   backgroundColor: Theme.of(context).disabledColor,
                   label: AppLocalizations.of(context)!.pdCancelLabel,
-                  textStyle: Theme.of(context).textTheme.bodyText1,
+                  textStyle: AppLocalizations.of(context)!.localeName == 'km'
+                      ? Theme.of(context).primaryTextTheme.bodyLarge
+                      : Theme.of(context).textTheme.bodyLarge,
                   onPressed: () {
                     _updateRatings(0);
                     _commentController.clear();
@@ -307,15 +335,17 @@ class _PostRatingFieldsState extends State<_PostRatingFields> {
                 ),
               ),
               Container(
-                height: 44,
                 width: MediaQuery.of(context).size.width / 2 - 3 * kHPadding,
                 child: StepperNavigationButton(
                   backgroundColor: currentRatings == 0
                       ? Theme.of(context).disabledColor
                       : Theme.of(context).primaryColor,
                   label: AppLocalizations.of(context)!.postLabel,
-                  textStyle: Theme.of(context).textTheme.bodyText1!.copyWith(
-                      color: currentRatings != 0 ? Colors.white : null),
+                  textStyle: AppLocalizations.of(context)!.localeName == 'km'
+                      ? Theme.of(context).primaryTextTheme.bodyLarge!.copyWith(
+                          color: currentRatings != 0 ? Colors.white : null)
+                      : Theme.of(context).textTheme.bodyLarge!.copyWith(
+                          color: currentRatings != 0 ? Colors.white : null),
                   onPressed: () async {
                     showDialog(
                       barrierDismissible: false,
@@ -361,7 +391,7 @@ class _RateButton extends StatelessWidget {
         onTap: () => ratingCallback(index + 1),
         child: Icon(
           CustomFilledIcons.star,
-          size: 42,
+          size: 50,
           color: Theme.of(context).highlightColor,
         ),
       ),
@@ -372,7 +402,7 @@ class _RateButton extends StatelessWidget {
             onTap: () => ratingCallback(currentRatings + index + 1),
             child: Icon(
               CustomFilledIcons.star,
-              size: 42,
+              size: 50,
               color: Theme.of(context).disabledColor,
             ),
           ),
@@ -417,7 +447,7 @@ class _RatingCard extends StatelessWidget {
       padding: const EdgeInsets.symmetric(
           horizontal: kHPadding, vertical: kHPadding),
       decoration: BoxDecoration(
-        color: Theme.of(context).bottomAppBarColor,
+        color: Theme.of(context).canvasColor,
         borderRadius: BorderRadius.circular(15.0),
       ),
       child: Column(
@@ -431,29 +461,29 @@ class _RatingCard extends StatelessWidget {
                     child: profileUrl.split('/').first == 'assets'
                         ? Image.asset(
                             profileUrl,
-                            width: 35,
-                            height: 35,
+                            width: 50,
+                            height: 50,
                             fit: BoxFit.cover,
                           )
                         : CachedNetworkImage(
                             imageUrl: profileUrl,
-                            width: 35,
-                            height: 35,
+                            width: 50,
+                            height: 50,
                             fit: BoxFit.cover,
                             placeholder: (context, _) => ImageFiltered(
                               imageFilter:
                                   ImageFilter.blur(sigmaX: 10, sigmaY: 10),
                               child: Image.asset(
                                 'assets/images/travenx_180.png',
-                                width: 35,
-                                height: 35,
+                                width: 50,
+                                height: 50,
                                 fit: BoxFit.cover,
                               ),
                             ),
                             errorWidget: (context, _, __) => Image.asset(
                               'assets/images/travenx_180.png',
-                              width: 35,
-                              height: 35,
+                              width: 50,
+                              height: 50,
                               fit: BoxFit.cover,
                             ),
                           ),
@@ -466,7 +496,9 @@ class _RatingCard extends StatelessWidget {
                     Text(
                       displayName,
                       textScaleFactor: textScaleFactor,
-                      style: Theme.of(context).textTheme.headline3,
+                      style: AppLocalizations.of(context)!.localeName == 'km'
+                          ? Theme.of(context).primaryTextTheme.titleLarge
+                          : Theme.of(context).textTheme.titleLarge,
                     ),
                     const SizedBox(height: 5),
                     Row(
@@ -477,7 +509,7 @@ class _RatingCard extends StatelessWidget {
                             (index) => Icon(
                               CustomFilledIcons.star,
                               color: Theme.of(context).highlightColor,
-                              size: 12,
+                              size: 16,
                             ),
                           )..addAll(
                               List.generate(
@@ -485,16 +517,19 @@ class _RatingCard extends StatelessWidget {
                                 (index) => Icon(
                                   CustomOutlinedIcons.star,
                                   color: Theme.of(context).highlightColor,
-                                  size: 12,
+                                  size: 16,
                                 ),
                               ),
                             ),
                         ),
-                        const SizedBox(width: 5),
+                        const SizedBox(width: 10),
                         Text(
                           '០២-០៧-២០២១',
                           textScaleFactor: textScaleFactor,
-                          style: Theme.of(context).textTheme.bodyText2,
+                          style: AppLocalizations.of(context)!.localeName ==
+                                  'km'
+                              ? Theme.of(context).primaryTextTheme.bodyMedium
+                              : Theme.of(context).textTheme.bodyMedium,
                         ),
                       ],
                     ),
@@ -503,7 +538,7 @@ class _RatingCard extends StatelessWidget {
               ),
               Icon(
                 Icons.more_horiz,
-                size: 24,
+                size: 32,
                 color: Theme.of(context).primaryIconTheme.color,
               ),
             ],
@@ -512,7 +547,9 @@ class _RatingCard extends StatelessWidget {
           Text(
             comment,
             textScaleFactor: textScaleFactor,
-            style: Theme.of(context).textTheme.bodyText1,
+            style: AppLocalizations.of(context)!.localeName == 'km'
+                ? Theme.of(context).primaryTextTheme.bodyLarge
+                : Theme.of(context).textTheme.bodyLarge,
           ),
           SizedBox(height: comment == '' ? 0 : kVPadding),
           Row(
@@ -556,10 +593,10 @@ class _ExpressionButton extends StatelessWidget {
                 ? Theme.of(context).primaryColor
                 : Theme.of(context).errorColor
             : Theme.of(context).disabledColor,
-        borderRadius: BorderRadius.circular(15),
+        borderRadius: BorderRadius.circular(20),
       ),
-      height: 30,
-      width: 65,
+      height: 40,
+      width: 80,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
@@ -567,18 +604,23 @@ class _ExpressionButton extends StatelessWidget {
             isLikeButton
                 ? CustomOutlinedIcons.like
                 : CustomOutlinedIcons.dislike,
-            size: 15,
+            size: 20,
             color: isClicked
-                ? Theme.of(context).bottomAppBarColor
-                : Theme.of(context).primaryIconTheme.color,
+                ? Theme.of(context).canvasColor
+                : Theme.of(context).iconTheme.color,
           ),
           const SizedBox(width: 5),
           Text(
             number.toString(),
-            style: Theme.of(context).textTheme.bodyText2!.copyWith(
-                color: isClicked
-                    ? Theme.of(context).bottomAppBarColor
-                    : Theme.of(context).primaryIconTheme.color),
+            style: AppLocalizations.of(context)!.localeName == 'km'
+                ? Theme.of(context).primaryTextTheme.bodyLarge!.copyWith(
+                    color: isClicked
+                        ? Theme.of(context).bottomAppBarColor
+                        : Theme.of(context).iconTheme.color)
+                : Theme.of(context).textTheme.bodyLarge!.copyWith(
+                    color: isClicked
+                        ? Theme.of(context).bottomAppBarColor
+                        : Theme.of(context).iconTheme.color),
           ),
         ],
       ),

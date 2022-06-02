@@ -60,7 +60,9 @@ class _ProvinceRoutesState extends State<ProvinceRoutes> {
             title: Text(
               AppLocalizations.of(context)!.pvAppBar,
               textScaleFactor: textScaleFactor,
-              style: Theme.of(context).textTheme.headline3,
+              style: AppLocalizations.of(context)!.localeName == 'km'
+                  ? Theme.of(context).primaryTextTheme.titleLarge
+                  : Theme.of(context).textTheme.titleLarge,
             ),
             actions: [
               IconButton(
@@ -162,7 +164,7 @@ class _ProvincesItem extends StatelessWidget {
                   2 * kHPadding -
                   _imageSize,
               decoration: BoxDecoration(
-                color: Theme.of(context).bottomAppBarColor,
+                color: Theme.of(context).canvasColor,
                 borderRadius: const BorderRadius.only(
                   topRight: Radius.circular(15.0),
                   bottomRight: Radius.circular(15.0),
@@ -177,9 +179,9 @@ class _ProvincesItem extends StatelessWidget {
                     Text(
                       modelProvince.label,
                       textScaleFactor: textScaleFactor,
-                      style: Theme.of(context).textTheme.headline2,
-                      overflow:
-                          kIsWeb ? TextOverflow.clip : TextOverflow.ellipsis,
+                      style: AppLocalizations.of(context)!.localeName == 'km'
+                          ? Theme.of(context).primaryTextTheme.displayMedium
+                          : Theme.of(context).textTheme.displayMedium,
                     ),
                     SizedBox(height: MediaQuery.of(context).size.height / 60),
                     Row(
@@ -187,14 +189,20 @@ class _ProvincesItem extends StatelessWidget {
                         Text(
                           AppLocalizations.of(context)!.pvCountPlaces,
                           textScaleFactor: textScaleFactor,
-                          style: Theme.of(context).textTheme.button,
+                          style: AppLocalizations.of(context)!.localeName ==
+                                  'km'
+                              ? Theme.of(context).primaryTextTheme.bodyMedium
+                              : Theme.of(context).textTheme.bodyMedium,
                         ),
                         Text(
                           totalPosts,
                           textScaleFactor: textScaleFactor,
-                          style: Theme.of(context).textTheme.button!.copyWith(
-                              color: Theme.of(context).primaryColor,
-                              fontWeight: FontWeight.w700),
+                          style: Theme.of(context)
+                              .textTheme
+                              .bodyMedium!
+                              .copyWith(
+                                  color: Theme.of(context).primaryColor,
+                                  fontWeight: FontWeight.w700),
                         ),
                       ],
                     ),
@@ -312,7 +320,9 @@ class _ProvinceListState extends State<_ProvinceList> {
                       child: Text(
                         AppLocalizations.of(context)!.pvTitle,
                         textScaleFactor: textScaleFactor,
-                        style: Theme.of(context).textTheme.headline3,
+                        style: AppLocalizations.of(context)!.localeName == 'km'
+                            ? Theme.of(context).primaryTextTheme.titleLarge
+                            : Theme.of(context).textTheme.titleLarge,
                       ),
                     ),
                     CardTileItem(
@@ -358,12 +368,12 @@ class _ProvinceListState extends State<_ProvinceList> {
                     Icon(
                       CustomOutlinedIcons.warning,
                       size: 24.0,
-                      color: Theme.of(context).primaryIconTheme.color,
+                      color: Theme.of(context).iconTheme.color,
                     ),
                     const SizedBox(height: 10),
                     Text(
                       AppLocalizations.of(context)!.noData,
-                      style: Theme.of(context).textTheme.bodyText1,
+                      style: Theme.of(context).textTheme.bodyLarge,
                     ),
                   ],
                 ),
@@ -493,7 +503,6 @@ class _ProvinceCover extends StatelessWidget {
             gradient: Palette.blackGradient,
             borderRadius: BorderRadius.circular(15.0),
           ),
-          child: Container(),
         ),
         Padding(
           padding: const EdgeInsets.all(20.0),
@@ -511,7 +520,7 @@ class _ProvinceCover extends StatelessWidget {
                 textScaleFactor: textScaleFactor,
                 style: Theme.of(context)
                     .textTheme
-                    .headline1!
+                    .displayLarge!
                     .copyWith(color: Colors.white, fontSize: 40.0),
               ),
               Row(
@@ -520,17 +529,23 @@ class _ProvinceCover extends StatelessWidget {
                   Text(
                     AppLocalizations.of(context)!.pvCountPlaces,
                     textScaleFactor: textScaleFactor,
-                    style: Theme.of(context)
-                        .textTheme
-                        .button!
-                        .copyWith(color: Colors.white),
+                    style: AppLocalizations.of(context)!.localeName == 'km'
+                        ? Theme.of(context)
+                            .primaryTextTheme
+                            .bodyMedium!
+                            .copyWith(color: Colors.white)
+                        : Theme.of(context)
+                            .textTheme
+                            .bodyMedium!
+                            .copyWith(color: Colors.white),
                   ),
                   Text(
                     totalPosts,
                     textScaleFactor: textScaleFactor,
-                    style: Theme.of(context).textTheme.button!.copyWith(
-                        color: Theme.of(context).primaryColor,
-                        fontWeight: FontWeight.w700),
+                    style: Theme.of(context)
+                        .textTheme
+                        .titleSmall!
+                        .copyWith(color: Theme.of(context).primaryColor),
                   ),
                 ],
               ),

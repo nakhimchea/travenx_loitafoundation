@@ -165,7 +165,7 @@ class _ChatScreenState extends State<ChatScreen> {
           title: Text(
             AppLocalizations.of(context)!.chatLabel,
             textScaleFactor: textScaleFactor,
-            style: Theme.of(context).textTheme.headline1,
+            style: Theme.of(context).textTheme.displayMedium,
           ),
           centerTitle: false,
           actions: [_ActionOptions()],
@@ -189,7 +189,7 @@ class _ChatScreenState extends State<ChatScreen> {
                     const SizedBox(height: 10),
                     Text(
                       AppLocalizations.of(context)!.chatNoData,
-                      style: Theme.of(context).textTheme.bodyText1,
+                      style: Theme.of(context).textTheme.bodyLarge,
                     ),
                     SizedBox(height: MediaQuery.of(context).size.height / 10),
                   ],
@@ -250,7 +250,7 @@ class _ChatScreenState extends State<ChatScreen> {
                           const SizedBox(height: 10),
                           Text(
                             AppLocalizations.of(context)!.chatNoData,
-                            style: Theme.of(context).textTheme.bodyText1,
+                            style: Theme.of(context).textTheme.bodyLarge,
                           ),
                           SizedBox(
                               height: MediaQuery.of(context).size.height / 10),
@@ -598,7 +598,7 @@ class _BuildChatItem extends StatelessWidget {
                         child: Text(
                           chatTitle,
                           textScaleFactor: textScaleFactor,
-                          style: Theme.of(context).textTheme.headline3,
+                          style: Theme.of(context).textTheme.displaySmall,
                           overflow: kIsWeb
                               ? TextOverflow.clip
                               : TextOverflow.ellipsis,
@@ -614,7 +614,7 @@ class _BuildChatItem extends StatelessWidget {
                               style: snapshot.data!.docs.single
                                           .get('senderUid') ==
                                       _user.uid
-                                  ? Theme.of(context).textTheme.bodyText1
+                                  ? Theme.of(context).textTheme.bodyLarge
                                   : Theme.of(context)
                                       .textTheme
                                       .bodyText1!
@@ -636,7 +636,7 @@ class _BuildChatItem extends StatelessWidget {
                                 '${chatDateTime.month.toString()}/' +
                                 '${chatDateTime.year.toString()}',
                             textScaleFactor: textScaleFactor,
-                            style: Theme.of(context).textTheme.bodyText1,
+                            style: Theme.of(context).textTheme.bodyLarge,
                             overflow: kIsWeb
                                 ? TextOverflow.clip
                                 : TextOverflow.ellipsis,

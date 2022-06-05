@@ -113,7 +113,7 @@ class _PortraitBodyState extends State<PortraitBody> {
                               : icon[0],
                           color: key == _icons.keys.elementAt(selectedIndex)
                               ? Theme.of(context).primaryColor
-                              : Theme.of(context).primaryIconTheme.color,
+                              : Theme.of(context).iconTheme.color,
                           size: icon[0] == CustomOutlinedIcons.wallet ||
                                   icon[1] == CustomFilledIcons.wallet
                               ? 26.0

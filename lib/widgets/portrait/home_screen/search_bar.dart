@@ -33,7 +33,7 @@ class SearchBar extends StatelessWidget {
             Icon(
               CustomOutlinedIcons.search,
               size: 26.0,
-              color: Theme.of(context).primaryIconTheme.color,
+              color: Theme.of(context).iconTheme.color,
             ),
             Text(
               AppLocalizations.of(context)!.searchLabel,

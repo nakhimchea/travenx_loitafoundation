@@ -3,6 +3,7 @@ import 'dart:ui';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:travenx_loitafoundation/config/configs.dart'
     show kHPadding, kVPadding, textScaleFactor;
 import 'package:travenx_loitafoundation/services/firestore_service.dart';
@@ -53,14 +54,16 @@ class _ChatState extends State<Chat> {
               Theme.of(context).scaffoldBackgroundColor.withOpacity(0.5),
           child: Icon(
             Icons.arrow_back_ios_new,
-            color: Theme.of(context).iconTheme.color,
-            size: 18.0,
+            color: Theme.of(context).primaryIconTheme.color,
+            size: 20.0,
           ),
         ),
         title: Text(
           widget.postTitle,
           textScaleFactor: textScaleFactor,
-          style: Theme.of(context).textTheme.displaySmall,
+          style: AppLocalizations.of(context)!.localeName == 'km'
+              ? Theme.of(context).primaryTextTheme.titleLarge
+              : Theme.of(context).textTheme.titleLarge,
         ),
         actions: [
           Padding(
@@ -227,7 +230,9 @@ class _MessageBubble extends StatelessWidget {
         children: <Widget>[
           Text(
             senderName,
-            style: Theme.of(context).textTheme.bodyMedium,
+            style: AppLocalizations.of(context)!.localeName == 'km'
+                ? Theme.of(context).primaryTextTheme.bodySmall
+                : Theme.of(context).textTheme.bodySmall,
           ),
           Material(
             borderRadius: isMe
@@ -248,10 +253,15 @@ class _MessageBubble extends StatelessWidget {
                   const EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0),
               child: Text(
                 message,
-                style: TextStyle(
-                  color: isMe ? Colors.white : Colors.black54,
-                  fontSize: 15.0,
-                ),
+                style: AppLocalizations.of(context)!.localeName == 'km'
+                    ? Theme.of(context)
+                        .primaryTextTheme
+                        .labelSmall!
+                        .copyWith(color: isMe ? Colors.white : Colors.black54)
+                    : Theme.of(context)
+                        .textTheme
+                        .labelSmall!
+                        .copyWith(color: isMe ? Colors.white : Colors.black54),
               ),
             ),
           ),
@@ -303,16 +313,20 @@ class _MessageSenderState extends State<_MessageSender> {
             child: TextField(
               controller: _sendingMessageController,
               onChanged: (text) => setState(() => _message = text),
-              style: Theme.of(context)
-                  .textTheme
-                  .bodyText1!
-                  .copyWith(color: Theme.of(context).iconTheme.color),
+              style: AppLocalizations.of(context)!.localeName == 'km'
+                  ? Theme.of(context)
+                      .primaryTextTheme
+                      .bodyLarge!
+                      .copyWith(color: Theme.of(context).primaryIconTheme.color)
+                  : Theme.of(context).textTheme.bodyLarge!.copyWith(
+                      color: Theme.of(context).primaryIconTheme.color),
               autocorrect: false,
               enableSuggestions: false,
-              cursorHeight: Theme.of(context).textTheme.bodyLarge!.fontSize,
               decoration: InputDecoration(
                 hintText: 'Aa',
-                hintStyle: Theme.of(context).textTheme.bodyLarge,
+                hintStyle: AppLocalizations.of(context)!.localeName == 'km'
+                    ? Theme.of(context).primaryTextTheme.bodyLarge
+                    : Theme.of(context).textTheme.bodyLarge,
                 fillColor: Theme.of(context).scaffoldBackgroundColor,
                 contentPadding:
                     const EdgeInsets.symmetric(horizontal: kHPadding),
@@ -321,14 +335,12 @@ class _MessageSenderState extends State<_MessageSender> {
                 ),
                 disabledBorder: OutlineInputBorder(
                   borderSide: BorderSide(
-                      color: Theme.of(context).primaryIconTheme.color!,
-                      width: 1.0),
+                      color: Theme.of(context).iconTheme.color!, width: 1.0),
                   borderRadius: const BorderRadius.all(Radius.circular(30.0)),
                 ),
                 enabledBorder: OutlineInputBorder(
                   borderSide: BorderSide(
-                      color: Theme.of(context).primaryIconTheme.color!,
-                      width: 1.0),
+                      color: Theme.of(context).iconTheme.color!, width: 1.0),
                   borderRadius: const BorderRadius.all(Radius.circular(30.0)),
                 ),
                 focusedBorder: OutlineInputBorder(
@@ -371,7 +383,7 @@ class _MessageSenderState extends State<_MessageSender> {
                     Icons.send_rounded,
                     size: 32.0,
                     color: _sendTapped
-                        ? Theme.of(context).primaryIconTheme.color
+                        ? Theme.of(context).iconTheme.color
                         : Theme.of(context).primaryColor,
                   ),
                 )

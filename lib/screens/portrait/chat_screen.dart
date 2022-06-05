@@ -165,7 +165,9 @@ class _ChatScreenState extends State<ChatScreen> {
           title: Text(
             AppLocalizations.of(context)!.chatLabel,
             textScaleFactor: textScaleFactor,
-            style: Theme.of(context).textTheme.displayMedium,
+            style: AppLocalizations.of(context)!.localeName == 'km'
+                ? Theme.of(context).primaryTextTheme.displayLarge
+                : Theme.of(context).textTheme.displayMedium,
           ),
           centerTitle: false,
           actions: [_ActionOptions()],
@@ -184,12 +186,14 @@ class _ChatScreenState extends State<ChatScreen> {
                     Icon(
                       CustomOutlinedIcons.warning,
                       size: 24.0,
-                      color: Theme.of(context).primaryIconTheme.color,
+                      color: Theme.of(context).iconTheme.color,
                     ),
                     const SizedBox(height: 10),
                     Text(
                       AppLocalizations.of(context)!.chatNoData,
-                      style: Theme.of(context).textTheme.bodyLarge,
+                      style: AppLocalizations.of(context)!.localeName == 'km'
+                          ? Theme.of(context).primaryTextTheme.bodyLarge
+                          : Theme.of(context).textTheme.bodyLarge,
                     ),
                     SizedBox(height: MediaQuery.of(context).size.height / 10),
                   ],
@@ -245,12 +249,15 @@ class _ChatScreenState extends State<ChatScreen> {
                           Icon(
                             CustomOutlinedIcons.warning,
                             size: 24.0,
-                            color: Theme.of(context).primaryIconTheme.color,
+                            color: Theme.of(context).iconTheme.color,
                           ),
                           const SizedBox(height: 10),
                           Text(
                             AppLocalizations.of(context)!.chatNoData,
-                            style: Theme.of(context).textTheme.bodyLarge,
+                            style: AppLocalizations.of(context)!.localeName ==
+                                    'km'
+                                ? Theme.of(context).primaryTextTheme.bodyLarge
+                                : Theme.of(context).textTheme.bodyLarge,
                           ),
                           SizedBox(
                               height: MediaQuery.of(context).size.height / 10),
@@ -342,7 +349,7 @@ class _ChatScreenState extends State<ChatScreen> {
                           'Login Now',
                           style: Theme.of(context)
                               .textTheme
-                              .bodyText1!
+                              .bodyLarge!
                               .copyWith(color: Theme.of(context).primaryColor),
                         ),
                       ),
@@ -394,20 +401,20 @@ class _ActionOptions extends StatelessWidget {
             radius: 20.0,
             backgroundColor:
                 Theme.of(context).colorScheme.brightness == Brightness.light
-                    ? Colors.white
+                    ? Theme.of(context).canvasColor
                     : Color(0x1AFFFFFF),
             child: Icon(
               Icons.more_horiz,
-              color: Theme.of(context).primaryIconTheme.color,
+              color: Theme.of(context).iconTheme.color,
               size: 28.0,
             ),
           ),
         ),
-        color: Theme.of(context).bottomAppBarColor,
+        color: Theme.of(context).canvasColor,
         itemBuilder: (context) => [
           PopupMenuItem<int>(
             value: 0,
-            child: PopUpListTile(
+            child: _PopUpListTile(
               iconData: Icons.logout,
               title: AppLocalizations.of(context)!.chatPopMarkAsRead,
             ),
@@ -415,7 +422,7 @@ class _ActionOptions extends StatelessWidget {
           PopupMenuDivider(),
           PopupMenuItem<int>(
             value: 1,
-            child: PopUpListTile(
+            child: _PopUpListTile(
               iconData: Icons.logout,
               title: AppLocalizations.of(context)!.chatPopArchive,
             ),
@@ -423,7 +430,7 @@ class _ActionOptions extends StatelessWidget {
           PopupMenuDivider(),
           PopupMenuItem<int>(
             value: 2,
-            child: PopUpListTile(
+            child: _PopUpListTile(
               iconData: Icons.logout,
               title: AppLocalizations.of(context)!.chatPopReport,
             ),
@@ -435,11 +442,11 @@ class _ActionOptions extends StatelessWidget {
   }
 }
 
-class PopUpListTile extends StatelessWidget {
+class _PopUpListTile extends StatelessWidget {
   final IconData iconData;
   final String title;
 
-  const PopUpListTile({
+  const _PopUpListTile({
     Key? key,
     required this.iconData,
     required this.title,
@@ -451,18 +458,23 @@ class PopUpListTile extends StatelessWidget {
       children: [
         Icon(
           iconData,
-          size: 16.0,
-          color: Theme.of(context).iconTheme.color,
+          size: 20.0,
+          color: Theme.of(context).primaryIconTheme.color,
         ),
         const SizedBox(width: 5),
         Expanded(
           child: Text(
             title,
             textScaleFactor: textScaleFactor,
-            style: Theme.of(context)
-                .textTheme
-                .bodyText1!
-                .copyWith(color: Theme.of(context).iconTheme.color),
+            style: AppLocalizations.of(context)!.localeName == 'km'
+                ? Theme.of(context)
+                    .primaryTextTheme
+                    .bodyMedium!
+                    .copyWith(color: Theme.of(context).primaryIconTheme.color)
+                : Theme.of(context)
+                    .textTheme
+                    .bodyMedium!
+                    .copyWith(color: Theme.of(context).primaryIconTheme.color),
             overflow: kIsWeb ? TextOverflow.clip : TextOverflow.ellipsis,
           ),
         ),
@@ -537,7 +549,7 @@ class _BuildChatItem extends StatelessWidget {
                     child: Container(
                       alignment: Alignment.center,
                       decoration: BoxDecoration(
-                        color: Theme.of(context).bottomAppBarColor,
+                        color: Theme.of(context).canvasColor,
                         borderRadius: BorderRadius.circular(15.0),
                       ),
                       child: const SizedBox.shrink(),
@@ -557,7 +569,7 @@ class _BuildChatItem extends StatelessWidget {
                   child: Container(
                     alignment: Alignment.center,
                     decoration: BoxDecoration(
-                      color: Theme.of(context).bottomAppBarColor,
+                      color: Theme.of(context).canvasColor,
                       borderRadius: BorderRadius.circular(15.0),
                     ),
                     child: ListTile(
@@ -593,34 +605,45 @@ class _BuildChatItem extends StatelessWidget {
                                 ),
                               ),
                       ),
-                      title: Padding(
-                        padding: const EdgeInsets.only(bottom: 9.0),
-                        child: Text(
-                          chatTitle,
-                          textScaleFactor: textScaleFactor,
-                          style: Theme.of(context).textTheme.displaySmall,
-                          overflow: kIsWeb
-                              ? TextOverflow.clip
-                              : TextOverflow.ellipsis,
-                        ),
+                      title: Text(
+                        chatTitle,
+                        textScaleFactor: textScaleFactor,
+                        style: AppLocalizations.of(context)!.localeName == 'km'
+                            ? Theme.of(context).primaryTextTheme.titleLarge
+                            : Theme.of(context).textTheme.titleLarge,
+                        overflow:
+                            kIsWeb ? TextOverflow.clip : TextOverflow.ellipsis,
                       ),
                       subtitle: Row(
                         children: [
                           Expanded(
                             child: Text(
                               chatMessage,
-                              maxLines: 2,
+                              maxLines: 1,
                               textScaleFactor: textScaleFactor,
                               style: snapshot.data!.docs.single
                                           .get('senderUid') ==
                                       _user.uid
-                                  ? Theme.of(context).textTheme.bodyLarge
-                                  : Theme.of(context)
-                                      .textTheme
-                                      .bodyText1!
-                                      .copyWith(
-                                          color:
-                                              Theme.of(context).primaryColor),
+                                  ? AppLocalizations.of(context)!.localeName ==
+                                          'km'
+                                      ? Theme.of(context)
+                                          .primaryTextTheme
+                                          .bodyLarge
+                                      : Theme.of(context).textTheme.bodyLarge
+                                  : AppLocalizations.of(context)!.localeName ==
+                                          'km'
+                                      ? Theme.of(context)
+                                          .primaryTextTheme
+                                          .bodyLarge!
+                                          .copyWith(
+                                              color: Theme.of(context)
+                                                  .primaryColor)
+                                      : Theme.of(context)
+                                          .textTheme
+                                          .bodyLarge!
+                                          .copyWith(
+                                              color: Theme.of(context)
+                                                  .primaryColor),
                               overflow: kIsWeb
                                   ? TextOverflow.clip
                                   : TextOverflow.ellipsis,
@@ -636,7 +659,10 @@ class _BuildChatItem extends StatelessWidget {
                                 '${chatDateTime.month.toString()}/' +
                                 '${chatDateTime.year.toString()}',
                             textScaleFactor: textScaleFactor,
-                            style: Theme.of(context).textTheme.bodyLarge,
+                            style: AppLocalizations.of(context)!.localeName ==
+                                    'km'
+                                ? Theme.of(context).primaryTextTheme.bodyLarge
+                                : Theme.of(context).textTheme.bodyLarge,
                             overflow: kIsWeb
                                 ? TextOverflow.clip
                                 : TextOverflow.ellipsis,

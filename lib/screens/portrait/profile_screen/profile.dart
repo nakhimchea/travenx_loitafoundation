@@ -1,5 +1,4 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -45,7 +44,7 @@ class _ProfileState extends State<Profile> {
     return Scaffold(
       body: CustomScrollView(
         primary: false,
-        physics: BouncingScrollPhysics(),
+        physics: const BouncingScrollPhysics(),
         slivers: [
           SliverToBoxAdapter(
             child: SingleChildScrollView(
@@ -58,47 +57,7 @@ class _ProfileState extends State<Profile> {
                     profileUrl: widget.profileUrl,
                     backgroundUrl: widget.backgroundUrl,
                   ),
-                  Padding(
-                    padding: EdgeInsets.symmetric(
-                      horizontal: MediaQuery.of(context).size.width / 5,
-                      vertical: kVPadding / 2,
-                    ),
-                    child: GestureDetector(
-                      onTap: () => _user != null
-                          ? Navigator.push(
-                              context,
-                              MaterialPageRoute(builder: (_) => AddPost()),
-                            )
-                          : widget.loggedInCallback(),
-                      child: Container(
-                        margin: const EdgeInsets.symmetric(vertical: 4.0),
-                        padding: const EdgeInsets.symmetric(vertical: 15.0),
-                        decoration: BoxDecoration(
-                          color: Theme.of(context).primaryColor,
-                          borderRadius: BorderRadius.circular(30.0),
-                        ),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Icon(
-                              CustomOutlinedIcons.new_icon,
-                              color: Colors.white,
-                              size: 20.0,
-                            ),
-                            const SizedBox(width: kHPadding),
-                            Text(
-                              AppLocalizations.of(context)!.pfAddPost,
-                              textScaleFactor: textScaleFactor,
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .bodyText1!
-                                  .copyWith(color: Colors.white),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ),
+                  _AddPost(user: _user, widget: widget),
                   Padding(
                     padding: const EdgeInsets.symmetric(
                       horizontal: kHPadding,
@@ -114,7 +73,7 @@ class _ProfileState extends State<Profile> {
                       trailing: [
                         Icon(
                           Icons.arrow_forward_ios_sharp,
-                          color: Theme.of(context).primaryIconTheme.color,
+                          color: Theme.of(context).iconTheme.color,
                           size: 14.0,
                         ),
                       ],
@@ -143,7 +102,7 @@ class _ProfileState extends State<Profile> {
                           trailing: [
                             Icon(
                               Icons.arrow_forward_ios_sharp,
-                              color: Theme.of(context).primaryIconTheme.color,
+                              color: Theme.of(context).iconTheme.color,
                               size: 14.0,
                             )
                           ],
@@ -158,7 +117,7 @@ class _ProfileState extends State<Profile> {
                           trailing: [
                             Icon(
                               Icons.arrow_forward_ios_sharp,
-                              color: Theme.of(context).primaryIconTheme.color,
+                              color: Theme.of(context).iconTheme.color,
                               size: 14.0,
                             )
                           ],
@@ -173,7 +132,7 @@ class _ProfileState extends State<Profile> {
                           trailing: [
                             Icon(
                               Icons.arrow_forward_ios_sharp,
-                              color: Theme.of(context).primaryIconTheme.color,
+                              color: Theme.of(context).iconTheme.color,
                               size: 14.0,
                             )
                           ],
@@ -182,7 +141,7 @@ class _ProfileState extends State<Profile> {
                         ProfileCategory(
                           icon: Icon(
                             CustomOutlinedIcons.setting,
-                            color: Theme.of(context).primaryIconTheme.color,
+                            color: Theme.of(context).iconTheme.color,
                             size: 20.0,
                           ),
                           title: AppLocalizations.of(context)!.pfLanguages,
@@ -190,18 +149,23 @@ class _ProfileState extends State<Profile> {
                             Text(
                               'ភាសាខ្មែរ',
                               textScaleFactor: textScaleFactor,
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .bodyText1!
-                                  .copyWith(
-                                      color: Theme.of(context).primaryColor),
-                              overflow: kIsWeb
-                                  ? TextOverflow.clip
-                                  : TextOverflow.ellipsis,
+                              style: AppLocalizations.of(context)!.localeName ==
+                                      'km'
+                                  ? Theme.of(context)
+                                      .primaryTextTheme
+                                      .bodyLarge!
+                                      .copyWith(
+                                          color: Theme.of(context).primaryColor)
+                                  : Theme.of(context)
+                                      .textTheme
+                                      .bodyLarge!
+                                      .copyWith(
+                                          color:
+                                              Theme.of(context).primaryColor),
                             ),
                             Icon(
                               Icons.arrow_forward_ios_sharp,
-                              color: Theme.of(context).primaryIconTheme.color,
+                              color: Theme.of(context).iconTheme.color,
                               size: 14.0,
                             )
                           ],
@@ -209,14 +173,14 @@ class _ProfileState extends State<Profile> {
                         ProfileCategory(
                           icon: Icon(
                             CustomOutlinedIcons.warning,
-                            color: Theme.of(context).primaryIconTheme.color,
+                            color: Theme.of(context).iconTheme.color,
                             size: 20.0,
                           ),
                           title: AppLocalizations.of(context)!.pfAboutUs,
                           trailing: [
                             Icon(
                               Icons.arrow_forward_ios_sharp,
-                              color: Theme.of(context).primaryIconTheme.color,
+                              color: Theme.of(context).iconTheme.color,
                               size: 14.0,
                             )
                           ],
@@ -224,7 +188,7 @@ class _ProfileState extends State<Profile> {
                         ProfileCategory(
                           icon: Icon(
                             CustomOutlinedIcons.file,
-                            color: Theme.of(context).primaryIconTheme.color,
+                            color: Theme.of(context).iconTheme.color,
                             size: 20.0,
                           ),
                           title:
@@ -232,7 +196,7 @@ class _ProfileState extends State<Profile> {
                           trailing: [
                             Icon(
                               Icons.arrow_forward_ios_sharp,
-                              color: Theme.of(context).primaryIconTheme.color,
+                              color: Theme.of(context).iconTheme.color,
                               size: 14.0,
                             )
                           ],
@@ -240,14 +204,14 @@ class _ProfileState extends State<Profile> {
                         ProfileCategory(
                           icon: Icon(
                             CustomOutlinedIcons.help,
-                            color: Theme.of(context).primaryIconTheme.color,
+                            color: Theme.of(context).iconTheme.color,
                             size: 20.0,
                           ),
                           title: AppLocalizations.of(context)!.pfFAQ,
                           trailing: [
                             Icon(
                               Icons.arrow_forward_ios_sharp,
-                              color: Theme.of(context).primaryIconTheme.color,
+                              color: Theme.of(context).iconTheme.color,
                               size: 14.0,
                             )
                           ],
@@ -300,7 +264,10 @@ class _ProfileState extends State<Profile> {
                         Text(
                           AppLocalizations.of(context)!.pfVersion,
                           textScaleFactor: textScaleFactor,
-                          style: Theme.of(context).textTheme.bodyLarge,
+                          style:
+                              AppLocalizations.of(context)!.localeName == 'km'
+                                  ? Theme.of(context).primaryTextTheme.bodyLarge
+                                  : Theme.of(context).textTheme.bodyLarge,
                         ),
                         const SizedBox(height: 60),
                       ],
@@ -311,6 +278,66 @@ class _ProfileState extends State<Profile> {
             ),
           ),
         ],
+      ),
+    );
+  }
+}
+
+class _AddPost extends StatelessWidget {
+  final User? user;
+  final Profile widget;
+  const _AddPost({
+    Key? key,
+    required this.user,
+    required this.widget,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: EdgeInsets.symmetric(
+        horizontal: MediaQuery.of(context).size.width / 5,
+        vertical: kVPadding / 2,
+      ),
+      child: GestureDetector(
+        onTap: () => user != null
+            ? Navigator.push(
+                context,
+                MaterialPageRoute(builder: (_) => AddPost()),
+              )
+            : widget.loggedInCallback(),
+        child: Container(
+          margin: const EdgeInsets.symmetric(vertical: 4.0),
+          padding: const EdgeInsets.symmetric(vertical: 15.0),
+          decoration: BoxDecoration(
+            color: Theme.of(context).primaryColor,
+            borderRadius: BorderRadius.circular(30.0),
+          ),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Icon(
+                CustomOutlinedIcons.new_icon,
+                color: Colors.white,
+                size: 20.0,
+              ),
+              const SizedBox(width: kHPadding),
+              Text(
+                AppLocalizations.of(context)!.pfAddPost,
+                textScaleFactor: textScaleFactor,
+                style: AppLocalizations.of(context)!.localeName == 'km'
+                    ? Theme.of(context)
+                        .primaryTextTheme
+                        .bodyLarge!
+                        .copyWith(color: Colors.white)
+                    : Theme.of(context)
+                        .textTheme
+                        .bodyLarge!
+                        .copyWith(color: Colors.white),
+              ),
+            ],
+          ),
+        ),
       ),
     );
   }

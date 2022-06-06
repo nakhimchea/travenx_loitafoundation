@@ -7,7 +7,6 @@ import 'package:travenx_loitafoundation/config/configs.dart'
 
 class PostCover extends StatefulWidget {
   final List<String> imageUrls;
-
   const PostCover({Key? key, required this.imageUrls}) : super(key: key);
 
   @override

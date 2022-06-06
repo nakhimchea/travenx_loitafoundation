@@ -22,7 +22,7 @@ class CategorySelection extends StatelessWidget {
       decoration: BoxDecoration(
         color: isCategoryHighlight
             ? Theme.of(context).errorColor.withOpacity(0.1)
-            : Theme.of(context).bottomAppBarColor,
+            : Theme.of(context).canvasColor,
         borderRadius: BorderRadius.circular(15.0),
       ),
       child: Column(
@@ -32,7 +32,9 @@ class CategorySelection extends StatelessWidget {
             AppLocalizations.of(context)!.pfApStBusinessType,
             textAlign: TextAlign.justify,
             textScaleFactor: textScaleFactor,
-            style: Theme.of(context).textTheme.bodyMedium,
+            style: AppLocalizations.of(context)!.localeName == 'km'
+                ? Theme.of(context).primaryTextTheme.bodyMedium
+                : Theme.of(context).textTheme.bodyMedium,
           ),
           const SizedBox(height: kHPadding),
           Wrap(
@@ -131,7 +133,7 @@ class _CategoryButton extends StatelessWidget {
             ? Theme.of(context).primaryColor.withOpacity(0.8)
             : Theme.of(context).scaffoldBackgroundColor),
         overlayColor: MaterialStateProperty.all<Color?>(
-            Theme.of(context).textTheme.bodyMedium!.color!.withOpacity(0.1)),
+            Theme.of(context).iconTheme.color!.withOpacity(0.1)),
         shape: MaterialStateProperty.all<OutlinedBorder?>(
             RoundedRectangleBorder(borderRadius: BorderRadius.circular(25.0))),
       ),
@@ -141,10 +143,15 @@ class _CategoryButton extends StatelessWidget {
           label,
           textScaleFactor: textScaleFactor,
           textAlign: TextAlign.center,
-          style: Theme.of(context)
-              .textTheme
-              .button!
-              .copyWith(color: state ? Colors.white : null),
+          style: AppLocalizations.of(context)!.localeName == 'km'
+              ? Theme.of(context)
+                  .primaryTextTheme
+                  .bodySmall!
+                  .copyWith(color: state ? Colors.white : null)
+              : Theme.of(context)
+                  .textTheme
+                  .bodySmall!
+                  .copyWith(color: state ? Colors.white : null),
         ),
       ),
     );

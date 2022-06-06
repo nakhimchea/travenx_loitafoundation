@@ -31,7 +31,7 @@ class BusinessTime extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(kHPadding),
       decoration: BoxDecoration(
-        color: Theme.of(context).bottomAppBarColor,
+        color: Theme.of(context).canvasColor,
         borderRadius: BorderRadius.vertical(top: Radius.circular(15.0)),
       ),
       child: Column(
@@ -40,7 +40,9 @@ class BusinessTime extends StatelessWidget {
           Text(
             AppLocalizations.of(context)!.pfApSthAdditionalLabel,
             textScaleFactor: textScaleFactor,
-            style: Theme.of(context).textTheme.displaySmall,
+            style: AppLocalizations.of(context)!.localeName == 'km'
+                ? Theme.of(context).primaryTextTheme.titleLarge
+                : Theme.of(context).textTheme.titleLarge,
           ),
           const SizedBox(height: kHPadding),
           Row(
@@ -65,7 +67,7 @@ class BusinessTime extends StatelessWidget {
                         decoration: BoxDecoration(
                           color: !openEnabled
                               ? Theme.of(context)
-                                  .primaryIconTheme
+                                  .iconTheme
                                   .color!
                                   .withOpacity(0.5)
                               : Theme.of(context).primaryColor.withOpacity(0.4),
@@ -76,21 +78,35 @@ class BusinessTime extends StatelessWidget {
                               const EdgeInsets.symmetric(vertical: kHPadding),
                           alignment: Alignment.center,
                           decoration: BoxDecoration(
-                            color: Theme.of(context).bottomAppBarColor,
+                            color: Theme.of(context).canvasColor,
                             borderRadius: BorderRadius.circular(5.0),
                           ),
                           child: Text(
                             AppLocalizations.of(context)!
                                     .pfApSthAdditionalAtLabel +
                                 timeTranslator(context, openHour),
-                            style: Theme.of(context)
-                                .textTheme
-                                .bodyMedium!
-                                .copyWith(
-                                    color: openEnabled
-                                        ? Theme.of(context).iconTheme.color
-                                        : null,
-                                    fontSize: 14 * textScaleFactor),
+                            style:
+                                AppLocalizations.of(context)!.localeName == 'km'
+                                    ? Theme.of(context)
+                                        .primaryTextTheme
+                                        .bodyLarge!
+                                        .copyWith(
+                                            color: openEnabled
+                                                ? Theme.of(context)
+                                                    .primaryIconTheme
+                                                    .color
+                                                : null,
+                                            fontSize: 14 * textScaleFactor)
+                                    : Theme.of(context)
+                                        .textTheme
+                                        .bodyLarge!
+                                        .copyWith(
+                                            color: openEnabled
+                                                ? Theme.of(context)
+                                                    .primaryIconTheme
+                                                    .color
+                                                : null,
+                                            fontSize: 14 * textScaleFactor),
                           ),
                         ),
                       ),
@@ -98,20 +114,31 @@ class BusinessTime extends StatelessWidget {
                         left: kHPadding,
                         child: Container(
                           padding: const EdgeInsets.symmetric(horizontal: 3.0),
-                          color: Theme.of(context).bottomAppBarColor,
+                          color: Theme.of(context).canvasColor,
                           child: Text(
                             AppLocalizations.of(context)!
                                 .pfApSthAdditionalOpenLabel,
                             textScaleFactor: textScaleFactor,
-                            style: Theme.of(context)
-                                .textTheme
-                                .bodyMedium!
-                                .copyWith(
-                                    color: openEnabled
-                                        ? Theme.of(context)
-                                            .primaryColor
-                                            .withOpacity(0.8)
-                                        : null),
+                            style:
+                                AppLocalizations.of(context)!.localeName == 'km'
+                                    ? Theme.of(context)
+                                        .primaryTextTheme
+                                        .bodySmall!
+                                        .copyWith(
+                                            color: openEnabled
+                                                ? Theme.of(context)
+                                                    .primaryColor
+                                                    .withOpacity(0.8)
+                                                : null)
+                                    : Theme.of(context)
+                                        .textTheme
+                                        .bodySmall!
+                                        .copyWith(
+                                            color: openEnabled
+                                                ? Theme.of(context)
+                                                    .primaryColor
+                                                    .withOpacity(0.8)
+                                                : null),
                           ),
                         ),
                       ),
@@ -141,7 +168,7 @@ class BusinessTime extends StatelessWidget {
                         decoration: BoxDecoration(
                           color: !closeEnabled
                               ? Theme.of(context)
-                                  .primaryIconTheme
+                                  .iconTheme
                                   .color!
                                   .withOpacity(0.5)
                               : Theme.of(context).errorColor.withOpacity(0.4),
@@ -152,21 +179,35 @@ class BusinessTime extends StatelessWidget {
                               const EdgeInsets.symmetric(vertical: kHPadding),
                           alignment: Alignment.center,
                           decoration: BoxDecoration(
-                            color: Theme.of(context).bottomAppBarColor,
+                            color: Theme.of(context).canvasColor,
                             borderRadius: BorderRadius.circular(5.0),
                           ),
                           child: Text(
                             AppLocalizations.of(context)!
                                     .pfApSthAdditionalAtLabel +
                                 timeTranslator(context, closeHour),
-                            style: Theme.of(context)
-                                .textTheme
-                                .bodyMedium!
-                                .copyWith(
-                                    color: closeEnabled
-                                        ? Theme.of(context).iconTheme.color
-                                        : null,
-                                    fontSize: 14 * textScaleFactor),
+                            style:
+                                AppLocalizations.of(context)!.localeName == 'km'
+                                    ? Theme.of(context)
+                                        .primaryTextTheme
+                                        .bodyLarge!
+                                        .copyWith(
+                                            color: closeEnabled
+                                                ? Theme.of(context)
+                                                    .primaryIconTheme
+                                                    .color
+                                                : null,
+                                            fontSize: 14 * textScaleFactor)
+                                    : Theme.of(context)
+                                        .textTheme
+                                        .bodyLarge!
+                                        .copyWith(
+                                            color: closeEnabled
+                                                ? Theme.of(context)
+                                                    .primaryIconTheme
+                                                    .color
+                                                : null,
+                                            fontSize: 14 * textScaleFactor),
                           ),
                         ),
                       ),
@@ -174,20 +215,31 @@ class BusinessTime extends StatelessWidget {
                         left: kHPadding,
                         child: Container(
                           padding: const EdgeInsets.symmetric(horizontal: 3.0),
-                          color: Theme.of(context).bottomAppBarColor,
+                          color: Theme.of(context).canvasColor,
                           child: Text(
                             AppLocalizations.of(context)!
                                 .pfApSthAdditionalCloseLabel,
                             textScaleFactor: textScaleFactor,
-                            style: Theme.of(context)
-                                .textTheme
-                                .bodyMedium!
-                                .copyWith(
-                                    color: closeEnabled
-                                        ? Theme.of(context)
-                                            .errorColor
-                                            .withOpacity(0.8)
-                                        : null),
+                            style:
+                                AppLocalizations.of(context)!.localeName == 'km'
+                                    ? Theme.of(context)
+                                        .primaryTextTheme
+                                        .bodySmall!
+                                        .copyWith(
+                                            color: closeEnabled
+                                                ? Theme.of(context)
+                                                    .errorColor
+                                                    .withOpacity(0.8)
+                                                : null)
+                                    : Theme.of(context)
+                                        .textTheme
+                                        .bodySmall!
+                                        .copyWith(
+                                            color: closeEnabled
+                                                ? Theme.of(context)
+                                                    .errorColor
+                                                    .withOpacity(0.8)
+                                                : null),
                           ),
                         ),
                       ),
@@ -214,8 +266,8 @@ class BusinessTime extends StatelessWidget {
                     },
                     child: Icon(
                       Icons.close,
-                      size: 22,
-                      color: Theme.of(context).primaryIconTheme.color,
+                      size: 26,
+                      color: Theme.of(context).iconTheme.color,
                     ),
                   ),
                 ),
@@ -249,9 +301,9 @@ class _CustomDialogState extends State<_CustomDialog> {
   @override
   Widget build(BuildContext context) {
     return Dialog(
-      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+      backgroundColor: Theme.of(context).canvasColor,
       insetPadding: EdgeInsets.symmetric(
-          horizontal: (MediaQuery.of(context).size.width - 228) / 2),
+          horizontal: (MediaQuery.of(context).size.width - 258) / 2),
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(15.0),
       ),
@@ -261,14 +313,14 @@ class _CustomDialogState extends State<_CustomDialog> {
           const SizedBox(height: kVPadding),
           Container(
             padding: const EdgeInsets.symmetric(vertical: kHPadding),
-            height: 160,
+            height: 180,
             child: CupertinoTheme(
               data: CupertinoThemeData(
                 textTheme: CupertinoTextThemeData(
                     dateTimePickerTextStyle: Theme.of(context)
                         .textTheme
-                        .headline2!
-                        .copyWith(fontWeight: FontWeight.w400)),
+                        .displayLarge!
+                        .copyWith(fontWeight: FontWeight.w500)),
               ),
               child: CupertinoDatePicker(
                 mode: CupertinoDatePickerMode.time,
@@ -302,17 +354,40 @@ class _CustomDialogState extends State<_CustomDialog> {
                   padding: const EdgeInsets.only(left: 30.0, bottom: kVPadding),
                   child: Text(
                     AppLocalizations.of(context)!.resetLabel,
-                    style: Theme.of(context).textTheme.displaySmall!.copyWith(
-                        color: _resetHold
-                            ? widget.isOpenHour
-                                ? Theme.of(context)
-                                    .primaryColor
-                                    .withOpacity(0.4)
-                                : Theme.of(context).errorColor.withOpacity(0.3)
-                            : widget.isOpenHour
-                                ? Theme.of(context).primaryColor
-                                : Theme.of(context).errorColor.withOpacity(0.7),
-                        fontWeight: FontWeight.w400),
+                    style: AppLocalizations.of(context)!.localeName == 'km'
+                        ? Theme.of(context)
+                            .primaryTextTheme
+                            .titleLarge!
+                            .copyWith(
+                                color: _resetHold
+                                    ? widget.isOpenHour
+                                        ? Theme.of(context)
+                                            .primaryColor
+                                            .withOpacity(0.4)
+                                        : Theme.of(context)
+                                            .errorColor
+                                            .withOpacity(0.3)
+                                    : widget.isOpenHour
+                                        ? Theme.of(context).primaryColor
+                                        : Theme.of(context)
+                                            .errorColor
+                                            .withOpacity(0.7),
+                                fontWeight: FontWeight.w400)
+                        : Theme.of(context).textTheme.titleLarge!.copyWith(
+                            color: _resetHold
+                                ? widget.isOpenHour
+                                    ? Theme.of(context)
+                                        .primaryColor
+                                        .withOpacity(0.4)
+                                    : Theme.of(context)
+                                        .errorColor
+                                        .withOpacity(0.3)
+                                : widget.isOpenHour
+                                    ? Theme.of(context).primaryColor
+                                    : Theme.of(context)
+                                        .errorColor
+                                        .withOpacity(0.7),
+                            fontWeight: FontWeight.w400),
                   ),
                 ),
               ),
@@ -325,18 +400,38 @@ class _CustomDialogState extends State<_CustomDialog> {
                       right: 30.0, bottom: kVPadding + 5.0, top: 5.0),
                   child: Text(
                     AppLocalizations.of(context)!.doneLabel,
-                    style: Theme.of(context).textTheme.displaySmall!.copyWith(
-                        color: _doneHold
-                            ? widget.isOpenHour
-                                ? Theme.of(context)
-                                    .primaryColor
-                                    .withOpacity(0.4)
-                                : Theme.of(context).errorColor.withOpacity(0.3)
-                            : widget.isOpenHour
-                                ? Theme.of(context).primaryColor
-                                : Theme.of(context)
-                                    .errorColor
-                                    .withOpacity(0.7)),
+                    style: AppLocalizations.of(context)!.localeName == 'km'
+                        ? Theme.of(context)
+                            .primaryTextTheme
+                            .titleLarge!
+                            .copyWith(
+                                color: _doneHold
+                                    ? widget.isOpenHour
+                                        ? Theme.of(context)
+                                            .primaryColor
+                                            .withOpacity(0.4)
+                                        : Theme.of(context)
+                                            .errorColor
+                                            .withOpacity(0.3)
+                                    : widget.isOpenHour
+                                        ? Theme.of(context).primaryColor
+                                        : Theme.of(context)
+                                            .errorColor
+                                            .withOpacity(0.7))
+                        : Theme.of(context).textTheme.titleLarge!.copyWith(
+                            color: _doneHold
+                                ? widget.isOpenHour
+                                    ? Theme.of(context)
+                                        .primaryColor
+                                        .withOpacity(0.4)
+                                    : Theme.of(context)
+                                        .errorColor
+                                        .withOpacity(0.3)
+                                : widget.isOpenHour
+                                    ? Theme.of(context).primaryColor
+                                    : Theme.of(context)
+                                        .errorColor
+                                        .withOpacity(0.7)),
                   ),
                 ),
               ),

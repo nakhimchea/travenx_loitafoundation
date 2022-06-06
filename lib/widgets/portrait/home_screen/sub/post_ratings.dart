@@ -279,7 +279,6 @@ class _PostRatingFieldsState extends State<_PostRatingFields> {
             maxLines: 24,
             textAlign: TextAlign.justify,
             cursorColor: Theme.of(context).primaryColor,
-            cursorHeight: 14 * textScaleFactor,
             decoration: InputDecoration(
               filled: true,
               fillColor: Theme.of(context).scaffoldBackgroundColor,
@@ -311,7 +310,7 @@ class _PostRatingFieldsState extends State<_PostRatingFields> {
                 AppLocalizations.of(context)!.pdReviewSharePublic,
                 textScaleFactor: textScaleFactor,
                 style: AppLocalizations.of(context)!.localeName == 'km'
-                    ? Theme.of(context).primaryTextTheme.bodyLarge
+                    ? Theme.of(context).primaryTextTheme.bodyMedium
                     : Theme.of(context).textTheme.bodyMedium,
               ),
             ),

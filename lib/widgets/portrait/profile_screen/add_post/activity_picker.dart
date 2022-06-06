@@ -17,7 +17,7 @@ class ActivityPicker extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.all(kHPadding),
-      color: Theme.of(context).bottomAppBarColor,
+      color: Theme.of(context).canvasColor,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -25,7 +25,9 @@ class ActivityPicker extends StatelessWidget {
             AppLocalizations.of(context)!.pfApSthActivityLabel,
             textAlign: TextAlign.justify,
             textScaleFactor: textScaleFactor,
-            style: Theme.of(context).textTheme.button,
+            style: AppLocalizations.of(context)!.localeName == 'km'
+                ? Theme.of(context).primaryTextTheme.bodyMedium
+                : Theme.of(context).textTheme.bodyMedium,
           ),
           const SizedBox(height: kHPadding),
           Wrap(
@@ -100,7 +102,7 @@ class _ActivityButton extends StatelessWidget {
             ? Theme.of(context).primaryColor.withOpacity(0.8)
             : Theme.of(context).scaffoldBackgroundColor),
         overlayColor: MaterialStateProperty.all<Color?>(
-            Theme.of(context).textTheme.button!.color!.withOpacity(0.1)),
+            Theme.of(context).iconTheme.color!.withOpacity(0.1)),
         shape: MaterialStateProperty.all<OutlinedBorder?>(
             RoundedRectangleBorder(borderRadius: BorderRadius.circular(25.0))),
       ),
@@ -110,10 +112,15 @@ class _ActivityButton extends StatelessWidget {
           label,
           textScaleFactor: textScaleFactor,
           textAlign: TextAlign.center,
-          style: Theme.of(context)
-              .textTheme
-              .button!
-              .copyWith(color: state ? Colors.white : null),
+          style: AppLocalizations.of(context)!.localeName == 'km'
+              ? Theme.of(context)
+                  .primaryTextTheme
+                  .bodySmall!
+                  .copyWith(color: state ? Colors.white : null)
+              : Theme.of(context)
+                  .textTheme
+                  .bodySmall!
+                  .copyWith(color: state ? Colors.white : null),
         ),
       ),
     );

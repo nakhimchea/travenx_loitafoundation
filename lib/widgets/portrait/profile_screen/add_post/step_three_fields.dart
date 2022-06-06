@@ -22,7 +22,7 @@ class StepThreeFields extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.all(kHPadding),
-      color: Theme.of(context).bottomAppBarColor,
+      color: Theme.of(context).canvasColor,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

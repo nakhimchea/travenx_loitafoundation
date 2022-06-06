@@ -26,7 +26,7 @@ class StepOneCheckedBox extends StatelessWidget {
       decoration: BoxDecoration(
         color: isAgreementHighlight
             ? Theme.of(context).highlightColor.withOpacity(0.1)
-            : Theme.of(context).bottomAppBarColor,
+            : Theme.of(context).canvasColor,
         borderRadius: BorderRadius.circular(15.0),
       ),
       child: GestureDetector(
@@ -34,14 +34,17 @@ class StepOneCheckedBox extends StatelessWidget {
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Icon(
-              !isChecked
-                  ? Icons.check_box_outline_blank
-                  : Icons.check_box_outlined,
-              color: !isChecked
-                  ? Theme.of(context).primaryIconTheme.color
-                  : Theme.of(context).primaryColor,
-              size: 16.0 * textScaleFactor,
+            Padding(
+              padding: const EdgeInsets.only(top: 4.0),
+              child: Icon(
+                !isChecked
+                    ? Icons.check_box_outline_blank
+                    : Icons.check_box_outlined,
+                color: !isChecked
+                    ? Theme.of(context).iconTheme.color
+                    : Theme.of(context).primaryColor,
+                size: 20.0 * textScaleFactor,
+              ),
             ),
             const SizedBox(width: 10),
             Expanded(
@@ -49,8 +52,13 @@ class StepOneCheckedBox extends StatelessWidget {
                 AppLocalizations.of(context)!.pfApSoCheckbox,
                 textAlign: TextAlign.justify,
                 textScaleFactor: textScaleFactor,
-                style: Theme.of(context).textTheme.bodyLarge!.copyWith(
-                    color: isChecked ? Theme.of(context).primaryColor : null),
+                style: AppLocalizations.of(context)!.localeName == 'km'
+                    ? Theme.of(context).primaryTextTheme.bodyLarge!.copyWith(
+                        color:
+                            isChecked ? Theme.of(context).primaryColor : null)
+                    : Theme.of(context).textTheme.bodyLarge!.copyWith(
+                        color:
+                            isChecked ? Theme.of(context).primaryColor : null),
               ),
             ),
           ],

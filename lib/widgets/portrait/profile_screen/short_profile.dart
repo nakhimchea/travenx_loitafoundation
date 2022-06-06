@@ -2,6 +2,7 @@ import 'dart:ui';
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:travenx_loitafoundation/config/constant.dart';
 import 'package:travenx_loitafoundation/config/variable.dart';
 import 'package:travenx_loitafoundation/helpers/profile_clipper.dart';
@@ -115,7 +116,9 @@ class ShortProfile extends StatelessWidget {
                 Text(
                   '${displayName != '' ? displayName : _anonymous.displayName}',
                   textScaleFactor: textScaleFactor,
-                  style: Theme.of(context).textTheme.displayMedium,
+                  style: AppLocalizations.of(context)!.localeName == 'km'
+                      ? Theme.of(context).primaryTextTheme.displayMedium
+                      : Theme.of(context).textTheme.displayMedium,
                 ),
                 const SizedBox(height: 5.0),
                 Text(

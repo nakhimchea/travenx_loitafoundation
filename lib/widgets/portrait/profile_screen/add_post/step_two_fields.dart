@@ -22,7 +22,7 @@ class StepTwoFields extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(kHPadding),
       decoration: BoxDecoration(
-        color: Theme.of(context).bottomAppBarColor,
+        color: Theme.of(context).canvasColor,
         borderRadius: BorderRadius.circular(15.0),
       ),
       child: Column(
@@ -31,7 +31,9 @@ class StepTwoFields extends StatelessWidget {
           Text(
             AppLocalizations.of(context)!.pfApStLabel,
             textScaleFactor: textScaleFactor,
-            style: Theme.of(context).textTheme.displaySmall,
+            style: AppLocalizations.of(context)!.localeName == 'km'
+                ? Theme.of(context).primaryTextTheme.titleLarge
+                : Theme.of(context).textTheme.titleLarge,
           ),
           const SizedBox(height: kHPadding),
           CustomInputBox(

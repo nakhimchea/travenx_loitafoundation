@@ -183,7 +183,7 @@ class _AddPostState extends State<AddPost> {
           onPressed: () => Navigator.pop(context),
           icon: Icon(
             CustomOutlinedIcons.close,
-            size: 24.0,
+            size: 26.0,
             color: Theme.of(context).errorColor,
           ),
           highlightColor: Colors.transparent,
@@ -193,7 +193,9 @@ class _AddPostState extends State<AddPost> {
         title: Text(
           AppLocalizations.of(context)!.pfAddPost,
           textScaleFactor: textScaleFactor,
-          style: Theme.of(context).textTheme.headline3,
+          style: AppLocalizations.of(context)!.localeName == 'km'
+              ? Theme.of(context).primaryTextTheme.titleLarge
+              : Theme.of(context).textTheme.titleLarge,
         ),
         actions: [
           Visibility(
@@ -216,7 +218,10 @@ class _AddPostState extends State<AddPost> {
               },
               child: Text(
                 AppLocalizations.of(context)!.skipLabel,
-                style: Theme.of(context).textTheme.bodyText1,
+                textScaleFactor: textScaleFactor,
+                style: AppLocalizations.of(context)!.localeName == 'km'
+                    ? Theme.of(context).primaryTextTheme.bodyMedium
+                    : Theme.of(context).textTheme.bodyMedium,
               ),
             ),
           ),
@@ -236,7 +241,9 @@ class _AddPostState extends State<AddPost> {
                 child: StepperNavigationButton(
                   backgroundColor: Theme.of(context).disabledColor,
                   label: AppLocalizations.of(context)!.backLabel,
-                  textStyle: Theme.of(context).textTheme.bodyText1,
+                  textStyle: AppLocalizations.of(context)!.localeName == 'km'
+                      ? Theme.of(context).primaryTextTheme.bodyLarge
+                      : Theme.of(context).textTheme.bodyLarge,
                   onPressed: () => setState(() => currentStep--),
                 ),
               ),
@@ -250,10 +257,15 @@ class _AddPostState extends State<AddPost> {
                 label: currentStep == 3
                     ? AppLocalizations.of(context)!.postLabel
                     : AppLocalizations.of(context)!.nextLabel,
-                textStyle: Theme.of(context)
-                    .textTheme
-                    .bodyText1!
-                    .copyWith(color: Colors.white),
+                textStyle: AppLocalizations.of(context)!.localeName == 'km'
+                    ? Theme.of(context)
+                        .primaryTextTheme
+                        .bodyLarge!
+                        .copyWith(color: Colors.white)
+                    : Theme.of(context)
+                        .textTheme
+                        .bodyLarge!
+                        .copyWith(color: Colors.white),
                 onPressed: _agreementChecked
                     ? () async {
                         switch (currentStep) {
@@ -358,9 +370,7 @@ class _AddPostState extends State<AddPost> {
                                 Center(
                                   child: Icon(
                                     CustomFilledIcons.location,
-                                    color: Theme.of(context)
-                                        .primaryIconTheme
-                                        .color,
+                                    color: Theme.of(context).iconTheme.color,
                                     size: 16,
                                   ),
                                 ),
@@ -369,18 +379,36 @@ class _AddPostState extends State<AddPost> {
                                   child: Text(
                                     AppLocalizations.of(context)!
                                         .locationClosed,
-                                    style: Theme.of(context).textTheme.button,
+                                    style: AppLocalizations.of(context)!
+                                                .localeName ==
+                                            'km'
+                                        ? Theme.of(context)
+                                            .primaryTextTheme
+                                            .bodyMedium
+                                        : Theme.of(context)
+                                            .textTheme
+                                            .bodyMedium,
                                   ),
                                 ),
                                 Center(
                                   child: Text(
                                     AppLocalizations.of(context)!
                                         .locationToOpenWeb,
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .button!
-                                        .copyWith(
-                                            color: Theme.of(context).hintColor),
+                                    style: AppLocalizations.of(context)!
+                                                .localeName ==
+                                            'km'
+                                        ? Theme.of(context)
+                                            .primaryTextTheme
+                                            .bodyMedium!
+                                            .copyWith(
+                                                color:
+                                                    Theme.of(context).hintColor)
+                                        : Theme.of(context)
+                                            .textTheme
+                                            .bodyMedium!
+                                            .copyWith(
+                                                color: Theme.of(context)
+                                                    .hintColor),
                                   ),
                                 ),
                                 const SizedBox(width: kHPadding),
@@ -422,9 +450,7 @@ class _AddPostState extends State<AddPost> {
                                   Center(
                                     child: Icon(
                                       CustomFilledIcons.location,
-                                      color: Theme.of(context)
-                                          .primaryIconTheme
-                                          .color,
+                                      color: Theme.of(context).iconTheme.color,
                                       size: 16,
                                     ),
                                   ),
@@ -433,19 +459,36 @@ class _AddPostState extends State<AddPost> {
                                     child: Text(
                                       AppLocalizations.of(context)!
                                           .locationClosed,
-                                      style: Theme.of(context).textTheme.button,
+                                      style: AppLocalizations.of(context)!
+                                                  .localeName ==
+                                              'km'
+                                          ? Theme.of(context)
+                                              .primaryTextTheme
+                                              .bodyMedium
+                                          : Theme.of(context)
+                                              .textTheme
+                                              .bodyMedium,
                                     ),
                                   ),
                                   Center(
                                     child: Text(
                                       AppLocalizations.of(context)!
                                           .locationToOpenMobile,
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .button!
-                                          .copyWith(
-                                              color:
-                                                  Theme.of(context).hintColor),
+                                      style: AppLocalizations.of(context)!
+                                                  .localeName ==
+                                              'km'
+                                          ? Theme.of(context)
+                                              .primaryTextTheme
+                                              .bodyMedium!
+                                              .copyWith(
+                                                  color: Theme.of(context)
+                                                      .hintColor)
+                                          : Theme.of(context)
+                                              .textTheme
+                                              .bodyMedium!
+                                              .copyWith(
+                                                  color: Theme.of(context)
+                                                      .hintColor),
                                     ),
                                   ),
                                   const SizedBox(width: kHPadding),
@@ -543,7 +586,7 @@ class _AddPostState extends State<AddPost> {
                     imagePickerCallback: _imagePicker,
                   ),
                 ),
-                const SizedBox(height: 100)
+                const SizedBox(height: 110)
               ],
             ),
           ),
@@ -612,6 +655,7 @@ class _AddPostState extends State<AddPost> {
                   policiesCallback: _changePolicyControllers,
                   announcementController: _announcementController,
                 ),
+                const SizedBox(height: 10),
               ],
             ),
           ),
@@ -781,7 +825,7 @@ class _AddPostState extends State<AddPost> {
                 _policies.isNotEmpty
                     ? Policies(policies: _policies)
                     : const SizedBox.shrink(),
-                const SizedBox(height: 70)
+                const SizedBox(height: 100)
               ],
             ),
           ),
@@ -809,14 +853,23 @@ class _Steps extends StatelessWidget {
                 Text(
                   AppLocalizations.of(context)!.pfApLocation,
                   textScaleFactor: textScaleFactor,
-                  style: Theme.of(context).textTheme.bodyText1!.copyWith(
-                        color: currentStep == 0
-                            ? Theme.of(context).primaryColor
-                            : Theme.of(context).disabledColor,
-                        fontWeight: currentStep == 0
-                            ? FontWeight.w700
-                            : FontWeight.w400,
-                      ),
+                  style: AppLocalizations.of(context)!.localeName == 'km'
+                      ? Theme.of(context).primaryTextTheme.bodyLarge!.copyWith(
+                            color: currentStep == 0
+                                ? Theme.of(context).primaryColor
+                                : Theme.of(context).disabledColor,
+                            fontWeight: currentStep == 0
+                                ? FontWeight.w700
+                                : FontWeight.w400,
+                          )
+                      : Theme.of(context).textTheme.bodyLarge!.copyWith(
+                            color: currentStep == 0
+                                ? Theme.of(context).primaryColor
+                                : Theme.of(context).disabledColor,
+                            fontWeight: currentStep == 0
+                                ? FontWeight.w700
+                                : FontWeight.w400,
+                          ),
                 ),
                 const SizedBox(height: 5.0),
                 Container(
@@ -841,14 +894,23 @@ class _Steps extends StatelessWidget {
                 Text(
                   AppLocalizations.of(context)!.pfApBasic,
                   textScaleFactor: textScaleFactor,
-                  style: Theme.of(context).textTheme.bodyText1!.copyWith(
-                        color: currentStep == 1
-                            ? Theme.of(context).primaryColor
-                            : Theme.of(context).disabledColor,
-                        fontWeight: currentStep == 1
-                            ? FontWeight.w700
-                            : FontWeight.w400,
-                      ),
+                  style: AppLocalizations.of(context)!.localeName == 'km'
+                      ? Theme.of(context).primaryTextTheme.bodyLarge!.copyWith(
+                            color: currentStep == 1
+                                ? Theme.of(context).primaryColor
+                                : Theme.of(context).disabledColor,
+                            fontWeight: currentStep == 1
+                                ? FontWeight.w700
+                                : FontWeight.w400,
+                          )
+                      : Theme.of(context).textTheme.bodyLarge!.copyWith(
+                            color: currentStep == 1
+                                ? Theme.of(context).primaryColor
+                                : Theme.of(context).disabledColor,
+                            fontWeight: currentStep == 1
+                                ? FontWeight.w700
+                                : FontWeight.w400,
+                          ),
                 ),
                 const SizedBox(height: 5.0),
                 Container(
@@ -873,14 +935,23 @@ class _Steps extends StatelessWidget {
                 Text(
                   AppLocalizations.of(context)!.pfApAdditional,
                   textScaleFactor: textScaleFactor,
-                  style: Theme.of(context).textTheme.bodyText1!.copyWith(
-                        color: currentStep == 2
-                            ? Theme.of(context).primaryColor
-                            : Theme.of(context).disabledColor,
-                        fontWeight: currentStep == 2
-                            ? FontWeight.w700
-                            : FontWeight.w400,
-                      ),
+                  style: AppLocalizations.of(context)!.localeName == 'km'
+                      ? Theme.of(context).primaryTextTheme.bodyLarge!.copyWith(
+                            color: currentStep == 2
+                                ? Theme.of(context).primaryColor
+                                : Theme.of(context).disabledColor,
+                            fontWeight: currentStep == 2
+                                ? FontWeight.w700
+                                : FontWeight.w400,
+                          )
+                      : Theme.of(context).textTheme.bodyLarge!.copyWith(
+                            color: currentStep == 2
+                                ? Theme.of(context).primaryColor
+                                : Theme.of(context).disabledColor,
+                            fontWeight: currentStep == 2
+                                ? FontWeight.w700
+                                : FontWeight.w400,
+                          ),
                 ),
                 const SizedBox(height: 5.0),
                 Container(
@@ -905,14 +976,23 @@ class _Steps extends StatelessWidget {
                 Text(
                   AppLocalizations.of(context)!.pfApPreview,
                   textScaleFactor: textScaleFactor,
-                  style: Theme.of(context).textTheme.bodyText1!.copyWith(
-                        color: currentStep == 3
-                            ? Theme.of(context).primaryColor
-                            : Theme.of(context).disabledColor,
-                        fontWeight: currentStep == 3
-                            ? FontWeight.w700
-                            : FontWeight.w400,
-                      ),
+                  style: AppLocalizations.of(context)!.localeName == 'km'
+                      ? Theme.of(context).primaryTextTheme.bodyLarge!.copyWith(
+                            color: currentStep == 3
+                                ? Theme.of(context).primaryColor
+                                : Theme.of(context).disabledColor,
+                            fontWeight: currentStep == 3
+                                ? FontWeight.w700
+                                : FontWeight.w400,
+                          )
+                      : Theme.of(context).textTheme.bodyLarge!.copyWith(
+                            color: currentStep == 3
+                                ? Theme.of(context).primaryColor
+                                : Theme.of(context).disabledColor,
+                            fontWeight: currentStep == 3
+                                ? FontWeight.w700
+                                : FontWeight.w400,
+                          ),
                 ),
                 const SizedBox(height: 5.0),
                 Container(

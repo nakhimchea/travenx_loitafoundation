@@ -32,7 +32,7 @@ class PostImagePicker extends StatelessWidget {
       decoration: BoxDecoration(
         color: isImagePathHighlight
             ? Theme.of(context).errorColor.withOpacity(0.1)
-            : Theme.of(context).bottomAppBarColor,
+            : Theme.of(context).canvasColor,
         borderRadius: BorderRadius.circular(15.0),
       ),
       child: Column(
@@ -42,7 +42,9 @@ class PostImagePicker extends StatelessWidget {
             AppLocalizations.of(context)!.pfApStImagePickerLabel,
             textAlign: TextAlign.justify,
             textScaleFactor: textScaleFactor,
-            style: Theme.of(context).textTheme.bodyMedium,
+            style: AppLocalizations.of(context)!.localeName == 'km'
+                ? Theme.of(context).primaryTextTheme.bodyMedium
+                : Theme.of(context).textTheme.bodyMedium,
           ),
           const SizedBox(height: kHPadding),
           Wrap(

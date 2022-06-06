@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:travenx_loitafoundation/config/variable.dart'
     show textScaleFactor;
 
@@ -32,19 +33,28 @@ class CustomInputBox extends StatelessWidget {
           label,
           textAlign: TextAlign.justify,
           textScaleFactor: textScaleFactor,
-          style: Theme.of(context).textTheme.bodyMedium,
+          style: minimumLines > 1
+              ? AppLocalizations.of(context)!.localeName == 'km'
+                  ? Theme.of(context).primaryTextTheme.bodyMedium
+                  : Theme.of(context).textTheme.bodyMedium
+              : AppLocalizations.of(context)!.localeName == 'km'
+                  ? Theme.of(context).primaryTextTheme.bodySmall
+                  : Theme.of(context).textTheme.bodySmall,
         ),
         const SizedBox(height: 3),
         TextField(
           controller: textController,
-          style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-              color: Theme.of(context).iconTheme.color,
-              fontSize: 14 * textScaleFactor),
+          style: AppLocalizations.of(context)!.localeName == 'km'
+              ? Theme.of(context).primaryTextTheme.bodyLarge!.copyWith(
+                  color: Theme.of(context).primaryIconTheme.color,
+                  fontSize: 16 * textScaleFactor)
+              : Theme.of(context).textTheme.bodyLarge!.copyWith(
+                  color: Theme.of(context).primaryIconTheme.color,
+                  fontSize: 16 * textScaleFactor),
           minLines: minimumLines,
           maxLines: 24,
           textAlign: TextAlign.justify,
           cursorColor: Theme.of(context).primaryColor,
-          cursorHeight: 14 * textScaleFactor,
           autofocus: autofocus,
           onChanged: (_) =>
               disableHighlight != null ? disableHighlight!() : null,
@@ -58,10 +68,15 @@ class CustomInputBox extends StatelessWidget {
               vertical: 12.0,
             ),
             hintText: hintText,
-            hintStyle: Theme.of(context)
-                .textTheme
-                .bodyText1!
-                .copyWith(fontSize: 14 * textScaleFactor),
+            hintStyle: AppLocalizations.of(context)!.localeName == 'km'
+                ? Theme.of(context)
+                    .primaryTextTheme
+                    .bodyLarge!
+                    .copyWith(fontSize: 16 * textScaleFactor)
+                : Theme.of(context)
+                    .textTheme
+                    .bodyLarge!
+                    .copyWith(fontSize: 16 * textScaleFactor),
             border: OutlineInputBorder(
               borderSide: BorderSide.none,
               borderRadius: BorderRadius.circular(10.0),

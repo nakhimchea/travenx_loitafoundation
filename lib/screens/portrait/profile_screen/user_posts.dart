@@ -54,7 +54,7 @@ class _UserPostsState extends State<UserPosts> {
           onPressed: () => Navigator.pop(context),
           icon: Icon(
             Icons.arrow_back_ios_new,
-            color: Theme.of(context).iconTheme.color,
+            color: Theme.of(context).primaryIconTheme.color,
             size: 18.0,
           ),
           highlightColor: Colors.transparent,
@@ -64,7 +64,9 @@ class _UserPostsState extends State<UserPosts> {
         title: Text(
           AppLocalizations.of(context)!.pfAddedPost,
           textScaleFactor: textScaleFactor,
-          style: Theme.of(context).textTheme.displaySmall,
+          style: AppLocalizations.of(context)!.localeName == 'km'
+              ? Theme.of(context).primaryTextTheme.titleLarge
+              : Theme.of(context).textTheme.titleLarge,
         ),
         actions: [
           IconButton(
@@ -75,7 +77,7 @@ class _UserPostsState extends State<UserPosts> {
             splashColor: Colors.transparent,
             icon: Icon(
               CustomOutlinedIcons.trash,
-              size: 24.0,
+              size: 26.0,
               color: Theme.of(context).primaryColor,
             ),
           ),
@@ -93,12 +95,15 @@ class _UserPostsState extends State<UserPosts> {
                         Icon(
                           CustomOutlinedIcons.warning,
                           size: 24.0,
-                          color: Theme.of(context).primaryIconTheme.color,
+                          color: Theme.of(context).iconTheme.color,
                         ),
                         const SizedBox(height: 10),
                         Text(
                           AppLocalizations.of(context)!.pfAddedPostNoData,
-                          style: Theme.of(context).textTheme.bodyLarge,
+                          style:
+                              AppLocalizations.of(context)!.localeName == 'km'
+                                  ? Theme.of(context).primaryTextTheme.bodyLarge
+                                  : Theme.of(context).textTheme.bodyLarge,
                         ),
                         SizedBox(
                             height: MediaQuery.of(context).size.height / 10),
@@ -126,19 +131,42 @@ class _UserPostsState extends State<UserPosts> {
       ? ListView.builder(
           physics: const BouncingScrollPhysics(),
           itemCount: postList.length ~/ 2 + 1,
-          itemBuilder: (BuildContext context, int index) =>
-              index == 0 && postList.length == 1
+          itemBuilder: (_, int index) => index == 0 && postList.length == 1
+              ? Padding(
+                  padding: EdgeInsets.only(top: kHPadding),
+                  child: _PostCard(
+                    post: postList.elementAt(index * 2),
+                    spacing: _spacing,
+                  ),
+                )
+              : index == 0 && postList.length > 1
                   ? Padding(
-                      padding: EdgeInsets.only(top: kHPadding),
-                      child: _PostCard(
-                        post: postList.elementAt(index * 2),
-                        spacing: _spacing,
+                      padding:
+                          EdgeInsets.only(top: kHPadding, bottom: _spacing),
+                      child: Row(
+                        children: [
+                          _PostCard(
+                            post: postList.elementAt(index * 2),
+                            spacing: _spacing,
+                          ),
+                          SizedBox(width: _spacing),
+                          _PostCard(
+                            post: postList.elementAt(index * 2 + 1),
+                            spacing: _spacing,
+                          ),
+                        ],
                       ),
                     )
-                  : index == 0 && postList.length > 1
+                  : index == (postList.length - 1) ~/ 2
                       ? Padding(
-                          padding:
-                              EdgeInsets.only(top: kHPadding, bottom: _spacing),
+                          padding: const EdgeInsets.only(bottom: kHPadding),
+                          child: _PostCard(
+                            post: postList.elementAt(index * 2),
+                            spacing: _spacing,
+                          ),
+                        )
+                      : Padding(
+                          padding: EdgeInsets.only(bottom: _spacing),
                           child: Row(
                             children: [
                               _PostCard(
@@ -152,31 +180,7 @@ class _UserPostsState extends State<UserPosts> {
                               ),
                             ],
                           ),
-                        )
-                      : index == (postList.length - 1) ~/ 2
-                          ? Padding(
-                              padding: const EdgeInsets.only(bottom: kHPadding),
-                              child: _PostCard(
-                                post: postList.elementAt(index * 2),
-                                spacing: _spacing,
-                              ),
-                            )
-                          : Padding(
-                              padding: EdgeInsets.only(bottom: _spacing),
-                              child: Row(
-                                children: [
-                                  _PostCard(
-                                    post: postList.elementAt(index * 2),
-                                    spacing: _spacing,
-                                  ),
-                                  SizedBox(width: _spacing),
-                                  _PostCard(
-                                    post: postList.elementAt(index * 2 + 1),
-                                    spacing: _spacing,
-                                  ),
-                                ],
-                              ),
-                            ),
+                        ),
         )
       : ListView.builder(
           physics: const BouncingScrollPhysics(),
@@ -279,146 +283,157 @@ class _PostCardState extends State<_PostCard> {
         ),
       ),
       child: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
-          Container(
-            height: MediaQuery.of(context).size.height / 6.16,
-            width: ((MediaQuery.of(context).size.width - widget.spacing) / 2) -
-                kHPadding,
-            child: ClipRRect(
-              borderRadius: const BorderRadius.only(
-                topLeft: Radius.circular(15.0),
-                topRight: Radius.circular(15.0),
-              ),
-              child: widget.post.imageUrls.elementAt(0).split('/').first ==
-                      'assets'
-                  ? Image.asset(
-                      widget.post.imageUrls.elementAt(0),
-                      fit: BoxFit.cover,
-                    )
-                  : CachedNetworkImage(
-                      imageUrl: widget.post.imageUrls.elementAt(0),
-                      fit: BoxFit.cover,
-                      placeholder: (context, _) => ImageFiltered(
-                        imageFilter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
-                        child: Image.asset(
-                          'assets/images/travenx_180.png',
+          Stack(
+            children: [
+              Container(
+                height: 150,
+                width:
+                    ((MediaQuery.of(context).size.width - widget.spacing) / 2) -
+                        kHPadding,
+                child: ClipRRect(
+                  borderRadius: const BorderRadius.only(
+                    topLeft: Radius.circular(15.0),
+                    topRight: Radius.circular(15.0),
+                  ),
+                  child: widget.post.imageUrls.elementAt(0).split('/').first ==
+                          'assets'
+                      ? Image.asset(
+                          widget.post.imageUrls.elementAt(0),
                           fit: BoxFit.cover,
-                        ),
-                      ),
-                      errorWidget: (context, _, __) => Image.asset(
-                        'assets/images/travenx.png',
-                        fit: BoxFit.cover,
-                      ),
-                    ),
-            ),
-          ),
-          Container(
-            padding: const EdgeInsets.all(10.0),
-            height: MediaQuery.of(context).size.height / 9.8,
-            width: ((MediaQuery.of(context).size.width - widget.spacing) / 2) -
-                kHPadding,
-            decoration: BoxDecoration(
-              color: Theme.of(context).bottomAppBarColor,
-              borderRadius: const BorderRadius.only(
-                bottomLeft: Radius.circular(15.0),
-                bottomRight: Radius.circular(15.0),
-              ),
-            ),
-            child: Stack(
-              children: [
-                Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      widget.post.title,
-                      textScaleFactor: textScaleFactor,
-                      style: Theme.of(context).textTheme.titleLarge,
-                      overflow:
-                          kIsWeb ? TextOverflow.clip : TextOverflow.ellipsis,
-                    ),
-                    Row(
-                      children: [
-                        Icon(
-                          CustomFilledIcons.location,
-                          color: Theme.of(context).primaryColor,
-                          size: descriptionIconSize,
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(left: 5.0),
-                          child: Text(
-                            (widget.post.state == 'ភ្នំពេញ'
-                                    ? 'រាជធានី'
-                                    : 'ខេត្ត') +
-                                widget.post.state,
-                            textScaleFactor: textScaleFactor,
-                            style: Theme.of(context).textTheme.bodySmall,
-                            overflow: kIsWeb
-                                ? TextOverflow.clip
-                                : TextOverflow.ellipsis,
+                        )
+                      : CachedNetworkImage(
+                          imageUrl: widget.post.imageUrls.elementAt(0),
+                          fit: BoxFit.cover,
+                          placeholder: (context, _) => ImageFiltered(
+                            imageFilter:
+                                ImageFilter.blur(sigmaX: 10, sigmaY: 10),
+                            child: Image.asset(
+                              'assets/images/travenx_180.png',
+                              fit: BoxFit.cover,
+                            ),
+                          ),
+                          errorWidget: (context, _, __) => Image.asset(
+                            'assets/images/travenx.png',
+                            fit: BoxFit.cover,
                           ),
                         ),
-                      ],
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Row(
-                          children: [
-                            Icon(
-                              CustomFilledIcons.star,
-                              color: Theme.of(context).highlightColor,
-                              size: descriptionIconSize,
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.only(left: 5.0),
-                              child: Text(
-                                _ratings.toStringAsFixed(1),
-                                textScaleFactor: textScaleFactor,
-                                style: Theme.of(context).textTheme.titleMedium,
-                                overflow: kIsWeb
-                                    ? TextOverflow.clip
-                                    : TextOverflow.ellipsis,
-                              ),
-                            ),
-                          ],
-                        ),
-                        Row(
-                          children: [
-                            Icon(
-                              CustomOutlinedIcons.view,
-                              color: Theme.of(context).hintColor,
-                              size: descriptionIconSize,
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.only(left: 5.0),
-                              child: Text(
-                                _views.toString(),
-                                textScaleFactor: textScaleFactor,
-                                style: Theme.of(context).textTheme.titleSmall,
-                                overflow: kIsWeb
-                                    ? TextOverflow.clip
-                                    : TextOverflow.ellipsis,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
-                  ],
                 ),
-                Positioned(
-                  top: MediaQuery.of(context).size.height / 40.0,
-                  right: 0.0,
+              ),
+              Positioned(
+                top: 0,
+                left: 0,
+                child: Container(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+                  decoration: BoxDecoration(
+                    color: widget.post.price ~/ 100 > 0
+                        ? Theme.of(context).errorColor
+                        : widget.post.price ~/ 25 > 0
+                            ? Theme.of(context).highlightColor
+                            : Theme.of(context).primaryColor,
+                    borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(15.0),
+                      bottomRight: Radius.circular(15.0),
+                    ),
+                  ),
                   child: Text(
                     widget.post.price == 0
                         ? 'Free'
                         : '\$${widget.post.price % 1 == 0 ? widget.post.price.toStringAsFixed(0) : widget.post.price.toStringAsFixed(1)}',
                     textScaleFactor: textScaleFactor,
-                    style: Theme.of(context).textTheme.titleMedium,
-                    overflow:
-                        kIsWeb ? TextOverflow.clip : TextOverflow.ellipsis,
+                    style: Theme.of(context)
+                        .textTheme
+                        .titleMedium!
+                        .copyWith(color: Colors.white),
                   ),
+                ),
+              ),
+            ],
+          ),
+          Container(
+            padding: const EdgeInsets.all(10.0),
+            height: 109,
+            width: ((MediaQuery.of(context).size.width - widget.spacing) / 2) -
+                kHPadding,
+            decoration: BoxDecoration(
+              color: Theme.of(context).canvasColor,
+              borderRadius: const BorderRadius.only(
+                bottomLeft: Radius.circular(15.0),
+                bottomRight: Radius.circular(15.0),
+              ),
+            ),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  widget.post.title,
+                  textScaleFactor: textScaleFactor,
+                  style: AppLocalizations.of(context)!.localeName == 'km'
+                      ? Theme.of(context).primaryTextTheme.titleMedium
+                      : Theme.of(context).textTheme.titleMedium,
+                  overflow: kIsWeb ? TextOverflow.clip : TextOverflow.ellipsis,
+                ),
+                const SizedBox(height: 2),
+                Row(
+                  children: [
+                    Icon(
+                      CustomFilledIcons.location,
+                      color: Theme.of(context).primaryColor,
+                      size: descriptionIconSize,
+                    ),
+                    const SizedBox(width: 5.0),
+                    Expanded(
+                      child: Text(
+                        (widget.post.state == 'ភ្នំពេញ' ? 'រាជធានី' : 'ខេត្ត') +
+                            widget.post.state,
+                        textScaleFactor: textScaleFactor,
+                        style: AppLocalizations.of(context)!.localeName == 'km'
+                            ? Theme.of(context).primaryTextTheme.bodySmall
+                            : Theme.of(context).textTheme.bodySmall,
+                        overflow:
+                            kIsWeb ? TextOverflow.clip : TextOverflow.ellipsis,
+                      ),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 3),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Row(
+                      children: [
+                        Icon(
+                          CustomFilledIcons.star,
+                          color: Theme.of(context).highlightColor,
+                          size: descriptionIconSize,
+                        ),
+                        const SizedBox(width: 5.0),
+                        Text(
+                          _ratings.toStringAsFixed(1),
+                          textScaleFactor: textScaleFactor,
+                          style: Theme.of(context).textTheme.titleSmall,
+                        ),
+                      ],
+                    ),
+                    Row(
+                      children: [
+                        Icon(
+                          CustomOutlinedIcons.view,
+                          color: Theme.of(context).hintColor,
+                          size: descriptionIconSize,
+                        ),
+                        const SizedBox(width: 5.0),
+                        Text(
+                          _views.toString(),
+                          textScaleFactor: textScaleFactor,
+                          style: Theme.of(context).textTheme.bodyMedium,
+                        ),
+                      ],
+                    ),
+                  ],
                 ),
               ],
             ),

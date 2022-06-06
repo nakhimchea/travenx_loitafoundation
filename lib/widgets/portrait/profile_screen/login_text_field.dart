@@ -115,7 +115,6 @@ class _LoginTextFieldState extends State<LoginTextField> {
                                   fontSize: 16.0,
                                   fontFamily: 'Nokora',
                                 ),
-                                cursorHeight: 16.0,
                                 enabled: widget.pinCodeEnabled != null
                                     ? !widget.isCodeSent &&
                                         widget.pinCodeEnabled!

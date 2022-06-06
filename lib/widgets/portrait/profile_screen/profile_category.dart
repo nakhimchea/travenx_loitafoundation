@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:travenx_loitafoundation/config/constant.dart';
 import 'package:travenx_loitafoundation/config/variable.dart';
 
@@ -29,7 +30,7 @@ class ProfileCategory extends StatelessWidget {
             const EdgeInsets.symmetric(horizontal: kHPadding, vertical: 15.0),
         alignment: Alignment.centerLeft,
         decoration: BoxDecoration(
-          color: Theme.of(context).bottomAppBarColor,
+          color: Theme.of(context).canvasColor,
           borderRadius: BorderRadius.circular(15.0),
         ),
         child: Row(
@@ -37,21 +38,27 @@ class ProfileCategory extends StatelessWidget {
           children: [
             icon,
             const SizedBox(width: kHPadding),
-            Text(
-              title,
-              textScaleFactor: textScaleFactor,
-              style: Theme.of(context).textTheme.bodyLarge!.copyWith(
-                    color: textColor != null
-                        ? textColor
-                        : Theme.of(context).iconTheme.color,
-                  ),
-              overflow: kIsWeb ? TextOverflow.clip : TextOverflow.ellipsis,
-            ),
             Expanded(
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: trailing,
+              child: Text(
+                title,
+                textScaleFactor: textScaleFactor,
+                style: AppLocalizations.of(context)!.localeName == 'km'
+                    ? Theme.of(context).primaryTextTheme.bodyLarge!.copyWith(
+                          color: textColor != null
+                              ? textColor
+                              : Theme.of(context).primaryIconTheme.color,
+                        )
+                    : Theme.of(context).textTheme.bodyLarge!.copyWith(
+                          color: textColor != null
+                              ? textColor
+                              : Theme.of(context).primaryIconTheme.color,
+                        ),
+                overflow: kIsWeb ? TextOverflow.clip : TextOverflow.ellipsis,
               ),
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: trailing,
             ),
           ],
         ),

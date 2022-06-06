@@ -17,7 +17,7 @@ class StepOneDescription extends StatelessWidget {
       decoration: BoxDecoration(
         color: isAgreementHighlight
             ? Theme.of(context).highlightColor.withOpacity(0.1)
-            : Theme.of(context).bottomAppBarColor,
+            : Theme.of(context).canvasColor,
         borderRadius: BorderRadius.circular(15.0),
       ),
       child: Column(
@@ -26,14 +26,18 @@ class StepOneDescription extends StatelessWidget {
           Text(
             AppLocalizations.of(context)!.pfApSoLabel,
             textScaleFactor: textScaleFactor,
-            style: Theme.of(context).textTheme.headline3,
+            style: AppLocalizations.of(context)!.localeName == 'km'
+                ? Theme.of(context).primaryTextTheme.titleLarge
+                : Theme.of(context).textTheme.titleLarge,
           ),
           const SizedBox(height: kHPadding),
           Text(
             AppLocalizations.of(context)!.pfApSoDescription,
             textAlign: TextAlign.justify,
             textScaleFactor: textScaleFactor,
-            style: Theme.of(context).textTheme.bodyText1,
+            style: AppLocalizations.of(context)!.localeName == 'km'
+                ? Theme.of(context).primaryTextTheme.bodyLarge
+                : Theme.of(context).textTheme.bodyLarge,
           ),
           const SizedBox(height: kVPadding),
         ],

@@ -113,10 +113,6 @@ class _LoginTextFieldState extends State<LoginTextField> {
                                           : widget.constraints.maxWidth / 20,
                                   fontFamily: 'Nokora',
                                 ),
-                                cursorHeight:
-                                    widget.constraints.maxWidth / 200 > 1.6
-                                        ? 16
-                                        : widget.constraints.maxWidth / 20,
                                 enabled: !widget.isCodeSent,
                                 autofocus: !widget.isCodeSent,
                                 onChanged: widget.onChangedCallback,

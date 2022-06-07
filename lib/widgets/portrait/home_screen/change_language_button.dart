@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:travenx_loitafoundation/config/constant.dart' show kVPadding;
+import 'package:travenx_loitafoundation/config/configs.dart'
+    show kVPadding, textScaleFactor;
 import 'package:travenx_loitafoundation/providers/locale_provider.dart';
 
 class ChangeLanguageButton extends StatelessWidget {
@@ -13,11 +14,11 @@ class ChangeLanguageButton extends StatelessWidget {
     return GestureDetector(
       child: CircleAvatar(
         backgroundColor: Theme.of(context).highlightColor,
-        radius: 20,
+        radius: 20 * textScaleFactor,
         child: Image.asset(
           'assets/icons/home_screen/languages.png',
-          height: 24,
-          width: 24,
+          height: 24 * textScaleFactor,
+          width: 24 * textScaleFactor,
         ),
       ),
       onTap: () {

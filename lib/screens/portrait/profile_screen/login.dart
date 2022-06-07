@@ -64,8 +64,8 @@ class _LoginState extends State<Login> {
               ),
             ),
             child: !_isPhoneLogin
-                ? CustomAppBar(skippedCallback: widget.loggedInCallback)
-                : LoginAppBar(
+                ? _CustomAppBar(skippedCallback: widget.loggedInCallback)
+                : _LoginAppBar(
                     skippedCallback: widget.loggedInCallback,
                     loggedInMethodsCallback: hasLoginMethods),
           ),
@@ -78,20 +78,20 @@ class _LoginState extends State<Login> {
                 Container(
                   margin: const EdgeInsets.only(bottom: 25.0),
                   child: !_isPhoneLogin
-                      ? LoginMethods(
+                      ? _LoginMethods(
                           isPhoneLogin: _isPhoneLogin,
                           isPhoneLoginCallback: hasPhoneLogin,
                           successfulLoggedInCallback: widget.loggedInCallback,
                           fbGgAuthCredentialCallback: setAuthCredential,
                           setProfileCallback: widget.getProfileCallback,
                         )
-                      : PhoneLogin(
+                      : _PhoneLogin(
                           fbGgAuthCredential: _fbGgAuthCredential,
                           successfulLoggedInCallback: widget.loggedInCallback,
                           setProfileCallback: widget.getProfileCallback,
                         ),
                 ),
-                PolicyAgreement(),
+                _PolicyAgreement(),
                 const SizedBox(height: 85.0),
               ],
             ),
@@ -102,9 +102,9 @@ class _LoginState extends State<Login> {
   }
 }
 
-class CustomAppBar extends StatelessWidget {
+class _CustomAppBar extends StatelessWidget {
   final void Function() skippedCallback;
-  const CustomAppBar({
+  const _CustomAppBar({
     Key? key,
     required this.skippedCallback,
   }) : super(key: key);
@@ -120,13 +120,11 @@ class CustomAppBar extends StatelessWidget {
             left: 16.0,
           ),
           child: Text('Travenx',
-
-              ///Can be used with App Name
               textScaleFactor: textScaleFactor,
               style: Theme.of(context)
                   .textTheme
-                  .headline6!
-                  .copyWith(color: Theme.of(context).bottomAppBarColor)),
+                  .displayLarge!
+                  .copyWith(color: Theme.of(context).canvasColor)),
         ),
         Container(
           margin: EdgeInsets.only(
@@ -142,23 +140,32 @@ class CustomAppBar extends StatelessWidget {
             style: ButtonStyle(
                 overlayColor:
                     MaterialStateProperty.all<Color>(Colors.transparent)),
-            child: Text(AppLocalizations.of(context)!.skipLabel,
-                style: Theme.of(context).textTheme.displaySmall!.copyWith(
-                    color: Theme.of(context).colorScheme.brightness ==
-                            Brightness.light
-                        ? Colors.white
-                        : Colors.white60)),
+            child: Text(
+              AppLocalizations.of(context)!.skipLabel,
+              textScaleFactor: textScaleFactor,
+              style: AppLocalizations.of(context)!.localeName == 'km'
+                  ? Theme.of(context).primaryTextTheme.headlineLarge!.copyWith(
+                      color: Theme.of(context).colorScheme.brightness ==
+                              Brightness.light
+                          ? Theme.of(context).canvasColor
+                          : Theme.of(context).canvasColor.withOpacity(0.6))
+                  : Theme.of(context).textTheme.headlineLarge!.copyWith(
+                      color: Theme.of(context).colorScheme.brightness ==
+                              Brightness.light
+                          ? Theme.of(context).canvasColor
+                          : Theme.of(context).canvasColor.withOpacity(0.6)),
+            ),
           ),
-        )
+        ),
       ],
     );
   }
 }
 
-class LoginAppBar extends StatelessWidget {
+class _LoginAppBar extends StatelessWidget {
   final void Function() skippedCallback;
   final void Function() loggedInMethodsCallback;
-  const LoginAppBar({
+  const _LoginAppBar({
     Key? key,
     required this.skippedCallback,
     required this.loggedInMethodsCallback,
@@ -173,13 +180,11 @@ class LoginAppBar extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Container(
-              margin: EdgeInsets.only(
-                  top: MediaQuery.of(context).size.height / 10 - 5,
-                  left: MediaQuery.of(context).size.width / 20),
-              child: CustomFloatingActionButton(
-                iconColor: Colors.black,
-                onTap: loggedInMethodsCallback,
-              )),
+            margin: EdgeInsets.only(
+                top: MediaQuery.of(context).size.height / 10 - 5,
+                left: MediaQuery.of(context).size.width / 20),
+            child: CustomFloatingActionButton(onTap: loggedInMethodsCallback),
+          ),
           Container(
             margin: EdgeInsets.only(
                 top: MediaQuery.of(context).size.height / 10,
@@ -194,12 +199,26 @@ class LoginAppBar extends StatelessWidget {
               style: ButtonStyle(
                   overlayColor:
                       MaterialStateProperty.all<Color>(Colors.transparent)),
-              child: Text(AppLocalizations.of(context)!.skipLabel,
-                  style: Theme.of(context).textTheme.displaySmall!.copyWith(
-                      color: Theme.of(context).colorScheme.brightness ==
-                              Brightness.light
-                          ? Colors.white
-                          : Colors.white60)),
+              child: Text(
+                AppLocalizations.of(context)!.skipLabel,
+                textScaleFactor: textScaleFactor,
+                style: AppLocalizations.of(context)!.localeName == 'km'
+                    ? Theme.of(context)
+                        .primaryTextTheme
+                        .headlineLarge!
+                        .copyWith(
+                            color: Theme.of(context).colorScheme.brightness ==
+                                    Brightness.light
+                                ? Theme.of(context).canvasColor
+                                : Theme.of(context)
+                                    .canvasColor
+                                    .withOpacity(0.6))
+                    : Theme.of(context).textTheme.headlineLarge!.copyWith(
+                        color: Theme.of(context).colorScheme.brightness ==
+                                Brightness.light
+                            ? Theme.of(context).canvasColor
+                            : Theme.of(context).canvasColor.withOpacity(0.6)),
+              ),
             ),
           ),
         ],
@@ -208,14 +227,14 @@ class LoginAppBar extends StatelessWidget {
   }
 }
 
-class LoginMethods extends StatefulWidget {
+class _LoginMethods extends StatefulWidget {
   final bool isPhoneLogin;
   final void Function() isPhoneLoginCallback;
   final void Function() successfulLoggedInCallback;
   final void Function(AuthCredential) fbGgAuthCredentialCallback;
   final void Function() setProfileCallback;
 
-  const LoginMethods({
+  const _LoginMethods({
     Key? key,
     required this.isPhoneLogin,
     required this.isPhoneLoginCallback,
@@ -228,7 +247,7 @@ class LoginMethods extends StatefulWidget {
   _LoginMethodsState createState() => _LoginMethodsState();
 }
 
-class _LoginMethodsState extends State<LoginMethods> {
+class _LoginMethodsState extends State<_LoginMethods> {
   bool _isLoading = false;
 
   @override
@@ -262,17 +281,19 @@ class _LoginMethodsState extends State<LoginMethods> {
                     Container(
                       height: 2.0,
                       width: (MediaQuery.of(context).size.width - (30 * 4)) / 2,
-                      color: Colors.white60,
+                      color: Theme.of(context).canvasColor.withOpacity(0.6),
                     ),
                     Text(
                       AppLocalizations.of(context)!.lgOr,
+                      textScaleFactor: textScaleFactor,
                       style: Theme.of(context).textTheme.titleLarge!.copyWith(
-                          color: Colors.white60, fontWeight: FontWeight.w400),
+                          color: Theme.of(context).canvasColor.withOpacity(0.6),
+                          fontWeight: FontWeight.w400),
                     ),
                     Container(
                       height: 2.0,
                       width: (MediaQuery.of(context).size.width - (30 * 4)) / 2,
-                      color: Colors.white60,
+                      color: Theme.of(context).canvasColor.withOpacity(0.6),
                     ),
                   ],
                 ),
@@ -314,11 +335,11 @@ class _LoginMethodsState extends State<LoginMethods> {
   }
 }
 
-class LoginButton extends StatelessWidget {
+class _LoginButton extends StatelessWidget {
   final String title;
   final bool isCodeSent;
   final void Function() onPressed;
-  const LoginButton({
+  const _LoginButton({
     Key? key,
     required this.title,
     required this.isCodeSent,
@@ -336,22 +357,27 @@ class LoginButton extends StatelessWidget {
         decoration: BoxDecoration(
           color: isCodeSent
               ? Theme.of(context).primaryColor
-              : Theme.of(context).bottomAppBarColor,
+              : Theme.of(context).canvasColor,
           borderRadius: BorderRadius.circular(14.0),
         ),
         child: TextButton(
           onPressed: onPressed,
           style: ButtonStyle(
               overlayColor: MaterialStateProperty.all<Color>(isCodeSent
-                  ? Theme.of(context).bottomAppBarColor.withOpacity(0.2)
+                  ? Theme.of(context).canvasColor.withOpacity(0.2)
                   : Colors.transparent)),
           child: Text(
             title,
             textScaleFactor: MediaQuery.of(context).size.width / 428,
-            style: Theme.of(context).textTheme.displayMedium!.copyWith(
-                color: isCodeSent
-                    ? Theme.of(context).bottomAppBarColor
-                    : Theme.of(context).disabledColor),
+            style: AppLocalizations.of(context)!.localeName == 'km'
+                ? Theme.of(context).primaryTextTheme.displayMedium!.copyWith(
+                    color: isCodeSent
+                        ? Theme.of(context).canvasColor
+                        : Theme.of(context).disabledColor)
+                : Theme.of(context).textTheme.displayMedium!.copyWith(
+                    color: isCodeSent
+                        ? Theme.of(context).canvasColor
+                        : Theme.of(context).disabledColor),
           ),
         ),
       ),
@@ -359,11 +385,11 @@ class LoginButton extends StatelessWidget {
   }
 }
 
-class PhoneLogin extends StatefulWidget {
+class _PhoneLogin extends StatefulWidget {
   final AuthCredential? fbGgAuthCredential;
   final void Function() successfulLoggedInCallback;
   final void Function() setProfileCallback;
-  const PhoneLogin({
+  const _PhoneLogin({
     Key? key,
     this.fbGgAuthCredential,
     required this.successfulLoggedInCallback,
@@ -374,7 +400,7 @@ class PhoneLogin extends StatefulWidget {
   _PhoneLoginState createState() => _PhoneLoginState();
 }
 
-class _PhoneLoginState extends State<PhoneLogin> {
+class _PhoneLoginState extends State<_PhoneLogin> {
   String _phoneNumber = '';
   String _otpNumber = '';
   String _smsCodeId = '';
@@ -431,12 +457,19 @@ class _PhoneLoginState extends State<PhoneLogin> {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        Text(AppLocalizations.of(context)!.lgConnectPhone,
-            textScaleFactor: textScaleFactor,
-            style: Theme.of(context)
-                .textTheme
-                .headline2!
-                .copyWith(color: Theme.of(context).bottomAppBarColor)),
+        Text(
+          AppLocalizations.of(context)!.lgConnectPhone,
+          textScaleFactor: textScaleFactor,
+          style: AppLocalizations.of(context)!.localeName == 'km'
+              ? Theme.of(context)
+                  .primaryTextTheme
+                  .displayMedium!
+                  .copyWith(color: Theme.of(context).canvasColor)
+              : Theme.of(context)
+                  .textTheme
+                  .displayMedium!
+                  .copyWith(color: Theme.of(context).canvasColor),
+        ),
         SizedBox(height: MediaQuery.of(context).size.height / 22),
         Column(
           children: [
@@ -464,7 +497,7 @@ class _PhoneLoginState extends State<PhoneLogin> {
             _isLoading
                 ? Loading()
                 : _showLogin
-                    ? LoginButton(
+                    ? _LoginButton(
                         title: AppLocalizations.of(context)!.lgLogIn,
                         isCodeSent: _isCodeSent,
                         onPressed: _isLoggingIn,
@@ -477,27 +510,46 @@ class _PhoneLoginState extends State<PhoneLogin> {
   }
 }
 
-class PolicyAgreement extends StatelessWidget {
+class _PolicyAgreement extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () => print('Policy Button click...'),
       child: Column(
         children: [
-          Text(AppLocalizations.of(context)!.lgAccept,
-              style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-                  color: Theme.of(context).colorScheme.brightness ==
-                          Brightness.light
-                      ? Colors.white
-                      : Colors.white60)),
+          Text(
+            AppLocalizations.of(context)!.lgAccept,
+            textScaleFactor: textScaleFactor,
+            style: AppLocalizations.of(context)!.localeName == 'km'
+                ? Theme.of(context).primaryTextTheme.bodyMedium!.copyWith(
+                    color: Theme.of(context).colorScheme.brightness ==
+                            Brightness.light
+                        ? Theme.of(context).canvasColor
+                        : Theme.of(context).canvasColor.withOpacity(0.6))
+                : Theme.of(context).textTheme.bodyMedium!.copyWith(
+                    color: Theme.of(context).colorScheme.brightness ==
+                            Brightness.light
+                        ? Theme.of(context).canvasColor
+                        : Theme.of(context).canvasColor.withOpacity(0.6)),
+          ),
           const SizedBox(height: 3),
-          Text(AppLocalizations.of(context)!.lgTermsPolicies,
-              style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-                  color: Theme.of(context).colorScheme.brightness ==
-                          Brightness.light
-                      ? Colors.white
-                      : Colors.white60,
-                  fontWeight: FontWeight.w700)),
+          Text(
+            AppLocalizations.of(context)!.lgTermsPolicies,
+            textScaleFactor: textScaleFactor,
+            style: AppLocalizations.of(context)!.localeName == 'km'
+                ? Theme.of(context).primaryTextTheme.bodyMedium!.copyWith(
+                    color: Theme.of(context).colorScheme.brightness ==
+                            Brightness.light
+                        ? Theme.of(context).canvasColor
+                        : Theme.of(context).canvasColor.withOpacity(0.6),
+                    fontWeight: FontWeight.w700)
+                : Theme.of(context).textTheme.bodyMedium!.copyWith(
+                    color: Theme.of(context).colorScheme.brightness ==
+                            Brightness.light
+                        ? Theme.of(context).canvasColor
+                        : Theme.of(context).canvasColor.withOpacity(0.6),
+                    fontWeight: FontWeight.w700),
+          ),
         ],
       ),
     );

@@ -74,10 +74,15 @@ class PostDetails extends StatelessWidget {
               AppLocalizations.of(context)!.pdDetailsGetDirection +
                   ' Google Map',
               textScaleFactor: textScaleFactor,
-              style: Theme.of(context)
-                  .textTheme
-                  .titleMedium!
-                  .copyWith(color: Theme.of(context).hintColor),
+              style: AppLocalizations.of(context)!.localeName == 'km'
+                  ? Theme.of(context)
+                      .primaryTextTheme
+                      .titleMedium!
+                      .copyWith(color: Theme.of(context).hintColor)
+                  : Theme.of(context)
+                      .textTheme
+                      .titleMedium!
+                      .copyWith(color: Theme.of(context).hintColor),
             ),
           ),
         ),

@@ -230,6 +230,7 @@ class _MessageBubble extends StatelessWidget {
         children: <Widget>[
           Text(
             senderName,
+            textScaleFactor: textScaleFactor,
             style: AppLocalizations.of(context)!.localeName == 'km'
                 ? Theme.of(context).primaryTextTheme.bodySmall
                 : Theme.of(context).textTheme.bodySmall,
@@ -253,6 +254,7 @@ class _MessageBubble extends StatelessWidget {
                   const EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0),
               child: Text(
                 message,
+                textScaleFactor: textScaleFactor,
                 style: AppLocalizations.of(context)!.localeName == 'km'
                     ? Theme.of(context)
                         .primaryTextTheme

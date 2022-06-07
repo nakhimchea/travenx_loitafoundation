@@ -4,7 +4,8 @@ import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:travenx_loitafoundation/config/variable.dart';
+import 'package:travenx_loitafoundation/config/variable.dart'
+    show selectedIndex, textScaleFactor;
 import 'package:travenx_loitafoundation/icons/icons.dart';
 import 'package:travenx_loitafoundation/screens/portrait/screens.dart';
 
@@ -116,13 +117,13 @@ class _PortraitBodyState extends State<PortraitBody> {
                               : Theme.of(context).iconTheme.color,
                           size: icon[0] == CustomOutlinedIcons.wallet ||
                                   icon[1] == CustomFilledIcons.wallet
-                              ? 26.0
+                              ? 26.0 * textScaleFactor
                               : icon[0] == CustomOutlinedIcons.user ||
                                       icon[1] == CustomFilledIcons.user ||
                                       icon[0] == CustomOutlinedIcons.message ||
                                       icon[1] == CustomFilledIcons.message
-                                  ? 29.0
-                                  : 30.0,
+                                  ? 29.0 * textScaleFactor
+                                  : 30.0 * textScaleFactor,
                         ),
                       ),
                     )

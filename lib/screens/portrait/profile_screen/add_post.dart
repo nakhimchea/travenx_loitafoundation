@@ -379,6 +379,7 @@ class _AddPostState extends State<AddPost> {
                                   child: Text(
                                     AppLocalizations.of(context)!
                                         .locationClosed,
+                                    textScaleFactor: textScaleFactor,
                                     style: AppLocalizations.of(context)!
                                                 .localeName ==
                                             'km'
@@ -394,6 +395,7 @@ class _AddPostState extends State<AddPost> {
                                   child: Text(
                                     AppLocalizations.of(context)!
                                         .locationToOpenWeb,
+                                    textScaleFactor: textScaleFactor,
                                     style: AppLocalizations.of(context)!
                                                 .localeName ==
                                             'km'
@@ -459,6 +461,7 @@ class _AddPostState extends State<AddPost> {
                                     child: Text(
                                       AppLocalizations.of(context)!
                                           .locationClosed,
+                                      textScaleFactor: textScaleFactor,
                                       style: AppLocalizations.of(context)!
                                                   .localeName ==
                                               'km'
@@ -474,6 +477,7 @@ class _AddPostState extends State<AddPost> {
                                     child: Text(
                                       AppLocalizations.of(context)!
                                           .locationToOpenMobile,
+                                      textScaleFactor: textScaleFactor,
                                       style: AppLocalizations.of(context)!
                                                   .localeName ==
                                               'km'

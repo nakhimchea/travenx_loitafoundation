@@ -390,7 +390,7 @@ class _RateButton extends StatelessWidget {
         onTap: () => ratingCallback(index + 1),
         child: Icon(
           CustomFilledIcons.star,
-          size: 50,
+          size: 45 * textScaleFactor,
           color: Theme.of(context).highlightColor,
         ),
       ),
@@ -401,7 +401,7 @@ class _RateButton extends StatelessWidget {
             onTap: () => ratingCallback(currentRatings + index + 1),
             child: Icon(
               CustomFilledIcons.star,
-              size: 50,
+              size: 45 * textScaleFactor,
               color: Theme.of(context).disabledColor,
             ),
           ),

@@ -95,7 +95,7 @@ class _PostDetailState extends State<PostDetail> {
       ),
       bottomNavigationBar: _isSelfPost
           ? Container(
-              height: MediaQuery.of(context).size.height / 10,
+              height: MediaQuery.of(context).size.height / 10 * textScaleFactor,
               padding: const EdgeInsets.only(
                 left: kHPadding,
                 right: kHPadding,
@@ -104,11 +104,14 @@ class _PostDetailState extends State<PostDetail> {
               ),
               color: Theme.of(context).bottomAppBarColor,
               child: Center(
-                child: Text(AppLocalizations.of(context)!.pdThisPlaceIsYours),
+                child: Text(
+                  AppLocalizations.of(context)!.pdThisPlaceIsYours,
+                  textScaleFactor: textScaleFactor,
+                ),
               ),
             )
           : Container(
-              height: MediaQuery.of(context).size.height / 10,
+              height: MediaQuery.of(context).size.height / 10 * textScaleFactor,
               padding: const EdgeInsets.only(
                 left: kHPadding,
                 right: kHPadding,
@@ -177,18 +180,20 @@ class _PostDetailState extends State<PostDetail> {
                       }
                     },
                     child: CircleAvatar(
-                      radius: MediaQuery.of(context).size.height / 20 -
-                          kVPadding -
-                          16.0 / 2,
+                      radius: (MediaQuery.of(context).size.height / 20 -
+                              kVPadding -
+                              16.0 / 2) *
+                          textScaleFactor,
                       backgroundColor: Theme.of(context).hintColor,
                       child: CircleAvatar(
-                        radius: MediaQuery.of(context).size.height / 20 -
-                            kVPadding -
-                            10,
+                        radius: (MediaQuery.of(context).size.height / 20 -
+                                kVPadding -
+                                10) *
+                            textScaleFactor,
                         backgroundColor: Theme.of(context).canvasColor,
                         child: Icon(
                           CustomFilledIcons.message,
-                          size: 24.0,
+                          size: 24.0 * textScaleFactor,
                           color: Theme.of(context).hintColor,
                         ),
                       ),
@@ -196,18 +201,20 @@ class _PostDetailState extends State<PostDetail> {
                   ),
                   const SizedBox(width: kVPadding),
                   CircleAvatar(
-                    radius: MediaQuery.of(context).size.height / 20 -
-                        kVPadding -
-                        16.0 / 2,
+                    radius: (MediaQuery.of(context).size.height / 20 -
+                            kVPadding -
+                            16.0 / 2) *
+                        textScaleFactor,
                     backgroundColor: Theme.of(context).primaryColor,
                     child: CircleAvatar(
-                      radius: MediaQuery.of(context).size.height / 20 -
-                          kVPadding -
-                          10,
+                      radius: (MediaQuery.of(context).size.height / 20 -
+                              kVPadding -
+                              10) *
+                          textScaleFactor,
                       backgroundColor: Theme.of(context).canvasColor,
                       child: Icon(
                         Icons.call_rounded,
-                        size: 24.0,
+                        size: 24.0 * textScaleFactor,
                         color: Theme.of(context).primaryColor,
                       ),
                     ),
@@ -215,9 +222,10 @@ class _PostDetailState extends State<PostDetail> {
                   const SizedBox(width: kVPadding),
                   Expanded(
                     child: Container(
-                      height: MediaQuery.of(context).size.height / 10 -
-                          2 * kVPadding -
-                          16.0,
+                      height: (MediaQuery.of(context).size.height / 10 -
+                              2 * kVPadding -
+                              16.0) *
+                          textScaleFactor,
                       alignment: Alignment.center,
                       decoration: BoxDecoration(
                         color: Theme.of(context).primaryColor,
@@ -226,10 +234,15 @@ class _PostDetailState extends State<PostDetail> {
                       child: Text(
                         AppLocalizations.of(context)!.pdProductAndServices,
                         textScaleFactor: textScaleFactor,
-                        style: Theme.of(context)
-                            .textTheme
-                            .displaySmall!
-                            .copyWith(color: Colors.white),
+                        style: AppLocalizations.of(context)!.localeName == 'km'
+                            ? Theme.of(context)
+                                .primaryTextTheme
+                                .displaySmall!
+                                .copyWith(color: Colors.white)
+                            : Theme.of(context)
+                                .textTheme
+                                .displaySmall!
+                                .copyWith(color: Colors.white),
                         overflow:
                             kIsWeb ? TextOverflow.clip : TextOverflow.ellipsis,
                       ),

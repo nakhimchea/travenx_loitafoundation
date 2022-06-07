@@ -129,7 +129,7 @@ class _PromotionsState extends State<Promotions> {
 
     return Container(
       padding: const EdgeInsets.only(top: 6.0, bottom: kVPadding),
-      height: MediaQuery.of(context).size.height / 3,
+      height: MediaQuery.of(context).size.height / 2.5,
       child: SmartRefresher(
         controller: _refreshController,
         physics: const BouncingScrollPhysics(),

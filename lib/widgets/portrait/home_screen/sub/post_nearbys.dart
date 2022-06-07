@@ -136,7 +136,7 @@ class _PostNearbysState extends State<PostNearbys> {
               ),
         SizedBox(height: !hasData ? 0.0 : 10.0),
         Container(
-          height: !hasData ? 0.0 : 256,
+          height: !hasData ? 0.0 : 150 + 121 * textScaleFactor,
           child: SmartRefresher(
             controller: _refreshController,
             physics: const BouncingScrollPhysics(),
@@ -313,7 +313,7 @@ class _NearbyCardState extends State<_NearbyCard> {
             ),
             Container(
               padding: const EdgeInsets.all(10.0),
-              height: 106,
+              height: 121 * textScaleFactor,
               width:
                   ((MediaQuery.of(context).size.width - widget.hPadding) / 2) -
                       kHPadding,
@@ -337,7 +337,6 @@ class _NearbyCardState extends State<_NearbyCard> {
                     overflow:
                         kIsWeb ? TextOverflow.clip : TextOverflow.ellipsis,
                   ),
-                  const SizedBox(height: 2),
                   Row(
                     children: [
                       Icon(
@@ -366,7 +365,6 @@ class _NearbyCardState extends State<_NearbyCard> {
                       ),
                     ],
                   ),
-                  const SizedBox(height: 3),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [

@@ -73,7 +73,7 @@ class _LoginTextFieldState extends State<LoginTextField> {
                       .toDouble(),
                   decoration: BoxDecoration(
                     color: widget.isCodeSent
-                        ? Theme.of(context).bottomAppBarColor
+                        ? Theme.of(context).canvasColor
                         : Theme.of(context).primaryColor,
                     borderRadius: BorderRadius.circular(30.0),
                   ),
@@ -83,7 +83,7 @@ class _LoginTextFieldState extends State<LoginTextField> {
                   height: ((MediaQuery.of(context).size.height / 16).ceil() - 2)
                       .toDouble(),
                   decoration: BoxDecoration(
-                    color: Theme.of(context).bottomAppBarColor,
+                    color: Theme.of(context).canvasColor,
                     borderRadius: BorderRadius.circular(28.0),
                   ),
                   child: Row(
@@ -110,11 +110,23 @@ class _LoginTextFieldState extends State<LoginTextField> {
                           children: [
                             Expanded(
                               child: TextField(
-                                style: TextStyle(
-                                  color: Theme.of(context).primaryColor,
-                                  fontSize: 16.0,
-                                  fontFamily: 'Nokora',
-                                ),
+                                style: AppLocalizations.of(context)!
+                                            .localeName ==
+                                        'km'
+                                    ? Theme.of(context)
+                                        .primaryTextTheme
+                                        .titleLarge!
+                                        .copyWith(
+                                            color:
+                                                Theme.of(context).primaryColor,
+                                            fontWeight: FontWeight.w500)
+                                    : Theme.of(context)
+                                        .textTheme
+                                        .titleLarge!
+                                        .copyWith(
+                                            color:
+                                                Theme.of(context).primaryColor,
+                                            fontWeight: FontWeight.w500),
                                 enabled: widget.pinCodeEnabled != null
                                     ? !widget.isCodeSent &&
                                         widget.pinCodeEnabled!
@@ -126,12 +138,18 @@ class _LoginTextFieldState extends State<LoginTextField> {
                                 onChanged: widget.onChangedCallback,
                                 decoration: InputDecoration(
                                   hintText: widget.hintText,
-                                  hintStyle: TextStyle(
-                                    color: Theme.of(context)
-                                        .primaryIconTheme
-                                        .color,
-                                    fontFamily: 'Nokora',
-                                  ),
+                                  hintStyle: widget.hintText ==
+                                          AppLocalizations.of(context)!
+                                              .lgEnterCode
+                                      ? Theme.of(context)
+                                          .primaryTextTheme
+                                          .labelSmall!
+                                          .copyWith(fontWeight: FontWeight.w500)
+                                      : Theme.of(context)
+                                          .textTheme
+                                          .labelMedium!
+                                          .copyWith(
+                                              fontWeight: FontWeight.w500),
                                   border: InputBorder.none,
                                 ),
                                 keyboardType: TextInputType.number,
@@ -174,12 +192,25 @@ class _LoginTextFieldState extends State<LoginTextField> {
                                             AppLocalizations.of(context)!
                                                 .lgSendCode,
                                             textScaleFactor: textScaleFactor,
-                                            style: Theme.of(context)
-                                                .textTheme
-                                                .subtitle1!
-                                                .copyWith(
-                                                    fontSize: 14.0,
-                                                    fontFamily: 'Nokora'),
+                                            style: AppLocalizations.of(context)!
+                                                        .localeName ==
+                                                    'km'
+                                                ? Theme.of(context)
+                                                    .primaryTextTheme
+                                                    .bodySmall!
+                                                    .copyWith(
+                                                        color: Theme.of(context)
+                                                            .highlightColor,
+                                                        fontWeight:
+                                                            FontWeight.w500)
+                                                : Theme.of(context)
+                                                    .textTheme
+                                                    .bodySmall!
+                                                    .copyWith(
+                                                        color: Theme.of(context)
+                                                            .highlightColor,
+                                                        fontWeight:
+                                                            FontWeight.w500),
                                           ),
                                         ),
                                       ),
@@ -188,14 +219,25 @@ class _LoginTextFieldState extends State<LoginTextField> {
                                         child: Text(
                                             '$_countSeconds ${AppLocalizations.of(context)!.lgSecond + ((AppLocalizations.of(context)!.localeName == 'en' && _countSeconds > 1) ? 's' : '')}',
                                             textScaleFactor: textScaleFactor,
-                                            style: Theme.of(context)
-                                                .textTheme
-                                                .subtitle1!
-                                                .copyWith(
-                                                    color: Theme.of(context)
-                                                        .disabledColor,
-                                                    fontSize: 14.0,
-                                                    fontFamily: 'Nokora')),
+                                            style: AppLocalizations.of(context)!
+                                                        .localeName ==
+                                                    'km'
+                                                ? Theme.of(context)
+                                                    .primaryTextTheme
+                                                    .bodySmall!
+                                                    .copyWith(
+                                                        color: Theme.of(context)
+                                                            .disabledColor,
+                                                        fontWeight:
+                                                            FontWeight.w500)
+                                                : Theme.of(context)
+                                                    .textTheme
+                                                    .bodySmall!
+                                                    .copyWith(
+                                                        color: Theme.of(context)
+                                                            .disabledColor,
+                                                        fontWeight:
+                                                            FontWeight.w500)),
                                       ),
                                     ],
                                   )

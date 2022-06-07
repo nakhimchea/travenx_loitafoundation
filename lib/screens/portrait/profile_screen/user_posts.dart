@@ -100,6 +100,7 @@ class _UserPostsState extends State<UserPosts> {
                         const SizedBox(height: 10),
                         Text(
                           AppLocalizations.of(context)!.pfAddedPostNoData,
+                          textScaleFactor: textScaleFactor,
                           style:
                               AppLocalizations.of(context)!.localeName == 'km'
                                   ? Theme.of(context).primaryTextTheme.bodyLarge
@@ -120,9 +121,9 @@ class _UserPostsState extends State<UserPosts> {
         },
         iconData: Icons.add,
         iconColor: Colors.white,
-        iconSize: 28.0,
+        iconSize: 26.0 * textScaleFactor,
         buttonColor: Theme.of(context).primaryColor,
-        buttonSize: 48.0,
+        buttonSize: 46.0 * textScaleFactor,
       ),
     );
   }
@@ -354,7 +355,7 @@ class _PostCardState extends State<_PostCard> {
           ),
           Container(
             padding: const EdgeInsets.all(10.0),
-            height: 109,
+            height: 121 * textScaleFactor,
             width: ((MediaQuery.of(context).size.width - widget.spacing) / 2) -
                 kHPadding,
             decoration: BoxDecoration(
@@ -376,7 +377,6 @@ class _PostCardState extends State<_PostCard> {
                       : Theme.of(context).textTheme.titleMedium,
                   overflow: kIsWeb ? TextOverflow.clip : TextOverflow.ellipsis,
                 ),
-                const SizedBox(height: 2),
                 Row(
                   children: [
                     Icon(
@@ -399,7 +399,6 @@ class _PostCardState extends State<_PostCard> {
                     ),
                   ],
                 ),
-                const SizedBox(height: 3),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [

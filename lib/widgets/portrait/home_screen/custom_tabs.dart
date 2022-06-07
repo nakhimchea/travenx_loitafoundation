@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:travenx_loitafoundation/config/constant.dart'
-    show kHPadding, kCardTileVPadding;
+import 'package:travenx_loitafoundation/config/configs.dart'
+    show kHPadding, kCardTileVPadding, textScaleFactor;
 import 'package:travenx_loitafoundation/helpers/post_translator.dart';
 import 'package:travenx_loitafoundation/models/post_object_model.dart';
 import 'package:travenx_loitafoundation/services/firestore_service.dart';
@@ -30,14 +30,24 @@ class CustomTabBar extends StatelessWidget {
       indicatorPadding: const EdgeInsets.symmetric(vertical: 6.0),
       labelColor: Colors.white,
       labelStyle: AppLocalizations.of(context)!.localeName == 'km'
-          ? Theme.of(context).primaryTextTheme.bodyMedium
-          : Theme.of(context).textTheme.bodyMedium,
-      unselectedLabelColor: AppLocalizations.of(context)!.localeName == 'km'
-          ? Theme.of(context).primaryTextTheme.bodyMedium!.color
-          : Theme.of(context).textTheme.bodyMedium!.color,
+          ? Theme.of(context)
+              .primaryTextTheme
+              .bodyMedium!
+              .copyWith(fontSize: 14 * textScaleFactor)
+          : Theme.of(context)
+              .textTheme
+              .bodyMedium!
+              .copyWith(fontSize: 14 * textScaleFactor),
+      unselectedLabelColor: Theme.of(context).iconTheme.color,
       unselectedLabelStyle: AppLocalizations.of(context)!.localeName == 'km'
-          ? Theme.of(context).primaryTextTheme.bodyMedium
-          : Theme.of(context).textTheme.bodyMedium,
+          ? Theme.of(context)
+              .primaryTextTheme
+              .bodyMedium!
+              .copyWith(fontSize: 14 * textScaleFactor)
+          : Theme.of(context)
+              .textTheme
+              .bodyMedium!
+              .copyWith(fontSize: 14 * textScaleFactor),
       tabs: [
         Tab(text: AppLocalizations.of(context)!.tbNewPlacesLabel),
         Tab(text: AppLocalizations.of(context)!.tbNewEventsLabel),

@@ -196,6 +196,7 @@ class _NearbysState extends State<Nearbys> {
                           child: Text(
                             AppLocalizations.of(context)!.locationClosed +
                                 AppLocalizations.of(context)!.locationSet,
+                            textScaleFactor: textScaleFactor,
                             style: AppLocalizations.of(context)!.localeName ==
                                     'km'
                                 ? Theme.of(context).primaryTextTheme.bodyMedium
@@ -205,6 +206,7 @@ class _NearbysState extends State<Nearbys> {
                         Center(
                           child: Text(
                             AppLocalizations.of(context)!.locationToOpenWeb,
+                            textScaleFactor: textScaleFactor,
                             style:
                                 AppLocalizations.of(context)!.localeName == 'km'
                                     ? Theme.of(context)
@@ -271,6 +273,7 @@ class _NearbysState extends State<Nearbys> {
                             child: Text(
                               AppLocalizations.of(context)!.locationClosed +
                                   AppLocalizations.of(context)!.locationSet,
+                              textScaleFactor: textScaleFactor,
                               style: AppLocalizations.of(context)!.localeName ==
                                       'km'
                                   ? Theme.of(context)
@@ -283,6 +286,7 @@ class _NearbysState extends State<Nearbys> {
                             child: Text(
                               AppLocalizations.of(context)!
                                   .locationToOpenMobile,
+                              textScaleFactor: textScaleFactor,
                               style: AppLocalizations.of(context)!.localeName ==
                                       'km'
                                   ? Theme.of(context)
@@ -318,10 +322,10 @@ class _NearbysState extends State<Nearbys> {
         cityName == ''
             ? Container(
                 alignment: Alignment.center,
-                height: 256,
+                height: 150 + 121 * textScaleFactor,
                 child: Loading(color: Theme.of(context).disabledColor))
             : Container(
-                height: 256,
+                height: 150 + 121 * textScaleFactor,
                 child: hasNoData
                     ? Center(
                         child: Column(
@@ -335,6 +339,7 @@ class _NearbysState extends State<Nearbys> {
                             const SizedBox(height: 10),
                             Text(
                               AppLocalizations.of(context)!.nbNoData,
+                              textScaleFactor: textScaleFactor,
                               style: AppLocalizations.of(context)!.localeName ==
                                       'km'
                                   ? Theme.of(context).primaryTextTheme.bodyLarge
@@ -528,7 +533,7 @@ class _NearbyCardState extends State<_NearbyCard> {
             ),
             Container(
               padding: const EdgeInsets.all(10.0),
-              height: 106,
+              height: 121 * textScaleFactor,
               width:
                   ((MediaQuery.of(context).size.width - widget.hPadding) / 2) -
                       kHPadding,
@@ -552,7 +557,6 @@ class _NearbyCardState extends State<_NearbyCard> {
                     overflow:
                         kIsWeb ? TextOverflow.clip : TextOverflow.ellipsis,
                   ),
-                  const SizedBox(height: 2),
                   Row(
                     children: [
                       Icon(
@@ -581,7 +585,6 @@ class _NearbyCardState extends State<_NearbyCard> {
                       ),
                     ],
                   ),
-                  const SizedBox(height: 3),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [

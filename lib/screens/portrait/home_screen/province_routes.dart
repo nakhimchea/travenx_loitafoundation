@@ -373,6 +373,7 @@ class _ProvinceListState extends State<_ProvinceList> {
                     const SizedBox(height: 10),
                     Text(
                       AppLocalizations.of(context)!.noData,
+                      textScaleFactor: textScaleFactor,
                       style: Theme.of(context).textTheme.bodyLarge,
                     ),
                   ],

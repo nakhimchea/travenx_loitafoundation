@@ -185,12 +185,13 @@ class _ChatScreenState extends State<ChatScreen> {
                   children: [
                     Icon(
                       CustomOutlinedIcons.warning,
-                      size: 24.0,
+                      size: 24.0 * textScaleFactor,
                       color: Theme.of(context).iconTheme.color,
                     ),
                     const SizedBox(height: 10),
                     Text(
                       AppLocalizations.of(context)!.chatNoData,
+                      textScaleFactor: textScaleFactor,
                       style: AppLocalizations.of(context)!.localeName == 'km'
                           ? Theme.of(context).primaryTextTheme.bodyLarge
                           : Theme.of(context).textTheme.bodyLarge,
@@ -254,6 +255,7 @@ class _ChatScreenState extends State<ChatScreen> {
                           const SizedBox(height: 10),
                           Text(
                             AppLocalizations.of(context)!.chatNoData,
+                            textScaleFactor: textScaleFactor,
                             style: AppLocalizations.of(context)!.localeName ==
                                     'km'
                                 ? Theme.of(context).primaryTextTheme.bodyLarge
@@ -347,6 +349,7 @@ class _ChatScreenState extends State<ChatScreen> {
                         padding: const EdgeInsets.all(8.0),
                         child: Text(
                           'Login Now',
+                          textScaleFactor: textScaleFactor,
                           style: Theme.of(context)
                               .textTheme
                               .bodyLarge!
@@ -395,10 +398,10 @@ class _ActionOptions extends StatelessWidget {
         ),
         padding: EdgeInsets.zero,
         icon: CircleAvatar(
-          radius: 20.2,
+          radius: 20.2 * textScaleFactor,
           backgroundColor: Colors.black26,
           child: CircleAvatar(
-            radius: 20.0,
+            radius: 20.0 * textScaleFactor,
             backgroundColor:
                 Theme.of(context).colorScheme.brightness == Brightness.light
                     ? Theme.of(context).canvasColor
@@ -406,7 +409,7 @@ class _ActionOptions extends StatelessWidget {
             child: Icon(
               Icons.more_horiz,
               color: Theme.of(context).iconTheme.color,
-              size: 28.0,
+              size: 28.0 * textScaleFactor,
             ),
           ),
         ),
@@ -458,7 +461,7 @@ class _PopUpListTile extends StatelessWidget {
       children: [
         Icon(
           iconData,
-          size: 20.0,
+          size: 20.0 * textScaleFactor,
           color: Theme.of(context).primaryIconTheme.color,
         ),
         const SizedBox(width: 5),
@@ -544,7 +547,7 @@ class _BuildChatItem extends StatelessWidget {
                   AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>> snapshot) {
                 if (!snapshot.hasData)
                   return Container(
-                    height: MediaQuery.of(context).size.height / 9,
+                    height: MediaQuery.of(context).size.height / 6,
                     padding: const EdgeInsets.symmetric(vertical: 4.0),
                     child: Container(
                       alignment: Alignment.center,
@@ -564,118 +567,153 @@ class _BuildChatItem extends StatelessWidget {
                     DateTime.fromMillisecondsSinceEpoch(
                         int.parse(snapshot.data!.docs.single.get('dateTime')));
                 return Container(
-                  height: MediaQuery.of(context).size.height / 9,
+                  height: MediaQuery.of(context).size.height / 6,
                   padding: const EdgeInsets.symmetric(vertical: 4.0),
                   child: Container(
+                    padding: const EdgeInsets.all(kHPadding),
                     alignment: Alignment.center,
                     decoration: BoxDecoration(
                       color: Theme.of(context).canvasColor,
                       borderRadius: BorderRadius.circular(15.0),
                     ),
-                    child: ListTile(
-                      dense: true,
-                      leading: ClipOval(
-                        child: chatImageUrl.split('/').first == 'assets'
-                            ? Image.asset(
-                                chatImageUrl,
-                                height: 50,
-                                width: 50,
-                                fit: BoxFit.cover,
-                              )
-                            : CachedNetworkImage(
-                                imageUrl: chatImageUrl,
-                                height: 50,
-                                width: 50,
-                                fit: BoxFit.cover,
-                                placeholder: (context, _) => ImageFiltered(
-                                  imageFilter:
-                                      ImageFilter.blur(sigmaX: 10, sigmaY: 10),
-                                  child: Image.asset(
+                    child: Row(
+                      children: [
+                        ClipOval(
+                          child: chatImageUrl.split('/').first == 'assets'
+                              ? Image.asset(
+                                  chatImageUrl,
+                                  height: 50 * textScaleFactor,
+                                  width: 50 * textScaleFactor,
+                                  fit: BoxFit.cover,
+                                )
+                              : CachedNetworkImage(
+                                  imageUrl: chatImageUrl,
+                                  height: 50 * textScaleFactor,
+                                  width: 50 * textScaleFactor,
+                                  fit: BoxFit.cover,
+                                  placeholder: (context, _) => ImageFiltered(
+                                    imageFilter: ImageFilter.blur(
+                                        sigmaX: 10, sigmaY: 10),
+                                    child: Image.asset(
+                                      'assets/images/travenx_180.png',
+                                      height: 50 * textScaleFactor,
+                                      width: 50 * textScaleFactor,
+                                      fit: BoxFit.cover,
+                                    ),
+                                  ),
+                                  errorWidget: (context, _, __) => Image.asset(
                                     'assets/images/travenx_180.png',
-                                    height: 50,
-                                    width: 50,
+                                    height: 50 * textScaleFactor,
+                                    width: 50 * textScaleFactor,
                                     fit: BoxFit.cover,
                                   ),
                                 ),
-                                errorWidget: (context, _, __) => Image.asset(
-                                  'assets/images/travenx_180.png',
-                                  height: 50,
-                                  width: 50,
-                                  fit: BoxFit.cover,
+                        ),
+                        Expanded(
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: kHPadding),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Expanded(
+                                  child: Text(
+                                    chatTitle,
+                                    maxLines: 1,
+                                    textScaleFactor: textScaleFactor,
+                                    style: AppLocalizations.of(context)!
+                                                .localeName ==
+                                            'km'
+                                        ? Theme.of(context)
+                                            .primaryTextTheme
+                                            .titleLarge
+                                        : Theme.of(context)
+                                            .textTheme
+                                            .titleLarge,
+                                    overflow: kIsWeb
+                                        ? TextOverflow.clip
+                                        : TextOverflow.ellipsis,
+                                  ),
                                 ),
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Expanded(
+                                      child: Text(
+                                        chatMessage,
+                                        maxLines: 1,
+                                        textScaleFactor: textScaleFactor,
+                                        style: snapshot.data!.docs.single
+                                                    .get('senderUid') ==
+                                                _user.uid
+                                            ? AppLocalizations.of(context)!
+                                                        .localeName ==
+                                                    'km'
+                                                ? Theme.of(context)
+                                                    .primaryTextTheme
+                                                    .bodyLarge
+                                                : Theme.of(context)
+                                                    .textTheme
+                                                    .bodyLarge
+                                            : AppLocalizations.of(context)!
+                                                        .localeName ==
+                                                    'km'
+                                                ? Theme.of(context)
+                                                    .primaryTextTheme
+                                                    .bodyLarge!
+                                                    .copyWith(
+                                                        color: Theme.of(context)
+                                                            .primaryColor)
+                                                : Theme.of(context)
+                                                    .textTheme
+                                                    .bodyLarge!
+                                                    .copyWith(
+                                                        color: Theme.of(context)
+                                                            .primaryColor),
+                                        overflow: kIsWeb
+                                            ? TextOverflow.clip
+                                            : TextOverflow.ellipsis,
+                                      ),
+                                    ),
+                                    chatMessage == ''
+                                        ? const SizedBox.shrink()
+                                        : const SizedBox(width: 20.0),
+                                    Text(
+                                      '${chatDateTime.hour.toString()}:' +
+                                          '${chatDateTime.minute < 10 ? '0' + chatDateTime.minute.toString() : chatDateTime.minute.toString()} ' +
+                                          '${chatDateTime.day.toString()}/' +
+                                          '${chatDateTime.month.toString()}/' +
+                                          '${chatDateTime.year.toString()}',
+                                      textScaleFactor: textScaleFactor,
+                                      style:
+                                          AppLocalizations.of(context)!
+                                                      .localeName ==
+                                                  'km'
+                                              ? Theme.of(context)
+                                                  .primaryTextTheme
+                                                  .bodyLarge
+                                              : Theme.of(context)
+                                                  .textTheme
+                                                  .bodyLarge,
+                                      overflow: kIsWeb
+                                          ? TextOverflow.clip
+                                          : TextOverflow.ellipsis,
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                        snapshot.data!.docs.single.get('senderUid') == _user.uid
+                            ? const SizedBox.shrink()
+                            : CircleAvatar(
+                                radius: 7.0,
+                                backgroundColor: Theme.of(context).primaryColor,
                               ),
-                      ),
-                      title: Text(
-                        chatTitle,
-                        textScaleFactor: textScaleFactor,
-                        style: AppLocalizations.of(context)!.localeName == 'km'
-                            ? Theme.of(context).primaryTextTheme.titleLarge
-                            : Theme.of(context).textTheme.titleLarge,
-                        overflow:
-                            kIsWeb ? TextOverflow.clip : TextOverflow.ellipsis,
-                      ),
-                      subtitle: Row(
-                        children: [
-                          Expanded(
-                            child: Text(
-                              chatMessage,
-                              maxLines: 1,
-                              textScaleFactor: textScaleFactor,
-                              style: snapshot.data!.docs.single
-                                          .get('senderUid') ==
-                                      _user.uid
-                                  ? AppLocalizations.of(context)!.localeName ==
-                                          'km'
-                                      ? Theme.of(context)
-                                          .primaryTextTheme
-                                          .bodyLarge
-                                      : Theme.of(context).textTheme.bodyLarge
-                                  : AppLocalizations.of(context)!.localeName ==
-                                          'km'
-                                      ? Theme.of(context)
-                                          .primaryTextTheme
-                                          .bodyLarge!
-                                          .copyWith(
-                                              color: Theme.of(context)
-                                                  .primaryColor)
-                                      : Theme.of(context)
-                                          .textTheme
-                                          .bodyLarge!
-                                          .copyWith(
-                                              color: Theme.of(context)
-                                                  .primaryColor),
-                              overflow: kIsWeb
-                                  ? TextOverflow.clip
-                                  : TextOverflow.ellipsis,
-                            ),
-                          ),
-                          chatMessage == ''
-                              ? const SizedBox.shrink()
-                              : const SizedBox(width: 20.0),
-                          Text(
-                            '${chatDateTime.hour.toString()}:' +
-                                '${chatDateTime.minute < 10 ? '0' + chatDateTime.minute.toString() : chatDateTime.minute.toString()} ' +
-                                '${chatDateTime.day.toString()}/' +
-                                '${chatDateTime.month.toString()}/' +
-                                '${chatDateTime.year.toString()}',
-                            textScaleFactor: textScaleFactor,
-                            style: AppLocalizations.of(context)!.localeName ==
-                                    'km'
-                                ? Theme.of(context).primaryTextTheme.bodyLarge
-                                : Theme.of(context).textTheme.bodyLarge,
-                            overflow: kIsWeb
-                                ? TextOverflow.clip
-                                : TextOverflow.ellipsis,
-                          ),
-                        ],
-                      ),
-                      trailing: snapshot.data!.docs.single.get('senderUid') ==
-                              _user.uid
-                          ? const SizedBox.shrink()
-                          : CircleAvatar(
-                              radius: 7.0,
-                              backgroundColor: Theme.of(context).primaryColor,
-                            ),
+                      ],
                     ),
                   ),
                 );

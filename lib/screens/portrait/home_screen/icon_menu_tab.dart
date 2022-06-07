@@ -33,7 +33,7 @@ class _IconMenuTabState extends State<IconMenuTab> {
             icon: Icon(
               Icons.arrow_back_ios_new,
               color: Theme.of(context).primaryIconTheme.color,
-              size: 18.0,
+              size: 18.0 * textScaleFactor,
             ),
             highlightColor: Colors.transparent,
             hoverColor: Colors.transparent,
@@ -59,7 +59,7 @@ class _IconMenuTabState extends State<IconMenuTab> {
               splashColor: Colors.transparent,
               icon: Icon(
                 CustomOutlinedIcons.search,
-                size: 28.0,
+                size: 28.0 * textScaleFactor,
                 color: Theme.of(context).primaryIconTheme.color,
               ),
             ),
@@ -120,12 +120,13 @@ class _BuildIconMenuListState extends State<_BuildIconMenuList> {
           children: [
             Icon(
               CustomOutlinedIcons.warning,
-              size: 24.0,
+              size: 24.0 * textScaleFactor,
               color: Theme.of(context).iconTheme.color,
             ),
             const SizedBox(height: 10),
             Text(
               AppLocalizations.of(context)!.noData,
+              textScaleFactor: textScaleFactor,
               style: AppLocalizations.of(context)!.localeName == 'km'
                   ? Theme.of(context).primaryTextTheme.bodyLarge
                   : Theme.of(context).textTheme.bodyLarge,
@@ -274,12 +275,24 @@ class _CustomTabBar extends StatelessWidget {
       overlayColor: MaterialStateProperty.all<Color>(Colors.transparent),
       labelColor: Colors.white,
       labelStyle: AppLocalizations.of(context)!.localeName == 'km'
-          ? Theme.of(context).primaryTextTheme.bodyMedium
-          : Theme.of(context).textTheme.bodyMedium,
-      unselectedLabelColor: Theme.of(context).textTheme.bodyMedium!.color,
+          ? Theme.of(context)
+              .primaryTextTheme
+              .bodyMedium!
+              .copyWith(fontSize: 14 * textScaleFactor)
+          : Theme.of(context)
+              .textTheme
+              .bodyMedium!
+              .copyWith(fontSize: 14 * textScaleFactor),
+      unselectedLabelColor: Theme.of(context).iconTheme.color,
       unselectedLabelStyle: AppLocalizations.of(context)!.localeName == 'km'
-          ? Theme.of(context).primaryTextTheme.bodyMedium
-          : Theme.of(context).textTheme.bodyMedium,
+          ? Theme.of(context)
+              .primaryTextTheme
+              .bodyMedium!
+              .copyWith(fontSize: 14 * textScaleFactor)
+          : Theme.of(context)
+              .textTheme
+              .bodyMedium!
+              .copyWith(fontSize: 14 * textScaleFactor),
       tabs: _buildTabs(context),
     );
   }

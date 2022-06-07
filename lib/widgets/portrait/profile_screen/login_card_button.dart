@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:travenx_loitafoundation/config/configs.dart'
     show kHPadding, textScaleFactor;
 
@@ -28,9 +29,8 @@ class LoginCardButton extends StatelessWidget {
         child: Container(
           height: (MediaQuery.of(context).size.height / 16).ceil().toDouble(),
           decoration: BoxDecoration(
-            color: titleColor != null
-                ? titleColor
-                : Theme.of(context).bottomAppBarColor,
+            color:
+                titleColor != null ? titleColor : Theme.of(context).canvasColor,
             borderRadius: BorderRadius.circular(15.0),
           ),
           child: Row(
@@ -49,18 +49,20 @@ class LoginCardButton extends StatelessWidget {
                     Text(
                       title,
                       textScaleFactor: textScaleFactor,
-                      style: Theme.of(context)
-                          .textTheme
-                          .headlineMedium!
-                          .copyWith(
+                      style: AppLocalizations.of(context)!.localeName == 'km'
+                          ? Theme.of(context)
+                              .primaryTextTheme
+                              .bodyLarge!
+                              .copyWith(
+                                  color: titleColor != null
+                                      ? Colors.white
+                                      : Theme.of(context)
+                                          .primaryIconTheme
+                                          .color)
+                          : Theme.of(context).textTheme.bodyLarge!.copyWith(
                               color: titleColor != null
                                   ? Colors.white
-                                  : Theme.of(context)
-                                      .textTheme
-                                      .headlineMedium!
-                                      .color,
-                              fontSize: 15.0,
-                              fontWeight: FontWeight.w400),
+                                  : Theme.of(context).primaryIconTheme.color),
                       overflow:
                           kIsWeb ? TextOverflow.clip : TextOverflow.ellipsis,
                     ),
@@ -69,14 +71,9 @@ class LoginCardButton extends StatelessWidget {
                       child: Text(
                         trailing != '' ? ' ' + trailing : '',
                         textScaleFactor: textScaleFactor,
-                        style: Theme.of(context)
-                            .textTheme
-                            .headlineMedium!
-                            .copyWith(
-                              fontSize: 15.0,
-                              fontFamily: 'Poppins',
-                              fontWeight: FontWeight.w500,
-                            ),
+                        style: Theme.of(context).textTheme.bodyLarge!.copyWith(
+                            color: Theme.of(context).primaryIconTheme.color,
+                            fontFamily: 'Poppins'),
                       ),
                     ),
                   ],

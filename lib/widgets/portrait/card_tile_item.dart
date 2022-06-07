@@ -47,7 +47,7 @@ class _CardTileItemState extends State<CardTileItem> {
 
   @override
   Widget build(BuildContext context) {
-    final double _imageSize = MediaQuery.of(context).size.height / 6.16;
+    final double _imageSize = MediaQuery.of(context).size.height / 5.95;
     return GestureDetector(
       onTap: () => Navigator.push(
         context,

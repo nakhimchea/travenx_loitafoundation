@@ -3,8 +3,8 @@ import 'dart:ui';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:travenx_loitafoundation/config/constant.dart';
-import 'package:travenx_loitafoundation/config/variable.dart';
+import 'package:travenx_loitafoundation/config/configs.dart'
+    show kHPadding, profilePictureDiameter, textScaleFactor;
 import 'package:travenx_loitafoundation/helpers/profile_clipper.dart';
 import 'package:travenx_loitafoundation/models/profile_object_model.dart';
 
@@ -37,19 +37,21 @@ class ShortProfile extends StatelessWidget {
                 child: backgroundUrl == ''
                     ? Image.asset(
                         _anonymous.imageBackgroundUrl,
-                        height: constraints.maxWidth * 9 / 16,
+                        height: constraints.maxWidth * 9 / 16 * textScaleFactor,
                         width: double.infinity,
                         fit: BoxFit.cover,
                       )
                     : backgroundUrl.split('/').first == 'assets'
                         ? Image.asset(
                             backgroundUrl,
-                            height: constraints.maxWidth * 9 / 16,
+                            height:
+                                constraints.maxWidth * 9 / 16 * textScaleFactor,
                             width: double.infinity,
                             fit: BoxFit.cover,
                           )
                         : CachedNetworkImage(
-                            height: constraints.maxWidth * 9 / 16,
+                            height:
+                                constraints.maxWidth * 9 / 16 * textScaleFactor,
                             width: double.infinity,
                             imageUrl: backgroundUrl,
                             fit: BoxFit.cover,
@@ -73,20 +75,20 @@ class ShortProfile extends StatelessWidget {
                   child: profileUrl == ''
                       ? Image.asset(
                           _anonymous.imageProfileUrl,
-                          height: profilePictureDiameter,
-                          width: profilePictureDiameter,
+                          height: profilePictureDiameter * textScaleFactor,
+                          width: profilePictureDiameter * textScaleFactor,
                           fit: BoxFit.contain,
                         )
                       : profileUrl.split('/').first == 'assets'
                           ? Image.asset(
                               profileUrl,
-                              height: profilePictureDiameter,
-                              width: profilePictureDiameter,
+                              height: profilePictureDiameter * textScaleFactor,
+                              width: profilePictureDiameter * textScaleFactor,
                               fit: BoxFit.contain,
                             )
                           : CachedNetworkImage(
-                              height: profilePictureDiameter,
-                              width: profilePictureDiameter,
+                              height: profilePictureDiameter * textScaleFactor,
+                              width: profilePictureDiameter * textScaleFactor,
                               imageUrl: profileUrl,
                               fit: BoxFit.contain,
                               placeholder: (context, _) => ImageFiltered(

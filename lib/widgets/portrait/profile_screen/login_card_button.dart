@@ -23,7 +23,7 @@ class LoginCardButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 30.0),
+      padding: EdgeInsets.symmetric(horizontal: 26.0 * textScaleFactor),
       child: GestureDetector(
         onTap: onTap,
         child: Container(
@@ -39,8 +39,8 @@ class LoginCardButton extends StatelessWidget {
               const SizedBox(width: kHPadding),
               Image.asset(
                 leadingUrl,
-                width: titleColor != null ? 22.0 : 25.0,
-                height: titleColor != null ? 22.0 : 25.0,
+                width: (titleColor != null ? 22.0 : 25.0) * textScaleFactor,
+                height: (titleColor != null ? 22.0 : 25.0) * textScaleFactor,
               ),
               Expanded(
                 child: Row(
@@ -79,7 +79,7 @@ class LoginCardButton extends StatelessWidget {
                   ],
                 ),
               ),
-              const SizedBox(width: 50),
+              SizedBox(width: 40 * textScaleFactor),
             ],
           ),
         ),

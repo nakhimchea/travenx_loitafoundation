@@ -98,7 +98,7 @@ class _ProvinceCard extends StatelessWidget {
                 children: [
                   Text(
                     modelProvince.label,
-                    textScaleFactor: textScaleFactor,
+                    textScaleFactor: textScaleFactor * 5 / 6,
                     style: AppLocalizations.of(context)!.localeName == 'km'
                         ? Theme.of(context)
                             .primaryTextTheme

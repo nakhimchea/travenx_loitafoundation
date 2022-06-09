@@ -44,7 +44,7 @@ class _NearbysState extends State<Nearbys> {
   List<PostObject> postList = [];
   DocumentSnapshot? _lastDoc;
 
-  double _hPadding = 10;
+  double _hPadding = 8;
 
   Widget _buildList() {
     return ListView.builder(
@@ -466,10 +466,7 @@ class _NearbyCardState extends State<_NearbyCard> {
               children: [
                 Container(
                   height: 150,
-                  width:
-                      ((MediaQuery.of(context).size.width - widget.hPadding) /
-                              2) -
-                          kHPadding,
+                  width: MediaQuery.of(context).size.width / 1.9,
                   child: ClipRRect(
                     borderRadius: const BorderRadius.only(
                       topLeft: Radius.circular(15.0),
@@ -534,9 +531,7 @@ class _NearbyCardState extends State<_NearbyCard> {
             Container(
               padding: const EdgeInsets.all(10.0),
               height: 121 * textScaleFactor,
-              width:
-                  ((MediaQuery.of(context).size.width - widget.hPadding) / 2) -
-                      kHPadding,
+              width: MediaQuery.of(context).size.width / 1.9,
               decoration: BoxDecoration(
                 color: Theme.of(context).canvasColor,
                 borderRadius: const BorderRadius.only(

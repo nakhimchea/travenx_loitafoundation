@@ -303,7 +303,8 @@ class _CustomDialogState extends State<_CustomDialog> {
     return Dialog(
       backgroundColor: Theme.of(context).canvasColor,
       insetPadding: EdgeInsets.symmetric(
-          horizontal: (MediaQuery.of(context).size.width - 258) / 2),
+          horizontal:
+              (MediaQuery.of(context).size.width - 230 * textScaleFactor) / 2),
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(15.0),
       ),
@@ -313,14 +314,16 @@ class _CustomDialogState extends State<_CustomDialog> {
           const SizedBox(height: kVPadding),
           Container(
             padding: const EdgeInsets.symmetric(vertical: kHPadding),
-            height: 180,
+            height: 160 * textScaleFactor,
             child: CupertinoTheme(
               data: CupertinoThemeData(
                 textTheme: CupertinoTextThemeData(
                     dateTimePickerTextStyle: Theme.of(context)
                         .textTheme
-                        .displayLarge!
-                        .copyWith(fontWeight: FontWeight.w500)),
+                        .displayMedium!
+                        .copyWith(
+                            fontSize: 24 * textScaleFactor,
+                            fontWeight: FontWeight.w500)),
               ),
               child: CupertinoDatePicker(
                 mode: CupertinoDatePickerMode.time,
@@ -354,6 +357,7 @@ class _CustomDialogState extends State<_CustomDialog> {
                   padding: const EdgeInsets.only(left: 30.0, bottom: kVPadding),
                   child: Text(
                     AppLocalizations.of(context)!.resetLabel,
+                    textScaleFactor: textScaleFactor,
                     style: AppLocalizations.of(context)!.localeName == 'km'
                         ? Theme.of(context)
                             .primaryTextTheme
@@ -400,6 +404,7 @@ class _CustomDialogState extends State<_CustomDialog> {
                       right: 30.0, bottom: kVPadding + 5.0, top: 5.0),
                   child: Text(
                     AppLocalizations.of(context)!.doneLabel,
+                    textScaleFactor: textScaleFactor,
                     style: AppLocalizations.of(context)!.localeName == 'km'
                         ? Theme.of(context)
                             .primaryTextTheme

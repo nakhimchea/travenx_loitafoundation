@@ -260,12 +260,12 @@ class _LoginMethodsState extends State<_LoginMethods> {
                 borderRadius: BorderRadius.circular(20),
                 child: Image.asset(
                   'assets/images/travenx.png',
-                  height: 140,
-                  width: 140,
+                  height: 110 * textScaleFactor,
+                  width: 110 * textScaleFactor,
                   fit: BoxFit.cover,
                 ),
               ),
-              const SizedBox(height: 100),
+              SizedBox(height: 80 * textScaleFactor),
               LoginCardButton(
                 leadingUrl: 'assets/icons/profile_screen/phone_logo.png',
                 title: AppLocalizations.of(context)!.lgConnectPhone,
@@ -274,7 +274,8 @@ class _LoginMethodsState extends State<_LoginMethods> {
               ),
               const SizedBox(height: 25.0),
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 30.0),
+                padding:
+                    EdgeInsets.symmetric(horizontal: 26.0 * textScaleFactor),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
@@ -349,7 +350,7 @@ class _LoginButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 30.0),
+      padding: EdgeInsets.symmetric(horizontal: 26.0 * textScaleFactor),
       child: Container(
         margin: const EdgeInsets.all(3.0),
         width: double.infinity,

@@ -60,7 +60,6 @@ class _CustomLanguageDialogState extends State<_CustomLanguageDialog> {
                 focusColor: Colors.transparent,
                 highlightColor: Colors.transparent,
                 hoverColor: Colors.transparent,
-                borderRadius: BorderRadius.vertical(top: Radius.circular(15.0)),
                 child: Container(
                   decoration: BoxDecoration(
                     color: selectedLanguage != null && selectedLanguage == 0
@@ -74,10 +73,8 @@ class _CustomLanguageDialogState extends State<_CustomLanguageDialog> {
                   padding: const EdgeInsets.symmetric(vertical: kVPadding),
                   child: Text(
                     'ភាសាខ្មែរ',
-                    style: Theme.of(context)
-                        .textTheme
-                        .button!
-                        .copyWith(fontSize: 18),
+                    textScaleFactor: textScaleFactor,
+                    style: Theme.of(context).textTheme.labelSmall,
                   ),
                 ),
               ),
@@ -95,10 +92,8 @@ class _CustomLanguageDialogState extends State<_CustomLanguageDialog> {
                   padding: const EdgeInsets.symmetric(vertical: kVPadding),
                   child: Text(
                     'English',
-                    style: Theme.of(context)
-                        .textTheme
-                        .button!
-                        .copyWith(fontSize: 18),
+                    textScaleFactor: textScaleFactor,
+                    style: Theme.of(context).textTheme.labelSmall,
                   ),
                 ),
               ),
@@ -118,8 +113,7 @@ class _CustomLanguageDialogState extends State<_CustomLanguageDialog> {
               //       '中文',
               //       style: Theme.of(context)
               //           .textTheme
-              //           .button!
-              //           .copyWith(fontSize: 18),
+              //           .labelSmall,
               //     ),
               //   ),
               // ),
@@ -134,20 +128,21 @@ class _CustomLanguageDialogState extends State<_CustomLanguageDialog> {
                   GestureDetector(
                     onTap: () => Navigator.pop(context),
                     child: Padding(
-                      padding: const EdgeInsets.only(
-                          left: 30.0, bottom: kVPadding + 5.0, top: 5.0),
+                      padding: EdgeInsets.only(
+                          left: 26.0 * textScaleFactor,
+                          bottom: kVPadding + 5.0,
+                          top: 5.0),
                       child: Text(
                         selectedLanguage == 0
                             ? 'បោះបង់'
                             : selectedLanguage == 2
                                 ? '取消'
                                 : 'Cancel',
+                        textScaleFactor: textScaleFactor,
                         style: Theme.of(context)
                             .textTheme
-                            .displaySmall!
-                            .copyWith(
-                                color: Theme.of(context).primaryColor,
-                                fontWeight: FontWeight.w400),
+                            .labelSmall!
+                            .copyWith(color: Theme.of(context).primaryColor),
                       ),
                     ),
                   ),
@@ -161,18 +156,18 @@ class _CustomLanguageDialogState extends State<_CustomLanguageDialog> {
                       Navigator.pop(context);
                     },
                     child: Padding(
-                      padding:
-                          const EdgeInsets.only(right: 30.0, bottom: kVPadding),
+                      padding: EdgeInsets.only(
+                          right: 26.0 * textScaleFactor, bottom: kVPadding),
                       child: Text(
                         selectedLanguage == 0
                             ? 'រួចរាល់'
                             : selectedLanguage == 2
                                 ? '完毕'
                                 : 'Done',
-                        style: Theme.of(context)
-                            .textTheme
-                            .headline3!
-                            .copyWith(color: Theme.of(context).primaryColor),
+                        textScaleFactor: textScaleFactor,
+                        style: Theme.of(context).textTheme.labelSmall!.copyWith(
+                            color: Theme.of(context).primaryColor,
+                            fontWeight: FontWeight.w600),
                       ),
                     ),
                   ),

@@ -547,7 +547,7 @@ class _BuildChatItem extends StatelessWidget {
                   AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>> snapshot) {
                 if (!snapshot.hasData)
                   return Container(
-                    height: MediaQuery.of(context).size.height / 6,
+                    height: 110 * textScaleFactor,
                     padding: const EdgeInsets.symmetric(vertical: 4.0),
                     child: Container(
                       alignment: Alignment.center,
@@ -567,7 +567,7 @@ class _BuildChatItem extends StatelessWidget {
                     DateTime.fromMillisecondsSinceEpoch(
                         int.parse(snapshot.data!.docs.single.get('dateTime')));
                 return Container(
-                  height: MediaQuery.of(context).size.height / 6,
+                  height: 110 * textScaleFactor,
                   padding: const EdgeInsets.symmetric(vertical: 4.0),
                   child: Container(
                     padding: const EdgeInsets.all(kHPadding),

@@ -64,13 +64,11 @@ class _LoginTextFieldState extends State<LoginTextField> {
     return _isLoading
         ? Loading()
         : Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 30.0),
+            padding: EdgeInsets.symmetric(horizontal: 26.0 * textScaleFactor),
             child: Stack(
               children: [
                 Container(
-                  height: (MediaQuery.of(context).size.height / 16)
-                      .ceil()
-                      .toDouble(),
+                  height: 50 * textScaleFactor + 2,
                   decoration: BoxDecoration(
                     color: widget.isCodeSent
                         ? Theme.of(context).canvasColor
@@ -80,8 +78,7 @@ class _LoginTextFieldState extends State<LoginTextField> {
                 ),
                 Container(
                   margin: EdgeInsets.all(1.0),
-                  height: ((MediaQuery.of(context).size.height / 16).ceil() - 2)
-                      .toDouble(),
+                  height: 50 * textScaleFactor,
                   decoration: BoxDecoration(
                     color: Theme.of(context).canvasColor,
                     borderRadius: BorderRadius.circular(28.0),
@@ -89,23 +86,24 @@ class _LoginTextFieldState extends State<LoginTextField> {
                   child: Row(
                     children: [
                       Container(
-                        width: 62.0,
-                        padding: const EdgeInsets.only(left: 30.0),
+                        width: 58.0 * textScaleFactor,
+                        padding: EdgeInsets.only(left: 26.0 * textScaleFactor),
                         child: Image.asset(
                           widget.logoUrl,
                           width: widget.hintText ==
                                   AppLocalizations.of(context)!.lgEnterCode
-                              ? 36.0
-                              : 22.0,
+                              ? 34.0 * textScaleFactor
+                              : 18.0 * textScaleFactor,
                           height: widget.hintText ==
                                   AppLocalizations.of(context)!.lgEnterCode
-                              ? 36.0
-                              : 22.0,
+                              ? 34.0 * textScaleFactor
+                              : 18.0 * textScaleFactor,
                         ),
                       ),
-                      const SizedBox(width: 20.0),
+                      SizedBox(width: 16.0 * textScaleFactor),
                       Container(
-                        width: MediaQuery.of(context).size.width - 167.0,
+                        width: MediaQuery.of(context).size.width -
+                            150.0 * textScaleFactor,
                         child: Row(
                           children: [
                             Expanded(
@@ -119,6 +117,7 @@ class _LoginTextFieldState extends State<LoginTextField> {
                                         .copyWith(
                                             color:
                                                 Theme.of(context).primaryColor,
+                                            fontSize: 18 * textScaleFactor,
                                             fontWeight: FontWeight.w500)
                                     : Theme.of(context)
                                         .textTheme
@@ -126,6 +125,7 @@ class _LoginTextFieldState extends State<LoginTextField> {
                                         .copyWith(
                                             color:
                                                 Theme.of(context).primaryColor,
+                                            fontSize: 18 * textScaleFactor,
                                             fontWeight: FontWeight.w500),
                                 enabled: widget.pinCodeEnabled != null
                                     ? !widget.isCodeSent &&
@@ -137,6 +137,7 @@ class _LoginTextFieldState extends State<LoginTextField> {
                                     : !widget.isCodeSent,
                                 onChanged: widget.onChangedCallback,
                                 decoration: InputDecoration(
+                                  contentPadding: EdgeInsets.zero,
                                   hintText: widget.hintText,
                                   hintStyle: widget.hintText ==
                                           AppLocalizations.of(context)!
@@ -144,11 +145,14 @@ class _LoginTextFieldState extends State<LoginTextField> {
                                       ? Theme.of(context)
                                           .primaryTextTheme
                                           .labelSmall!
-                                          .copyWith(fontWeight: FontWeight.w500)
+                                          .copyWith(
+                                              fontSize: 18 * textScaleFactor,
+                                              fontWeight: FontWeight.w500)
                                       : Theme.of(context)
                                           .textTheme
                                           .labelMedium!
                                           .copyWith(
+                                              fontSize: 18 * textScaleFactor,
                                               fontWeight: FontWeight.w500),
                                   border: InputBorder.none,
                                 ),
@@ -197,7 +201,7 @@ class _LoginTextFieldState extends State<LoginTextField> {
                                                     'km'
                                                 ? Theme.of(context)
                                                     .primaryTextTheme
-                                                    .bodySmall!
+                                                    .labelSmall!
                                                     .copyWith(
                                                         color: Theme.of(context)
                                                             .highlightColor,
@@ -205,7 +209,7 @@ class _LoginTextFieldState extends State<LoginTextField> {
                                                             FontWeight.w500)
                                                 : Theme.of(context)
                                                     .textTheme
-                                                    .bodySmall!
+                                                    .labelSmall!
                                                     .copyWith(
                                                         color: Theme.of(context)
                                                             .highlightColor,
@@ -217,27 +221,28 @@ class _LoginTextFieldState extends State<LoginTextField> {
                                       Visibility(
                                         visible: !widget.isCodeSent,
                                         child: Text(
-                                            '$_countSeconds ${AppLocalizations.of(context)!.lgSecond + ((AppLocalizations.of(context)!.localeName == 'en' && _countSeconds > 1) ? 's' : '')}',
-                                            textScaleFactor: textScaleFactor,
-                                            style: AppLocalizations.of(context)!
-                                                        .localeName ==
-                                                    'km'
-                                                ? Theme.of(context)
-                                                    .primaryTextTheme
-                                                    .bodySmall!
-                                                    .copyWith(
-                                                        color: Theme.of(context)
-                                                            .disabledColor,
-                                                        fontWeight:
-                                                            FontWeight.w500)
-                                                : Theme.of(context)
-                                                    .textTheme
-                                                    .bodySmall!
-                                                    .copyWith(
-                                                        color: Theme.of(context)
-                                                            .disabledColor,
-                                                        fontWeight:
-                                                            FontWeight.w500)),
+                                          '$_countSeconds ${AppLocalizations.of(context)!.lgSecond + ((AppLocalizations.of(context)!.localeName == 'en' && _countSeconds > 1) ? 's' : '')}',
+                                          textScaleFactor: textScaleFactor,
+                                          style: AppLocalizations.of(context)!
+                                                      .localeName ==
+                                                  'km'
+                                              ? Theme.of(context)
+                                                  .primaryTextTheme
+                                                  .bodyLarge!
+                                                  .copyWith(
+                                                      color: Theme.of(context)
+                                                          .disabledColor,
+                                                      fontWeight:
+                                                          FontWeight.w500)
+                                              : Theme.of(context)
+                                                  .textTheme
+                                                  .bodyLarge!
+                                                  .copyWith(
+                                                      color: Theme.of(context)
+                                                          .disabledColor,
+                                                      fontWeight:
+                                                          FontWeight.w500),
+                                        ),
                                       ),
                                     ],
                                   )

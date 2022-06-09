@@ -111,7 +111,6 @@ class _LoginTextFieldState extends State<LoginTextField> {
                                       widget.constraints.maxWidth / 200 > 1.6
                                           ? 16
                                           : widget.constraints.maxWidth / 20,
-                                  fontFamily: 'Nokora',
                                 ),
                                 enabled: !widget.isCodeSent,
                                 autofocus: !widget.isCodeSent,
@@ -126,7 +125,6 @@ class _LoginTextFieldState extends State<LoginTextField> {
                                         widget.constraints.maxWidth / 200 > 1.6
                                             ? 16
                                             : widget.constraints.maxWidth / 20,
-                                    fontFamily: 'Nokora',
                                   ),
                                   border: InputBorder.none,
                                 ),
@@ -173,9 +171,7 @@ class _LoginTextFieldState extends State<LoginTextField> {
                                                           200,
                                               style: Theme.of(context)
                                                   .textTheme
-                                                  .subtitle1!
-                                                  .copyWith(
-                                                      fontFamily: 'Nokora')),
+                                                  .subtitle1),
                                         ),
                                       ),
                                       Visibility(

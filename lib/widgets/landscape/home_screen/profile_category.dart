@@ -57,7 +57,6 @@ class ProfileCategory extends StatelessWidget {
                         ? textColor
                         : Theme.of(context).iconTheme.color,
                     fontSize: 12.0,
-                    fontFamily: 'Nokora',
                     fontWeight: FontWeight.w400,
                   ),
                   overflow: TextOverflow.clip,

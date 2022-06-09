@@ -98,9 +98,6 @@ flutter:
         - asset: fonts/Custom-Filled-Icons.ttf
 
     # Font Styles: Khmer
-    - family: Nokora
-      fonts:
-        - asset: fonts/Nokora-Regular.ttf
     - family: Sowannaphum
       fonts:
         - asset: fonts/Sowannaphum.ttf

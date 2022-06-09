@@ -185,25 +185,21 @@ class Travenx {
       headline1: TextStyle(
         color: Colors.white,
         fontSize: 24.0,
-        fontFamily: 'Nokora',
         fontWeight: FontWeight.w700,
       ),
       headline2: TextStyle(
         color: Colors.white,
         fontSize: 20.0,
-        fontFamily: 'Nokora',
         fontWeight: FontWeight.w700,
       ),
       headline3: TextStyle(
         color: Colors.white,
         fontSize: 16.0,
-        fontFamily: 'Nokora',
         fontWeight: FontWeight.w700,
       ),
       headline4: TextStyle(
         color: Colors.white,
         fontSize: 14.0,
-        fontFamily: 'Nokora',
         fontWeight: FontWeight.w700,
       ),
       headline5: TextStyle(
@@ -230,19 +226,16 @@ class Travenx {
       bodyText1: TextStyle(
         color: Color(0xFF91949A),
         fontSize: 14.0,
-        fontFamily: 'Nokora',
         fontWeight: FontWeight.w400,
       ),
       button: TextStyle(
         color: Color(0xFF91949A),
         fontSize: 12.0,
-        fontFamily: 'Nokora',
         fontWeight: FontWeight.w400,
       ),
       bodyText2: TextStyle(
         color: Color(0xFF91949A),
         fontSize: 10.0,
-        fontFamily: 'Nokora',
         fontWeight: FontWeight.w400,
       ),
     ),

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:travenx_loitafoundation/config/configs.dart'
-    show kHPadding, kVPadding, textScaleFactor;
+    show kHPadding, kVPadding, displayScaleFactor;
 import 'package:travenx_loitafoundation/icons/icons.dart';
 
 class SearchBar extends StatelessWidget {
@@ -37,7 +37,7 @@ class SearchBar extends StatelessWidget {
             ),
             Text(
               AppLocalizations.of(context)!.searchLabel,
-              textScaleFactor: textScaleFactor,
+              textScaleFactor: displayScaleFactor,
               style: AppLocalizations.of(context)!.localeName == 'km'
                   ? Theme.of(context).primaryTextTheme.bodyMedium
                   : Theme.of(context).textTheme.bodyMedium,

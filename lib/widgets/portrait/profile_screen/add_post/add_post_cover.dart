@@ -4,7 +4,7 @@ import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:travenx_loitafoundation/config/configs.dart'
-    show kHPadding, textScaleFactor;
+    show kHPadding, displayScaleFactor;
 
 class AddPostCover extends StatefulWidget {
   final List<XFile> imagesFile;
@@ -89,7 +89,7 @@ class _AddPostCoverState extends State<AddPostCover> {
             child: Center(
               child: Text(
                 '${_imagesIndex + 1}/${widget.imagesFile.length}',
-                textScaleFactor: textScaleFactor,
+                textScaleFactor: displayScaleFactor,
                 textAlign: TextAlign.center,
                 style: Theme.of(context).textTheme.titleSmall,
               ),

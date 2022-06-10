@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:travenx_loitafoundation/config/configs.dart'
-    show kHPadding, kCardTileVPadding, textScaleFactor;
+    show kHPadding, kCardTileVPadding, displayScaleFactor;
 import 'package:travenx_loitafoundation/helpers/post_translator.dart';
 import 'package:travenx_loitafoundation/models/post_object_model.dart';
 import 'package:travenx_loitafoundation/services/firestore_service.dart';
@@ -33,21 +33,21 @@ class CustomTabBar extends StatelessWidget {
           ? Theme.of(context)
               .primaryTextTheme
               .bodyMedium!
-              .copyWith(fontSize: 14 * textScaleFactor)
+              .copyWith(fontSize: 14 * displayScaleFactor)
           : Theme.of(context)
               .textTheme
               .bodyMedium!
-              .copyWith(fontSize: 14 * textScaleFactor),
+              .copyWith(fontSize: 14 * displayScaleFactor),
       unselectedLabelColor: Theme.of(context).iconTheme.color,
       unselectedLabelStyle: AppLocalizations.of(context)!.localeName == 'km'
           ? Theme.of(context)
               .primaryTextTheme
               .bodyMedium!
-              .copyWith(fontSize: 14 * textScaleFactor)
+              .copyWith(fontSize: 14 * displayScaleFactor)
           : Theme.of(context)
               .textTheme
               .bodyMedium!
-              .copyWith(fontSize: 14 * textScaleFactor),
+              .copyWith(fontSize: 14 * displayScaleFactor),
       tabs: [
         Tab(text: AppLocalizations.of(context)!.tbNewPlacesLabel),
         Tab(text: AppLocalizations.of(context)!.tbNewEventsLabel),

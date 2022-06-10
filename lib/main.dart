@@ -183,8 +183,8 @@ class _ResponsiveDeciderState extends State<ResponsiveDecider> {
 
   @override
   Widget build(BuildContext context) {
-    textScaleFactor = MediaQuery.of(context).size.width / 375;
-    textScaleFactor = textScaleFactor > 1.5 ? 1.5 : textScaleFactor;
+    displayScaleFactor = MediaQuery.of(context).size.width / 375;
+    displayScaleFactor = displayScaleFactor > 1.5 ? 1.5 : displayScaleFactor;
 
     Future.delayed(const Duration(seconds: 2))
         .whenComplete(() => setState(() => _isLoading = false));
@@ -210,7 +210,7 @@ class _ResponsiveDeciderState extends State<ResponsiveDecider> {
                       margin: const EdgeInsets.only(top: 80.0),
                       child: Text(
                         'Travenx',
-                        textScaleFactor: textScaleFactor,
+                        textScaleFactor: displayScaleFactor,
                         style: const TextStyle(
                           color: Colors.white,
                           fontSize: 36.0,

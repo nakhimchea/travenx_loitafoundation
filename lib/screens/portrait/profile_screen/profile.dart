@@ -4,7 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:travenx_loitafoundation/config/configs.dart'
-    show kHPadding, kVPadding, textScaleFactor, selectedIndex;
+    show kHPadding, kVPadding, displayScaleFactor, selectedIndex;
 import 'package:travenx_loitafoundation/icons/icons.dart';
 import 'package:travenx_loitafoundation/screens/portrait/profile_screen/add_post.dart';
 import 'package:travenx_loitafoundation/screens/portrait/profile_screen/user_posts.dart';
@@ -67,14 +67,14 @@ class _ProfileState extends State<Profile> {
                       icon: Icon(
                         CustomOutlinedIcons.menu,
                         color: Theme.of(context).primaryColor,
-                        size: 20.0 * textScaleFactor,
+                        size: 20.0 * displayScaleFactor,
                       ),
                       title: AppLocalizations.of(context)!.pfAddedPost,
                       trailing: [
                         Icon(
                           Icons.arrow_forward_ios_sharp,
                           color: Theme.of(context).iconTheme.color,
-                          size: 14.0 * textScaleFactor,
+                          size: 14.0 * displayScaleFactor,
                         ),
                       ],
                       onTap: () => _user != null
@@ -96,14 +96,14 @@ class _ProfileState extends State<Profile> {
                           icon: Icon(
                             CustomOutlinedIcons.user,
                             color: Theme.of(context).primaryColor,
-                            size: 20.0 * textScaleFactor,
+                            size: 20.0 * displayScaleFactor,
                           ),
                           title: AppLocalizations.of(context)!.pfProfile,
                           trailing: [
                             Icon(
                               Icons.arrow_forward_ios_sharp,
                               color: Theme.of(context).iconTheme.color,
-                              size: 14.0 * textScaleFactor,
+                              size: 14.0 * displayScaleFactor,
                             )
                           ],
                         ),
@@ -111,14 +111,14 @@ class _ProfileState extends State<Profile> {
                           icon: Icon(
                             CustomOutlinedIcons.bookmark,
                             color: Theme.of(context).primaryColor,
-                            size: 20.0 * textScaleFactor,
+                            size: 20.0 * displayScaleFactor,
                           ),
                           title: AppLocalizations.of(context)!.pfSaved,
                           trailing: [
                             Icon(
                               Icons.arrow_forward_ios_sharp,
                               color: Theme.of(context).iconTheme.color,
-                              size: 14.0 * textScaleFactor,
+                              size: 14.0 * displayScaleFactor,
                             )
                           ],
                         ),
@@ -126,14 +126,14 @@ class _ProfileState extends State<Profile> {
                           icon: Icon(
                             CustomOutlinedIcons.star,
                             color: Theme.of(context).primaryColor,
-                            size: 20.0 * textScaleFactor,
+                            size: 20.0 * displayScaleFactor,
                           ),
                           title: AppLocalizations.of(context)!.pfReviewed,
                           trailing: [
                             Icon(
                               Icons.arrow_forward_ios_sharp,
                               color: Theme.of(context).iconTheme.color,
-                              size: 14.0 * textScaleFactor,
+                              size: 14.0 * displayScaleFactor,
                             )
                           ],
                         ),
@@ -142,13 +142,13 @@ class _ProfileState extends State<Profile> {
                           icon: Icon(
                             CustomOutlinedIcons.setting,
                             color: Theme.of(context).iconTheme.color,
-                            size: 20.0 * textScaleFactor,
+                            size: 20.0 * displayScaleFactor,
                           ),
                           title: AppLocalizations.of(context)!.pfLanguages,
                           trailing: [
                             Text(
                               'ភាសាខ្មែរ',
-                              textScaleFactor: textScaleFactor,
+                              textScaleFactor: displayScaleFactor,
                               style: AppLocalizations.of(context)!.localeName ==
                                       'km'
                                   ? Theme.of(context)
@@ -166,7 +166,7 @@ class _ProfileState extends State<Profile> {
                             Icon(
                               Icons.arrow_forward_ios_sharp,
                               color: Theme.of(context).iconTheme.color,
-                              size: 14.0 * textScaleFactor,
+                              size: 14.0 * displayScaleFactor,
                             )
                           ],
                         ),
@@ -174,14 +174,14 @@ class _ProfileState extends State<Profile> {
                           icon: Icon(
                             CustomOutlinedIcons.warning,
                             color: Theme.of(context).iconTheme.color,
-                            size: 20.0 * textScaleFactor,
+                            size: 20.0 * displayScaleFactor,
                           ),
                           title: AppLocalizations.of(context)!.pfAboutUs,
                           trailing: [
                             Icon(
                               Icons.arrow_forward_ios_sharp,
                               color: Theme.of(context).iconTheme.color,
-                              size: 14.0 * textScaleFactor,
+                              size: 14.0 * displayScaleFactor,
                             )
                           ],
                         ),
@@ -189,7 +189,7 @@ class _ProfileState extends State<Profile> {
                           icon: Icon(
                             CustomOutlinedIcons.file,
                             color: Theme.of(context).iconTheme.color,
-                            size: 20.0 * textScaleFactor,
+                            size: 20.0 * displayScaleFactor,
                           ),
                           title:
                               AppLocalizations.of(context)!.pfTermsAndPolicies,
@@ -197,7 +197,7 @@ class _ProfileState extends State<Profile> {
                             Icon(
                               Icons.arrow_forward_ios_sharp,
                               color: Theme.of(context).iconTheme.color,
-                              size: 14.0 * textScaleFactor,
+                              size: 14.0 * displayScaleFactor,
                             )
                           ],
                         ),
@@ -205,14 +205,14 @@ class _ProfileState extends State<Profile> {
                           icon: Icon(
                             CustomOutlinedIcons.help,
                             color: Theme.of(context).iconTheme.color,
-                            size: 20.0 * textScaleFactor,
+                            size: 20.0 * displayScaleFactor,
                           ),
                           title: AppLocalizations.of(context)!.pfFAQ,
                           trailing: [
                             Icon(
                               Icons.arrow_forward_ios_sharp,
                               color: Theme.of(context).iconTheme.color,
-                              size: 14.0 * textScaleFactor,
+                              size: 14.0 * displayScaleFactor,
                             )
                           ],
                         ),
@@ -221,7 +221,7 @@ class _ProfileState extends State<Profile> {
                           icon: Icon(
                             CustomFilledIcons.star,
                             color: Theme.of(context).highlightColor,
-                            size: 20.0 * textScaleFactor,
+                            size: 20.0 * displayScaleFactor,
                           ),
                           title: AppLocalizations.of(context)!.pfRateUs,
                           trailing: [],
@@ -230,7 +230,7 @@ class _ProfileState extends State<Profile> {
                           icon: Icon(
                             CustomFilledIcons.share,
                             color: Theme.of(context).hintColor,
-                            size: 20.0 * textScaleFactor,
+                            size: 20.0 * displayScaleFactor,
                           ),
                           title: AppLocalizations.of(context)!.pfShare,
                           trailing: [],
@@ -240,7 +240,7 @@ class _ProfileState extends State<Profile> {
                           icon: Icon(
                             CustomOutlinedIcons.logout,
                             color: Color(0xFFC23616),
-                            size: 20.0 * textScaleFactor,
+                            size: 20.0 * displayScaleFactor,
                           ),
                           title: AppLocalizations.of(context)!.pfLogOut,
                           textColor: Color(0xFFC23616),
@@ -263,7 +263,7 @@ class _ProfileState extends State<Profile> {
                         const SizedBox(height: 15.0),
                         Text(
                           AppLocalizations.of(context)!.pfVersion,
-                          textScaleFactor: textScaleFactor,
+                          textScaleFactor: displayScaleFactor,
                           style:
                               AppLocalizations.of(context)!.localeName == 'km'
                                   ? Theme.of(context).primaryTextTheme.bodyLarge
@@ -319,12 +319,12 @@ class _AddPost extends StatelessWidget {
               Icon(
                 CustomOutlinedIcons.new_icon,
                 color: Colors.white,
-                size: 20.0 * textScaleFactor,
+                size: 20.0 * displayScaleFactor,
               ),
               const SizedBox(width: kHPadding),
               Text(
                 AppLocalizations.of(context)!.pfAddPost,
-                textScaleFactor: textScaleFactor,
+                textScaleFactor: displayScaleFactor,
                 style: AppLocalizations.of(context)!.localeName == 'km'
                     ? Theme.of(context)
                         .primaryTextTheme

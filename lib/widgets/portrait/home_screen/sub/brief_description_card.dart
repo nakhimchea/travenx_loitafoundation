@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:travenx_loitafoundation/config/configs.dart'
-    show textScaleFactor, briefIconSize;
+    show displayScaleFactor, briefIconSize;
 import 'package:travenx_loitafoundation/models/icon_menu_model.dart';
 
 class BriefDescriptionCard extends StatelessWidget {
@@ -117,7 +117,7 @@ class _CardRowItem extends StatelessWidget {
         const SizedBox(height: 8.0),
         Text(
           text,
-          textScaleFactor: textScaleFactor,
+          textScaleFactor: displayScaleFactor,
           style: Theme.of(context).textTheme.displaySmall!.copyWith(
                 fontWeight: FontWeight.w700,
                 fontFamily: '',
@@ -126,7 +126,7 @@ class _CardRowItem extends StatelessWidget {
         const SizedBox(height: 8.0),
         Text(
           subText,
-          textScaleFactor: textScaleFactor,
+          textScaleFactor: displayScaleFactor,
           style: AppLocalizations.of(context)!.localeName == 'km'
               ? Theme.of(context).primaryTextTheme.bodySmall
               : Theme.of(context).textTheme.bodySmall,

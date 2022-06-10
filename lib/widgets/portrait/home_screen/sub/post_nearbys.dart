@@ -8,7 +8,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:travenx_loitafoundation/config/configs.dart'
-    show kHPadding, textScaleFactor, descriptionIconSize;
+    show kHPadding, displayScaleFactor, descriptionIconSize;
 import 'package:travenx_loitafoundation/helpers/post_translator.dart';
 import 'package:travenx_loitafoundation/icons/icons.dart';
 import 'package:travenx_loitafoundation/models/post_object_model.dart';
@@ -128,7 +128,7 @@ class _PostNearbysState extends State<PostNearbys> {
                 padding: const EdgeInsets.only(left: kHPadding),
                 child: Text(
                   AppLocalizations.of(context)!.nbLabel,
-                  textScaleFactor: textScaleFactor,
+                  textScaleFactor: displayScaleFactor,
                   style: AppLocalizations.of(context)!.localeName == 'km'
                       ? Theme.of(context).primaryTextTheme.titleLarge
                       : Theme.of(context).textTheme.titleLarge,
@@ -136,7 +136,7 @@ class _PostNearbysState extends State<PostNearbys> {
               ),
         SizedBox(height: !hasData ? 0.0 : 10.0),
         Container(
-          height: !hasData ? 0.0 : 150 + 121 * textScaleFactor,
+          height: !hasData ? 0.0 : 150 + 121 * displayScaleFactor,
           child: SmartRefresher(
             controller: _refreshController,
             physics: const BouncingScrollPhysics(),
@@ -298,7 +298,7 @@ class _NearbyCardState extends State<_NearbyCard> {
                       widget.post.price == 0
                           ? 'Free'
                           : '\$${widget.post.price % 1 == 0 ? widget.post.price.toStringAsFixed(0) : widget.post.price.toStringAsFixed(1)}',
-                      textScaleFactor: textScaleFactor,
+                      textScaleFactor: displayScaleFactor,
                       style: Theme.of(context)
                           .textTheme
                           .titleMedium!
@@ -310,7 +310,7 @@ class _NearbyCardState extends State<_NearbyCard> {
             ),
             Container(
               padding: const EdgeInsets.all(10.0),
-              height: 121 * textScaleFactor,
+              height: 121 * displayScaleFactor,
               width: MediaQuery.of(context).size.width / 1.9,
               decoration: BoxDecoration(
                 color: Theme.of(context).canvasColor,
@@ -325,7 +325,7 @@ class _NearbyCardState extends State<_NearbyCard> {
                 children: [
                   Text(
                     widget.post.title,
-                    textScaleFactor: textScaleFactor,
+                    textScaleFactor: displayScaleFactor,
                     style: AppLocalizations.of(context)!.localeName == 'km'
                         ? Theme.of(context).primaryTextTheme.titleMedium
                         : Theme.of(context).textTheme.titleMedium,
@@ -348,7 +348,7 @@ class _NearbyCardState extends State<_NearbyCard> {
                                       : 'ខេត្ត'
                                   : '') +
                               widget.post.state,
-                          textScaleFactor: textScaleFactor,
+                          textScaleFactor: displayScaleFactor,
                           style:
                               AppLocalizations.of(context)!.localeName == 'km'
                                   ? Theme.of(context).primaryTextTheme.bodySmall
@@ -373,7 +373,7 @@ class _NearbyCardState extends State<_NearbyCard> {
                           const SizedBox(width: 5.0),
                           Text(
                             _ratings.toStringAsFixed(1),
-                            textScaleFactor: textScaleFactor,
+                            textScaleFactor: displayScaleFactor,
                             style: Theme.of(context).textTheme.titleSmall,
                           ),
                         ],
@@ -388,7 +388,7 @@ class _NearbyCardState extends State<_NearbyCard> {
                           const SizedBox(width: 5.0),
                           Text(
                             _views.toString(),
-                            textScaleFactor: textScaleFactor,
+                            textScaleFactor: displayScaleFactor,
                             style: Theme.of(context).textTheme.bodyMedium,
                           ),
                         ],

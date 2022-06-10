@@ -8,7 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:travenx_loitafoundation/config/configs.dart'
-    show kHPadding, kVPadding, textScaleFactor;
+    show kHPadding, kVPadding, displayScaleFactor;
 import 'package:travenx_loitafoundation/icons/icons.dart';
 import 'package:travenx_loitafoundation/services/firestore_service.dart';
 import 'package:travenx_loitafoundation/services/image_picker_service.dart';
@@ -103,7 +103,7 @@ class _PostGalleryState extends State<PostGallery> {
             children: [
               Text(
                 AppLocalizations.of(context)!.pdGalleryLabel,
-                textScaleFactor: textScaleFactor,
+                textScaleFactor: displayScaleFactor,
                 style: AppLocalizations.of(context)!.localeName == 'km'
                     ? Theme.of(context).primaryTextTheme.titleLarge
                     : Theme.of(context).textTheme.titleLarge,
@@ -130,7 +130,7 @@ class _PostGalleryState extends State<PostGallery> {
                       const SizedBox(width: 5.0),
                       Text(
                         AppLocalizations.of(context)!.pdGalleryUploadLabel,
-                        textScaleFactor: textScaleFactor,
+                        textScaleFactor: displayScaleFactor,
                         style: AppLocalizations.of(context)!.localeName == 'km'
                             ? Theme.of(context)
                                 .primaryTextTheme
@@ -191,7 +191,7 @@ class _PostGalleryState extends State<PostGallery> {
                   padding: const EdgeInsets.symmetric(vertical: kVPadding),
                   child: Text(
                     AppLocalizations.of(context)!.pdShowAllLabel,
-                    textScaleFactor: textScaleFactor,
+                    textScaleFactor: displayScaleFactor,
                     style: AppLocalizations.of(context)!.localeName == 'km'
                         ? Theme.of(context)
                             .primaryTextTheme
@@ -378,7 +378,7 @@ class _PostGalleryPicker extends StatelessWidget {
         children: [
           Text(
             AppLocalizations.of(context)!.pdGalleryUploadLabel,
-            textScaleFactor: textScaleFactor,
+            textScaleFactor: displayScaleFactor,
             style: AppLocalizations.of(context)!.localeName == 'km'
                 ? Theme.of(context).primaryTextTheme.displayMedium
                 : Theme.of(context).textTheme.displayMedium,
@@ -404,7 +404,7 @@ class _PostGalleryPicker extends StatelessWidget {
               padding: const EdgeInsets.symmetric(vertical: kVPadding),
               child: Text(
                 AppLocalizations.of(context)!.pdGallerySharePublic,
-                textScaleFactor: textScaleFactor,
+                textScaleFactor: displayScaleFactor,
                 style: AppLocalizations.of(context)!.localeName == 'km'
                     ? Theme.of(context).primaryTextTheme.bodyMedium
                     : Theme.of(context).textTheme.bodyMedium,

@@ -10,7 +10,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:travenx_loitafoundation/config/configs.dart'
-    show kHPadding, kVPadding, textScaleFactor, selectedIndex;
+    show kHPadding, kVPadding, displayScaleFactor, selectedIndex;
 import 'package:travenx_loitafoundation/icons/icons.dart';
 import 'package:travenx_loitafoundation/screens/portrait/chat_screen/chat.dart';
 import 'package:travenx_loitafoundation/services/firestore_service.dart';
@@ -164,7 +164,7 @@ class _ChatScreenState extends State<ChatScreen> {
           backgroundColor: Theme.of(context).scaffoldBackgroundColor,
           title: Text(
             AppLocalizations.of(context)!.chatLabel,
-            textScaleFactor: textScaleFactor,
+            textScaleFactor: displayScaleFactor,
             style: AppLocalizations.of(context)!.localeName == 'km'
                 ? Theme.of(context).primaryTextTheme.displayLarge
                 : Theme.of(context).textTheme.displayMedium,
@@ -185,13 +185,13 @@ class _ChatScreenState extends State<ChatScreen> {
                   children: [
                     Icon(
                       CustomOutlinedIcons.warning,
-                      size: 24.0 * textScaleFactor,
+                      size: 24.0 * displayScaleFactor,
                       color: Theme.of(context).iconTheme.color,
                     ),
                     const SizedBox(height: 10),
                     Text(
                       AppLocalizations.of(context)!.chatNoData,
-                      textScaleFactor: textScaleFactor,
+                      textScaleFactor: displayScaleFactor,
                       style: AppLocalizations.of(context)!.localeName == 'km'
                           ? Theme.of(context).primaryTextTheme.bodyLarge
                           : Theme.of(context).textTheme.bodyLarge,
@@ -255,7 +255,7 @@ class _ChatScreenState extends State<ChatScreen> {
                           const SizedBox(height: 10),
                           Text(
                             AppLocalizations.of(context)!.chatNoData,
-                            textScaleFactor: textScaleFactor,
+                            textScaleFactor: displayScaleFactor,
                             style: AppLocalizations.of(context)!.localeName ==
                                     'km'
                                 ? Theme.of(context).primaryTextTheme.bodyLarge
@@ -349,7 +349,7 @@ class _ChatScreenState extends State<ChatScreen> {
                         padding: const EdgeInsets.all(8.0),
                         child: Text(
                           'Login Now',
-                          textScaleFactor: textScaleFactor,
+                          textScaleFactor: displayScaleFactor,
                           style: Theme.of(context)
                               .textTheme
                               .bodyLarge!
@@ -398,10 +398,10 @@ class _ActionOptions extends StatelessWidget {
         ),
         padding: EdgeInsets.zero,
         icon: CircleAvatar(
-          radius: 20.2 * textScaleFactor,
+          radius: 20.2 * displayScaleFactor,
           backgroundColor: Colors.black26,
           child: CircleAvatar(
-            radius: 20.0 * textScaleFactor,
+            radius: 20.0 * displayScaleFactor,
             backgroundColor:
                 Theme.of(context).colorScheme.brightness == Brightness.light
                     ? Theme.of(context).canvasColor
@@ -409,7 +409,7 @@ class _ActionOptions extends StatelessWidget {
             child: Icon(
               Icons.more_horiz,
               color: Theme.of(context).iconTheme.color,
-              size: 28.0 * textScaleFactor,
+              size: 28.0 * displayScaleFactor,
             ),
           ),
         ),
@@ -461,14 +461,14 @@ class _PopUpListTile extends StatelessWidget {
       children: [
         Icon(
           iconData,
-          size: 20.0 * textScaleFactor,
+          size: 20.0 * displayScaleFactor,
           color: Theme.of(context).primaryIconTheme.color,
         ),
         const SizedBox(width: 5),
         Expanded(
           child: Text(
             title,
-            textScaleFactor: textScaleFactor,
+            textScaleFactor: displayScaleFactor,
             style: AppLocalizations.of(context)!.localeName == 'km'
                 ? Theme.of(context)
                     .primaryTextTheme
@@ -547,7 +547,7 @@ class _BuildChatItem extends StatelessWidget {
                   AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>> snapshot) {
                 if (!snapshot.hasData)
                   return Container(
-                    height: 110 * textScaleFactor,
+                    height: 110 * displayScaleFactor,
                     padding: const EdgeInsets.symmetric(vertical: 4.0),
                     child: Container(
                       alignment: Alignment.center,
@@ -567,7 +567,7 @@ class _BuildChatItem extends StatelessWidget {
                     DateTime.fromMillisecondsSinceEpoch(
                         int.parse(snapshot.data!.docs.single.get('dateTime')));
                 return Container(
-                  height: 110 * textScaleFactor,
+                  height: 110 * displayScaleFactor,
                   padding: const EdgeInsets.symmetric(vertical: 4.0),
                   child: Container(
                     padding: const EdgeInsets.all(kHPadding),
@@ -582,29 +582,29 @@ class _BuildChatItem extends StatelessWidget {
                           child: chatImageUrl.split('/').first == 'assets'
                               ? Image.asset(
                                   chatImageUrl,
-                                  height: 50 * textScaleFactor,
-                                  width: 50 * textScaleFactor,
+                                  height: 50 * displayScaleFactor,
+                                  width: 50 * displayScaleFactor,
                                   fit: BoxFit.cover,
                                 )
                               : CachedNetworkImage(
                                   imageUrl: chatImageUrl,
-                                  height: 50 * textScaleFactor,
-                                  width: 50 * textScaleFactor,
+                                  height: 50 * displayScaleFactor,
+                                  width: 50 * displayScaleFactor,
                                   fit: BoxFit.cover,
                                   placeholder: (context, _) => ImageFiltered(
                                     imageFilter: ImageFilter.blur(
                                         sigmaX: 10, sigmaY: 10),
                                     child: Image.asset(
                                       'assets/images/travenx_180.png',
-                                      height: 50 * textScaleFactor,
-                                      width: 50 * textScaleFactor,
+                                      height: 50 * displayScaleFactor,
+                                      width: 50 * displayScaleFactor,
                                       fit: BoxFit.cover,
                                     ),
                                   ),
                                   errorWidget: (context, _, __) => Image.asset(
                                     'assets/images/travenx_180.png',
-                                    height: 50 * textScaleFactor,
-                                    width: 50 * textScaleFactor,
+                                    height: 50 * displayScaleFactor,
+                                    width: 50 * displayScaleFactor,
                                     fit: BoxFit.cover,
                                   ),
                                 ),
@@ -621,7 +621,7 @@ class _BuildChatItem extends StatelessWidget {
                                   child: Text(
                                     chatTitle,
                                     maxLines: 1,
-                                    textScaleFactor: textScaleFactor,
+                                    textScaleFactor: displayScaleFactor,
                                     style: AppLocalizations.of(context)!
                                                 .localeName ==
                                             'km'
@@ -644,7 +644,7 @@ class _BuildChatItem extends StatelessWidget {
                                       child: Text(
                                         chatMessage,
                                         maxLines: 1,
-                                        textScaleFactor: textScaleFactor,
+                                        textScaleFactor: displayScaleFactor,
                                         style: snapshot.data!.docs.single
                                                     .get('senderUid') ==
                                                 _user.uid
@@ -686,7 +686,7 @@ class _BuildChatItem extends StatelessWidget {
                                           '${chatDateTime.day.toString()}/' +
                                           '${chatDateTime.month.toString()}/' +
                                           '${chatDateTime.year.toString()}',
-                                      textScaleFactor: textScaleFactor,
+                                      textScaleFactor: displayScaleFactor,
                                       style:
                                           AppLocalizations.of(context)!
                                                       .localeName ==

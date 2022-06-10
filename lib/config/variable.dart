@@ -1,2 +1,2 @@
 int selectedIndex = 0;
-double textScaleFactor = 1;
+double displayScaleFactor = 1;

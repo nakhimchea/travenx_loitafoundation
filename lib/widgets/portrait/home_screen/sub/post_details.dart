@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:readmore/readmore.dart';
 import 'package:travenx_loitafoundation/config/configs.dart'
-    show kHPadding, textScaleFactor;
+    show kHPadding, displayScaleFactor;
 import 'package:travenx_loitafoundation/models/post_object_model.dart';
 
 class PostDetails extends StatelessWidget {
@@ -17,7 +17,7 @@ class PostDetails extends StatelessWidget {
       children: <Widget>[
         Text(
           AppLocalizations.of(context)!.pdDetailsLabel,
-          textScaleFactor: textScaleFactor,
+          textScaleFactor: displayScaleFactor,
           style: AppLocalizations.of(context)!.localeName == 'km'
               ? Theme.of(context).primaryTextTheme.titleLarge
               : Theme.of(context).textTheme.titleLarge,
@@ -25,7 +25,7 @@ class PostDetails extends StatelessWidget {
         const SizedBox(height: 10.0),
         ReadMoreText(
           this.details.textDetail,
-          textScaleFactor: textScaleFactor,
+          textScaleFactor: displayScaleFactor,
           trimLines: 5,
           textAlign: TextAlign.justify,
           trimMode: TrimMode.Line,
@@ -73,7 +73,7 @@ class PostDetails extends StatelessWidget {
             child: Text(
               AppLocalizations.of(context)!.pdDetailsGetDirection +
                   ' Google Map',
-              textScaleFactor: textScaleFactor,
+              textScaleFactor: displayScaleFactor,
               style: AppLocalizations.of(context)!.localeName == 'km'
                   ? Theme.of(context)
                       .primaryTextTheme

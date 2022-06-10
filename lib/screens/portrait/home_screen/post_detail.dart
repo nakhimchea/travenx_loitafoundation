@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:travenx_loitafoundation/config/configs.dart'
-    show kHPadding, kVPadding, textScaleFactor, selectedIndex;
+    show kHPadding, kVPadding, displayScaleFactor, selectedIndex;
 import 'package:travenx_loitafoundation/helpers/weather_forecast_extractor.dart';
 import 'package:travenx_loitafoundation/icons/icons.dart';
 import 'package:travenx_loitafoundation/models/home_screen_models.dart';
@@ -95,7 +95,8 @@ class _PostDetailState extends State<PostDetail> {
       ),
       bottomNavigationBar: _isSelfPost
           ? Container(
-              height: MediaQuery.of(context).size.height / 10 * textScaleFactor,
+              height:
+                  MediaQuery.of(context).size.height / 10 * displayScaleFactor,
               padding: const EdgeInsets.only(
                 left: kHPadding,
                 right: kHPadding,
@@ -106,12 +107,13 @@ class _PostDetailState extends State<PostDetail> {
               child: Center(
                 child: Text(
                   AppLocalizations.of(context)!.pdThisPlaceIsYours,
-                  textScaleFactor: textScaleFactor,
+                  textScaleFactor: displayScaleFactor,
                 ),
               ),
             )
           : Container(
-              height: MediaQuery.of(context).size.height / 10 * textScaleFactor,
+              height:
+                  MediaQuery.of(context).size.height / 10 * displayScaleFactor,
               padding: const EdgeInsets.only(
                 left: kHPadding,
                 right: kHPadding,
@@ -183,17 +185,17 @@ class _PostDetailState extends State<PostDetail> {
                       radius: (MediaQuery.of(context).size.height / 20 -
                               kVPadding -
                               16.0 / 2) *
-                          textScaleFactor,
+                          displayScaleFactor,
                       backgroundColor: Theme.of(context).hintColor,
                       child: CircleAvatar(
                         radius: (MediaQuery.of(context).size.height / 20 -
                                 kVPadding -
                                 10) *
-                            textScaleFactor,
+                            displayScaleFactor,
                         backgroundColor: Theme.of(context).canvasColor,
                         child: Icon(
                           CustomFilledIcons.message,
-                          size: 24.0 * textScaleFactor,
+                          size: 24.0 * displayScaleFactor,
                           color: Theme.of(context).hintColor,
                         ),
                       ),
@@ -204,17 +206,17 @@ class _PostDetailState extends State<PostDetail> {
                     radius: (MediaQuery.of(context).size.height / 20 -
                             kVPadding -
                             16.0 / 2) *
-                        textScaleFactor,
+                        displayScaleFactor,
                     backgroundColor: Theme.of(context).primaryColor,
                     child: CircleAvatar(
                       radius: (MediaQuery.of(context).size.height / 20 -
                               kVPadding -
                               10) *
-                          textScaleFactor,
+                          displayScaleFactor,
                       backgroundColor: Theme.of(context).canvasColor,
                       child: Icon(
                         Icons.call_rounded,
-                        size: 24.0 * textScaleFactor,
+                        size: 24.0 * displayScaleFactor,
                         color: Theme.of(context).primaryColor,
                       ),
                     ),
@@ -225,7 +227,7 @@ class _PostDetailState extends State<PostDetail> {
                       height: (MediaQuery.of(context).size.height / 10 -
                               2 * kVPadding -
                               16.0) *
-                          textScaleFactor,
+                          displayScaleFactor,
                       alignment: Alignment.center,
                       decoration: BoxDecoration(
                         color: Theme.of(context).primaryColor,
@@ -233,7 +235,7 @@ class _PostDetailState extends State<PostDetail> {
                       ),
                       child: Text(
                         AppLocalizations.of(context)!.pdProductAndServices,
-                        textScaleFactor: textScaleFactor,
+                        textScaleFactor: displayScaleFactor,
                         style: AppLocalizations.of(context)!.localeName == 'km'
                             ? Theme.of(context)
                                 .primaryTextTheme

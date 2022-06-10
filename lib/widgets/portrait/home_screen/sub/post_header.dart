@@ -2,7 +2,7 @@ import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:travenx_loitafoundation/config/configs.dart'
-    show textScaleFactor, descriptionIconSize, detailIconSize;
+    show displayScaleFactor, descriptionIconSize, detailIconSize;
 import 'package:travenx_loitafoundation/icons/icons.dart';
 
 class PostHeader extends StatelessWidget {
@@ -36,7 +36,7 @@ class PostHeader extends StatelessWidget {
               child: Text(
                 this.title,
                 maxLines: 2,
-                textScaleFactor: textScaleFactor,
+                textScaleFactor: displayScaleFactor,
                 style: AppLocalizations.of(context)!.localeName == 'km'
                     ? Theme.of(context).primaryTextTheme.displayLarge
                     : Theme.of(context).textTheme.displayLarge,
@@ -53,7 +53,7 @@ class PostHeader extends StatelessWidget {
                 const SizedBox(width: 5),
                 Text(
                   this.ratings.toStringAsFixed(1),
-                  textScaleFactor: textScaleFactor,
+                  textScaleFactor: displayScaleFactor,
                   style: Theme.of(context).textTheme.titleMedium,
                 ),
               ],
@@ -69,7 +69,7 @@ class PostHeader extends StatelessWidget {
                 const SizedBox(width: 5),
                 Text(
                   this.views.toString(),
-                  textScaleFactor: textScaleFactor,
+                  textScaleFactor: displayScaleFactor,
                   style: Theme.of(context).textTheme.headlineLarge,
                 ),
               ],
@@ -80,7 +80,7 @@ class PostHeader extends StatelessWidget {
           this.price == 0
               ? 'Free'
               : '\$${this.price % 1 == 0 ? this.price.toStringAsFixed(0) : this.price.toStringAsFixed(2)}',
-          textScaleFactor: textScaleFactor,
+          textScaleFactor: displayScaleFactor,
           style: Theme.of(context)
               .primaryTextTheme
               .displayMedium!
@@ -105,7 +105,7 @@ class PostHeader extends StatelessWidget {
                     this.state +
                     ', ' +
                     this.country,
-                textScaleFactor: textScaleFactor,
+                textScaleFactor: displayScaleFactor,
                 style: AppLocalizations.of(context)!.localeName == 'km'
                     ? Theme.of(context).primaryTextTheme.bodyLarge
                     : Theme.of(context).textTheme.bodyLarge,
@@ -127,7 +127,7 @@ class PostHeader extends StatelessWidget {
                   const SizedBox(width: 5),
                   Text(
                     AppLocalizations.of(context)!.pdBusinessHourLabel,
-                    textScaleFactor: textScaleFactor,
+                    textScaleFactor: displayScaleFactor,
                     style: AppLocalizations.of(context)!.localeName == 'km'
                         ? Theme.of(context)
                             .primaryTextTheme
@@ -143,7 +143,7 @@ class PostHeader extends StatelessWidget {
                   const SizedBox(width: 5),
                   Text(
                     this.openHours!,
-                    textScaleFactor: textScaleFactor,
+                    textScaleFactor: displayScaleFactor,
                     style: AppLocalizations.of(context)!.localeName == 'km'
                         ? Theme.of(context)
                             .primaryTextTheme

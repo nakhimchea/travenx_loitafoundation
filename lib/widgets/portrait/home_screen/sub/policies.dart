@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:travenx_loitafoundation/config/configs.dart'
-    show kHPadding, kVPadding, textScaleFactor;
+    show kHPadding, kVPadding, displayScaleFactor;
 
 class Policies extends StatelessWidget {
   final List<String> policies;
@@ -14,7 +14,7 @@ class Policies extends StatelessWidget {
       policyList.add(
         Text(
           '• ' + policy,
-          textScaleFactor: textScaleFactor,
+          textScaleFactor: displayScaleFactor,
           textAlign: TextAlign.justify,
           style: AppLocalizations.of(context)!.localeName == 'km'
               ? Theme.of(context).primaryTextTheme.bodyLarge
@@ -37,7 +37,7 @@ class Policies extends StatelessWidget {
         children: <Widget>[
           Text(
             AppLocalizations.of(context)!.pdPoliciesLabel,
-            textScaleFactor: textScaleFactor,
+            textScaleFactor: displayScaleFactor,
             style: AppLocalizations.of(context)!.localeName == 'km'
                 ? Theme.of(context).primaryTextTheme.titleLarge
                 : Theme.of(context).textTheme.titleLarge,

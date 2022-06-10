@@ -4,7 +4,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:travenx_loitafoundation/config/configs.dart'
-    show kCardTileVPadding, kVPadding, textScaleFactor;
+    show kCardTileVPadding, kVPadding, displayScaleFactor;
 import 'package:travenx_loitafoundation/helpers/post_translator.dart';
 import 'package:travenx_loitafoundation/icons/icons.dart';
 import 'package:travenx_loitafoundation/models/home_screen_models.dart';
@@ -33,7 +33,7 @@ class _IconMenuTabState extends State<IconMenuTab> {
             icon: Icon(
               Icons.arrow_back_ios_new,
               color: Theme.of(context).primaryIconTheme.color,
-              size: 18.0 * textScaleFactor,
+              size: 18.0 * displayScaleFactor,
             ),
             highlightColor: Colors.transparent,
             hoverColor: Colors.transparent,
@@ -41,7 +41,7 @@ class _IconMenuTabState extends State<IconMenuTab> {
           ),
           title: Text(
             AppLocalizations.of(context)!.icAppBar,
-            textScaleFactor: textScaleFactor,
+            textScaleFactor: displayScaleFactor,
             style: AppLocalizations.of(context)!.localeName == 'km'
                 ? Theme.of(context).primaryTextTheme.titleLarge
                 : Theme.of(context).textTheme.titleLarge,
@@ -59,7 +59,7 @@ class _IconMenuTabState extends State<IconMenuTab> {
               splashColor: Colors.transparent,
               icon: Icon(
                 CustomOutlinedIcons.search,
-                size: 28.0 * textScaleFactor,
+                size: 28.0 * displayScaleFactor,
                 color: Theme.of(context).primaryIconTheme.color,
               ),
             ),
@@ -120,13 +120,13 @@ class _BuildIconMenuListState extends State<_BuildIconMenuList> {
           children: [
             Icon(
               CustomOutlinedIcons.warning,
-              size: 24.0 * textScaleFactor,
+              size: 24.0 * displayScaleFactor,
               color: Theme.of(context).iconTheme.color,
             ),
             const SizedBox(height: 10),
             Text(
               AppLocalizations.of(context)!.noData,
-              textScaleFactor: textScaleFactor,
+              textScaleFactor: displayScaleFactor,
               style: AppLocalizations.of(context)!.localeName == 'km'
                   ? Theme.of(context).primaryTextTheme.bodyLarge
                   : Theme.of(context).textTheme.bodyLarge,
@@ -278,21 +278,21 @@ class _CustomTabBar extends StatelessWidget {
           ? Theme.of(context)
               .primaryTextTheme
               .bodyMedium!
-              .copyWith(fontSize: 14 * textScaleFactor)
+              .copyWith(fontSize: 14 * displayScaleFactor)
           : Theme.of(context)
               .textTheme
               .bodyMedium!
-              .copyWith(fontSize: 14 * textScaleFactor),
+              .copyWith(fontSize: 14 * displayScaleFactor),
       unselectedLabelColor: Theme.of(context).iconTheme.color,
       unselectedLabelStyle: AppLocalizations.of(context)!.localeName == 'km'
           ? Theme.of(context)
               .primaryTextTheme
               .bodyMedium!
-              .copyWith(fontSize: 14 * textScaleFactor)
+              .copyWith(fontSize: 14 * displayScaleFactor)
           : Theme.of(context)
               .textTheme
               .bodyMedium!
-              .copyWith(fontSize: 14 * textScaleFactor),
+              .copyWith(fontSize: 14 * displayScaleFactor),
       tabs: _buildTabs(context),
     );
   }

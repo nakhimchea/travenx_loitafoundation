@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:travenx_loitafoundation/config/configs.dart'
-    show kHPadding, textScaleFactor;
+    show kHPadding, displayScaleFactor;
 
 class StepOneCheckedBox extends StatelessWidget {
   final bool isAgreementHighlight;
@@ -43,7 +43,7 @@ class StepOneCheckedBox extends StatelessWidget {
                 color: !isChecked
                     ? Theme.of(context).iconTheme.color
                     : Theme.of(context).primaryColor,
-                size: 20.0 * textScaleFactor,
+                size: 20.0 * displayScaleFactor,
               ),
             ),
             const SizedBox(width: 10),
@@ -51,7 +51,7 @@ class StepOneCheckedBox extends StatelessWidget {
               child: Text(
                 AppLocalizations.of(context)!.pfApSoCheckbox,
                 textAlign: TextAlign.justify,
-                textScaleFactor: textScaleFactor,
+                textScaleFactor: displayScaleFactor,
                 style: AppLocalizations.of(context)!.localeName == 'km'
                     ? Theme.of(context).primaryTextTheme.bodyLarge!.copyWith(
                         color:

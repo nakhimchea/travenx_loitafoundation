@@ -2,7 +2,7 @@ import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:travenx_loitafoundation/config/configs.dart'
-    show kHPadding, textScaleFactor;
+    show kHPadding, displayScaleFactor;
 
 class LoginCardButton extends StatelessWidget {
   final String leadingUrl;
@@ -23,7 +23,7 @@ class LoginCardButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 26.0 * textScaleFactor),
+      padding: EdgeInsets.symmetric(horizontal: 26.0 * displayScaleFactor),
       child: GestureDetector(
         onTap: onTap,
         child: Container(
@@ -39,8 +39,8 @@ class LoginCardButton extends StatelessWidget {
               const SizedBox(width: kHPadding),
               Image.asset(
                 leadingUrl,
-                width: (titleColor != null ? 22.0 : 25.0) * textScaleFactor,
-                height: (titleColor != null ? 22.0 : 25.0) * textScaleFactor,
+                width: (titleColor != null ? 22.0 : 25.0) * displayScaleFactor,
+                height: (titleColor != null ? 22.0 : 25.0) * displayScaleFactor,
               ),
               Expanded(
                 child: Row(
@@ -48,7 +48,7 @@ class LoginCardButton extends StatelessWidget {
                   children: [
                     Text(
                       title,
-                      textScaleFactor: textScaleFactor,
+                      textScaleFactor: displayScaleFactor,
                       style: AppLocalizations.of(context)!.localeName == 'km'
                           ? Theme.of(context)
                               .primaryTextTheme
@@ -70,7 +70,7 @@ class LoginCardButton extends StatelessWidget {
                       alignment: const Alignment(0, -0.06),
                       child: Text(
                         trailing != '' ? ' ' + trailing : '',
-                        textScaleFactor: textScaleFactor,
+                        textScaleFactor: displayScaleFactor,
                         style: Theme.of(context).textTheme.bodyLarge!.copyWith(
                             color: Theme.of(context).primaryIconTheme.color,
                             fontFamily: 'Poppins'),
@@ -79,7 +79,7 @@ class LoginCardButton extends StatelessWidget {
                   ],
                 ),
               ),
-              SizedBox(width: 40 * textScaleFactor),
+              SizedBox(width: 40 * displayScaleFactor),
             ],
           ),
         ),

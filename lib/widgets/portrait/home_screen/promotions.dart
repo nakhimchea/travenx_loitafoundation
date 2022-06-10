@@ -8,7 +8,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:travenx_loitafoundation/config/configs.dart'
-    show kHPadding, kVPadding, textScaleFactor, descriptionIconSize, Palette;
+    show kHPadding, kVPadding, displayScaleFactor, descriptionIconSize, Palette;
 import 'package:travenx_loitafoundation/helpers/post_translator.dart';
 import 'package:travenx_loitafoundation/icons/icons.dart';
 import 'package:travenx_loitafoundation/models/post_object_model.dart';
@@ -272,7 +272,7 @@ class _PromotionCardState extends State<_PromotionCard> {
                   widget.post.price == 0
                       ? 'Free'
                       : '\$${widget.post.price % 1 == 0 ? widget.post.price.toStringAsFixed(0) : widget.post.price.toStringAsFixed(2)}',
-                  textScaleFactor: textScaleFactor,
+                  textScaleFactor: displayScaleFactor,
                   style: Theme.of(context)
                       .textTheme
                       .titleLarge!
@@ -294,7 +294,7 @@ class _PromotionCardState extends State<_PromotionCard> {
                   Text(
                     widget.post.title,
                     maxLines: 2,
-                    textScaleFactor: textScaleFactor,
+                    textScaleFactor: displayScaleFactor,
                     style: AppLocalizations.of(context)!.localeName == 'km'
                         ? Theme.of(context)
                             .primaryTextTheme
@@ -328,7 +328,7 @@ class _PromotionCardState extends State<_PromotionCard> {
                                       : 'ខេត្ត'
                                   : '') +
                               widget.post.state,
-                          textScaleFactor: textScaleFactor,
+                          textScaleFactor: displayScaleFactor,
                           style:
                               AppLocalizations.of(context)!.localeName == 'km'
                                   ? Theme.of(context)
@@ -364,7 +364,7 @@ class _PromotionCardState extends State<_PromotionCard> {
                           const SizedBox(width: 5.0),
                           Text(
                             _ratings.toStringAsFixed(1),
-                            textScaleFactor: textScaleFactor,
+                            textScaleFactor: displayScaleFactor,
                             style: Theme.of(context)
                                 .textTheme
                                 .titleSmall!
@@ -382,7 +382,7 @@ class _PromotionCardState extends State<_PromotionCard> {
                           const SizedBox(width: 5.0),
                           Text(
                             _views.toString(),
-                            textScaleFactor: textScaleFactor,
+                            textScaleFactor: displayScaleFactor,
                             style: Theme.of(context)
                                 .textTheme
                                 .bodyMedium!

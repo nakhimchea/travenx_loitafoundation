@@ -120,7 +120,7 @@ class _CustomAppBar extends StatelessWidget {
             left: 16.0,
           ),
           child: Text('Travenx',
-              textScaleFactor: textScaleFactor,
+              textScaleFactor: displayScaleFactor,
               style: Theme.of(context)
                   .textTheme
                   .displayLarge!
@@ -142,7 +142,7 @@ class _CustomAppBar extends StatelessWidget {
                     MaterialStateProperty.all<Color>(Colors.transparent)),
             child: Text(
               AppLocalizations.of(context)!.skipLabel,
-              textScaleFactor: textScaleFactor,
+              textScaleFactor: displayScaleFactor,
               style: AppLocalizations.of(context)!.localeName == 'km'
                   ? Theme.of(context).primaryTextTheme.headlineLarge!.copyWith(
                       color: Theme.of(context).colorScheme.brightness ==
@@ -201,7 +201,7 @@ class _LoginAppBar extends StatelessWidget {
                       MaterialStateProperty.all<Color>(Colors.transparent)),
               child: Text(
                 AppLocalizations.of(context)!.skipLabel,
-                textScaleFactor: textScaleFactor,
+                textScaleFactor: displayScaleFactor,
                 style: AppLocalizations.of(context)!.localeName == 'km'
                     ? Theme.of(context)
                         .primaryTextTheme
@@ -260,12 +260,12 @@ class _LoginMethodsState extends State<_LoginMethods> {
                 borderRadius: BorderRadius.circular(20),
                 child: Image.asset(
                   'assets/images/travenx.png',
-                  height: 110 * textScaleFactor,
-                  width: 110 * textScaleFactor,
+                  height: 110 * displayScaleFactor,
+                  width: 110 * displayScaleFactor,
                   fit: BoxFit.cover,
                 ),
               ),
-              SizedBox(height: 80 * textScaleFactor),
+              SizedBox(height: 80 * displayScaleFactor),
               LoginCardButton(
                 leadingUrl: 'assets/icons/profile_screen/phone_logo.png',
                 title: AppLocalizations.of(context)!.lgConnectPhone,
@@ -275,7 +275,7 @@ class _LoginMethodsState extends State<_LoginMethods> {
               const SizedBox(height: 25.0),
               Padding(
                 padding:
-                    EdgeInsets.symmetric(horizontal: 26.0 * textScaleFactor),
+                    EdgeInsets.symmetric(horizontal: 26.0 * displayScaleFactor),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
@@ -286,7 +286,7 @@ class _LoginMethodsState extends State<_LoginMethods> {
                     ),
                     Text(
                       AppLocalizations.of(context)!.lgOr,
-                      textScaleFactor: textScaleFactor,
+                      textScaleFactor: displayScaleFactor,
                       style: Theme.of(context).textTheme.titleLarge!.copyWith(
                           color: Theme.of(context).canvasColor.withOpacity(0.6),
                           fontWeight: FontWeight.w400),
@@ -350,7 +350,7 @@ class _LoginButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 26.0 * textScaleFactor),
+      padding: EdgeInsets.symmetric(horizontal: 26.0 * displayScaleFactor),
       child: Container(
         margin: const EdgeInsets.all(3.0),
         width: double.infinity,
@@ -460,7 +460,7 @@ class _PhoneLoginState extends State<_PhoneLogin> {
       children: [
         Text(
           AppLocalizations.of(context)!.lgConnectPhone,
-          textScaleFactor: textScaleFactor,
+          textScaleFactor: displayScaleFactor,
           style: AppLocalizations.of(context)!.localeName == 'km'
               ? Theme.of(context)
                   .primaryTextTheme
@@ -520,7 +520,7 @@ class _PolicyAgreement extends StatelessWidget {
         children: [
           Text(
             AppLocalizations.of(context)!.lgAccept,
-            textScaleFactor: textScaleFactor,
+            textScaleFactor: displayScaleFactor,
             style: AppLocalizations.of(context)!.localeName == 'km'
                 ? Theme.of(context).primaryTextTheme.bodyMedium!.copyWith(
                     color: Theme.of(context).colorScheme.brightness ==
@@ -536,7 +536,7 @@ class _PolicyAgreement extends StatelessWidget {
           const SizedBox(height: 3),
           Text(
             AppLocalizations.of(context)!.lgTermsPolicies,
-            textScaleFactor: textScaleFactor,
+            textScaleFactor: displayScaleFactor,
             style: AppLocalizations.of(context)!.localeName == 'km'
                 ? Theme.of(context).primaryTextTheme.bodyMedium!.copyWith(
                     color: Theme.of(context).colorScheme.brightness ==

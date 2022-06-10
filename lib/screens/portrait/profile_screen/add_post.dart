@@ -8,7 +8,7 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:geolocator/geolocator.dart' show Geolocator;
 import 'package:image_picker/image_picker.dart';
 import 'package:travenx_loitafoundation/config/configs.dart'
-    show kHPadding, kVPadding, textScaleFactor;
+    show kHPadding, kVPadding, displayScaleFactor;
 import 'package:travenx_loitafoundation/helpers/activity_type.dart';
 import 'package:travenx_loitafoundation/helpers/category_type.dart';
 import 'package:travenx_loitafoundation/helpers/city_name_translator.dart';
@@ -192,7 +192,7 @@ class _AddPostState extends State<AddPost> {
         ),
         title: Text(
           AppLocalizations.of(context)!.pfAddPost,
-          textScaleFactor: textScaleFactor,
+          textScaleFactor: displayScaleFactor,
           style: AppLocalizations.of(context)!.localeName == 'km'
               ? Theme.of(context).primaryTextTheme.titleLarge
               : Theme.of(context).textTheme.titleLarge,
@@ -218,7 +218,7 @@ class _AddPostState extends State<AddPost> {
               },
               child: Text(
                 AppLocalizations.of(context)!.skipLabel,
-                textScaleFactor: textScaleFactor,
+                textScaleFactor: displayScaleFactor,
                 style: AppLocalizations.of(context)!.localeName == 'km'
                     ? Theme.of(context).primaryTextTheme.bodyMedium
                     : Theme.of(context).textTheme.bodyMedium,
@@ -379,7 +379,7 @@ class _AddPostState extends State<AddPost> {
                                   child: Text(
                                     AppLocalizations.of(context)!
                                         .locationClosed,
-                                    textScaleFactor: textScaleFactor,
+                                    textScaleFactor: displayScaleFactor,
                                     style: AppLocalizations.of(context)!
                                                 .localeName ==
                                             'km'
@@ -395,7 +395,7 @@ class _AddPostState extends State<AddPost> {
                                   child: Text(
                                     AppLocalizations.of(context)!
                                         .locationToOpenWeb,
-                                    textScaleFactor: textScaleFactor,
+                                    textScaleFactor: displayScaleFactor,
                                     style: AppLocalizations.of(context)!
                                                 .localeName ==
                                             'km'
@@ -461,7 +461,7 @@ class _AddPostState extends State<AddPost> {
                                     child: Text(
                                       AppLocalizations.of(context)!
                                           .locationClosed,
-                                      textScaleFactor: textScaleFactor,
+                                      textScaleFactor: displayScaleFactor,
                                       style: AppLocalizations.of(context)!
                                                   .localeName ==
                                               'km'
@@ -477,7 +477,7 @@ class _AddPostState extends State<AddPost> {
                                     child: Text(
                                       AppLocalizations.of(context)!
                                           .locationToOpenMobile,
-                                      textScaleFactor: textScaleFactor,
+                                      textScaleFactor: displayScaleFactor,
                                       style: AppLocalizations.of(context)!
                                                   .localeName ==
                                               'km'
@@ -856,7 +856,7 @@ class _Steps extends StatelessWidget {
               children: [
                 Text(
                   AppLocalizations.of(context)!.pfApLocation,
-                  textScaleFactor: textScaleFactor,
+                  textScaleFactor: displayScaleFactor,
                   style: AppLocalizations.of(context)!.localeName == 'km'
                       ? Theme.of(context).primaryTextTheme.bodyLarge!.copyWith(
                             color: currentStep == 0
@@ -897,7 +897,7 @@ class _Steps extends StatelessWidget {
               children: [
                 Text(
                   AppLocalizations.of(context)!.pfApBasic,
-                  textScaleFactor: textScaleFactor,
+                  textScaleFactor: displayScaleFactor,
                   style: AppLocalizations.of(context)!.localeName == 'km'
                       ? Theme.of(context).primaryTextTheme.bodyLarge!.copyWith(
                             color: currentStep == 1
@@ -938,7 +938,7 @@ class _Steps extends StatelessWidget {
               children: [
                 Text(
                   AppLocalizations.of(context)!.pfApAdditional,
-                  textScaleFactor: textScaleFactor,
+                  textScaleFactor: displayScaleFactor,
                   style: AppLocalizations.of(context)!.localeName == 'km'
                       ? Theme.of(context).primaryTextTheme.bodyLarge!.copyWith(
                             color: currentStep == 2
@@ -979,7 +979,7 @@ class _Steps extends StatelessWidget {
               children: [
                 Text(
                   AppLocalizations.of(context)!.pfApPreview,
-                  textScaleFactor: textScaleFactor,
+                  textScaleFactor: displayScaleFactor,
                   style: AppLocalizations.of(context)!.localeName == 'km'
                       ? Theme.of(context).primaryTextTheme.bodyLarge!.copyWith(
                             color: currentStep == 3

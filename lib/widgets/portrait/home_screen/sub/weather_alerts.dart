@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:travenx_loitafoundation/config/configs.dart'
-    show textScaleFactor;
+    show displayScaleFactor;
 
 class WeatherAlerts extends StatelessWidget {
   final List<String> forecast;
@@ -29,7 +29,7 @@ class WeatherAlerts extends StatelessWidget {
                             ? 'There will be a ${this.forecast.first.split('/')[1]} here ${this.forecast.first.split('/')[0]} at ${this.forecast.first.split('/')[2]}.'
                             : '',
                     textAlign: TextAlign.justify,
-                    textScaleFactor: textScaleFactor,
+                    textScaleFactor: displayScaleFactor,
                     style: AppLocalizations.of(context)!.localeName == 'km'
                         ? Theme.of(context)
                             .primaryTextTheme
@@ -49,7 +49,7 @@ class WeatherAlerts extends StatelessWidget {
                                 ' And there will also be a ${this.forecast.elementAt(1).split('/')[1]} ${this.forecast.elementAt(1).split('/')[0]} at ${this.forecast.first.split('/')[2]}.'
                             : '',
                     textAlign: TextAlign.justify,
-                    textScaleFactor: textScaleFactor,
+                    textScaleFactor: displayScaleFactor,
                     style: AppLocalizations.of(context)!.localeName == 'km'
                         ? Theme.of(context)
                             .primaryTextTheme
@@ -71,7 +71,7 @@ class WeatherAlerts extends StatelessWidget {
                           ? 'Today, the sun will here set at $sunset.\nAnd rise tomorrow at $sunrise.'
                           : '',
                   textAlign: TextAlign.center,
-                  textScaleFactor: textScaleFactor,
+                  textScaleFactor: displayScaleFactor,
                   style: AppLocalizations.of(context)!.localeName == 'km'
                       ? Theme.of(context)
                           .primaryTextTheme

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:travenx_loitafoundation/config/configs.dart'
-    show kHPadding, textScaleFactor;
+    show kHPadding, displayScaleFactor;
 import 'package:travenx_loitafoundation/models/post_object_model.dart';
 
 class Activities extends StatelessWidget {
@@ -19,7 +19,7 @@ class Activities extends StatelessWidget {
           padding: const EdgeInsets.only(left: kHPadding),
           child: Text(
             AppLocalizations.of(context)!.pdActivityLabel,
-            textScaleFactor: textScaleFactor,
+            textScaleFactor: displayScaleFactor,
             style: AppLocalizations.of(context)!.localeName == 'km'
                 ? Theme.of(context).primaryTextTheme.titleLarge
                 : Theme.of(context).textTheme.titleLarge,
@@ -102,7 +102,7 @@ class _ActivityCard extends StatelessWidget {
               ),
               child: Text(
                 activity.label,
-                textScaleFactor: textScaleFactor,
+                textScaleFactor: displayScaleFactor,
                 style: AppLocalizations.of(context)!.localeName == 'km'
                     ? Theme.of(context).primaryTextTheme.displaySmall
                     : Theme.of(context).textTheme.displaySmall,

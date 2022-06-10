@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:travenx_loitafoundation/config/configs.dart'
-    show kHPadding, textScaleFactor;
+    show kHPadding, displayScaleFactor;
 import 'package:travenx_loitafoundation/widgets/portrait/profile_screen/add_post/custom_input_box.dart';
 
 class StepTwoFields extends StatelessWidget {
@@ -30,7 +30,7 @@ class StepTwoFields extends StatelessWidget {
         children: [
           Text(
             AppLocalizations.of(context)!.pfApStLabel,
-            textScaleFactor: textScaleFactor,
+            textScaleFactor: displayScaleFactor,
             style: AppLocalizations.of(context)!.localeName == 'km'
                 ? Theme.of(context).primaryTextTheme.titleLarge
                 : Theme.of(context).textTheme.titleLarge,

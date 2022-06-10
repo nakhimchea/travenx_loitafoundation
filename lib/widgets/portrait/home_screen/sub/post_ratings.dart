@@ -4,7 +4,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:travenx_loitafoundation/config/configs.dart'
-    show kHPadding, kVPadding, textScaleFactor;
+    show kHPadding, kVPadding, displayScaleFactor;
 import 'package:travenx_loitafoundation/helpers/rating_uploader.dart';
 import 'package:travenx_loitafoundation/icons/icons.dart';
 import 'package:travenx_loitafoundation/services/firestore_service.dart';
@@ -73,7 +73,7 @@ class _PostRatingsState extends State<PostRatings> {
             children: [
               Text(
                 AppLocalizations.of(context)!.pdReviewLabel,
-                textScaleFactor: textScaleFactor,
+                textScaleFactor: displayScaleFactor,
                 style: AppLocalizations.of(context)!.localeName == 'km'
                     ? Theme.of(context).primaryTextTheme.titleLarge
                     : Theme.of(context).textTheme.titleLarge,
@@ -100,7 +100,7 @@ class _PostRatingsState extends State<PostRatings> {
                       const SizedBox(width: 5.0),
                       Text(
                         AppLocalizations.of(context)!.pdReviewAddLabel,
-                        textScaleFactor: textScaleFactor,
+                        textScaleFactor: displayScaleFactor,
                         style: AppLocalizations.of(context)!.localeName == 'km'
                             ? Theme.of(context)
                                 .primaryTextTheme
@@ -160,7 +160,7 @@ class _PostRatingsState extends State<PostRatings> {
                       padding: const EdgeInsets.symmetric(vertical: kVPadding),
                       child: Text(
                         AppLocalizations.of(context)!.pdShowAllLabel,
-                        textScaleFactor: textScaleFactor,
+                        textScaleFactor: displayScaleFactor,
                         style: AppLocalizations.of(context)!.localeName == 'km'
                             ? Theme.of(context)
                                 .primaryTextTheme
@@ -249,7 +249,7 @@ class _PostRatingFieldsState extends State<_PostRatingFields> {
         children: [
           Text(
             AppLocalizations.of(context)!.pdReviewAddLabel,
-            textScaleFactor: textScaleFactor,
+            textScaleFactor: displayScaleFactor,
             style: AppLocalizations.of(context)!.localeName == 'km'
                 ? Theme.of(context).primaryTextTheme.displayMedium
                 : Theme.of(context).textTheme.displayMedium,
@@ -257,7 +257,7 @@ class _PostRatingFieldsState extends State<_PostRatingFields> {
           const SizedBox(height: 5.0),
           Text(
             AppLocalizations.of(context)!.pdReviewInstruction,
-            textScaleFactor: textScaleFactor,
+            textScaleFactor: displayScaleFactor,
             style: AppLocalizations.of(context)!.localeName == 'km'
                 ? Theme.of(context).primaryTextTheme.bodyLarge
                 : Theme.of(context).textTheme.bodyLarge,
@@ -271,10 +271,10 @@ class _PostRatingFieldsState extends State<_PostRatingFields> {
             style: AppLocalizations.of(context)!.localeName == 'km'
                 ? Theme.of(context).primaryTextTheme.bodyMedium!.copyWith(
                     color: Theme.of(context).primaryIconTheme.color,
-                    fontSize: 14 * textScaleFactor)
+                    fontSize: 14 * displayScaleFactor)
                 : Theme.of(context).textTheme.bodyMedium!.copyWith(
                     color: Theme.of(context).primaryIconTheme.color,
-                    fontSize: 14 * textScaleFactor),
+                    fontSize: 14 * displayScaleFactor),
             minLines: 5,
             maxLines: 24,
             textAlign: TextAlign.justify,
@@ -291,11 +291,11 @@ class _PostRatingFieldsState extends State<_PostRatingFields> {
                   ? Theme.of(context)
                       .primaryTextTheme
                       .bodyLarge!
-                      .copyWith(fontSize: 14 * textScaleFactor)
+                      .copyWith(fontSize: 14 * displayScaleFactor)
                   : Theme.of(context)
                       .textTheme
                       .bodyLarge!
-                      .copyWith(fontSize: 14 * textScaleFactor),
+                      .copyWith(fontSize: 14 * displayScaleFactor),
               border: OutlineInputBorder(
                 borderSide: BorderSide.none,
                 borderRadius: BorderRadius.circular(10.0),
@@ -308,7 +308,7 @@ class _PostRatingFieldsState extends State<_PostRatingFields> {
               padding: const EdgeInsets.symmetric(vertical: kVPadding),
               child: Text(
                 AppLocalizations.of(context)!.pdReviewSharePublic,
-                textScaleFactor: textScaleFactor,
+                textScaleFactor: displayScaleFactor,
                 style: AppLocalizations.of(context)!.localeName == 'km'
                     ? Theme.of(context).primaryTextTheme.bodyMedium
                     : Theme.of(context).textTheme.bodyMedium,
@@ -390,7 +390,7 @@ class _RateButton extends StatelessWidget {
         onTap: () => ratingCallback(index + 1),
         child: Icon(
           CustomFilledIcons.star,
-          size: 45 * textScaleFactor,
+          size: 45 * displayScaleFactor,
           color: Theme.of(context).highlightColor,
         ),
       ),
@@ -401,7 +401,7 @@ class _RateButton extends StatelessWidget {
             onTap: () => ratingCallback(currentRatings + index + 1),
             child: Icon(
               CustomFilledIcons.star,
-              size: 45 * textScaleFactor,
+              size: 45 * displayScaleFactor,
               color: Theme.of(context).disabledColor,
             ),
           ),
@@ -494,7 +494,7 @@ class _RatingCard extends StatelessWidget {
                   children: [
                     Text(
                       displayName,
-                      textScaleFactor: textScaleFactor,
+                      textScaleFactor: displayScaleFactor,
                       style: AppLocalizations.of(context)!.localeName == 'km'
                           ? Theme.of(context).primaryTextTheme.titleLarge
                           : Theme.of(context).textTheme.titleLarge,
@@ -524,7 +524,7 @@ class _RatingCard extends StatelessWidget {
                         const SizedBox(width: 10),
                         Text(
                           '០២-០៧-២០២១',
-                          textScaleFactor: textScaleFactor,
+                          textScaleFactor: displayScaleFactor,
                           style: AppLocalizations.of(context)!.localeName ==
                                   'km'
                               ? Theme.of(context).primaryTextTheme.bodyMedium
@@ -545,7 +545,7 @@ class _RatingCard extends StatelessWidget {
           SizedBox(height: comment == '' ? 0 : kVPadding),
           Text(
             comment,
-            textScaleFactor: textScaleFactor,
+            textScaleFactor: displayScaleFactor,
             style: AppLocalizations.of(context)!.localeName == 'km'
                 ? Theme.of(context).primaryTextTheme.bodyLarge
                 : Theme.of(context).textTheme.bodyLarge,

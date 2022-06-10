@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:travenx_loitafoundation/config/variable.dart'
-    show textScaleFactor;
+    show displayScaleFactor;
 import 'package:travenx_loitafoundation/icons/icons.dart';
 
 class CustomSnackBarContent extends StatelessWidget {
@@ -47,11 +47,11 @@ class CustomSnackBarContent extends StatelessWidget {
                       contentCode == 'invalid_facebook_account' ||
                       contentCode == 'invalid_google_account'
                   ? CircleAvatar(
-                      radius: (14 * textScaleFactor) / 2,
+                      radius: (14 * displayScaleFactor) / 2,
                       backgroundColor: Colors.white,
                       child: Icon(
                         CustomOutlinedIcons.close,
-                        size: 10 * textScaleFactor,
+                        size: 10 * displayScaleFactor,
                         color: Theme.of(context).errorColor,
                       ),
                     )
@@ -60,7 +60,7 @@ class CustomSnackBarContent extends StatelessWidget {
                               contentCode == 'successful_login'
                           ? CustomFilledIcons.success
                           : CustomFilledIcons.warning,
-                      size: 16 * textScaleFactor,
+                      size: 16 * displayScaleFactor,
                       color: Colors.white,
                     ),
             ],
@@ -70,7 +70,7 @@ class CustomSnackBarContent extends StatelessWidget {
             child: contentCode != 'code_sent'
                 ? Image.asset(
                     'assets/images/profile_screen/${AppLocalizations.of(context)!.localeName == 'km' ? contentCode + '_km' : contentCode}.png',
-                    height: 16.0 * textScaleFactor,
+                    height: 16.0 * displayScaleFactor,
                     fit: BoxFit.fitHeight,
                     alignment: Alignment.centerLeft,
                   )
@@ -78,13 +78,13 @@ class CustomSnackBarContent extends StatelessWidget {
                     children: [
                       Image.asset(
                         'assets/images/profile_screen/${AppLocalizations.of(context)!.localeName == 'km' ? contentCode + '_km' : contentCode}.png',
-                        height: 16.0 * textScaleFactor,
+                        height: 16.0 * displayScaleFactor,
                         fit: BoxFit.fitHeight,
                       ),
                       const SizedBox(width: 5),
                       Text(
                         '$phoneNumber',
-                        textScaleFactor: textScaleFactor,
+                        textScaleFactor: displayScaleFactor,
                         style: Theme.of(context)
                             .textTheme
                             .button!

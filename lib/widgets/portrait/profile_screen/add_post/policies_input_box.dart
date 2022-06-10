@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:travenx_loitafoundation/config/configs.dart'
-    show kVPadding, textScaleFactor;
+    show kVPadding, displayScaleFactor;
 import 'package:travenx_loitafoundation/icons/icons.dart';
 
 class PoliciesInputBox extends StatelessWidget {
@@ -31,7 +31,7 @@ class PoliciesInputBox extends StatelessWidget {
               Text(
                 '${index + 1}.',
                 textAlign: TextAlign.justify,
-                textScaleFactor: textScaleFactor,
+                textScaleFactor: displayScaleFactor,
                 style: Theme.of(context).textTheme.bodyMedium,
               ),
               const SizedBox(width: 3),
@@ -41,10 +41,10 @@ class PoliciesInputBox extends StatelessWidget {
                   style: AppLocalizations.of(context)!.localeName == 'km'
                       ? Theme.of(context).primaryTextTheme.bodyMedium!.copyWith(
                           color: Theme.of(context).primaryIconTheme.color,
-                          fontSize: 14 * textScaleFactor)
+                          fontSize: 14 * displayScaleFactor)
                       : Theme.of(context).textTheme.bodyMedium!.copyWith(
                           color: Theme.of(context).primaryIconTheme.color,
-                          fontSize: 14 * textScaleFactor),
+                          fontSize: 14 * displayScaleFactor),
                   minLines: minimumLines,
                   maxLines: 3,
                   textAlign: TextAlign.justify,
@@ -78,11 +78,11 @@ class PoliciesInputBox extends StatelessWidget {
                         ? Theme.of(context)
                             .primaryTextTheme
                             .bodyMedium!
-                            .copyWith(fontSize: 14 * textScaleFactor)
+                            .copyWith(fontSize: 14 * displayScaleFactor)
                         : Theme.of(context)
                             .textTheme
                             .bodyMedium!
-                            .copyWith(fontSize: 14 * textScaleFactor),
+                            .copyWith(fontSize: 14 * displayScaleFactor),
                     border: OutlineInputBorder(
                       borderSide: BorderSide.none,
                       borderRadius: BorderRadius.circular(10.0),

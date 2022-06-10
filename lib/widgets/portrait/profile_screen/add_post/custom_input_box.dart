@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:travenx_loitafoundation/config/variable.dart'
-    show textScaleFactor;
+    show displayScaleFactor;
 
 class CustomInputBox extends StatelessWidget {
   final TextEditingController textController;
@@ -32,7 +32,7 @@ class CustomInputBox extends StatelessWidget {
         Text(
           label,
           textAlign: TextAlign.justify,
-          textScaleFactor: textScaleFactor,
+          textScaleFactor: displayScaleFactor,
           style: minimumLines > 1
               ? AppLocalizations.of(context)!.localeName == 'km'
                   ? Theme.of(context).primaryTextTheme.bodyMedium
@@ -47,10 +47,10 @@ class CustomInputBox extends StatelessWidget {
           style: AppLocalizations.of(context)!.localeName == 'km'
               ? Theme.of(context).primaryTextTheme.bodyLarge!.copyWith(
                   color: Theme.of(context).primaryIconTheme.color,
-                  fontSize: 16 * textScaleFactor)
+                  fontSize: 16 * displayScaleFactor)
               : Theme.of(context).textTheme.bodyLarge!.copyWith(
                   color: Theme.of(context).primaryIconTheme.color,
-                  fontSize: 16 * textScaleFactor),
+                  fontSize: 16 * displayScaleFactor),
           minLines: minimumLines,
           maxLines: 24,
           textAlign: TextAlign.justify,
@@ -72,11 +72,11 @@ class CustomInputBox extends StatelessWidget {
                 ? Theme.of(context)
                     .primaryTextTheme
                     .bodyLarge!
-                    .copyWith(fontSize: 16 * textScaleFactor)
+                    .copyWith(fontSize: 16 * displayScaleFactor)
                 : Theme.of(context)
                     .textTheme
                     .bodyLarge!
-                    .copyWith(fontSize: 16 * textScaleFactor),
+                    .copyWith(fontSize: 16 * displayScaleFactor),
             border: OutlineInputBorder(
               borderSide: BorderSide.none,
               borderRadius: BorderRadius.circular(10.0),

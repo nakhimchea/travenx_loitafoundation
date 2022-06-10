@@ -11,7 +11,7 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:travenx_loitafoundation/config/configs.dart'
-    show kHPadding, textScaleFactor, descriptionIconSize;
+    show kHPadding, displayScaleFactor, descriptionIconSize;
 import 'package:travenx_loitafoundation/helpers/city_name_translator.dart';
 import 'package:travenx_loitafoundation/helpers/post_translator.dart';
 import 'package:travenx_loitafoundation/icons/icons.dart';
@@ -196,7 +196,7 @@ class _NearbysState extends State<Nearbys> {
                           child: Text(
                             AppLocalizations.of(context)!.locationClosed +
                                 AppLocalizations.of(context)!.locationSet,
-                            textScaleFactor: textScaleFactor,
+                            textScaleFactor: displayScaleFactor,
                             style: AppLocalizations.of(context)!.localeName ==
                                     'km'
                                 ? Theme.of(context).primaryTextTheme.bodyMedium
@@ -206,7 +206,7 @@ class _NearbysState extends State<Nearbys> {
                         Center(
                           child: Text(
                             AppLocalizations.of(context)!.locationToOpenWeb,
-                            textScaleFactor: textScaleFactor,
+                            textScaleFactor: displayScaleFactor,
                             style:
                                 AppLocalizations.of(context)!.localeName == 'km'
                                     ? Theme.of(context)
@@ -273,7 +273,7 @@ class _NearbysState extends State<Nearbys> {
                             child: Text(
                               AppLocalizations.of(context)!.locationClosed +
                                   AppLocalizations.of(context)!.locationSet,
-                              textScaleFactor: textScaleFactor,
+                              textScaleFactor: displayScaleFactor,
                               style: AppLocalizations.of(context)!.localeName ==
                                       'km'
                                   ? Theme.of(context)
@@ -286,7 +286,7 @@ class _NearbysState extends State<Nearbys> {
                             child: Text(
                               AppLocalizations.of(context)!
                                   .locationToOpenMobile,
-                              textScaleFactor: textScaleFactor,
+                              textScaleFactor: displayScaleFactor,
                               style: AppLocalizations.of(context)!.localeName ==
                                       'km'
                                   ? Theme.of(context)
@@ -312,7 +312,7 @@ class _NearbysState extends State<Nearbys> {
           padding: const EdgeInsets.only(left: kHPadding),
           child: Text(
             AppLocalizations.of(context)!.nbLabel,
-            textScaleFactor: textScaleFactor,
+            textScaleFactor: displayScaleFactor,
             style: AppLocalizations.of(context)!.localeName == 'km'
                 ? Theme.of(context).primaryTextTheme.titleLarge
                 : Theme.of(context).textTheme.titleLarge,
@@ -322,10 +322,10 @@ class _NearbysState extends State<Nearbys> {
         cityName == ''
             ? Container(
                 alignment: Alignment.center,
-                height: 150 + 121 * textScaleFactor,
+                height: 150 + 121 * displayScaleFactor,
                 child: Loading(color: Theme.of(context).disabledColor))
             : Container(
-                height: 150 + 121 * textScaleFactor,
+                height: 150 + 121 * displayScaleFactor,
                 child: hasNoData
                     ? Center(
                         child: Column(
@@ -339,7 +339,7 @@ class _NearbysState extends State<Nearbys> {
                             const SizedBox(height: 10),
                             Text(
                               AppLocalizations.of(context)!.nbNoData,
-                              textScaleFactor: textScaleFactor,
+                              textScaleFactor: displayScaleFactor,
                               style: AppLocalizations.of(context)!.localeName ==
                                       'km'
                                   ? Theme.of(context).primaryTextTheme.bodyLarge
@@ -518,7 +518,7 @@ class _NearbyCardState extends State<_NearbyCard> {
                       widget.post.price == 0
                           ? 'Free'
                           : '\$${widget.post.price % 1 == 0 ? widget.post.price.toStringAsFixed(0) : widget.post.price.toStringAsFixed(1)}',
-                      textScaleFactor: textScaleFactor,
+                      textScaleFactor: displayScaleFactor,
                       style: Theme.of(context)
                           .textTheme
                           .titleMedium!
@@ -530,7 +530,7 @@ class _NearbyCardState extends State<_NearbyCard> {
             ),
             Container(
               padding: const EdgeInsets.all(10.0),
-              height: 121 * textScaleFactor,
+              height: 121 * displayScaleFactor,
               width: MediaQuery.of(context).size.width / 1.9,
               decoration: BoxDecoration(
                 color: Theme.of(context).canvasColor,
@@ -545,7 +545,7 @@ class _NearbyCardState extends State<_NearbyCard> {
                 children: [
                   Text(
                     widget.post.title,
-                    textScaleFactor: textScaleFactor,
+                    textScaleFactor: displayScaleFactor,
                     style: AppLocalizations.of(context)!.localeName == 'km'
                         ? Theme.of(context).primaryTextTheme.titleMedium
                         : Theme.of(context).textTheme.titleMedium,
@@ -568,7 +568,7 @@ class _NearbyCardState extends State<_NearbyCard> {
                                       : 'ខេត្ត'
                                   : '') +
                               widget.post.state,
-                          textScaleFactor: textScaleFactor,
+                          textScaleFactor: displayScaleFactor,
                           style:
                               AppLocalizations.of(context)!.localeName == 'km'
                                   ? Theme.of(context).primaryTextTheme.bodySmall
@@ -593,7 +593,7 @@ class _NearbyCardState extends State<_NearbyCard> {
                           const SizedBox(width: 5.0),
                           Text(
                             _ratings.toStringAsFixed(1),
-                            textScaleFactor: textScaleFactor,
+                            textScaleFactor: displayScaleFactor,
                             style: Theme.of(context).textTheme.titleSmall,
                           ),
                         ],
@@ -608,7 +608,7 @@ class _NearbyCardState extends State<_NearbyCard> {
                           const SizedBox(width: 5.0),
                           Text(
                             _views.toString(),
-                            textScaleFactor: textScaleFactor,
+                            textScaleFactor: displayScaleFactor,
                             style: Theme.of(context).textTheme.bodyMedium,
                           ),
                         ],

@@ -2,7 +2,7 @@ import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:travenx_loitafoundation/config/configs.dart'
-    show kHPadding, kVPadding, textScaleFactor, Palette;
+    show kHPadding, kVPadding, displayScaleFactor, Palette;
 import 'package:travenx_loitafoundation/models/province_model.dart';
 import 'package:travenx_loitafoundation/screens/portrait/home_screen/province_routes.dart';
 
@@ -16,7 +16,7 @@ class Provinces extends StatelessWidget {
       children: <Widget>[
         Text(
           AppLocalizations.of(context)!.pvLabel,
-          textScaleFactor: textScaleFactor,
+          textScaleFactor: displayScaleFactor,
           style: AppLocalizations.of(context)!.localeName == 'km'
               ? Theme.of(context).primaryTextTheme.titleLarge
               : Theme.of(context).textTheme.titleLarge,
@@ -98,7 +98,7 @@ class _ProvinceCard extends StatelessWidget {
                 children: [
                   Text(
                     modelProvince.label,
-                    textScaleFactor: textScaleFactor * 5 / 6,
+                    textScaleFactor: displayScaleFactor * 5 / 6,
                     style: AppLocalizations.of(context)!.localeName == 'km'
                         ? Theme.of(context)
                             .primaryTextTheme

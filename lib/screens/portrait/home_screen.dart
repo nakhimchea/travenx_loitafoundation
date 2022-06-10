@@ -6,7 +6,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:travenx_loitafoundation/config/configs.dart'
-    show kHPadding, kVPadding, textScaleFactor;
+    show kHPadding, kVPadding, displayScaleFactor;
 import 'package:travenx_loitafoundation/widgets/portrait/home_screen/widgets.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -82,7 +82,7 @@ class _HomeScreenState extends State<HomeScreen>
                 backgroundColor: Theme.of(context).scaffoldBackgroundColor,
                 title: Text(
                   'Travenx',
-                  textScaleFactor: textScaleFactor,
+                  textScaleFactor: displayScaleFactor,
                   style: Theme.of(context).textTheme.displayLarge,
                 ),
                 centerTitle: false,

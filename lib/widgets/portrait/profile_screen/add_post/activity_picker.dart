@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:travenx_loitafoundation/config/configs.dart'
-    show kHPadding, textScaleFactor;
+    show kHPadding, displayScaleFactor;
 import 'package:travenx_loitafoundation/helpers/activity_type.dart';
 
 class ActivityPicker extends StatelessWidget {
@@ -24,7 +24,7 @@ class ActivityPicker extends StatelessWidget {
           Text(
             AppLocalizations.of(context)!.pfApSthActivityLabel,
             textAlign: TextAlign.justify,
-            textScaleFactor: textScaleFactor,
+            textScaleFactor: displayScaleFactor,
             style: AppLocalizations.of(context)!.localeName == 'km'
                 ? Theme.of(context).primaryTextTheme.bodyMedium
                 : Theme.of(context).textTheme.bodyMedium,
@@ -110,7 +110,7 @@ class _ActivityButton extends StatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: 5),
         child: Text(
           label,
-          textScaleFactor: textScaleFactor,
+          textScaleFactor: displayScaleFactor,
           textAlign: TextAlign.center,
           style: AppLocalizations.of(context)!.localeName == 'km'
               ? Theme.of(context)

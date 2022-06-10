@@ -1,8 +1,8 @@
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:travenx_loitafoundation/config/constant.dart';
-import 'package:travenx_loitafoundation/config/variable.dart';
+import 'package:travenx_loitafoundation/config/configs.dart'
+    show kHPadding, displayScaleFactor;
 
 class ProfileCategory extends StatelessWidget {
   final Widget icon;
@@ -41,7 +41,7 @@ class ProfileCategory extends StatelessWidget {
             Expanded(
               child: Text(
                 title,
-                textScaleFactor: textScaleFactor,
+                textScaleFactor: displayScaleFactor,
                 style: AppLocalizations.of(context)!.localeName == 'km'
                     ? Theme.of(context).primaryTextTheme.bodyLarge!.copyWith(
                           color: textColor != null

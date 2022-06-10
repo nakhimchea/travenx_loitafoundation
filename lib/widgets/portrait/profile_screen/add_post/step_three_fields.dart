@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:travenx_loitafoundation/config/configs.dart'
-    show kHPadding, textScaleFactor;
+    show kHPadding, displayScaleFactor;
 import 'package:travenx_loitafoundation/widgets/portrait/profile_screen/add_post/custom_input_box.dart';
 import 'package:travenx_loitafoundation/widgets/portrait/profile_screen/add_post/policies_input_box.dart';
 
@@ -36,7 +36,7 @@ class StepThreeFields extends StatelessWidget {
           Text(
             AppLocalizations.of(context)!.pfApSthPoliciesLabel,
             textAlign: TextAlign.justify,
-            textScaleFactor: textScaleFactor,
+            textScaleFactor: displayScaleFactor,
             style: Theme.of(context).textTheme.bodyMedium,
           ),
           PoliciesInputBox(

@@ -64,11 +64,12 @@ class _LoginTextFieldState extends State<LoginTextField> {
     return _isLoading
         ? Loading()
         : Padding(
-            padding: EdgeInsets.symmetric(horizontal: 26.0 * textScaleFactor),
+            padding:
+                EdgeInsets.symmetric(horizontal: 26.0 * displayScaleFactor),
             child: Stack(
               children: [
                 Container(
-                  height: 50 * textScaleFactor + 2,
+                  height: 50 * displayScaleFactor + 2,
                   decoration: BoxDecoration(
                     color: widget.isCodeSent
                         ? Theme.of(context).canvasColor
@@ -78,7 +79,7 @@ class _LoginTextFieldState extends State<LoginTextField> {
                 ),
                 Container(
                   margin: EdgeInsets.all(1.0),
-                  height: 50 * textScaleFactor,
+                  height: 50 * displayScaleFactor,
                   decoration: BoxDecoration(
                     color: Theme.of(context).canvasColor,
                     borderRadius: BorderRadius.circular(28.0),
@@ -86,24 +87,25 @@ class _LoginTextFieldState extends State<LoginTextField> {
                   child: Row(
                     children: [
                       Container(
-                        width: 58.0 * textScaleFactor,
-                        padding: EdgeInsets.only(left: 26.0 * textScaleFactor),
+                        width: 58.0 * displayScaleFactor,
+                        padding:
+                            EdgeInsets.only(left: 26.0 * displayScaleFactor),
                         child: Image.asset(
                           widget.logoUrl,
                           width: widget.hintText ==
                                   AppLocalizations.of(context)!.lgEnterCode
-                              ? 34.0 * textScaleFactor
-                              : 18.0 * textScaleFactor,
+                              ? 34.0 * displayScaleFactor
+                              : 18.0 * displayScaleFactor,
                           height: widget.hintText ==
                                   AppLocalizations.of(context)!.lgEnterCode
-                              ? 34.0 * textScaleFactor
-                              : 18.0 * textScaleFactor,
+                              ? 34.0 * displayScaleFactor
+                              : 18.0 * displayScaleFactor,
                         ),
                       ),
-                      SizedBox(width: 16.0 * textScaleFactor),
+                      SizedBox(width: 16.0 * displayScaleFactor),
                       Container(
                         width: MediaQuery.of(context).size.width -
-                            150.0 * textScaleFactor,
+                            150.0 * displayScaleFactor,
                         child: Row(
                           children: [
                             Expanded(
@@ -117,7 +119,7 @@ class _LoginTextFieldState extends State<LoginTextField> {
                                         .copyWith(
                                             color:
                                                 Theme.of(context).primaryColor,
-                                            fontSize: 18 * textScaleFactor,
+                                            fontSize: 18 * displayScaleFactor,
                                             fontWeight: FontWeight.w500)
                                     : Theme.of(context)
                                         .textTheme
@@ -125,7 +127,7 @@ class _LoginTextFieldState extends State<LoginTextField> {
                                         .copyWith(
                                             color:
                                                 Theme.of(context).primaryColor,
-                                            fontSize: 18 * textScaleFactor,
+                                            fontSize: 18 * displayScaleFactor,
                                             fontWeight: FontWeight.w500),
                                 enabled: widget.pinCodeEnabled != null
                                     ? !widget.isCodeSent &&
@@ -146,13 +148,13 @@ class _LoginTextFieldState extends State<LoginTextField> {
                                           .primaryTextTheme
                                           .labelSmall!
                                           .copyWith(
-                                              fontSize: 18 * textScaleFactor,
+                                              fontSize: 18 * displayScaleFactor,
                                               fontWeight: FontWeight.w500)
                                       : Theme.of(context)
                                           .textTheme
                                           .labelMedium!
                                           .copyWith(
-                                              fontSize: 18 * textScaleFactor,
+                                              fontSize: 18 * displayScaleFactor,
                                               fontWeight: FontWeight.w500),
                                   border: InputBorder.none,
                                 ),
@@ -195,7 +197,7 @@ class _LoginTextFieldState extends State<LoginTextField> {
                                           child: Text(
                                             AppLocalizations.of(context)!
                                                 .lgSendCode,
-                                            textScaleFactor: textScaleFactor,
+                                            textScaleFactor: displayScaleFactor,
                                             style: AppLocalizations.of(context)!
                                                         .localeName ==
                                                     'km'
@@ -222,7 +224,7 @@ class _LoginTextFieldState extends State<LoginTextField> {
                                         visible: !widget.isCodeSent,
                                         child: Text(
                                           '$_countSeconds ${AppLocalizations.of(context)!.lgSecond + ((AppLocalizations.of(context)!.localeName == 'en' && _countSeconds > 1) ? 's' : '')}',
-                                          textScaleFactor: textScaleFactor,
+                                          textScaleFactor: displayScaleFactor,
                                           style: AppLocalizations.of(context)!
                                                       .localeName ==
                                                   'km'

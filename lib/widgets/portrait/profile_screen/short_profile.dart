@@ -4,7 +4,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:travenx_loitafoundation/config/configs.dart'
-    show kHPadding, profilePictureDiameter, textScaleFactor;
+    show kHPadding, profilePictureDiameter, displayScaleFactor;
 import 'package:travenx_loitafoundation/helpers/profile_clipper.dart';
 import 'package:travenx_loitafoundation/models/profile_object_model.dart';
 
@@ -37,21 +37,26 @@ class ShortProfile extends StatelessWidget {
                 child: backgroundUrl == ''
                     ? Image.asset(
                         _anonymous.imageBackgroundUrl,
-                        height: constraints.maxWidth * 9 / 16 * textScaleFactor,
+                        height:
+                            constraints.maxWidth * 9 / 16 * displayScaleFactor,
                         width: double.infinity,
                         fit: BoxFit.cover,
                       )
                     : backgroundUrl.split('/').first == 'assets'
                         ? Image.asset(
                             backgroundUrl,
-                            height:
-                                constraints.maxWidth * 9 / 16 * textScaleFactor,
+                            height: constraints.maxWidth *
+                                9 /
+                                16 *
+                                displayScaleFactor,
                             width: double.infinity,
                             fit: BoxFit.cover,
                           )
                         : CachedNetworkImage(
-                            height:
-                                constraints.maxWidth * 9 / 16 * textScaleFactor,
+                            height: constraints.maxWidth *
+                                9 /
+                                16 *
+                                displayScaleFactor,
                             width: double.infinity,
                             imageUrl: backgroundUrl,
                             fit: BoxFit.cover,
@@ -75,20 +80,24 @@ class ShortProfile extends StatelessWidget {
                   child: profileUrl == ''
                       ? Image.asset(
                           _anonymous.imageProfileUrl,
-                          height: profilePictureDiameter * textScaleFactor,
-                          width: profilePictureDiameter * textScaleFactor,
+                          height: profilePictureDiameter * displayScaleFactor,
+                          width: profilePictureDiameter * displayScaleFactor,
                           fit: BoxFit.contain,
                         )
                       : profileUrl.split('/').first == 'assets'
                           ? Image.asset(
                               profileUrl,
-                              height: profilePictureDiameter * textScaleFactor,
-                              width: profilePictureDiameter * textScaleFactor,
+                              height:
+                                  profilePictureDiameter * displayScaleFactor,
+                              width:
+                                  profilePictureDiameter * displayScaleFactor,
                               fit: BoxFit.contain,
                             )
                           : CachedNetworkImage(
-                              height: profilePictureDiameter * textScaleFactor,
-                              width: profilePictureDiameter * textScaleFactor,
+                              height:
+                                  profilePictureDiameter * displayScaleFactor,
+                              width:
+                                  profilePictureDiameter * displayScaleFactor,
                               imageUrl: profileUrl,
                               fit: BoxFit.contain,
                               placeholder: (context, _) => ImageFiltered(
@@ -117,7 +126,7 @@ class ShortProfile extends StatelessWidget {
               children: [
                 Text(
                   '${displayName != '' ? displayName : _anonymous.displayName}',
-                  textScaleFactor: textScaleFactor,
+                  textScaleFactor: displayScaleFactor,
                   style: AppLocalizations.of(context)!.localeName == 'km'
                       ? Theme.of(context).primaryTextTheme.displayMedium
                       : Theme.of(context).textTheme.displayMedium,
@@ -125,7 +134,7 @@ class ShortProfile extends StatelessWidget {
                 const SizedBox(height: 5.0),
                 Text(
                   phoneNumber != '' ? phoneNumber : _anonymous.phoneNumber,
-                  textScaleFactor: textScaleFactor,
+                  textScaleFactor: displayScaleFactor,
                   style: Theme.of(context).textTheme.bodyLarge,
                 ),
               ],

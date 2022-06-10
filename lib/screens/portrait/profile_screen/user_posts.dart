@@ -6,7 +6,7 @@ import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:travenx_loitafoundation/config/configs.dart'
-    show kHPadding, textScaleFactor, descriptionIconSize;
+    show kHPadding, displayScaleFactor, descriptionIconSize;
 import 'package:travenx_loitafoundation/helpers/post_translator.dart';
 import 'package:travenx_loitafoundation/icons/icons.dart';
 import 'package:travenx_loitafoundation/models/home_screen_models.dart';
@@ -63,7 +63,7 @@ class _UserPostsState extends State<UserPosts> {
         ),
         title: Text(
           AppLocalizations.of(context)!.pfAddedPost,
-          textScaleFactor: textScaleFactor,
+          textScaleFactor: displayScaleFactor,
           style: AppLocalizations.of(context)!.localeName == 'km'
               ? Theme.of(context).primaryTextTheme.titleLarge
               : Theme.of(context).textTheme.titleLarge,
@@ -100,7 +100,7 @@ class _UserPostsState extends State<UserPosts> {
                         const SizedBox(height: 10),
                         Text(
                           AppLocalizations.of(context)!.pfAddedPostNoData,
-                          textScaleFactor: textScaleFactor,
+                          textScaleFactor: displayScaleFactor,
                           style:
                               AppLocalizations.of(context)!.localeName == 'km'
                                   ? Theme.of(context).primaryTextTheme.bodyLarge
@@ -121,9 +121,9 @@ class _UserPostsState extends State<UserPosts> {
         },
         iconData: Icons.add,
         iconColor: Colors.white,
-        iconSize: 26.0 * textScaleFactor,
+        iconSize: 26.0 * displayScaleFactor,
         buttonColor: Theme.of(context).primaryColor,
-        buttonSize: 46.0 * textScaleFactor,
+        buttonSize: 46.0 * displayScaleFactor,
       ),
     );
   }
@@ -343,7 +343,7 @@ class _PostCardState extends State<_PostCard> {
                     widget.post.price == 0
                         ? 'Free'
                         : '\$${widget.post.price % 1 == 0 ? widget.post.price.toStringAsFixed(0) : widget.post.price.toStringAsFixed(1)}',
-                    textScaleFactor: textScaleFactor,
+                    textScaleFactor: displayScaleFactor,
                     style: Theme.of(context)
                         .textTheme
                         .titleMedium!
@@ -355,7 +355,7 @@ class _PostCardState extends State<_PostCard> {
           ),
           Container(
             padding: const EdgeInsets.all(10.0),
-            height: 121 * textScaleFactor,
+            height: 121 * displayScaleFactor,
             width: ((MediaQuery.of(context).size.width - widget.spacing) / 2) -
                 kHPadding,
             decoration: BoxDecoration(
@@ -371,7 +371,7 @@ class _PostCardState extends State<_PostCard> {
               children: [
                 Text(
                   widget.post.title,
-                  textScaleFactor: textScaleFactor,
+                  textScaleFactor: displayScaleFactor,
                   style: AppLocalizations.of(context)!.localeName == 'km'
                       ? Theme.of(context).primaryTextTheme.titleMedium
                       : Theme.of(context).textTheme.titleMedium,
@@ -389,7 +389,7 @@ class _PostCardState extends State<_PostCard> {
                       child: Text(
                         (widget.post.state == 'ភ្នំពេញ' ? 'រាជធានី' : 'ខេត្ត') +
                             widget.post.state,
-                        textScaleFactor: textScaleFactor,
+                        textScaleFactor: displayScaleFactor,
                         style: AppLocalizations.of(context)!.localeName == 'km'
                             ? Theme.of(context).primaryTextTheme.bodySmall
                             : Theme.of(context).textTheme.bodySmall,
@@ -412,7 +412,7 @@ class _PostCardState extends State<_PostCard> {
                         const SizedBox(width: 5.0),
                         Text(
                           _ratings.toStringAsFixed(1),
-                          textScaleFactor: textScaleFactor,
+                          textScaleFactor: displayScaleFactor,
                           style: Theme.of(context).textTheme.titleSmall,
                         ),
                       ],
@@ -427,7 +427,7 @@ class _PostCardState extends State<_PostCard> {
                         const SizedBox(width: 5.0),
                         Text(
                           _views.toString(),
-                          textScaleFactor: textScaleFactor,
+                          textScaleFactor: displayScaleFactor,
                           style: Theme.of(context).textTheme.bodyMedium,
                         ),
                       ],

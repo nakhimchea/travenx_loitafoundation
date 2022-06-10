@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:travenx_loitafoundation/config/configs.dart'
-    show kVPadding, textScaleFactor;
+    show kVPadding, displayScaleFactor;
 import 'package:travenx_loitafoundation/providers/locale_provider.dart';
 
 class ChangeLanguageButton extends StatelessWidget {
@@ -14,11 +14,11 @@ class ChangeLanguageButton extends StatelessWidget {
     return GestureDetector(
       child: CircleAvatar(
         backgroundColor: Theme.of(context).highlightColor,
-        radius: 20 * textScaleFactor,
+        radius: 20 * displayScaleFactor,
         child: Image.asset(
           'assets/icons/home_screen/languages.png',
-          height: 24 * textScaleFactor,
-          width: 24 * textScaleFactor,
+          height: 24 * displayScaleFactor,
+          width: 24 * displayScaleFactor,
         ),
       ),
       onTap: () {
@@ -73,7 +73,7 @@ class _CustomLanguageDialogState extends State<_CustomLanguageDialog> {
                   padding: const EdgeInsets.symmetric(vertical: kVPadding),
                   child: Text(
                     'ភាសាខ្មែរ',
-                    textScaleFactor: textScaleFactor,
+                    textScaleFactor: displayScaleFactor,
                     style: Theme.of(context).textTheme.labelSmall,
                   ),
                 ),
@@ -92,7 +92,7 @@ class _CustomLanguageDialogState extends State<_CustomLanguageDialog> {
                   padding: const EdgeInsets.symmetric(vertical: kVPadding),
                   child: Text(
                     'English',
-                    textScaleFactor: textScaleFactor,
+                    textScaleFactor: displayScaleFactor,
                     style: Theme.of(context).textTheme.labelSmall,
                   ),
                 ),
@@ -129,7 +129,7 @@ class _CustomLanguageDialogState extends State<_CustomLanguageDialog> {
                     onTap: () => Navigator.pop(context),
                     child: Padding(
                       padding: EdgeInsets.only(
-                          left: 26.0 * textScaleFactor,
+                          left: 26.0 * displayScaleFactor,
                           bottom: kVPadding + 5.0,
                           top: 5.0),
                       child: Text(
@@ -138,7 +138,7 @@ class _CustomLanguageDialogState extends State<_CustomLanguageDialog> {
                             : selectedLanguage == 2
                                 ? '取消'
                                 : 'Cancel',
-                        textScaleFactor: textScaleFactor,
+                        textScaleFactor: displayScaleFactor,
                         style: Theme.of(context)
                             .textTheme
                             .labelSmall!
@@ -157,14 +157,14 @@ class _CustomLanguageDialogState extends State<_CustomLanguageDialog> {
                     },
                     child: Padding(
                       padding: EdgeInsets.only(
-                          right: 26.0 * textScaleFactor, bottom: kVPadding),
+                          right: 26.0 * displayScaleFactor, bottom: kVPadding),
                       child: Text(
                         selectedLanguage == 0
                             ? 'រួចរាល់'
                             : selectedLanguage == 2
                                 ? '完毕'
                                 : 'Done',
-                        textScaleFactor: textScaleFactor,
+                        textScaleFactor: displayScaleFactor,
                         style: Theme.of(context).textTheme.labelSmall!.copyWith(
                             color: Theme.of(context).primaryColor,
                             fontWeight: FontWeight.w600),

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:travenx_loitafoundation/config/configs.dart'
-    show kVPadding, textScaleFactor;
+    show kVPadding, displayScaleFactor;
 
 class StepperNavigationButton extends StatelessWidget {
   final Color backgroundColor;
@@ -30,7 +30,7 @@ class StepperNavigationButton extends StatelessWidget {
         padding: const EdgeInsets.symmetric(vertical: kVPadding / 2),
         child: Text(
           label,
-          textScaleFactor: textScaleFactor,
+          textScaleFactor: displayScaleFactor,
           textAlign: TextAlign.center,
           style: textStyle,
         ),

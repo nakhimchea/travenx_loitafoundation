@@ -5,7 +5,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:travenx_loitafoundation/config/configs.dart'
-    show kHPadding, kVPadding, textScaleFactor, kCardTileVPadding, Palette;
+    show kHPadding, kVPadding, displayScaleFactor, kCardTileVPadding, Palette;
 import 'package:travenx_loitafoundation/helpers/post_translator.dart';
 import 'package:travenx_loitafoundation/icons/icons.dart';
 import 'package:travenx_loitafoundation/models/home_screen_models.dart';
@@ -59,7 +59,7 @@ class _ProvinceRoutesState extends State<ProvinceRoutes> {
             ),
             title: Text(
               AppLocalizations.of(context)!.pvAppBar,
-              textScaleFactor: textScaleFactor,
+              textScaleFactor: displayScaleFactor,
               style: AppLocalizations.of(context)!.localeName == 'km'
                   ? Theme.of(context).primaryTextTheme.titleLarge
                   : Theme.of(context).textTheme.titleLarge,
@@ -178,7 +178,7 @@ class _ProvincesItem extends StatelessWidget {
                   children: [
                     Text(
                       modelProvince.label,
-                      textScaleFactor: textScaleFactor,
+                      textScaleFactor: displayScaleFactor,
                       style: AppLocalizations.of(context)!.localeName == 'km'
                           ? Theme.of(context).primaryTextTheme.displayMedium
                           : Theme.of(context).textTheme.displayMedium,
@@ -188,7 +188,7 @@ class _ProvincesItem extends StatelessWidget {
                       children: [
                         Text(
                           AppLocalizations.of(context)!.pvCountPlaces,
-                          textScaleFactor: textScaleFactor,
+                          textScaleFactor: displayScaleFactor,
                           style: AppLocalizations.of(context)!.localeName ==
                                   'km'
                               ? Theme.of(context).primaryTextTheme.bodyMedium
@@ -196,7 +196,7 @@ class _ProvincesItem extends StatelessWidget {
                         ),
                         Text(
                           totalPosts,
-                          textScaleFactor: textScaleFactor,
+                          textScaleFactor: displayScaleFactor,
                           style: Theme.of(context)
                               .textTheme
                               .bodyMedium!
@@ -319,7 +319,7 @@ class _ProvinceListState extends State<_ProvinceList> {
                           horizontal: kHPadding, vertical: 6.0),
                       child: Text(
                         AppLocalizations.of(context)!.pvTitle,
-                        textScaleFactor: textScaleFactor,
+                        textScaleFactor: displayScaleFactor,
                         style: AppLocalizations.of(context)!.localeName == 'km'
                             ? Theme.of(context).primaryTextTheme.titleLarge
                             : Theme.of(context).textTheme.titleLarge,
@@ -373,7 +373,7 @@ class _ProvinceListState extends State<_ProvinceList> {
                     const SizedBox(height: 10),
                     Text(
                       AppLocalizations.of(context)!.noData,
-                      textScaleFactor: textScaleFactor,
+                      textScaleFactor: displayScaleFactor,
                       style: Theme.of(context).textTheme.bodyLarge,
                     ),
                   ],
@@ -518,7 +518,7 @@ class _ProvinceCover extends StatelessWidget {
                             : 'ខេត្ត'
                         : '') +
                     modelProvince.label,
-                textScaleFactor: textScaleFactor,
+                textScaleFactor: displayScaleFactor,
                 style: Theme.of(context)
                     .textTheme
                     .displayLarge!
@@ -529,7 +529,7 @@ class _ProvinceCover extends StatelessWidget {
                 children: [
                   Text(
                     AppLocalizations.of(context)!.pvCountPlaces,
-                    textScaleFactor: textScaleFactor,
+                    textScaleFactor: displayScaleFactor,
                     style: AppLocalizations.of(context)!.localeName == 'km'
                         ? Theme.of(context)
                             .primaryTextTheme
@@ -542,7 +542,7 @@ class _ProvinceCover extends StatelessWidget {
                   ),
                   Text(
                     totalPosts,
-                    textScaleFactor: textScaleFactor,
+                    textScaleFactor: displayScaleFactor,
                     style: Theme.of(context)
                         .textTheme
                         .titleSmall!

@@ -5,7 +5,7 @@ import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:travenx_loitafoundation/config/configs.dart'
-    show descriptionIconSize, kHPadding, textScaleFactor;
+    show descriptionIconSize, kHPadding, displayScaleFactor;
 import 'package:travenx_loitafoundation/icons/icons.dart';
 import 'package:travenx_loitafoundation/models/post_object_model.dart';
 import 'package:travenx_loitafoundation/screens/portrait/home_screen/post_detail.dart';
@@ -117,7 +117,7 @@ class _CardTileItemState extends State<CardTileItem> {
                         Expanded(
                           child: Text(
                             widget.post.title,
-                            textScaleFactor: textScaleFactor,
+                            textScaleFactor: displayScaleFactor,
                             style: AppLocalizations.of(context)!.localeName ==
                                     'km'
                                 ? Theme.of(context).primaryTextTheme.titleMedium
@@ -131,7 +131,7 @@ class _CardTileItemState extends State<CardTileItem> {
                           widget.post.price == 0
                               ? 'Free'
                               : '\$${widget.post.price % 1 == 0 ? widget.post.price.toStringAsFixed(0) : widget.post.price.toStringAsFixed(1)}',
-                          textScaleFactor: textScaleFactor,
+                          textScaleFactor: displayScaleFactor,
                           style: Theme.of(context)
                               .textTheme
                               .titleLarge!
@@ -158,7 +158,7 @@ class _CardTileItemState extends State<CardTileItem> {
                                           : 'ខេត្ត'
                                       : '') +
                                   widget.post.state,
-                              textScaleFactor: textScaleFactor,
+                              textScaleFactor: displayScaleFactor,
                               style: AppLocalizations.of(context)!.localeName ==
                                       'km'
                                   ? Theme.of(context).primaryTextTheme.bodySmall
@@ -178,7 +178,7 @@ class _CardTileItemState extends State<CardTileItem> {
                             ? widget.post.details!.textDetail
                             : '',
                         textAlign: TextAlign.justify,
-                        textScaleFactor: textScaleFactor,
+                        textScaleFactor: displayScaleFactor,
                         maxLines: 3,
                         style: AppLocalizations.of(context)!.localeName == 'km'
                             ? Theme.of(context).primaryTextTheme.bodySmall
@@ -201,7 +201,7 @@ class _CardTileItemState extends State<CardTileItem> {
                               padding: const EdgeInsets.only(left: 5.0),
                               child: Text(
                                 _ratings.toStringAsFixed(1),
-                                textScaleFactor: textScaleFactor,
+                                textScaleFactor: displayScaleFactor,
                                 style: Theme.of(context).textTheme.titleSmall,
                               ),
                             ),
@@ -218,7 +218,7 @@ class _CardTileItemState extends State<CardTileItem> {
                               padding: const EdgeInsets.only(left: 5.0),
                               child: Text(
                                 _views.toString(),
-                                textScaleFactor: textScaleFactor,
+                                textScaleFactor: displayScaleFactor,
                                 style: Theme.of(context).textTheme.bodyLarge,
                               ),
                             ),

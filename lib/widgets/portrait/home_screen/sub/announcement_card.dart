@@ -2,7 +2,7 @@ import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:travenx_loitafoundation/config/configs.dart'
-    show kHPadding, textScaleFactor;
+    show kHPadding, displayScaleFactor;
 
 class AnnouncementCard extends StatelessWidget {
   final String announcement;
@@ -30,7 +30,7 @@ class AnnouncementCard extends StatelessWidget {
             children: [
               Text(
                 AppLocalizations.of(context)!.pdAnnouncementLabel,
-                textScaleFactor: textScaleFactor,
+                textScaleFactor: displayScaleFactor,
                 style: AppLocalizations.of(context)!.localeName == 'km'
                     ? Theme.of(context)
                         .primaryTextTheme
@@ -45,7 +45,7 @@ class AnnouncementCard extends StatelessWidget {
               RichText(
                 textAlign: TextAlign.justify,
                 maxLines: 6,
-                textScaleFactor: textScaleFactor,
+                textScaleFactor: displayScaleFactor,
                 overflow: kIsWeb ? TextOverflow.clip : TextOverflow.ellipsis,
                 text: TextSpan(
                   text: '    ',

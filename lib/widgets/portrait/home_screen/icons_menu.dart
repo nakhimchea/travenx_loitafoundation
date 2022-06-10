@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:travenx_loitafoundation/config/configs.dart'
-    show kHPadding, kVPadding, textScaleFactor;
+    show kHPadding, kVPadding, displayScaleFactor;
 import 'package:travenx_loitafoundation/models/icon_menu_model.dart';
 import 'package:travenx_loitafoundation/screens/portrait/home_screen/icon_menu_tab.dart';
 
@@ -68,7 +68,7 @@ class _IconMenu extends StatelessWidget {
             ),
             Text(
               modelIconMenu.label,
-              textScaleFactor: textScaleFactor,
+              textScaleFactor: displayScaleFactor,
               style: AppLocalizations.of(context)!.localeName == 'km'
                   ? Theme.of(context).primaryTextTheme.bodySmall
                   : Theme.of(context).textTheme.bodySmall,

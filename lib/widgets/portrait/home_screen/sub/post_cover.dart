@@ -3,7 +3,7 @@ import 'dart:ui';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:travenx_loitafoundation/config/configs.dart'
-    show kHPadding, textScaleFactor;
+    show kHPadding, displayScaleFactor;
 
 class PostCover extends StatefulWidget {
   final List<String> imageUrls;
@@ -97,7 +97,7 @@ class _PostCoverState extends State<PostCover> {
             child: Center(
               child: Text(
                 '${_imagesIndex + 1}/${widget.imageUrls.length}',
-                textScaleFactor: textScaleFactor,
+                textScaleFactor: displayScaleFactor,
                 textAlign: TextAlign.center,
                 style: Theme.of(context).textTheme.titleSmall,
               ),

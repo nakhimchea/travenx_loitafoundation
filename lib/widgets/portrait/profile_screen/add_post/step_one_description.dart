@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:travenx_loitafoundation/config/configs.dart'
-    show kHPadding, kVPadding, textScaleFactor;
+    show kHPadding, kVPadding, displayScaleFactor;
 
 class StepOneDescription extends StatelessWidget {
   final bool isAgreementHighlight;
@@ -25,7 +25,7 @@ class StepOneDescription extends StatelessWidget {
         children: [
           Text(
             AppLocalizations.of(context)!.pfApSoLabel,
-            textScaleFactor: textScaleFactor,
+            textScaleFactor: displayScaleFactor,
             style: AppLocalizations.of(context)!.localeName == 'km'
                 ? Theme.of(context).primaryTextTheme.titleLarge
                 : Theme.of(context).textTheme.titleLarge,
@@ -34,7 +34,7 @@ class StepOneDescription extends StatelessWidget {
           Text(
             AppLocalizations.of(context)!.pfApSoDescription,
             textAlign: TextAlign.justify,
-            textScaleFactor: textScaleFactor,
+            textScaleFactor: displayScaleFactor,
             style: AppLocalizations.of(context)!.localeName == 'km'
                 ? Theme.of(context).primaryTextTheme.bodyLarge
                 : Theme.of(context).textTheme.bodyLarge,

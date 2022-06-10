@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:travenx_loitafoundation/config/configs.dart'
-    show kHPadding, kVPadding, textScaleFactor;
+    show kHPadding, kVPadding, displayScaleFactor;
 import 'package:travenx_loitafoundation/helpers/time_translator.dart';
 
 class BusinessTime extends StatelessWidget {
@@ -39,7 +39,7 @@ class BusinessTime extends StatelessWidget {
         children: [
           Text(
             AppLocalizations.of(context)!.pfApSthAdditionalLabel,
-            textScaleFactor: textScaleFactor,
+            textScaleFactor: displayScaleFactor,
             style: AppLocalizations.of(context)!.localeName == 'km'
                 ? Theme.of(context).primaryTextTheme.titleLarge
                 : Theme.of(context).textTheme.titleLarge,
@@ -96,7 +96,7 @@ class BusinessTime extends StatelessWidget {
                                                     .primaryIconTheme
                                                     .color
                                                 : null,
-                                            fontSize: 14 * textScaleFactor)
+                                            fontSize: 14 * displayScaleFactor)
                                     : Theme.of(context)
                                         .textTheme
                                         .bodyLarge!
@@ -106,7 +106,7 @@ class BusinessTime extends StatelessWidget {
                                                     .primaryIconTheme
                                                     .color
                                                 : null,
-                                            fontSize: 14 * textScaleFactor),
+                                            fontSize: 14 * displayScaleFactor),
                           ),
                         ),
                       ),
@@ -118,7 +118,7 @@ class BusinessTime extends StatelessWidget {
                           child: Text(
                             AppLocalizations.of(context)!
                                 .pfApSthAdditionalOpenLabel,
-                            textScaleFactor: textScaleFactor,
+                            textScaleFactor: displayScaleFactor,
                             style:
                                 AppLocalizations.of(context)!.localeName == 'km'
                                     ? Theme.of(context)
@@ -197,7 +197,7 @@ class BusinessTime extends StatelessWidget {
                                                     .primaryIconTheme
                                                     .color
                                                 : null,
-                                            fontSize: 14 * textScaleFactor)
+                                            fontSize: 14 * displayScaleFactor)
                                     : Theme.of(context)
                                         .textTheme
                                         .bodyLarge!
@@ -207,7 +207,7 @@ class BusinessTime extends StatelessWidget {
                                                     .primaryIconTheme
                                                     .color
                                                 : null,
-                                            fontSize: 14 * textScaleFactor),
+                                            fontSize: 14 * displayScaleFactor),
                           ),
                         ),
                       ),
@@ -219,7 +219,7 @@ class BusinessTime extends StatelessWidget {
                           child: Text(
                             AppLocalizations.of(context)!
                                 .pfApSthAdditionalCloseLabel,
-                            textScaleFactor: textScaleFactor,
+                            textScaleFactor: displayScaleFactor,
                             style:
                                 AppLocalizations.of(context)!.localeName == 'km'
                                     ? Theme.of(context)
@@ -304,7 +304,8 @@ class _CustomDialogState extends State<_CustomDialog> {
       backgroundColor: Theme.of(context).canvasColor,
       insetPadding: EdgeInsets.symmetric(
           horizontal:
-              (MediaQuery.of(context).size.width - 230 * textScaleFactor) / 2),
+              (MediaQuery.of(context).size.width - 230 * displayScaleFactor) /
+                  2),
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(15.0),
       ),
@@ -314,7 +315,7 @@ class _CustomDialogState extends State<_CustomDialog> {
           const SizedBox(height: kVPadding),
           Container(
             padding: const EdgeInsets.symmetric(vertical: kHPadding),
-            height: 160 * textScaleFactor,
+            height: 160 * displayScaleFactor,
             child: CupertinoTheme(
               data: CupertinoThemeData(
                 textTheme: CupertinoTextThemeData(
@@ -322,7 +323,7 @@ class _CustomDialogState extends State<_CustomDialog> {
                         .textTheme
                         .displayMedium!
                         .copyWith(
-                            fontSize: 24 * textScaleFactor,
+                            fontSize: 24 * displayScaleFactor,
                             fontWeight: FontWeight.w500)),
               ),
               child: CupertinoDatePicker(
@@ -357,7 +358,7 @@ class _CustomDialogState extends State<_CustomDialog> {
                   padding: const EdgeInsets.only(left: 30.0, bottom: kVPadding),
                   child: Text(
                     AppLocalizations.of(context)!.resetLabel,
-                    textScaleFactor: textScaleFactor,
+                    textScaleFactor: displayScaleFactor,
                     style: AppLocalizations.of(context)!.localeName == 'km'
                         ? Theme.of(context)
                             .primaryTextTheme
@@ -404,7 +405,7 @@ class _CustomDialogState extends State<_CustomDialog> {
                       right: 30.0, bottom: kVPadding + 5.0, top: 5.0),
                   child: Text(
                     AppLocalizations.of(context)!.doneLabel,
-                    textScaleFactor: textScaleFactor,
+                    textScaleFactor: displayScaleFactor,
                     style: AppLocalizations.of(context)!.localeName == 'km'
                         ? Theme.of(context)
                             .primaryTextTheme

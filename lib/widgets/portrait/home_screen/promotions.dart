@@ -254,7 +254,7 @@ class _PromotionCardState extends State<_PromotionCard> {
             ),
             Positioned(
               top: 0,
-              right: 0,
+              left: 0,
               child: Container(
                 padding: const EdgeInsets.all(10),
                 decoration: BoxDecoration(
@@ -264,8 +264,8 @@ class _PromotionCardState extends State<_PromotionCard> {
                           ? Theme.of(context).highlightColor
                           : Theme.of(context).primaryColor,
                   borderRadius: BorderRadius.only(
-                    topRight: Radius.circular(15.0),
-                    bottomLeft: Radius.circular(15.0),
+                    topLeft: Radius.circular(15.0),
+                    bottomRight: Radius.circular(15.0),
                   ),
                 ),
                 child: Text(

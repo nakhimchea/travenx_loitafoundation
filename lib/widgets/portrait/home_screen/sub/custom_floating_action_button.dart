@@ -33,11 +33,11 @@ class CustomFloatingActionButton extends StatelessWidget {
         decoration: BoxDecoration(
           color: buttonColor != null
               ? buttonColor
-              : Theme.of(context).disabledColor.withOpacity(0.5),
+              : Theme.of(context).canvasColor.withOpacity(0.5),
           shape: BoxShape.circle,
           boxShadow: [
             BoxShadow(
-              color: Theme.of(context).disabledColor.withOpacity(0.5),
+              color: Theme.of(context).canvasColor.withOpacity(0.5),
               offset: const Offset(0, 1),
               spreadRadius: 2.0,
               blurRadius: 3.0,

@@ -65,9 +65,9 @@ class MyApp extends StatelessWidget {
             GlobalCupertinoLocalizations.delegate,
           ],
           supportedLocales: Locales.languages,
-          themeMode: themeProvider.themeMode ?? ThemeMode.light,
-          theme: Travenx.themeLightGrey,
-          darkTheme: Travenx.darkTheme,
+          themeMode: ThemeMode.light,
+          theme: themeProvider.themeOption,
+          darkTheme: Travenx.themeDarkGrey,
           home: ResponsiveDecider(),
           scrollBehavior: CustomScrollBehavior(),
         );

@@ -7,6 +7,7 @@ import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:travenx_loitafoundation/config/configs.dart'
     show kHPadding, kVPadding, displayScaleFactor;
+import 'package:travenx_loitafoundation/widgets/portrait/home_screen/change_theme_button.dart';
 import 'package:travenx_loitafoundation/widgets/portrait/home_screen/widgets.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -91,6 +92,10 @@ class _HomeScreenState extends State<HomeScreen>
                   Padding(
                     padding: const EdgeInsets.only(right: kHPadding),
                     child: ChangeLanguageButton(callback: _toggleNeedRefresh),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(right: kHPadding),
+                    child: ChangeThemeButton(),
                   ),
                 ],
               ),

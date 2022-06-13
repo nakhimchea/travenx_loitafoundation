@@ -27,7 +27,7 @@ class _IconMenuTabState extends State<IconMenuTab> {
       child: Scaffold(
         appBar: AppBar(
           elevation: 0.7,
-          backgroundColor: Theme.of(context).bottomAppBarColor,
+          backgroundColor: Theme.of(context).backgroundColor,
           leading: IconButton(
             onPressed: () => Navigator.pop(context),
             icon: Icon(
@@ -35,9 +35,9 @@ class _IconMenuTabState extends State<IconMenuTab> {
               color: Theme.of(context).primaryIconTheme.color,
               size: 18.0 * displayScaleFactor,
             ),
-            highlightColor: Colors.transparent,
-            hoverColor: Colors.transparent,
-            splashColor: Colors.transparent,
+            highlightColor: Theme.of(context).highlightColor,
+            hoverColor: Theme.of(context).hoverColor,
+            splashColor: Theme.of(context).splashColor,
           ),
           title: Text(
             AppLocalizations.of(context)!.icAppBar,
@@ -54,9 +54,9 @@ class _IconMenuTabState extends State<IconMenuTab> {
               //   context,
               //   MaterialPageRoute(builder: (_) => SearchSubscreen()),
               // ),
-              highlightColor: Colors.transparent,
-              hoverColor: Colors.transparent,
-              splashColor: Colors.transparent,
+              highlightColor: Theme.of(context).highlightColor,
+              hoverColor: Theme.of(context).hoverColor,
+              splashColor: Theme.of(context).splashColor,
               icon: Icon(
                 CustomOutlinedIcons.search,
                 size: 28.0 * displayScaleFactor,

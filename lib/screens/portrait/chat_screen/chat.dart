@@ -44,10 +44,10 @@ class _ChatState extends State<Chat> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Theme.of(context).bottomAppBarColor,
+        backgroundColor: Theme.of(context).backgroundColor,
         leading: InkWell(
           onTap: () => Navigator.pop(context),
-          highlightColor: Colors.transparent,
+          highlightColor: Theme.of(context).highlightColor,
           hoverColor:
               Theme.of(context).scaffoldBackgroundColor.withOpacity(0.5),
           splashColor:

@@ -57,9 +57,9 @@ class _CustomLanguageDialogState extends State<_CustomLanguageDialog> {
             children: [
               InkWell(
                 onTap: () => setState(() => selectedLanguage = 0),
-                focusColor: Colors.transparent,
-                highlightColor: Colors.transparent,
-                hoverColor: Colors.transparent,
+                focusColor: Theme.of(context).focusColor,
+                highlightColor: Theme.of(context).highlightColor,
+                hoverColor: Theme.of(context).hoverColor,
                 child: Container(
                   decoration: BoxDecoration(
                     color: selectedLanguage != null && selectedLanguage == 0
@@ -80,9 +80,9 @@ class _CustomLanguageDialogState extends State<_CustomLanguageDialog> {
               ),
               InkWell(
                 onTap: () => setState(() => selectedLanguage = 1),
-                focusColor: Colors.transparent,
-                highlightColor: Colors.transparent,
-                hoverColor: Colors.transparent,
+                focusColor: Theme.of(context).focusColor,
+                highlightColor: Theme.of(context).highlightColor,
+                hoverColor: Theme.of(context).hoverColor,
                 child: Container(
                   color: selectedLanguage != null && selectedLanguage == 1
                       ? Theme.of(context).disabledColor
@@ -99,9 +99,9 @@ class _CustomLanguageDialogState extends State<_CustomLanguageDialog> {
               ),
               // InkWell(
               //   onTap: () => setState(() => selectedLanguage = 2),
-              //   focusColor: Colors.transparent,
-              //   highlightColor: Colors.transparent,
-              //   hoverColor: Colors.transparent,
+              //   focusColor: Theme.of(context).focusColor,
+              //   highlightColor: Theme.of(context).highlightColor,
+              //   hoverColor: Theme.of(context).hoverColor,
               //   child: Container(
               //     color: selectedLanguage != null && selectedLanguage == 2
               //         ? Theme.of(context).disabledColor

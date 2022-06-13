@@ -49,7 +49,7 @@ class _UserPostsState extends State<UserPosts> {
     return Scaffold(
       appBar: AppBar(
         elevation: 0.7,
-        backgroundColor: Theme.of(context).bottomAppBarColor,
+        backgroundColor: Theme.of(context).backgroundColor,
         leading: IconButton(
           onPressed: () => Navigator.pop(context),
           icon: Icon(
@@ -57,9 +57,9 @@ class _UserPostsState extends State<UserPosts> {
             color: Theme.of(context).primaryIconTheme.color,
             size: 18.0,
           ),
-          highlightColor: Colors.transparent,
-          hoverColor: Colors.transparent,
-          splashColor: Colors.transparent,
+          highlightColor: Theme.of(context).highlightColor,
+          hoverColor: Theme.of(context).hoverColor,
+          splashColor: Theme.of(context).splashColor,
         ),
         title: Text(
           AppLocalizations.of(context)!.pfAddedPost,
@@ -72,9 +72,9 @@ class _UserPostsState extends State<UserPosts> {
           IconButton(
             onPressed: () {}, //TODO: Stack user to Delete Icon
             padding: const EdgeInsets.symmetric(horizontal: kHPadding),
-            highlightColor: Colors.transparent,
-            hoverColor: Colors.transparent,
-            splashColor: Colors.transparent,
+            highlightColor: Theme.of(context).highlightColor,
+            hoverColor: Theme.of(context).hoverColor,
+            splashColor: Theme.of(context).splashColor,
             icon: Icon(
               CustomOutlinedIcons.trash,
               size: 26.0,

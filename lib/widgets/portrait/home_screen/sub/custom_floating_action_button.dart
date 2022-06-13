@@ -23,7 +23,7 @@ class CustomFloatingActionButton extends StatelessWidget {
     return InkWell(
       onTap: onTap,
       borderRadius: BorderRadius.circular(buttonSize / 2),
-      highlightColor: Colors.transparent,
+      highlightColor: Theme.of(context).highlightColor,
       hoverColor: Theme.of(context).primaryColor.withOpacity(0.2),
       splashColor: Theme.of(context).primaryColor.withOpacity(0.6),
       child: Container(

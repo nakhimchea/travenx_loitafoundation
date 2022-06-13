@@ -48,7 +48,7 @@ class CustomSnackBarContent extends StatelessWidget {
                       contentCode == 'invalid_google_account'
                   ? CircleAvatar(
                       radius: (14 * displayScaleFactor) / 2,
-                      backgroundColor: Colors.white,
+                      backgroundColor: Theme.of(context).backgroundColor,
                       child: Icon(
                         CustomOutlinedIcons.close,
                         size: 10 * displayScaleFactor,

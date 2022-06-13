@@ -45,7 +45,7 @@ class _ProvinceRoutesState extends State<ProvinceRoutes> {
         slivers: [
           SliverAppBar(
             pinned: true,
-            backgroundColor: Theme.of(context).bottomAppBarColor,
+            backgroundColor: Theme.of(context).backgroundColor,
             leading: IconButton(
               onPressed: () => Navigator.pop(context),
               icon: Icon(
@@ -53,9 +53,9 @@ class _ProvinceRoutesState extends State<ProvinceRoutes> {
                 color: Theme.of(context).iconTheme.color,
                 size: 18.0,
               ),
-              highlightColor: Colors.transparent,
-              hoverColor: Colors.transparent,
-              splashColor: Colors.transparent,
+              highlightColor: Theme.of(context).highlightColor,
+              hoverColor: Theme.of(context).hoverColor,
+              splashColor: Theme.of(context).splashColor,
             ),
             title: Text(
               AppLocalizations.of(context)!.pvAppBar,
@@ -77,9 +77,9 @@ class _ProvinceRoutesState extends State<ProvinceRoutes> {
                   size: 28.0,
                   color: Theme.of(context).iconTheme.color,
                 ),
-                highlightColor: Colors.transparent,
-                hoverColor: Colors.transparent,
-                splashColor: Colors.transparent,
+                highlightColor: Theme.of(context).highlightColor,
+                hoverColor: Theme.of(context).hoverColor,
+                splashColor: Theme.of(context).splashColor,
               ),
             ],
           ),

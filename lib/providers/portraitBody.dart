@@ -98,7 +98,7 @@ class _PortraitBodyState extends State<PortraitBody> {
               bottomNavigationBar: CurvedNavigationBar(
                 color: Theme.of(context).bottomAppBarColor,
                 buttonBackgroundColor:
-                    Theme.of(context).bottomAppBarColor.withOpacity(0.7),
+                    Theme.of(context).backgroundColor.withOpacity(0.7),
                 backgroundColor: Colors.transparent,
                 index: selectedIndex,
                 onTap: (index) => setState(() => selectedIndex = index),

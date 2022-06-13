@@ -198,9 +198,9 @@ class _ThemeSelection extends StatelessWidget {
     }
     return InkWell(
       onTap: onTap,
-      focusColor: Colors.transparent,
-      highlightColor: Colors.transparent,
-      hoverColor: Colors.transparent,
+      focusColor: Theme.of(context).focusColor,
+      highlightColor: Theme.of(context).highlightColor,
+      hoverColor: Theme.of(context).hoverColor,
       child: Container(
         decoration: BoxDecoration(
           color: selectedTheme != null && selectedTheme == themeButton

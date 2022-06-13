@@ -67,9 +67,9 @@ class PostDetails extends StatelessWidget {
         Center(
           child: InkWell(
             onTap: () {},
-            hoverColor: Colors.transparent,
-            splashColor: Colors.transparent,
-            highlightColor: Colors.transparent,
+            hoverColor: Theme.of(context).hoverColor,
+            splashColor: Theme.of(context).splashColor,
+            highlightColor: Theme.of(context).highlightColor,
             child: Text(
               AppLocalizations.of(context)!.pdDetailsGetDirection +
                   ' Google Map',

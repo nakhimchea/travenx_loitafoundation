@@ -205,7 +205,7 @@ class _LoginTextFieldState extends State<LoginTextField> {
                                                     .labelSmall!
                                                     .copyWith(
                                                         color: Theme.of(context)
-                                                            .highlightColor,
+                                                            .secondaryHeaderColor,
                                                         fontWeight:
                                                             FontWeight.w500)
                                                 : Theme.of(context)
@@ -213,7 +213,7 @@ class _LoginTextFieldState extends State<LoginTextField> {
                                                     .labelSmall!
                                                     .copyWith(
                                                         color: Theme.of(context)
-                                                            .highlightColor,
+                                                            .secondaryHeaderColor,
                                                         fontWeight:
                                                             FontWeight.w500),
                                           ),

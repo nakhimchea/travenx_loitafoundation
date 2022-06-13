@@ -178,7 +178,7 @@ class _AddPostState extends State<AddPost> {
     return Scaffold(
       appBar: AppBar(
         elevation: 0.7,
-        backgroundColor: Theme.of(context).bottomAppBarColor,
+        backgroundColor: Theme.of(context).backgroundColor,
         leading: IconButton(
           onPressed: () => Navigator.pop(context),
           icon: Icon(
@@ -186,9 +186,9 @@ class _AddPostState extends State<AddPost> {
             size: 26.0,
             color: Theme.of(context).errorColor,
           ),
-          highlightColor: Colors.transparent,
-          hoverColor: Colors.transparent,
-          splashColor: Colors.transparent,
+          highlightColor: Theme.of(context).highlightColor,
+          hoverColor: Theme.of(context).hoverColor,
+          splashColor: Theme.of(context).splashColor,
         ),
         title: Text(
           AppLocalizations.of(context)!.pfAddPost,
@@ -202,10 +202,8 @@ class _AddPostState extends State<AddPost> {
             visible: currentStep == 2,
             child: TextButton(
               style: ButtonStyle(
-                backgroundColor: MaterialStateProperty.all(
-                    Theme.of(context).backgroundColor),
-                overlayColor: MaterialStateProperty.all(
-                    Theme.of(context).backgroundColor),
+                backgroundColor: MaterialStateProperty.all(Colors.transparent),
+                overlayColor: MaterialStateProperty.all(Colors.transparent),
               ),
               onPressed: () {
                 setState(() {

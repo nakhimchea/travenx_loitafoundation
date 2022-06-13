@@ -391,7 +391,7 @@ class _RateButton extends StatelessWidget {
         child: Icon(
           CustomFilledIcons.star,
           size: 45 * displayScaleFactor,
-          color: Theme.of(context).highlightColor,
+          color: Theme.of(context).secondaryHeaderColor,
         ),
       ),
     )..addAll(
@@ -507,7 +507,7 @@ class _RatingCard extends StatelessWidget {
                             rating,
                             (index) => Icon(
                               CustomFilledIcons.star,
-                              color: Theme.of(context).highlightColor,
+                              color: Theme.of(context).secondaryHeaderColor,
                               size: 16,
                             ),
                           )..addAll(
@@ -515,7 +515,7 @@ class _RatingCard extends StatelessWidget {
                                 5 - rating,
                                 (index) => Icon(
                                   CustomOutlinedIcons.star,
-                                  color: Theme.of(context).highlightColor,
+                                  color: Theme.of(context).secondaryHeaderColor,
                                   size: 16,
                                 ),
                               ),

@@ -47,7 +47,7 @@ class PostHeader extends StatelessWidget {
               children: [
                 Icon(
                   CustomFilledIcons.star,
-                  color: Theme.of(context).highlightColor,
+                  color: Theme.of(context).secondaryHeaderColor,
                   size: descriptionIconSize,
                 ),
                 const SizedBox(width: 5),
@@ -84,7 +84,7 @@ class PostHeader extends StatelessWidget {
           style: Theme.of(context)
               .primaryTextTheme
               .displayMedium!
-              .copyWith(color: Theme.of(context).highlightColor),
+              .copyWith(color: Theme.of(context).secondaryHeaderColor),
           overflow: kIsWeb ? TextOverflow.clip : TextOverflow.ellipsis,
         ),
         Row(

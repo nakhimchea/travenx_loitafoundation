@@ -219,7 +219,7 @@ class _ResponsiveDeciderState extends State<ResponsiveDecider> {
                       ),
                     ),
                   ),
-                  Loading(color: Theme.of(context).highlightColor),
+                  Loading(color: Theme.of(context).secondaryHeaderColor),
                 ],
               ),
             ),

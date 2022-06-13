@@ -399,7 +399,7 @@ class _ActionOptions extends StatelessWidget {
         padding: EdgeInsets.zero,
         icon: CircleAvatar(
           radius: 20.2 * displayScaleFactor,
-          backgroundColor: Colors.black26,
+          backgroundColor: Theme.of(context).shadowColor,
           child: CircleAvatar(
             radius: 20.0 * displayScaleFactor,
             backgroundColor:

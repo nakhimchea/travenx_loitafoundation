@@ -202,8 +202,10 @@ class _AddPostState extends State<AddPost> {
             visible: currentStep == 2,
             child: TextButton(
               style: ButtonStyle(
-                backgroundColor: MaterialStateProperty.all(Colors.transparent),
-                overlayColor: MaterialStateProperty.all(Colors.transparent),
+                backgroundColor: MaterialStateProperty.all(
+                    Theme.of(context).backgroundColor),
+                overlayColor: MaterialStateProperty.all(
+                    Theme.of(context).backgroundColor),
               ),
               onPressed: () {
                 setState(() {

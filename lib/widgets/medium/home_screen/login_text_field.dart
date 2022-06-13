@@ -154,9 +154,8 @@ class _LoginTextFieldState extends State<LoginTextField> {
                                           },
                                           style: ButtonStyle(
                                             overlayColor: MaterialStateProperty
-                                                .all<Color>(
-                                              Colors.transparent,
-                                            ),
+                                                .all<Color>(Theme.of(context)
+                                                    .backgroundColor),
                                           ),
                                           child: Text('ផ្ញើលេខកូដ',
                                               textScaleFactor:

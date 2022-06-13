@@ -138,8 +138,8 @@ class _CustomAppBar extends StatelessWidget {
               skippedCallback();
             },
             style: ButtonStyle(
-                overlayColor:
-                    MaterialStateProperty.all<Color>(Colors.transparent)),
+                overlayColor: MaterialStateProperty.all<Color>(
+                    Theme.of(context).backgroundColor)),
             child: Text(
               AppLocalizations.of(context)!.skipLabel,
               textScaleFactor: displayScaleFactor,
@@ -197,8 +197,8 @@ class _LoginAppBar extends StatelessWidget {
                 skippedCallback();
               },
               style: ButtonStyle(
-                  overlayColor:
-                      MaterialStateProperty.all<Color>(Colors.transparent)),
+                  overlayColor: MaterialStateProperty.all<Color>(
+                      Theme.of(context).backgroundColor)),
               child: Text(
                 AppLocalizations.of(context)!.skipLabel,
                 textScaleFactor: displayScaleFactor,
@@ -366,7 +366,7 @@ class _LoginButton extends StatelessWidget {
           style: ButtonStyle(
               overlayColor: MaterialStateProperty.all<Color>(isCodeSent
                   ? Theme.of(context).canvasColor.withOpacity(0.2)
-                  : Colors.transparent)),
+                  : Theme.of(context).backgroundColor)),
           child: Text(
             title,
             textScaleFactor: MediaQuery.of(context).size.width / 428,

@@ -61,7 +61,7 @@ class _WalletScreenState extends State<WalletScreen> {
                           shape: BoxShape.circle,
                           boxShadow: [
                             BoxShadow(
-                              color: Colors.black26,
+                              color: Theme.of(context).shadowColor,
                               offset: Offset(3, 3),
                               blurRadius: 15.0,
                             ),

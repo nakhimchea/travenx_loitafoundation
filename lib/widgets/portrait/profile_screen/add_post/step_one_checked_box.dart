@@ -25,7 +25,7 @@ class StepOneCheckedBox extends StatelessWidget {
       ),
       decoration: BoxDecoration(
         color: isAgreementHighlight
-            ? Theme.of(context).highlightColor.withOpacity(0.1)
+            ? Theme.of(context).secondaryHeaderColor.withOpacity(0.1)
             : Theme.of(context).canvasColor,
         borderRadius: BorderRadius.circular(15.0),
       ),

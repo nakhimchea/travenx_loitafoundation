@@ -13,7 +13,7 @@ class ChangeThemeButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       child: CircleAvatar(
-        backgroundColor: Theme.of(context).highlightColor,
+        backgroundColor: Theme.of(context).secondaryHeaderColor,
         radius: 20 * displayScaleFactor,
         child: Icon(
           Icons.light_mode,

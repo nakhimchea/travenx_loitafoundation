@@ -220,7 +220,7 @@ class _ProfileState extends State<Profile> {
                         ProfileCategory(
                           icon: Icon(
                             CustomFilledIcons.star,
-                            color: Theme.of(context).highlightColor,
+                            color: Theme.of(context).secondaryHeaderColor,
                             size: 20.0 * displayScaleFactor,
                           ),
                           title: AppLocalizations.of(context)!.pfRateUs,

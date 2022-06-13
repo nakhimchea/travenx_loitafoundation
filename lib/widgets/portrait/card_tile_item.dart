@@ -136,7 +136,8 @@ class _CardTileItemState extends State<CardTileItem> {
                               .textTheme
                               .titleLarge!
                               .copyWith(
-                                  color: Theme.of(context).highlightColor),
+                                  color:
+                                      Theme.of(context).secondaryHeaderColor),
                         ),
                       ],
                     ),
@@ -194,7 +195,7 @@ class _CardTileItemState extends State<CardTileItem> {
                           children: [
                             Icon(
                               CustomFilledIcons.star,
-                              color: Theme.of(context).highlightColor,
+                              color: Theme.of(context).secondaryHeaderColor,
                               size: descriptionIconSize,
                             ),
                             Padding(

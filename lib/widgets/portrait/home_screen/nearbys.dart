@@ -507,7 +507,7 @@ class _NearbyCardState extends State<_NearbyCard> {
                       color: widget.post.price ~/ 100 > 0
                           ? Theme.of(context).errorColor
                           : widget.post.price ~/ 25 > 0
-                              ? Theme.of(context).highlightColor
+                              ? Theme.of(context).secondaryHeaderColor
                               : Theme.of(context).primaryColor,
                       borderRadius: BorderRadius.only(
                         topLeft: Radius.circular(15.0),
@@ -587,7 +587,7 @@ class _NearbyCardState extends State<_NearbyCard> {
                         children: [
                           Icon(
                             CustomFilledIcons.star,
-                            color: Theme.of(context).highlightColor,
+                            color: Theme.of(context).secondaryHeaderColor,
                             size: descriptionIconSize,
                           ),
                           const SizedBox(width: 5.0),

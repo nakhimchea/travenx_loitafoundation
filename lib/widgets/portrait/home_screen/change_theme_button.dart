@@ -80,6 +80,12 @@ class _CustomThemeDialogState extends State<_CustomThemeDialog> {
                 onTap: () => setState(() => selectedTheme = ThemeType.darkGrey),
                 selectedTheme: selectedTheme,
               ),
+              _ThemeSelection(
+                themeButton: ThemeType.lightBlue,
+                onTap: () =>
+                    setState(() => selectedTheme = ThemeType.lightBlue),
+                selectedTheme: selectedTheme,
+              ),
               Divider(
                 color: Theme.of(context).primaryColor.withOpacity(0.8),
                 indent: 6.0,
@@ -191,6 +197,13 @@ class _ThemeSelection extends StatelessWidget {
             ? label = 'ពណ៌ប្រផេះងងឹត'
             : AppLocalizations.of(context)!.localeName == 'en'
                 ? label = 'Dark Grey'
+                : label = '----';
+        break;
+      case ThemeType.lightBlue:
+        AppLocalizations.of(context)!.localeName == 'km'
+            ? label = 'ពណ៌ទឹកសមុទ្រ'
+            : AppLocalizations.of(context)!.localeName == 'en'
+                ? label = 'Light Blue'
                 : label = '----';
         break;
       default:

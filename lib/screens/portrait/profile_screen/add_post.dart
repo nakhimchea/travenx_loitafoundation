@@ -258,14 +258,20 @@ class _AddPostState extends State<AddPost> {
                     ? AppLocalizations.of(context)!.postLabel
                     : AppLocalizations.of(context)!.nextLabel,
                 textStyle: AppLocalizations.of(context)!.localeName == 'km'
-                    ? Theme.of(context)
-                        .primaryTextTheme
-                        .bodyLarge!
-                        .copyWith(color: Colors.white)
-                    : Theme.of(context)
-                        .textTheme
-                        .bodyLarge!
-                        .copyWith(color: Colors.white),
+                    ? Theme.of(context).primaryTextTheme.bodyLarge!.copyWith(
+                        color: _agreementChecked
+                            ? Colors.white
+                            : Theme.of(context)
+                                .iconTheme
+                                .color!
+                                .withOpacity(0.3))
+                    : Theme.of(context).textTheme.bodyLarge!.copyWith(
+                        color: _agreementChecked
+                            ? Colors.white
+                            : Theme.of(context)
+                                .iconTheme
+                                .color!
+                                .withOpacity(0.3)),
                 onPressed: _agreementChecked
                     ? () async {
                         switch (currentStep) {

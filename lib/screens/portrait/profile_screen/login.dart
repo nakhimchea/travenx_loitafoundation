@@ -124,7 +124,7 @@ class _CustomAppBar extends StatelessWidget {
               style: Theme.of(context)
                   .textTheme
                   .displayLarge!
-                  .copyWith(color: Theme.of(context).canvasColor)),
+                  .copyWith(color: Theme.of(context).scaffoldBackgroundColor)),
         ),
         Container(
           margin: EdgeInsets.only(
@@ -147,13 +147,17 @@ class _CustomAppBar extends StatelessWidget {
                   ? Theme.of(context).primaryTextTheme.headlineLarge!.copyWith(
                       color: Theme.of(context).colorScheme.brightness ==
                               Brightness.light
-                          ? Theme.of(context).canvasColor
-                          : Theme.of(context).canvasColor.withOpacity(0.6))
+                          ? Theme.of(context).scaffoldBackgroundColor
+                          : Theme.of(context)
+                              .scaffoldBackgroundColor
+                              .withOpacity(0.6))
                   : Theme.of(context).textTheme.headlineLarge!.copyWith(
                       color: Theme.of(context).colorScheme.brightness ==
                               Brightness.light
-                          ? Theme.of(context).canvasColor
-                          : Theme.of(context).canvasColor.withOpacity(0.6)),
+                          ? Theme.of(context).scaffoldBackgroundColor
+                          : Theme.of(context)
+                              .scaffoldBackgroundColor
+                              .withOpacity(0.6)),
             ),
           ),
         ),
@@ -183,7 +187,10 @@ class _LoginAppBar extends StatelessWidget {
             margin: EdgeInsets.only(
                 top: MediaQuery.of(context).size.height / 10 - 5,
                 left: MediaQuery.of(context).size.width / 20),
-            child: CustomFloatingActionButton(onTap: loggedInMethodsCallback),
+            child: CustomFloatingActionButton(
+              onTap: loggedInMethodsCallback,
+              buttonColor: Theme.of(context).scaffoldBackgroundColor,
+            ),
           ),
           Container(
             margin: EdgeInsets.only(
@@ -209,15 +216,17 @@ class _LoginAppBar extends StatelessWidget {
                         .copyWith(
                             color: Theme.of(context).colorScheme.brightness ==
                                     Brightness.light
-                                ? Theme.of(context).canvasColor
+                                ? Theme.of(context).scaffoldBackgroundColor
                                 : Theme.of(context)
-                                    .canvasColor
+                                    .scaffoldBackgroundColor
                                     .withOpacity(0.6))
                     : Theme.of(context).textTheme.headlineLarge!.copyWith(
                         color: Theme.of(context).colorScheme.brightness ==
                                 Brightness.light
-                            ? Theme.of(context).canvasColor
-                            : Theme.of(context).canvasColor.withOpacity(0.6)),
+                            ? Theme.of(context).scaffoldBackgroundColor
+                            : Theme.of(context)
+                                .scaffoldBackgroundColor
+                                .withOpacity(0.6)),
               ),
             ),
           ),
@@ -282,19 +291,25 @@ class _LoginMethodsState extends State<_LoginMethods> {
                     Container(
                       height: 2.0,
                       width: (MediaQuery.of(context).size.width - (30 * 4)) / 2,
-                      color: Theme.of(context).canvasColor.withOpacity(0.6),
+                      color: Theme.of(context)
+                          .scaffoldBackgroundColor
+                          .withOpacity(0.6),
                     ),
                     Text(
                       AppLocalizations.of(context)!.lgOr,
                       textScaleFactor: displayScaleFactor,
                       style: Theme.of(context).textTheme.titleLarge!.copyWith(
-                          color: Theme.of(context).canvasColor.withOpacity(0.6),
+                          color: Theme.of(context)
+                              .scaffoldBackgroundColor
+                              .withOpacity(0.6),
                           fontWeight: FontWeight.w400),
                     ),
                     Container(
                       height: 2.0,
                       width: (MediaQuery.of(context).size.width - (30 * 4)) / 2,
-                      color: Theme.of(context).canvasColor.withOpacity(0.6),
+                      color: Theme.of(context)
+                          .scaffoldBackgroundColor
+                          .withOpacity(0.6),
                     ),
                   ],
                 ),
@@ -525,13 +540,17 @@ class _PolicyAgreement extends StatelessWidget {
                 ? Theme.of(context).primaryTextTheme.bodyMedium!.copyWith(
                     color: Theme.of(context).colorScheme.brightness ==
                             Brightness.light
-                        ? Theme.of(context).canvasColor
-                        : Theme.of(context).canvasColor.withOpacity(0.6))
+                        ? Theme.of(context).scaffoldBackgroundColor
+                        : Theme.of(context)
+                            .scaffoldBackgroundColor
+                            .withOpacity(0.6))
                 : Theme.of(context).textTheme.bodyMedium!.copyWith(
                     color: Theme.of(context).colorScheme.brightness ==
                             Brightness.light
-                        ? Theme.of(context).canvasColor
-                        : Theme.of(context).canvasColor.withOpacity(0.6)),
+                        ? Theme.of(context).scaffoldBackgroundColor
+                        : Theme.of(context)
+                            .scaffoldBackgroundColor
+                            .withOpacity(0.6)),
           ),
           const SizedBox(height: 3),
           Text(
@@ -541,14 +560,18 @@ class _PolicyAgreement extends StatelessWidget {
                 ? Theme.of(context).primaryTextTheme.bodyMedium!.copyWith(
                     color: Theme.of(context).colorScheme.brightness ==
                             Brightness.light
-                        ? Theme.of(context).canvasColor
-                        : Theme.of(context).canvasColor.withOpacity(0.6),
+                        ? Theme.of(context).scaffoldBackgroundColor
+                        : Theme.of(context)
+                            .scaffoldBackgroundColor
+                            .withOpacity(0.6),
                     fontWeight: FontWeight.w700)
                 : Theme.of(context).textTheme.bodyMedium!.copyWith(
                     color: Theme.of(context).colorScheme.brightness ==
                             Brightness.light
-                        ? Theme.of(context).canvasColor
-                        : Theme.of(context).canvasColor.withOpacity(0.6),
+                        ? Theme.of(context).scaffoldBackgroundColor
+                        : Theme.of(context)
+                            .scaffoldBackgroundColor
+                            .withOpacity(0.6),
                     fontWeight: FontWeight.w700),
           ),
         ],

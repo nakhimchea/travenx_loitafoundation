@@ -29,8 +29,9 @@ class LoginCardButton extends StatelessWidget {
         child: Container(
           height: (MediaQuery.of(context).size.height / 16).ceil().toDouble(),
           decoration: BoxDecoration(
-            color:
-                titleColor != null ? titleColor : Theme.of(context).canvasColor,
+            color: titleColor != null
+                ? titleColor
+                : Theme.of(context).scaffoldBackgroundColor,
             borderRadius: BorderRadius.circular(15.0),
           ),
           child: Row(

@@ -4,4 +4,5 @@ enum ThemeType {
   lightPink,
   lightPurple,
   darkGrey,
+  lightBlue,
 }

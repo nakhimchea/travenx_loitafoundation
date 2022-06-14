@@ -72,7 +72,7 @@ class _LoginTextFieldState extends State<LoginTextField> {
                   height: 50 * displayScaleFactor + 2,
                   decoration: BoxDecoration(
                     color: widget.isCodeSent
-                        ? Theme.of(context).canvasColor
+                        ? Theme.of(context).scaffoldBackgroundColor
                         : Theme.of(context).primaryColor,
                     borderRadius: BorderRadius.circular(30.0),
                   ),
@@ -81,7 +81,7 @@ class _LoginTextFieldState extends State<LoginTextField> {
                   margin: EdgeInsets.all(1.0),
                   height: 50 * displayScaleFactor,
                   decoration: BoxDecoration(
-                    color: Theme.of(context).canvasColor,
+                    color: Theme.of(context).scaffoldBackgroundColor,
                     borderRadius: BorderRadius.circular(28.0),
                   ),
                   child: Row(

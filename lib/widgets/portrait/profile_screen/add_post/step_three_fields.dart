@@ -53,7 +53,7 @@ class StepThreeFields extends StatelessWidget {
             textController: announcementController,
             minimumLines: 5,
           ),
-          const SizedBox(height: 80),
+          const SizedBox(height: 80 + kHPadding),
         ],
       ),
     );

@@ -11,6 +11,12 @@ import 'package:travenx_loitafoundation/widgets/portrait/home_screen/change_them
 import 'package:travenx_loitafoundation/widgets/portrait/home_screen/widgets.dart';
 
 class HomeScreen extends StatefulWidget {
+  final bool needRefresh;
+  final void Function() toggleNeedRefresh;
+  const HomeScreen(
+      {Key? key, required this.needRefresh, required this.toggleNeedRefresh})
+      : super(key: key);
+
   @override
   _HomeScreenState createState() => _HomeScreenState();
 }
@@ -22,9 +28,6 @@ class _HomeScreenState extends State<HomeScreen>
   late TabController _tabController;
   late StreamSubscription subscription;
   bool _hasInternet = true;
-
-  bool _needRefresh = false;
-  void _toggleNeedRefresh() => _needRefresh = !_needRefresh;
 
   @override
   void initState() {
@@ -61,7 +64,7 @@ class _HomeScreenState extends State<HomeScreen>
             releaseText: AppLocalizations.of(context)!.loadingText,
           ),
           onRefresh: () {
-            _needRefresh = true;
+            widget.toggleNeedRefresh();
             if (mounted) setState(() {});
             _refreshController.refreshCompleted();
           },
@@ -91,7 +94,9 @@ class _HomeScreenState extends State<HomeScreen>
                 actions: [
                   Padding(
                     padding: const EdgeInsets.only(right: kHPadding),
-                    child: ChangeLanguageButton(callback: _toggleNeedRefresh),
+                    child: ChangeLanguageButton(
+                      toggleNeedRefresh: widget.toggleNeedRefresh,
+                    ),
                   ),
                   Padding(
                     padding: const EdgeInsets.only(right: kHPadding),
@@ -112,7 +117,7 @@ class _HomeScreenState extends State<HomeScreen>
                         ),
                         child: IconsMenu(),
                       ),
-                      Promotions(needRefresh: _needRefresh),
+                      Promotions(needRefresh: widget.needRefresh),
                       Padding(
                         padding: const EdgeInsets.symmetric(
                           horizontal: kHPadding,
@@ -120,7 +125,7 @@ class _HomeScreenState extends State<HomeScreen>
                         ),
                         child: Provinces(),
                       ),
-                      Nearbys(needRefresh: _needRefresh),
+                      Nearbys(needRefresh: widget.needRefresh),
                     ],
                   ),
                 ),
@@ -135,10 +140,11 @@ class _HomeScreenState extends State<HomeScreen>
                 padding: const EdgeInsets.only(bottom: kVPadding),
                 sliver: SliverToBoxAdapter(
                   child: CustomTabBarList(
-                      needRefresh: _needRefresh,
-                      callback: _toggleNeedRefresh,
-                      context: context,
-                      tabController: _tabController),
+                    context: context,
+                    tabController: _tabController,
+                    needRefresh: widget.needRefresh,
+                    toggleNeedRefresh: widget.toggleNeedRefresh,
+                  ),
                 ),
               ),
             ],

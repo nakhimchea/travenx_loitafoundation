@@ -8,6 +8,7 @@ import 'package:travenx_loitafoundation/config/configs.dart'
 import 'package:travenx_loitafoundation/icons/icons.dart';
 import 'package:travenx_loitafoundation/screens/portrait/profile_screen/add_post.dart';
 import 'package:travenx_loitafoundation/screens/portrait/profile_screen/user_posts.dart';
+import 'package:travenx_loitafoundation/widgets/portrait/home_screen/change_language_button.dart';
 import 'package:travenx_loitafoundation/widgets/portrait/profile_screen/profile_category.dart';
 import 'package:travenx_loitafoundation/widgets/portrait/profile_screen/short_profile.dart';
 
@@ -18,6 +19,7 @@ class Profile extends StatefulWidget {
   final String profileUrl;
   final String backgroundUrl;
   final void Function() cleanProfileCallback;
+  final void Function() toggleNeedRefresh;
   const Profile({
     Key? key,
     required this.loggedInCallback,
@@ -26,6 +28,7 @@ class Profile extends StatefulWidget {
     required this.profileUrl,
     required this.backgroundUrl,
     required this.cleanProfileCallback,
+    required this.toggleNeedRefresh,
   }) : super(key: key);
 
   @override
@@ -147,7 +150,9 @@ class _ProfileState extends State<Profile> {
                           title: AppLocalizations.of(context)!.pfLanguages,
                           trailing: [
                             Text(
-                              'ភាសាខ្មែរ',
+                              AppLocalizations.of(context)!.localeName == 'km'
+                                  ? 'English/中文'
+                                  : 'ភាសាខ្មែរ/中文',
                               textScaleFactor: displayScaleFactor,
                               style: AppLocalizations.of(context)!.localeName ==
                                       'km'
@@ -169,6 +174,12 @@ class _ProfileState extends State<Profile> {
                               size: 14.0 * displayScaleFactor,
                             )
                           ],
+                          onTap: () => showDialog(
+                            context: context,
+                            builder: (context) => CustomLanguageDialog(
+                              toggleNeedRefresh: widget.toggleNeedRefresh,
+                            ),
+                          ),
                         ),
                         ProfileCategory(
                           icon: Icon(

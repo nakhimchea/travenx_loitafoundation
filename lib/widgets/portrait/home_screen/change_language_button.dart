@@ -5,8 +5,8 @@ import 'package:travenx_loitafoundation/config/configs.dart'
 import 'package:travenx_loitafoundation/providers/locale_provider.dart';
 
 class ChangeLanguageButton extends StatelessWidget {
-  final void Function() callback;
-  const ChangeLanguageButton({Key? key, required this.callback})
+  final void Function() toggleNeedRefresh;
+  const ChangeLanguageButton({Key? key, required this.toggleNeedRefresh})
       : super(key: key);
 
   @override
@@ -24,25 +24,24 @@ class ChangeLanguageButton extends StatelessWidget {
       onTap: () {
         showDialog(
           context: context,
-          builder: (context) => _CustomLanguageDialog(callback: callback),
+          builder: (context) =>
+              CustomLanguageDialog(toggleNeedRefresh: toggleNeedRefresh),
         );
       },
     );
   }
 }
 
-class _CustomLanguageDialog extends StatefulWidget {
-  final void Function() callback;
-  const _CustomLanguageDialog({
-    Key? key,
-    required this.callback,
-  }) : super(key: key);
+class CustomLanguageDialog extends StatefulWidget {
+  final void Function() toggleNeedRefresh;
+  const CustomLanguageDialog({Key? key, required this.toggleNeedRefresh})
+      : super(key: key);
 
   @override
-  State<_CustomLanguageDialog> createState() => _CustomLanguageDialogState();
+  State<CustomLanguageDialog> createState() => _CustomLanguageDialogState();
 }
 
-class _CustomLanguageDialogState extends State<_CustomLanguageDialog> {
+class _CustomLanguageDialogState extends State<CustomLanguageDialog> {
   int? selectedLanguage;
   @override
   Widget build(BuildContext context) {
@@ -152,7 +151,7 @@ class _CustomLanguageDialogState extends State<_CustomLanguageDialog> {
                           Provider.of<LocaleProvider>(context, listen: false);
                       if (selectedLanguage != null)
                         provider.setLocale(selectedLanguage!);
-                      widget.callback();
+                      widget.toggleNeedRefresh();
                       Navigator.pop(context);
                     },
                     child: Padding(

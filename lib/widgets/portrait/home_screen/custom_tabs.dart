@@ -60,19 +60,19 @@ class CustomTabBar extends StatelessWidget {
 }
 
 class CustomTabBarList extends StatefulWidget {
-  final bool needRefresh;
-  final void Function() callback;
   final BuildContext context;
   final TabController tabController;
   final double vPadding;
-  const CustomTabBarList(
-      {Key? key,
-      required this.needRefresh,
-      required this.callback,
-      required this.context,
-      required this.tabController,
-      this.vPadding = kCardTileVPadding})
-      : super(key: key);
+  final bool needRefresh;
+  final void Function() toggleNeedRefresh;
+  const CustomTabBarList({
+    Key? key,
+    required this.context,
+    required this.tabController,
+    this.vPadding = kCardTileVPadding,
+    required this.needRefresh,
+    required this.toggleNeedRefresh,
+  }) : super(key: key);
 
   @override
   _CustomTabBarListState createState() => _CustomTabBarListState();
@@ -128,7 +128,7 @@ class _CustomTabBarListState extends State<CustomTabBarList> {
     if (widget.needRefresh) {
       tabLists = [];
       setTabBarData();
-      widget.callback();
+      widget.toggleNeedRefresh();
     }
 
     return Container(

@@ -35,6 +35,9 @@ class PortraitBody extends StatefulWidget {
 }
 
 class _PortraitBodyState extends State<PortraitBody> {
+  bool _needRefresh = false;
+  void _toggleNeedRefresh() => _needRefresh = !_needRefresh;
+
   List<Widget> _screens = [];
 
   @override
@@ -59,7 +62,8 @@ class _PortraitBodyState extends State<PortraitBody> {
     };
 
     setState(() => _screens = [
-          HomeScreen(),
+          HomeScreen(
+              needRefresh: _needRefresh, toggleNeedRefresh: _toggleNeedRefresh),
           ChatScreen(
               isLoggedIn: widget.isLoggedIn,
               displayName: widget.displayName,
@@ -78,7 +82,8 @@ class _PortraitBodyState extends State<PortraitBody> {
               backgroundUrl: widget.backgroundUrl,
               cleanProfileCallback: widget.cleanProfileCallback,
               loggedInCallback: widget.loggedInCallback,
-              getProfileCallback: widget.getProfileCallback),
+              getProfileCallback: widget.getProfileCallback,
+              toggleNeedRefresh: _toggleNeedRefresh),
         ]);
     return DefaultTabController(
       length: _icons.length,

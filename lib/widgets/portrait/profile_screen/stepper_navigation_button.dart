@@ -17,22 +17,34 @@ class StepperNavigationButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return TextButton(
-      onPressed: onPressed,
-      style: ButtonStyle(
-        backgroundColor: MaterialStateProperty.all<Color?>(backgroundColor),
-        overlayColor: MaterialStateProperty.all<Color?>(
-            textStyle!.color!.withOpacity(0.1)),
-        shape: MaterialStateProperty.all<OutlinedBorder?>(
-            RoundedRectangleBorder(borderRadius: BorderRadius.circular(15.0))),
+    return Container(
+      padding: const EdgeInsets.all(1),
+      decoration: BoxDecoration(
+        color: backgroundColor == Theme.of(context).primaryColor
+            ? null
+            : Theme.of(context).bottomAppBarColor == Colors.white
+                ? Theme.of(context).disabledColor
+                : Theme.of(context).bottomAppBarColor,
+        borderRadius: BorderRadius.circular(16.0),
       ),
-      child: Padding(
-        padding: const EdgeInsets.symmetric(vertical: kVPadding / 2),
-        child: Text(
-          label,
-          textScaleFactor: displayScaleFactor,
-          textAlign: TextAlign.center,
-          style: textStyle,
+      child: TextButton(
+        onPressed: onPressed,
+        style: ButtonStyle(
+          backgroundColor: MaterialStateProperty.all<Color?>(backgroundColor),
+          overlayColor: MaterialStateProperty.all<Color?>(
+              textStyle!.color!.withOpacity(0.1)),
+          shape: MaterialStateProperty.all<OutlinedBorder?>(
+              RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(15.0))),
+        ),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(vertical: kVPadding / 2),
+          child: Text(
+            label,
+            textScaleFactor: displayScaleFactor,
+            textAlign: TextAlign.center,
+            style: textStyle,
+          ),
         ),
       ),
     );

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_svg/flutter_svg.dart';
+import 'package:lottie/lottie.dart';
 import 'package:travenx_loitafoundation/config/configs.dart';
 
 class WalletScreen extends StatefulWidget {
@@ -23,119 +23,192 @@ class WalletScreen extends StatefulWidget {
 class _WalletScreenState extends State<WalletScreen> {
   @override
   Widget build(BuildContext context) {
-    if (widget.isLoggedIn == true)
-      return Scaffold(
-        appBar: AppBar(
-          elevation: 0,
-          backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-        ),
-        body: Center(
-          child: SvgPicture.asset(
-            'assets/images/home_screen/sub/boating.svg',
-            width: MediaQuery.of(context).size.width,
-            height: MediaQuery.of(context).size.width / 2,
-            fit: BoxFit.cover,
-          ),
-        ),
-      );
-    else if (widget.isLoggedIn == true && widget.displayName != '') {
+    if (widget.isLoggedIn == true && widget.displayName != '') {
       SystemChrome.setSystemUIOverlayStyle(
           Theme.of(context).colorScheme.brightness == Brightness.dark
               ? SystemUiOverlayStyle.light
               : SystemUiOverlayStyle.dark);
       return Scaffold(
-        body: LayoutBuilder(
-          builder: (context, constraints) => Stack(
+        backgroundColor: Theme.of(context).bottomAppBarColor == Colors.white
+            ? Theme.of(context).primaryColor
+            : Theme.of(context).bottomAppBarColor,
+        body: SafeArea(
+          bottom: false,
+          child: Stack(
             children: [
               CustomScrollView(
                 primary: false,
-                physics: BouncingScrollPhysics(),
+                physics: const BouncingScrollPhysics(),
                 slivers: [
                   SliverToBoxAdapter(
                     child: Container(
-                      height: constraints.maxWidth,
-                      padding: EdgeInsets.all(constraints.maxWidth / 8),
-                      child: Container(
-                        padding: EdgeInsets.all(constraints.maxWidth / 8),
-                        decoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                          boxShadow: [
-                            BoxShadow(
-                              color: Theme.of(context).shadowColor,
-                              offset: Offset(3, 3),
-                              blurRadius: 15.0,
-                            ),
-                          ],
-                          color: Theme.of(context).scaffoldBackgroundColor,
-                        ),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: [
-                            Text(
-                              'Total balance',
-                              style: const TextStyle(fontSize: 16),
-                            ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              crossAxisAlignment: CrossAxisAlignment.end,
-                              children: [
-                                Text(
-                                  '\$ 0.10',
-                                  style: TextStyle(
-                                    color: Theme.of(context)
-                                        .primaryIconTheme
-                                        .color,
-                                    fontSize: 44.0,
-                                    fontFamily: 'Poppins',
-                                    fontWeight: FontWeight.w700,
-                                  ),
-                                ),
-                              ],
-                            ),
-                            Container(
-                              alignment: Alignment.center,
-                              height: 40,
-                              width: 120,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(15),
-                                color: Colors.green.shade100,
+                      height: MediaQuery.of(context).size.height / 2.5,
+                      padding: EdgeInsets.all(kHPadding),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Stack(
+                            alignment: Alignment.center,
+                            children: [
+                              Lottie.asset(
+                                'assets/animations/random_dot.json',
+                                height: MediaQuery.of(context).size.height / 3 -
+                                    60 -
+                                    2 * kHPadding,
                               ),
-                              child: Row(
+                              Lottie.asset(
+                                'assets/animations/circle_dot.json',
+                                height:
+                                    MediaQuery.of(context).size.height / 2.5 -
+                                        40 -
+                                        2 * kHPadding,
+                              ),
+                              Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
-                                  Icon(
-                                    Icons.volunteer_activism_outlined,
-                                    size: 15,
-                                    color: Theme.of(context).primaryColor,
-                                  ),
-                                  const SizedBox(width: 5),
                                   Text(
-                                    'Receive',
+                                    '\$ 0.10',
                                     style: TextStyle(
-                                      fontSize: 15,
-                                      color: Theme.of(context).primaryColor,
+                                      color: Colors.white,
+                                      fontSize: 38.0,
+                                      fontFamily: 'Poppins',
+                                      fontWeight: FontWeight.w700,
                                     ),
                                   ),
                                 ],
                               ),
-                            ),
-                          ],
-                        ),
+                            ],
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: [
+                              Container(
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: kHPadding),
+                                alignment: Alignment.center,
+                                height: 40,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(15),
+                                  color:
+                                      Theme.of(context).scaffoldBackgroundColor,
+                                ),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Icon(
+                                      Icons.arrow_upward,
+                                      size: 15,
+                                      color: Theme.of(context).primaryColor,
+                                    ),
+                                    const SizedBox(width: 5),
+                                    Text(
+                                      'Send',
+                                      style: TextStyle(
+                                        fontSize: 15,
+                                        color: Theme.of(context).primaryColor,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              Container(
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: kHPadding),
+                                alignment: Alignment.center,
+                                height: 40,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(15),
+                                  color:
+                                      Theme.of(context).scaffoldBackgroundColor,
+                                ),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Icon(
+                                      Icons.arrow_downward,
+                                      size: 15,
+                                      color: Theme.of(context).primaryColor,
+                                    ),
+                                    const SizedBox(width: 5),
+                                    Text(
+                                      'Receive',
+                                      style: TextStyle(
+                                        fontSize: 15,
+                                        color: Theme.of(context).primaryColor,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              Container(
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: kHPadding),
+                                alignment: Alignment.center,
+                                height: 40,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(15),
+                                  color: Theme.of(context).secondaryHeaderColor,
+                                ),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Icon(
+                                      Icons.money,
+                                      size: 15,
+                                      color: Theme.of(context).primaryColor,
+                                    ),
+                                    const SizedBox(width: 5),
+                                    Text(
+                                      'Deposit',
+                                      style: TextStyle(
+                                        fontSize: 15,
+                                        color: Theme.of(context).primaryColor,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ],
+                          ),
+                        ],
                       ),
                     ),
                   ),
-                  SliverPadding(
-                    padding: const EdgeInsets.symmetric(horizontal: kHPadding),
-                    sliver: SliverToBoxAdapter(
+                  SliverToBoxAdapter(
+                    child: Container(
+                      padding:
+                          const EdgeInsets.symmetric(horizontal: kHPadding),
+                      decoration: BoxDecoration(
+                        color: Theme.of(context).scaffoldBackgroundColor,
+                        borderRadius:
+                            BorderRadius.vertical(top: Radius.circular(16)),
+                      ),
                       child: Column(
                         children: [
-                          _HistoryCard(),
-                          _HistoryCard(),
-                          _HistoryCard(),
-                          _HistoryCard(),
-                          _HistoryCard(),
-                          _HistoryCard(),
-                          const SizedBox(height: 15.0),
+                          const SizedBox(height: kHPadding),
+                          Text(
+                            '    Tuesday, 17, May, 2022',
+                            style: TextStyle(fontSize: 14, color: Colors.black),
+                          ),
+                          Divider(color: Theme.of(context).iconTheme.color),
+                          _HistoryCard(cent: '2'),
+                          Divider(color: Theme.of(context).iconTheme.color),
+                          _HistoryCard(cent: '1'),
+                          Divider(color: Theme.of(context).iconTheme.color),
+                          _HistoryCard(cent: '5'),
+                          Divider(color: Theme.of(context).iconTheme.color),
+                          _HistoryCard(cent: '4'),
+                          Divider(color: Theme.of(context).iconTheme.color),
+                          _HistoryCard(cent: '8'),
+                          Divider(color: Theme.of(context).iconTheme.color),
+                          _HistoryCard(cent: '6'),
+                          Divider(color: Theme.of(context).iconTheme.color),
+                          _HistoryCard(cent: '5'),
+                          Divider(color: Theme.of(context).iconTheme.color),
+                          _HistoryCard(cent: '4'),
+                          Divider(color: Theme.of(context).iconTheme.color),
+                          _HistoryCard(cent: '8'),
+                          const SizedBox(height: 100.0),
                         ],
                       ),
                     ),
@@ -201,23 +274,32 @@ class _WalletScreenState extends State<WalletScreen> {
 }
 
 class _HistoryCard extends StatelessWidget {
-  const _HistoryCard({Key? key}) : super(key: key);
+  final String cent;
+  const _HistoryCard({Key? key, required this.cent}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 5.0),
-      child: Container(
-        height: 80,
-        width: double.infinity,
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(10),
-          color: Theme.of(context).bottomAppBarColor,
-        ),
-        child: Center(
-          child: Text(
-            'ថ្ងៃទី ២១ ខែ ៧ ឆ្នាំ ២០២២ បានចំណាយប្រាក់            ចំនួន \$0.05',
-            style: const TextStyle(fontSize: 14),
+    return Container(
+      height: 40,
+      width: double.infinity,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(10),
+        color: Theme.of(context).scaffoldBackgroundColor,
+      ),
+      child: Center(
+        child: RichText(
+          text: TextSpan(
+            text:
+                'បង់សេវាកម្ម                                                                         ',
+            style: TextStyle(
+                fontSize: 14, color: Theme.of(context).iconTheme.color),
+            children: [
+              TextSpan(
+                text: '-\$0.0$cent',
+                style: TextStyle(
+                    fontSize: 14.0, color: Theme.of(context).errorColor),
+              ),
+            ],
           ),
         ),
       ),

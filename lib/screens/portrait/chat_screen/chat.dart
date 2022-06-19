@@ -258,11 +258,11 @@ class _MessageBubble extends StatelessWidget {
                 style: AppLocalizations.of(context)!.localeName == 'km'
                     ? Theme.of(context)
                         .primaryTextTheme
-                        .labelSmall!
+                        .bodyLarge!
                         .copyWith(color: isMe ? Colors.white : Colors.black54)
                     : Theme.of(context)
                         .textTheme
-                        .labelSmall!
+                        .bodyLarge!
                         .copyWith(color: isMe ? Colors.white : Colors.black54),
               ),
             ),

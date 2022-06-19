@@ -30,9 +30,7 @@ class PostImagePicker extends StatelessWidget {
       padding: const EdgeInsets.all(kHPadding),
       width: double.infinity,
       decoration: BoxDecoration(
-        color: isImagePathHighlight
-            ? Theme.of(context).errorColor.withOpacity(0.1)
-            : Theme.of(context).canvasColor,
+        color: Theme.of(context).canvasColor,
         borderRadius: BorderRadius.circular(15.0),
       ),
       child: Column(
@@ -66,16 +64,25 @@ class PostImagePicker extends StatelessWidget {
             onTap: () async =>
                 await ImagePickerService.addImage(imagePickerCallback),
             child: Container(
-              width: imageSize,
-              height: imageSize,
+              padding: const EdgeInsets.all(1),
               decoration: BoxDecoration(
-                color: Theme.of(context).primaryColor.withOpacity(0.1),
-                borderRadius: BorderRadius.circular(15.0),
+                color: isImagePathHighlight
+                    ? Theme.of(context).errorColor.withOpacity(0.5)
+                    : Theme.of(context).canvasColor,
+                borderRadius: BorderRadius.circular(16.0),
               ),
-              child: Icon(
-                CustomOutlinedIcons.add,
-                size: imageSize / 2,
-                color: Theme.of(context).disabledColor,
+              child: Container(
+                width: imageSize,
+                height: imageSize,
+                decoration: BoxDecoration(
+                  color: Theme.of(context).scaffoldBackgroundColor,
+                  borderRadius: BorderRadius.circular(15.0),
+                ),
+                child: Icon(
+                  CustomOutlinedIcons.add,
+                  size: imageSize / 2,
+                  color: Theme.of(context).bottomAppBarColor,
+                ),
               ),
             ),
           );
@@ -87,11 +94,11 @@ class PostImagePicker extends StatelessWidget {
                 width: imageSize,
                 height: imageSize,
                 decoration: BoxDecoration(
-                  color: Theme.of(context).primaryColor.withOpacity(0.1),
+                  color: Theme.of(context).scaffoldBackgroundColor,
                   borderRadius: BorderRadius.circular(15.0),
                 ),
                 child: ClipRRect(
-                  borderRadius: BorderRadius.circular(15.0),
+                  borderRadius: BorderRadius.circular(14.0),
                   child: kIsWeb
                       ? Image.network(
                           imagesFile.elementAt(index).path,

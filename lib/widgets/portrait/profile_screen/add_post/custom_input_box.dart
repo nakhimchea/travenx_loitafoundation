@@ -42,47 +42,54 @@ class CustomInputBox extends StatelessWidget {
                   : Theme.of(context).textTheme.bodySmall,
         ),
         const SizedBox(height: 3),
-        TextField(
-          controller: textController,
-          style: AppLocalizations.of(context)!.localeName == 'km'
-              ? Theme.of(context).primaryTextTheme.bodyLarge!.copyWith(
-                  color: Theme.of(context).primaryIconTheme.color,
-                  fontSize: 16 * displayScaleFactor)
-              : Theme.of(context).textTheme.bodyLarge!.copyWith(
-                  color: Theme.of(context).primaryIconTheme.color,
-                  fontSize: 16 * displayScaleFactor),
-          minLines: minimumLines,
-          maxLines: 24,
-          textAlign: TextAlign.justify,
-          cursorColor: Theme.of(context).primaryColor,
-          autofocus: autofocus,
-          onChanged: (_) =>
-              disableHighlight != null ? disableHighlight!() : null,
-          decoration: InputDecoration(
-            filled: true,
-            fillColor: isHighlight
-                ? Theme.of(context).errorColor.withOpacity(0.1)
-                : Theme.of(context).primaryColor.withOpacity(0.1),
-            contentPadding: const EdgeInsets.symmetric(
-              horizontal: 12.0,
-              vertical: 12.0,
-            ),
-            hintText: hintText,
-            hintStyle: AppLocalizations.of(context)!.localeName == 'km'
-                ? Theme.of(context)
-                    .primaryTextTheme
-                    .bodyLarge!
-                    .copyWith(fontSize: 16 * displayScaleFactor)
-                : Theme.of(context)
-                    .textTheme
-                    .bodyLarge!
-                    .copyWith(fontSize: 16 * displayScaleFactor),
-            border: OutlineInputBorder(
-              borderSide: BorderSide.none,
-              borderRadius: BorderRadius.circular(10.0),
-            ),
+        Container(
+          padding: const EdgeInsets.all(1),
+          decoration: BoxDecoration(
+            color: isHighlight
+                ? Theme.of(context).errorColor.withOpacity(0.5)
+                : Theme.of(context).canvasColor,
+            borderRadius: BorderRadius.circular(11.0),
           ),
-          keyboardType: inputType,
+          child: TextField(
+            controller: textController,
+            style: AppLocalizations.of(context)!.localeName == 'km'
+                ? Theme.of(context).primaryTextTheme.bodyLarge!.copyWith(
+                    color: Theme.of(context).primaryIconTheme.color,
+                    fontSize: 16 * displayScaleFactor)
+                : Theme.of(context).textTheme.bodyLarge!.copyWith(
+                    color: Theme.of(context).primaryIconTheme.color,
+                    fontSize: 16 * displayScaleFactor),
+            minLines: minimumLines,
+            maxLines: 24,
+            textAlign: TextAlign.justify,
+            cursorColor: Theme.of(context).primaryColor,
+            autofocus: autofocus,
+            onChanged: (_) =>
+                disableHighlight != null ? disableHighlight!() : null,
+            decoration: InputDecoration(
+              filled: true,
+              fillColor: Theme.of(context).scaffoldBackgroundColor,
+              contentPadding: const EdgeInsets.symmetric(
+                horizontal: 12.0,
+                vertical: 12.0,
+              ),
+              hintText: hintText,
+              hintStyle: AppLocalizations.of(context)!.localeName == 'km'
+                  ? Theme.of(context)
+                      .primaryTextTheme
+                      .bodyLarge!
+                      .copyWith(fontSize: 16 * displayScaleFactor)
+                  : Theme.of(context)
+                      .textTheme
+                      .bodyLarge!
+                      .copyWith(fontSize: 16 * displayScaleFactor),
+              border: OutlineInputBorder(
+                borderSide: BorderSide.none,
+                borderRadius: BorderRadius.circular(10.0),
+              ),
+            ),
+            keyboardType: inputType,
+          ),
         ),
       ],
     );

@@ -239,7 +239,7 @@ class _AddPostState extends State<AddPost> {
               visible: currentStep > 0,
               child: Expanded(
                 child: StepperNavigationButton(
-                  backgroundColor: Theme.of(context).disabledColor,
+                  backgroundColor: Theme.of(context).scaffoldBackgroundColor,
                   label: AppLocalizations.of(context)!.backLabel,
                   textStyle: AppLocalizations.of(context)!.localeName == 'km'
                       ? Theme.of(context).primaryTextTheme.bodyLarge
@@ -518,7 +518,9 @@ class _AddPostState extends State<AddPost> {
                   padding:
                       const EdgeInsets.symmetric(horizontal: kHPadding + 12.0),
                   child: CustomDivider(
-                    color: Theme.of(context).primaryColor,
+                    color: Theme.of(context).canvasColor == Colors.white
+                        ? Theme.of(context).disabledColor
+                        : Theme.of(context).canvasColor,
                     dashWidth: 6,
                     dashHeight: 1,
                   ),
@@ -566,7 +568,9 @@ class _AddPostState extends State<AddPost> {
                   padding:
                       const EdgeInsets.symmetric(horizontal: kHPadding + 12.0),
                   child: CustomDivider(
-                    color: Theme.of(context).primaryColor,
+                    color: Theme.of(context).canvasColor == Colors.white
+                        ? Theme.of(context).disabledColor
+                        : Theme.of(context).canvasColor,
                     dashWidth: 6,
                     dashHeight: 1,
                   ),
@@ -583,7 +587,9 @@ class _AddPostState extends State<AddPost> {
                   padding:
                       const EdgeInsets.symmetric(horizontal: kHPadding + 12.0),
                   child: CustomDivider(
-                    color: Theme.of(context).primaryColor,
+                    color: Theme.of(context).canvasColor == Colors.white
+                        ? Theme.of(context).disabledColor
+                        : Theme.of(context).canvasColor,
                     dashWidth: 6,
                     dashHeight: 1,
                   ),
@@ -637,7 +643,9 @@ class _AddPostState extends State<AddPost> {
                         : 0,
                   ),
                   child: CustomDivider(
-                    color: Theme.of(context).primaryColor.withOpacity(0.2),
+                    color: Theme.of(context).canvasColor == Colors.white
+                        ? Theme.of(context).disabledColor
+                        : Theme.of(context).canvasColor,
                     dashWidth: 6,
                     dashHeight: 1,
                   ),
@@ -654,7 +662,9 @@ class _AddPostState extends State<AddPost> {
                         : 0,
                   ),
                   child: CustomDivider(
-                    color: Theme.of(context).primaryColor.withOpacity(0.2),
+                    color: Theme.of(context).canvasColor == Colors.white
+                        ? Theme.of(context).disabledColor
+                        : Theme.of(context).canvasColor,
                     dashWidth: 6,
                     dashHeight: 1,
                   ),
@@ -665,7 +675,6 @@ class _AddPostState extends State<AddPost> {
                   policiesCallback: _changePolicyControllers,
                   announcementController: _announcementController,
                 ),
-                const SizedBox(height: 10),
               ],
             ),
           ),

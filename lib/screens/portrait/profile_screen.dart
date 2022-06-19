@@ -11,6 +11,7 @@ class ProfileScreen extends StatefulWidget {
   final void Function() cleanProfileCallback;
   final void Function() loggedInCallback;
   final void Function() getProfileCallback;
+  final void Function() toggleNeedRefresh;
   const ProfileScreen({
     Key? key,
     required this.isLoggedIn,
@@ -21,6 +22,7 @@ class ProfileScreen extends StatefulWidget {
     required this.cleanProfileCallback,
     required this.loggedInCallback,
     required this.getProfileCallback,
+    required this.toggleNeedRefresh,
   }) : super(key: key);
 
   @override
@@ -43,7 +45,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
               profileUrl: widget.profileUrl,
               backgroundUrl: widget.backgroundUrl,
               cleanProfileCallback: widget.cleanProfileCallback,
-            ),
+              toggleNeedRefresh: widget.toggleNeedRefresh),
     );
   }
 }

@@ -17,10 +17,7 @@ import 'package:travenx_loitafoundation/services/firestore_service.dart';
 
 class Promotions extends StatefulWidget {
   final bool needRefresh;
-  const Promotions({
-    Key? key,
-    required this.needRefresh,
-  }) : super(key: key);
+  const Promotions({Key? key, required this.needRefresh}) : super(key: key);
 
   @override
   _PromotionsState createState() => _PromotionsState();

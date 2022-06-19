@@ -24,10 +24,7 @@ import 'package:travenx_loitafoundation/widgets/custom_loading.dart';
 
 class Nearbys extends StatefulWidget {
   final bool needRefresh;
-  const Nearbys({
-    Key? key,
-    required this.needRefresh,
-  }) : super(key: key);
+  const Nearbys({Key? key, required this.needRefresh}) : super(key: key);
 
   @override
   _NearbysState createState() => _NearbysState();
